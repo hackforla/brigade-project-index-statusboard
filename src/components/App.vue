@@ -9,10 +9,20 @@
 <script>
 export default {
     data() {
-        return {};
+        return {
+            last_check: null,
+        };
     },
     created(){
+        this.last_check = new Date();
         this.$store.dispatch("load_brigades");
+        window.setInterval(this.checkForUpdates, 60000); // Check for updates every minute
+    },
+    methods: {
+        checkForUpdates() {
+            this.$store.dispatch("check_for_updates", this.last_check);
+            this.last_check = new Date();
+        }
     }
 }
 </script>

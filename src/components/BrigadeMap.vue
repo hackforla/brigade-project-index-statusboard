@@ -50,15 +50,20 @@ export default {
        },
        updateMap(){
             const projection = d3.geoAlbersUsa().scale(1280).translate([480, 300])
-            const brigade_r = 10;
+            const brigade_r = 5;
             console.log("updating map with",this.brigades);
+
+            const color3= d3.scaleLinear()
+                .domain([0,1])
+                .range(['#0000ff','#00ff00'])
+                .interpolate(d3.interpolateHcl); 
 
             d3.select("#map").select(".brigades")
                 .selectAll("circle") 
                 .data(this.brigades, d => d.name )
                 .join(
                     enter => enter.append("circle")
-                        .attr("r",brigade_r)
+                        .attr("r", d => d.projects.length == 0?2:brigade_r)
                         .attr("transform", d => { 
                             var p = projection(
                                 [d.longitude,d.latitude]
@@ -72,17 +77,8 @@ export default {
                         } )
                         .attr("fill", d => {
                             if(d.tagged == null){ return "lightgray" };
-
                             const p = d.tagged / d.projects.length;
-                            if(p > 0.9){
-                                return "palegreen";
-                            }else if(p > 0.5 ){
-                                return "lightblue";
-                            }else if(p > 0.25){
-                                return "purple";
-                            }else{
-                                return "paleturquoise";
-                            }
+                            return color3(p);
                         })
                         .on("mouseover", d => {
                             const div = d3.select("#tooltip")
@@ -104,17 +100,11 @@ export default {
                             // TODO load Brigade Detail  
                         }),
                     update => update.attr("name",d => d.name)
+                        .attr("r", d => d.projects.length == 0?2:brigade_r)
                         .attr("fill", d => {
+                            if(d.tagged == null){ return "lightgray" };
                             const p = d.tagged / d.projects.length;
-                            if(p > 0.9){
-                                return "palegreen";
-                            }else if(p > 0.5 ){
-                                return "lightblue";
-                            }else if(p > 0.25){
-                                return "purple";
-                            }else{
-                                return "paleturquoise";
-                            }
+                            return color3(p);
                         }),
                 )
        },
@@ -138,9 +128,11 @@ export default {
     stroke: #444444;
     stroke-width: 1px;
     cursor: pointer;
+    transition: r 200ms, fill 200ms;
 }
 
 #tooltip {
+    border-radius: 3px;
     position: absolute;
     padding: 8px;
     background-color: white;

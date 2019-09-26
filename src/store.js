@@ -90,5 +90,8 @@ export default new Vuex.Store({
                 })
             })
         },
+        checkForUpdates({commit, state, dispatch}, last_check) {
+            console.log("TODO check for updates given last check was at ",last_check);
+        },
     }
 });
