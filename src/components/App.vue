@@ -17,9 +17,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
     h1 {
-        position: fixed;
+        position: absolute;
         top: 10px;
         width: 100%;
         text-align: center;

@@ -17,13 +17,17 @@ export default new Vuex.Store({
         },
     },
     mutations: {
-        set_brigades( state, brigadesj ){
-            state.brigades = brigades;
+        set_brigades( state, brigades ){
+            // Consider is this how we filter for Brigades?
+            state.brigades = _.filter(
+                brigades,
+                b => typeof(b.type) !== 'undefined' && b.type.indexOf('Brigade') >= 0
+            );
         },
     },
     actions: {
         load_brigades ({ commit,dispatch } ) {
-            const url = `/data/brigades.json`;
+            const url = `/data/organizations.json`;
 
             axios.get(url).then( response => {
                 const data = response.data;

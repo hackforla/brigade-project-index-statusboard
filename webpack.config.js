@@ -60,6 +60,7 @@ module.exports = {
     }),
   ],
   devServer: {
-      contentBase: './dist'
+      contentBase: './dist',
+      hot: true,
   }
 }
