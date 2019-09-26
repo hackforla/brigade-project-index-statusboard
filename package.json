@@ -1,14 +1,10 @@
 {
-  "name": "civic-tech-archive",
+  "name": "civic-tech-statusboard",
   "version": "0.1.0",
-  "description": "A community history of brigades and their projects",
-  "author": "Chris Alfano <chris@jarv.us>",
+  "description": "A status board representation of the brigade index",
+  "author": "Nikolaj Baer <nikolaj.baer@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "^0.19.0",
-    "gitsheets": "^0.2.2",
-    "parse-link-header": "^1.0.1",
-    "progress": "^2.0.3",
-    "yargs": "^14.0.0"
+    "axios": "^0.19.0"
   }
 }
