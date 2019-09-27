@@ -16,6 +16,10 @@ export default new Vuex.Store({
         brigades: state => {
             return state.brigades;
         },
+        leaders: state => {
+            const leaders = _.sortBy(state.brigades, b => -(b.tagged/b.projects.length));
+            return _.slice(leaders,0,10);
+        }
     },
     mutations: {
         add_brigades( state, brigades ){
@@ -54,6 +58,7 @@ export default new Vuex.Store({
                         brigade.name = /([^\/]+)\.toml$/.exec(response.config.url)[1];
                         brigade.tagged = null;
                         brigade.projects = [];
+                        brigade.slug = brigade.name.toLowerCase().replace(/[^a-zA-Z0-9\-]+/g,"-")
                         return brigade;
                     }).filter( b => typeof b.type !== 'undefined' && b.type.indexOf('Brigade') >= 0  && b.type.indexOf('Code for America') > 0);
                     commit('add_brigades', brigades);

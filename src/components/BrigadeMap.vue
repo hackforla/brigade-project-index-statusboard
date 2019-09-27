@@ -3,7 +3,7 @@
         <div id="tooltip"></div>
         <svg id="map"></svg>
         <div id="announce">
-            <img :src="shield_svg" />
+            <span class="badge">🛡</span>
             New Achievement Unlocked for Open San Diego!
         </div>
     </div>
@@ -14,14 +14,8 @@ import _ from 'lodash';
 import usa_topojson from 'us-atlas/states-albers-10m.json';
 import * as d3 from 'd3';
 import * as topojson from 'topojson';
-import shield_svg from "../assets/shield.svg";
 
 export default {
-   data() {
-       return {
-           shield_svg: shield_svg,
-       };
-   },
    computed: {
        brigades(){
            return this.$store.getters.brigades;
@@ -36,7 +30,6 @@ export default {
    mounted(){
        this.createMap();
        this.updateMap();
-       console.log(shield_svg);
    },
    methods: {
        createMap(){
@@ -103,6 +96,7 @@ export default {
                         })
                         .on("click", d => {
                             d3.select("#tooltip").style("opacity",0);
+                            this.$router.push(`/brigade/${d.slug}`)
                             // TODO load Brigade Detail  
                         }),
                     update => update.attr("name",d => d.name)
@@ -152,7 +146,7 @@ export default {
 #announce {
     position: absolute;
     width: 50%;
-    top: 50%;
+    top: 40%;
     left: 25%;
     margin: auto;
     min-height: 100px;
@@ -162,11 +156,11 @@ export default {
     padding: 20px;
     font-size: 32pt;
     opacity: 0;
-    display: none;
+    display: none; 
 }
-#announce img {
-    width: 100px;
-    height: 100px;
+#announce .badge {
+    font-size: 100px; 
+    vertical-align: middle;
 }
 
 </style>
