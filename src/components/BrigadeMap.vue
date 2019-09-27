@@ -2,6 +2,10 @@
     <div>
         <div id="tooltip"></div>
         <svg id="map"></svg>
+        <div id="announce">
+            <img :src="shield_svg" />
+            New Achievement Unlocked for Open San Diego!
+        </div>
     </div>
 </template>
 
@@ -10,11 +14,12 @@ import _ from 'lodash';
 import usa_topojson from 'us-atlas/states-albers-10m.json';
 import * as d3 from 'd3';
 import * as topojson from 'topojson';
+import shield_svg from "../assets/shield.svg";
 
 export default {
    data() {
        return {
-           svg: null,
+           shield_svg: shield_svg,
        };
    },
    computed: {
@@ -31,11 +36,12 @@ export default {
    mounted(){
        this.createMap();
        this.updateMap();
+       console.log(shield_svg);
    },
    methods: {
        createMap(){
             const svg = d3.select("#map")
-              .attr("viewBox",[[0,0],[960,700]]); 
+              .attr("viewBox",[[0,0],[975,610]]); 
             const path = d3.geoPath();
 
             console.log("making map of ",usa_topojson,svg)
@@ -49,13 +55,13 @@ export default {
               svg.append("g").attr("class","brigades");
        },
        updateMap(){
-            const projection = d3.geoAlbersUsa().scale(1280).translate([480, 300])
+            const projection = d3.geoAlbersUsa().scale(1280).translate([975/2, 610/2])
             const brigade_r = 5;
             console.log("updating map with",this.brigades);
 
             const color3= d3.scaleLinear()
                 .domain([0,1])
-                .range(['#0000ff','#00ff00'])
+                .range(['#fedd44','#00a175'])
                 .interpolate(d3.interpolateHcl); 
 
             d3.select("#map").select(".brigades")
@@ -119,8 +125,8 @@ export default {
     margin: 100px auto;
 }
 .states path {
-    fill:#e5e5e5 ;
-    stroke: #444;
+    fill: #399fd3;
+    stroke: #fff;
     stroke-width: 1px;
 }
 
@@ -141,6 +147,26 @@ export default {
     min-height: 100px;
     opacity: 0;
     pointer-events: none;
+}
+
+#announce {
+    position: absolute;
+    width: 50%;
+    top: 50%;
+    left: 25%;
+    margin: auto;
+    min-height: 100px;
+    background-color: #fedd44;
+    border: solid 3px white;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 32pt;
+    opacity: 0;
+    display: none;
+}
+#announce img {
+    width: 100px;
+    height: 100px;
 }
 
 </style>

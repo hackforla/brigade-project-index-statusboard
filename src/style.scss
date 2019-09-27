@@ -1,1 +1,12 @@
 @import "~bootstrap/scss/bootstrap";
+
+body {
+    background-color: #cf1b41;
+}
+
+h1,h2 {
+    color: white;
+    font-family: "Interstate", "Gotham A", "Gotham B", "Open Sans Regular", "Verdana", "Helvetica", "Arial";
+    font-weight: 700;
+    text-transform: uppercase;
+}

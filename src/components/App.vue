@@ -1,7 +1,10 @@
 <template>
 
     <div class="content">
-        <h1>⭐ Brigade Project Index ⭐</h1>
+        <header>
+            <h1>Brigade Project Index</h1>
+            <h2>STATUSBOARD</h2>
+        </header>
         <router-view></router-view>
     </div>
 </template>
@@ -28,7 +31,7 @@ export default {
 </script>
 
 <style>
-    h1 {
+    header {
         position: absolute;
         top: 10px;
         width: 100%;
