@@ -2,10 +2,19 @@
 
     <div class="content">
         <header>
-            <h1>Brigade Project Index</h1>
+            <h1><router-link to="/">Brigade Project Index</router-link></h1>
             <h2>STATUSBOARD</h2>
+            <div class="loader" v-if="loading">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">loading...</span>
+                </div>
+                Loading {{ loading }}
+            </div>
         </header>
         <router-view></router-view>
+        <div class="leader-link">
+            <router-link class="btn btn-primary" to="/leaders">Leader Board</router-link>
+        </div>
     </div>
 </template>
 
@@ -15,6 +24,11 @@ export default {
         return {
             last_check: null,
         };
+    },
+    computed: {
+        loading(){
+            return this.$store.getters.loading;
+        }
     },
     created(){
         this.last_check = new Date();
@@ -37,4 +51,9 @@ export default {
         width: 100%;
         text-align: center;
     } 
+    .leader-link {
+        position: fixed;
+        left: 8px;
+        bottom: 8px;
+    }
 </style>

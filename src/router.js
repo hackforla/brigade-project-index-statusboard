@@ -13,15 +13,18 @@ export default new Router({
     routes: [
         {
             path: '/', 
+            name: 'overview',
             component: BrigadeMap,
         },
         {
             path: '/leaders', 
+            name: 'leaders',
             component: Leaderboard,
         },
         {
             path: '/brigade/:slug', 
             component: BrigadeDetail,
+            name: 'brigade-detail',
             props: true,
         }
     ]

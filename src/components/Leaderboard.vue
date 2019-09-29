@@ -1,9 +1,13 @@
 <template>
-    <div id="leaders">
-        <button>Close</button>
-        <div class="panel" v-for="brigade in leaders">
-            <div>{{ brigade.name }}</div>
-        </div>
+    <div class="container" id="leaders">
+        <h2>Leaders</h2>
+        <ul class="list-group" v-for="brigade in leaders">
+            <li class="list-group-item">
+                <router-link :to="{name:'brigade-detail', params:  { slug: brigade.slug } }" >
+                    {{ brigade.name }}
+                </router-link>
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -16,3 +20,9 @@ export default {
     } 
 }
 </script>
+
+<style scoped>
+    #leaders {
+        margin-top: 140px;
+    }
+</style>
