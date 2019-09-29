@@ -5,6 +5,8 @@ import store from './store.js';
 import BrigadeMap from './components/BrigadeMap.vue';
 import Leaderboard from './components/Leaderboard.vue';
 import BrigadeDetail from './components/BrigadeDetail.vue';
+import Topics from './components/Topics.vue';
+import TopicDetail from './components/TopicDetail.vue';
 
 Vue.use(Router)
 
@@ -20,6 +22,17 @@ export default new Router({
             path: '/leaders', 
             name: 'leaders',
             component: Leaderboard,
+        },
+        {
+            path: '/topics', 
+            name: 'topics',
+            component: Topics,
+        },
+        {
+            path: '/topics/:topic', 
+            name: 'topic-detail',
+            component: TopicDetail,
+            props: true,
         },
         {
             path: '/brigade/:slug', 

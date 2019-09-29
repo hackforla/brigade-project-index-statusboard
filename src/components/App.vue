@@ -13,7 +13,9 @@
         </header>
         <router-view></router-view>
         <div class="leader-link">
+            <router-link class="btn btn-primary" to="/">Map</router-link>
             <router-link class="btn btn-primary" to="/leaders">Leader Board</router-link>
+            <router-link class="btn btn-primary" to="/topics">Topics</router-link>
         </div>
     </div>
 </template>
@@ -33,7 +35,7 @@ export default {
     created(){
         this.last_check = new Date();
         this.$store.dispatch("load_brigades");
-        window.setInterval(this.checkForUpdates, 60000); // Check for updates every minute
+        window.setInterval(this.checkForUpdates, 30000); // Check for updates every minute
     },
     methods: {
         checkForUpdates() {

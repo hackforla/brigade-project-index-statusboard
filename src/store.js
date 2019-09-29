@@ -9,7 +9,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         brigades: [],
-        projects: null,
         last_update: null,
         loading: "brigades",
     },
@@ -21,6 +20,22 @@ export default new Vuex.Store({
             const leaders = _.sortBy(state.brigades, b => -(b.tagged/b.projects.length));
             return _.slice(leaders,0,10);
         },
+        topics: state => {
+            const topics = [];
+            state.brigades.forEach( br => {
+                if(br.projects){
+                    br.projects.forEach( prj => {
+                        if(typeof prj.topics !== 'undefined') {
+                            topics.push( ...prj.topics );
+                        }
+                    });
+                }
+            })
+            return topics;
+        },
+        projects: state => {
+            return _.flatten(_.map(state.brigades, b => b.projects));
+        },
         loading: state => {
             return state.loading;
         },
@@ -30,14 +45,25 @@ export default new Vuex.Store({
             state.brigades = brigades;
         },
         set_projects( state, data ){
+            // find the relevant brigade by name
             const i = _.findIndex(state.brigades, br => br.name == data.brigade );
             if(i >= 0){
                 const br = state.brigades[i];
+
+                // Update the preojcts
                 br.projects = data.projects;
+
                 if(br.projects.length > 0){
-                    br.tagged = br.projects.filter(
+                    const tagged = br.projects.filter(
                             p => typeof p.topics !== "undefined"
                         ).length;
+
+                    if( typeof br.tagged !== 'undefined' && tagged > br.tagged){
+                        // Dispatch achievement event
+                        // Or maybe we should be doing this externally in the action?
+                        // can we see this in watch?
+                    }
+                    br.tagged = tagged;
                 }
 
                 // TOOD better way to annotate centralize project evaluations
@@ -55,7 +81,8 @@ export default new Vuex.Store({
             }
         },
         set_loading( state, value ){
-            state.loading =value;
+            state.loading = value;
+            state.last_update = new Date();
         }
     },
     actions: {
@@ -118,6 +145,7 @@ export default new Vuex.Store({
         },
         check_for_updates({commit, state, dispatch}, last_check) {
             console.log("TODO check for updates given last check was at ",last_check);
+            dispatch("load_projects");
         },
     }
 });

@@ -1,6 +1,20 @@
 <template>
   <div class="container" id="brigade">
     <h2>{{ brigade.name }}</h2>
+
+    <dl>
+      <dt>City</dt>
+        <dd>{{ brigade.city }}</dd>
+      <dt>Website</dt>
+        <dd>{{ brigade.website }}</dd>
+      <dt>Events Url<dt/>
+        <dd>{{ brigade.events_url}}</dd>
+      <dt>Project List Url</dt>
+        <dd>{{ brigade.website }}</dd>
+      <dt>Previous Names</dt>
+        <dd><span v-for="n in brigade.previous_names">{{ n }}</span></dd>
+    </dl>
+
     <p>{{ brigade.projects.length }} Projects</p>
 
     <div class="row mb-3">
@@ -17,6 +31,7 @@
           >{{ tagged_percent }}%</div>
         </div>
       </div>
+
     </div>
 
     <ul class="list-group projects" v-for="project in brigade.projects">
