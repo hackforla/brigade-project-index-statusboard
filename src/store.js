@@ -87,13 +87,13 @@ export default new Vuex.Store({
     },
     actions: {
         load_brigades ({ commit,dispatch } ) {
-            const url = `/data/organizations/`;
+            const url = `/api/organizations/`;
             commit('set_loading',"brigades");
 
             axios.get(url).then( response => {
                 axios.all(
                     response.data.map( brigade_url => {
-                        return axios.get(url + brigade_url);
+                        return axios.get(url + brigade_url); // Get project listing
                     })
                 ).then( responseArr => {
                     const brigades = responseArr.map( response => {
@@ -114,7 +114,7 @@ export default new Vuex.Store({
         load_projects({ commit,dispatch,state }) {
             axios.all(
                 state.brigades.map( b => axios({
-                    url:`/data/projects/${b.name}/`,
+                    url:`/api/projects/${b.name}/`,
                     validateStatus: s => s == 200 || s == 404,
                 }))
             ).then(responseArr => {

@@ -49,7 +49,7 @@ export default {
        },
        updateMap(){
             const projection = d3.geoAlbersUsa().scale(1280).translate([975/2, 610/2])
-            const brigade_r = 5;
+            const brigade_r = 10;
             console.log("updating map with",this.brigades);
 
             const color3= d3.scaleLinear()
