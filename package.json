@@ -37,6 +37,7 @@
     "html-webpack-plugin": "^3.2.0",
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
+    "memjs": "^1.2.2",
     "node-sass": "^4.12.0",
     "octonode": "^0.9.5",
     "style-loader": "^0.23.1",
