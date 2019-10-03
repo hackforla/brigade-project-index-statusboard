@@ -21,6 +21,15 @@ const mc = memjs.Client.create(process.env.MEMCACHIER_SERVERS, {
 // We will use Express 
 var app = express();
 
+// TODO
+// This is not a great way to go about it
+// Instead we should query the org list
+// Then bundle a GET for each org
+// Where we download all projects from the project folder
+// And cache that result, that way we limit the total request
+// Also, ultimately we could perhaps bundle it all into one big delivery
+// Rather than 75 GETs
+
 /* Routes */
 app.get('/api/organizations/', (req, res ) => {
     // check cache for orgs list
