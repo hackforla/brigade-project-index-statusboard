@@ -2,6 +2,7 @@ import express from 'express';
 import GitHub from 'github-api';
 import _ from 'lodash';
 
+const port = process.env.PORT || 8080;
 const gh = new GitHub();
 const repo = gh.getRepo('codeforamerica','brigade-project-index');
 
@@ -44,17 +45,6 @@ app.get('/api/projects/:orgname/:projfile', (req, res ) => {
 });
 
 
+app.use(express.static(__dirname + '/dist'));
 
-// Base Web App
-app.use(express.static('dist'))
-
-
-// TODO /data/organizations/<name>.toml
-// TODO /data/projects/<org>/
-// TODO /data/projects/<org>/<name>.toml
-// CONSIDER Handle HEAD requests correctly to check for updates?
-
-// TODO integrate so vue/webpack/express work together
-app.listen(8081, ()=>{
-  console.log('API listening on port 8081');
-});
+app.listen(port);
