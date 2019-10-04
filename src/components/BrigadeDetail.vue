@@ -37,8 +37,8 @@
     <ul class="list-group projects" v-for="project in brigade.projects">
         <li class="list-group-item">
           <h4><a :href="project.link_url">{{ project.name }}</a></h4>
-          <span class="passed-metric" v-for="metric in project.metrics">
-                <i class="fa fa-check"></i> {{ metric.name }}
+          <span class="passed-metric" v-if="project.topics">
+                <i class="fa fa-check"></i> GithubTopics
           </span>
           <a v-if="project.git_url" :href="project.code_url">
             <i class="fa fa-github"></i>
