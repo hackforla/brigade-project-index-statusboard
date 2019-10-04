@@ -34,7 +34,7 @@ export default {
     },
     created(){
         this.last_check = new Date();
-        this.$store.dispatch("load_brigades");
+        this.$store.dispatch("load_all");
         window.setInterval(this.checkForUpdates, 30000); // Check for updates every minute
     },
     methods: {

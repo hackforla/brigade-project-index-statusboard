@@ -86,6 +86,19 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        load_all( {commit, dispatch} ){
+            const url = `/api/data.json`;
+
+            axios.get( url ).then( response => {
+                const brigades = response.data;
+                brigades.forEach( b => {
+                    b.tagged = null;
+                })
+                console.log("loaded brigades",brigades);
+                commit('add_brigades', brigades);
+                commit('set_loading',false);
+            })
+        },
         load_brigades ({ commit,dispatch } ) {
             const url = `/api/organizations/`;
             commit('set_loading',"brigades");
