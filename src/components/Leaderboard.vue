@@ -10,7 +10,9 @@
                     {{brigade.city}}
                 </div>
                 <div class="col-sm">
-                    Project Tagging: {{ tagged_percent(brigade) }}%
+                    <span class="passed-metric" v-if="brigade.tagged">
+                        <i class="fa fa-check"></i> GithubTopics
+                    </span>
                     <!--
                     <div class="progress">
                       <div

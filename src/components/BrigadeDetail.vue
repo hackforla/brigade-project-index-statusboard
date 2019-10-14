@@ -39,7 +39,15 @@
     <ul class="list-group projects" v-for="project in brigade.projects">
         <li class="list-group-item">
           <h4><a :href="project.link_url">{{ project.name }}</a></h4>
-          <div v-if="project.topics" class="topics">{{ project.topics.join(', ') }}</div>
+          <div>
+            <span v-for="(t,index) in project.topics">
+                <strong v-if="index == 0">Topics:</strong>
+                <span v-if="index > 0">,</span>
+                <router-link :to="`/topics/${t}`">
+                    {{ t }}
+                </router-link>
+            </span>
+          </div>
           <span class="passed-metric" v-if="project.topics" :title="project.topics">
                 <i class="fa fa-check"></i> GithubTopics
           </span>
