@@ -37,7 +37,8 @@
     <ul class="list-group projects" v-for="project in brigade.projects">
         <li class="list-group-item">
           <h4><a :href="project.link_url">{{ project.name }}</a></h4>
-          <span class="passed-metric" v-if="project.topics">
+          <div v-if="project.topics" class="topics">{{ project.topics.join(', ') }}</div>
+          <span class="passed-metric" v-if="project.topics" :title="project.topics">
                 <i class="fa fa-check"></i> GithubTopics
           </span>
           <a v-if="project.git_url" :href="project.code_url">
@@ -71,5 +72,8 @@ export default {
 }
 .passed-metric {
   color: #00a175;
+}
+.topics {
+  font-style: italic;
 }
 </style>

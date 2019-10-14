@@ -3,8 +3,16 @@
         <h2>Projects tagged with {{ topic }}</h2>
         <ul class="list-group" v-for="project in tagged_projects">
             <li class="list-group-item row">
-                <div><strong>{{ project.brigade_name }}:</strong> {{ project.name }}</div>
-                <div class='other-topics'>{{ other_topics(project.topics) }}</div>
+                <div><strong>{{ project.brigade }}:</strong> {{ project.name }}</div>
+                <div class='other-topics'>
+                    <span v-for="(t,index) in  other_topics(project.topics)">
+                        <strong v-if="index == 0">Other Topics:</strong>
+                        <span v-if="index > 0">,</span>
+                        <router-link :to="`/topics/${t}`">
+                            {{ t }}
+                        </router-link>
+                    </span>
+                </div>
             </li>
         </ul>
     </div>
@@ -22,10 +30,7 @@ export default {
     } ,
     methods: {
         other_topics(topics){
-            const other = _.filter(topics, t => t != this.topic);
-            if(other.length){ 
-                return `other topics: ${other.join(',')}`
-            }else{ return ''; }
+            return _.filter(topics, t => t != this.topic);
         }
     }
 }

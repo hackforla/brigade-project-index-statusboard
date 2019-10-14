@@ -7,7 +7,7 @@
             </thead>
             <tbody>
                 <tr v-for="t in topic_frequencies">
-                    <td>{{ t[0] }}</td>
+                    <td><router-link :to="`/topics/${t[0]}`">{{ t[0] }}</router-link></td>
                     <td>{{ t[1] }}</td>
                 </tr>
             </tbody>
