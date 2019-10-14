@@ -14,7 +14,7 @@
         <router-view></router-view>
         <div class="leader-link">
             <router-link class="btn btn-primary" to="/">Map</router-link>
-            <router-link class="btn btn-primary" to="/leaders">Leader Board</router-link>
+            <router-link class="btn btn-primary" to="/leaders">Brigades</router-link>
             <router-link class="btn btn-primary" to="/topics">Topics</router-link>
         </div>
     </div>

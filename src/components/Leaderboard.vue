@@ -10,7 +10,8 @@
                     {{brigade.city}}
                 </div>
                 <div class="col-sm">
-                    Project Tagging:
+                    Project Tagging: {{ tagged_percent(brigade) }}%
+                    <!--
                     <div class="progress">
                       <div
                         class="progress-bar"
@@ -21,6 +22,7 @@
                         aria-valuemax="100"
                       >{{ tagged_percent(brigade) }}% have topics</div>
                     </div>
+                    -->
                 </div>
             </li>
         </ul>
@@ -31,7 +33,7 @@
 export default {
     computed: {
         leaders(){
-            return this.$store.getters.leaders;
+            return _.sortBy(this.$store.getters.brigades, b => b.name);
         },
     } ,
     methods: {

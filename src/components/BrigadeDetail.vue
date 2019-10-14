@@ -20,6 +20,7 @@
     <div class="row mb-3">
       <div class="col-sm">
         <h5>Github Topic Coverage</h5>
+        <!--
         <div class="progress">
           <div
             class="progress-bar"
@@ -30,6 +31,7 @@
             aria-valuemax="100"
           >{{ tagged_percent }}%</div>
         </div>
+        -->
       </div>
 
     </div>
@@ -40,6 +42,9 @@
           <div v-if="project.topics" class="topics">{{ project.topics.join(', ') }}</div>
           <span class="passed-metric" v-if="project.topics" :title="project.topics">
                 <i class="fa fa-check"></i> GithubTopics
+          </span>
+          <span class="passed-metric" v-if="project.description" :title="project.description">
+                <i class="fa fa-check"></i> Github Description
           </span>
           <a v-if="project.git_url" :href="project.code_url">
             <i class="fa fa-github"></i>
