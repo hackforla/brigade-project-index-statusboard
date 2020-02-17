@@ -2,6 +2,7 @@ import express from 'express';
 import _ from 'lodash';
 import memjs from 'memjs';
 import getProjectIndex from './api';
+import * as enforce from 'express-sslify';
 
 const port = process.env.PORT || 8080;
 
@@ -36,5 +37,9 @@ app.get('/api/data.json', (req, res ) => {
 });
 
 app.use(express.static(__dirname + '/dist'));
+
+if(process.env.DYNO != undefined){ // If we are in heroku environment, force SSL
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+}
 
 app.listen(port);
