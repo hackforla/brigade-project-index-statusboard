@@ -1,7 +1,7 @@
 <template>
     <div class="container" id="leaders">
         <h2>Github Taggging Leaders</h2>
-        <ul class="list-group" v-for="brigade in leaders">
+        <ul class="list-group" v-for="brigade in leaders" v-bind:key="brigade.name">
             <li class="list-group-item row">
                 <div class="col-sm">
                     <router-link :to="{name:'brigade-detail', params:  { slug: brigade.slug } }" >
