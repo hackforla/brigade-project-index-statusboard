@@ -43,6 +43,8 @@ if(process.env.REDIRECT_TO_DOMAIN != undefined){ // If we are in heroku environm
     var host = req.header("host");
     if (host != process.env.REDIRECT_TO_DOMAIN) {
       res.redirect(301, "https://" + process.env.REDIRECT_TO_DOMAIN );
+    }else{
+      next();
     }
   });
 }
