@@ -38,7 +38,6 @@ app.get('/api/data.json', (req, res ) => {
 
 
 if(process.env.REDIRECT_TO_DOMAIN != undefined){ // If we are in heroku environment, force SSL / domain redirect given appropriate env
-  //app.use(enforce.HTTPS({ trustProtoHeader: true }));
   app.all(/.*/, function(req, res, next) {
     var host = req.header("host");
     if (host != process.env.REDIRECT_TO_DOMAIN) {
@@ -47,6 +46,7 @@ if(process.env.REDIRECT_TO_DOMAIN != undefined){ // If we are in heroku environm
       next();
     }
   });
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
 }
 
 app.use(express.static(__dirname + '/dist'));
