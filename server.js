@@ -36,10 +36,17 @@ app.get('/api/data.json', (req, res ) => {
   });
 });
 
-app.use(express.static(__dirname + '/dist'));
 
-if(process.env.DYNO != undefined){ // If we are in heroku environment, force SSL
-  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+if(process.env.REDIRECT_TO_DOMAIN != undefined){ // If we are in heroku environment, force SSL / domain redirect given appropriate env
+  //app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  app.all(/.*/, function(req, res, next) {
+    var host = req.header("host");
+    if (host != process.env.REDIRECT_TO_DOMAIN) {
+      res.redirect(301, "https://" + process.env.REDIRECT_TO_DOMAIN );
+    }
+  });
 }
+
+app.use(express.static(__dirname + '/dist'));
 
 app.listen(port);
