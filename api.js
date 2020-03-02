@@ -67,7 +67,9 @@ export default function getProjectIndex(org_type){
                     console.log(`Loaded ${orgs.length} orgs and ${projects.length} projects.. joining them`);
                     const orgs_by_name = _.keyBy(orgs,'name');
                     projects.forEach( proj => {
-                        orgs_by_name[proj.brigade].projects.push(proj);
+                        if( orgs_by_name[proj.brigade]){
+                            orgs_by_name[proj.brigade].projects.push(proj);
+                        }
                     });
 
                     if(org_type != null){
