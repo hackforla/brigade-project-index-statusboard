@@ -12,7 +12,7 @@
       <dt>Project List Url</dt>
         <dd>{{ brigade.website }}</dd>
       <dt>Previous Names</dt>
-        <dd><span v-for="n in brigade.previous_names">{{ n }}</span></dd>
+        <dd><span v-for="n in brigade.previous_names" v-bind:key="n">{{ n }}</span></dd>
     </dl>
 
     <p>{{ brigade.projects.length }} Projects</p>
@@ -36,36 +36,20 @@
 
     </div>
 
-    <ul class="list-group projects" v-for="project in brigade.projects">
-        <li class="list-group-item">
-          <h4><a :href="project.link_url">{{ project.name }}</a></h4>
-          <div>
-            <span v-for="(t,index) in project.topics">
-                <strong v-if="index == 0">Topics:</strong>
-                <span v-if="index > 0">,</span>
-                <router-link :to="`/topics/${t}`">
-                    {{ t }}
-                </router-link>
-            </span>
-          </div>
-          <span class="passed-metric" v-if="project.topics" :title="project.topics">
-                <i class="fa fa-check"></i> GithubTopics
-          </span>
-          <span class="passed-metric" v-if="project.description" :title="project.description">
-                <i class="fa fa-check"></i> Github Description
-          </span>
-          <a v-if="project.git_url" :href="project.code_url">
-            <i class="fa fa-github"></i>
-          </a>
-        </li>
+    <ul class="list-group projects" v-for="project in brigade.projects" v-bind:key="project.name">
+        <ProjectRow v-bind:project="project" class="list-group-item" />
     </ul>
   </div>
 </template>
 
 <script>
 import _ from 'lodash';
+import ProjectRow from "./ProjectRow.vue"
 
 export default {
+    components: {
+      ProjectRow
+    },
     props: ['slug'],
     computed: {
         tagged_percent(){

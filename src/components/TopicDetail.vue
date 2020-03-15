@@ -1,36 +1,25 @@
 <template>
     <div class="container" id="topics">
         <h2>Projects tagged with {{ topic }}</h2>
-        <ul class="list-group" v-for="project in tagged_projects">
-            <li class="list-group-item row">
-                <div><strong>{{ project.brigade }}:</strong> {{ project.name }}</div>
-                <div class='other-topics'>
-                    <span v-for="(t,index) in  other_topics(project.topics)">
-                        <strong v-if="index == 0">Other Topics:</strong>
-                        <span v-if="index > 0">,</span>
-                        <router-link :to="`/topics/${t}`">
-                            {{ t }}
-                        </router-link>
-                    </span>
-                </div>
-            </li>
+        <ul class="list-group" v-for="project in tagged_projects" v-bind:key="project.name">
+            <ProjectRow v-bind:project="project" class="list-group-item row" />
         </ul>
     </div>
 </template>
 
 <script>
+import ProjectRow from "./ProjectRow.vue"
+
 export default {
+    components: {
+        ProjectRow
+    },
     props: ['topic'],
     computed: {
         tagged_projects(){
             return _.filter(this.$store.getters.projects, p => {
                 return (typeof p.topics !== 'undefined' && p.topics.indexOf( this.topic) >= 0 );
             })
-        }
-    } ,
-    methods: {
-        other_topics(topics){
-            return _.filter(topics, t => t != this.topic);
         }
     }
 }

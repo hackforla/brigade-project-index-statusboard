@@ -8,6 +8,10 @@ export function getLastUpdate(){
     // TODO Promise of last commit
 }
 
+function slugify(n){
+    return n.toLowerCase().replace(/[^a-zA-Z0-9\-]+/g,"-")
+}
+
 export default function getProjectIndex(org_type){
     // We will make calls out to Github for the latest index information
     const octokit = Octokit({
@@ -54,7 +58,7 @@ export default function getProjectIndex(org_type){
                                 const o = toml.parse(data);
                                 o.projects = [];
                                 o.name = parts[parts.length - 1].replace('.toml','');
-                                o.slug = o.name.toLowerCase().replace(/[^a-zA-Z0-9\-]+/g,"-")
+                                o.slug = slugify(o.name)
                                 orgs.push(o)
                             }))
                         }
@@ -68,6 +72,7 @@ export default function getProjectIndex(org_type){
                     const orgs_by_name = _.keyBy(orgs,'name');
                     projects.forEach( proj => {
                         if( orgs_by_name[proj.brigade]){
+                            proj.brigade_slug = slugify(proj.brigade);
                             orgs_by_name[proj.brigade].projects.push(proj);
                         }
                     });
