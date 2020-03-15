@@ -27,7 +27,7 @@
             <strong>Project:</strong> <a v-bind:href="project.link_url">{{ project.link_url }}</a>
         </div>
         <div class="links" v-if="project.code_url">
-            <strong>Code:</strong> <a v-bind:href="project.code_url">{{ project.code_url }}</a></strong>
+            <strong>Code:</strong> <a v-bind:href="project.code_url">{{ project.code_url }}</a>
         </div>
     </li>
 </template>
