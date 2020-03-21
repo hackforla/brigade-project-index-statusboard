@@ -6,6 +6,9 @@
             <span class="badge">🛡</span>
             New Achievement Unlocked for Open San Diego!
         </div>
+        <div class="text-center"> 
+            <router-link v-if="filter_tag" class="btn btn-primary" :to="`/topics/${filter_tag}`">"{{ filter_tag }}" Project List</router-link>
+        </div>
     </div>
 </template>
 
@@ -15,7 +18,13 @@ import usa_topojson from 'us-atlas/states-albers-10m.json';
 import * as d3 from 'd3';
 import * as topojson from 'topojson';
 
+const color3= d3.scaleLinear()
+    .domain([0,1])
+    .range(['#fedd44','#00a175'])
+    .interpolate(d3.interpolateHcl); 
+
 export default {
+   props: ["filter_tag"],
    computed: {
        brigades(){
            return this.$store.getters.brigades;
@@ -25,6 +34,9 @@ export default {
         brigades: function(newVal, oldVal) {
             this.updateMap();
                // TODO update map
+        },
+        filter_tag: function(newVal, oldVal){
+            this.updateMap();
         }
    },
    mounted(){
@@ -37,7 +49,7 @@ export default {
               .attr("viewBox",[[0,0],[975,610]]); 
             const path = d3.geoPath();
 
-            console.log("making map of ",usa_topojson,svg)
+            //console.log("making map of ",usa_topojson,svg)
             svg.append("g")
                   .attr("class", "states")
                 .selectAll("path")
@@ -52,17 +64,12 @@ export default {
             const brigade_r = 10;
             console.log("updating map with",this.brigades);
 
-            const color3= d3.scaleLinear()
-                .domain([0,1])
-                .range(['#fedd44','#00a175'])
-                .interpolate(d3.interpolateHcl); 
-
             d3.select("#map").select(".brigades")
                 .selectAll("circle") 
                 .data(this.brigades, d => d.name )
                 .join(
                     enter => enter.append("circle")
-                        .attr("r", d => d.projects.length == 0?2:brigade_r)
+                        .attr("r", this.brigade_radius )
                         .attr("transform", d => { 
                             var p = projection(
                                 [d.longitude,d.latitude]
@@ -74,21 +81,14 @@ export default {
                                 return `translate(-100,-100)`; // Sorry PR!
                             }
                         } )
-                        .attr("fill", d => {
-                            if(d.tagged == null){ return "lightgray" };
-                            const p = d.tagged / d.projects.length;
-                            return color3(p);
-                        })
+                        .attr("fill", this.brigade_color )
                         .on("mouseover", d => {
                             const div = d3.select("#tooltip")
                             div.transition().duration(200).style('opacity',.9);
 
-                            div	.html(
-                                `${d.name}` 
-                                + `<br> ${d.projects.length } Projects ` 
-                                + ((d.tagged==null)?"":`<br> ${d.tagged} have topics`)
-                                ).style("left", (d3.event.pageX + brigade_r) + "px")		
-                                .style("top", (d3.event.pageY - brigade_r) + "px");	
+                            div.html( this.brigade_html( d ) )
+                                .style("left", (d3.event.pageX + brigade_r) + "px")		
+                                .style("top", (d3.event.pageY - brigade_r) + "px");
                         })			
                         .on("mouseout", d => {
                             const div = d3.select("#tooltip")
@@ -100,14 +100,37 @@ export default {
                             // TODO load Brigade Detail  
                         }),
                     update => update.attr("name",d => d.name)
-                        .attr("r", d => d.projects.length == 0?2:brigade_r)
-                        .attr("fill", d => {
-                            if(d.tagged == null){ return "lightgray" };
-                            const p = d.tagged / d.projects.length;
-                            return color3(p);
-                        }),
+                        .attr("r", this.brigade_radius )
+                        .attr("fill", this.brigade_color ),
                 )
        },
+       filtered_projects(brigade){
+            var projects = brigade.projects
+            if(this.filter_tag){
+                projects = projects.filter(p => {
+                    return !(p.topics == undefined ||  p.topics.indexOf(this.filter_tag) < 0 )
+                })
+            }
+            return projects;
+       },
+       brigade_radius(brigade){
+           return this.filtered_projects(brigade).length == 0? 2: 10;
+       },
+       brigade_color(brigade){
+            if(brigade.tagged == null){ return "lightgray" };
+            const p = brigade.tagged / brigade.projects.length;
+            return color3(p);
+       },
+       brigade_html(brigade){
+           const projects = this.filtered_projects(brigade)
+            var html = `${brigade.name}` 
+                + `<br> ${brigade.projects.length } Projects ` 
+                + ((brigade.tagged==null)?"":`<br> ${brigade.tagged} have topics`);
+            if( projects.length < brigade.projects.length && this.filter_tag != null){
+                html += `<br>${projects.length} projects tagged with "${this.filter_tag}"`;
+            }
+            return html;
+       }
    }
 }
 </script>

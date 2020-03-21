@@ -19,6 +19,12 @@ export default new Router({
             component: BrigadeMap,
         },
         {
+            path: '/map/:filter_tag', 
+            name: 'topic-map',
+            component: BrigadeMap,
+            props: true,
+        },
+        {
             path: '/leaders', 
             name: 'leaders',
             component: Leaderboard,

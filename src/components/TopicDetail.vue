@@ -4,6 +4,11 @@
         <ul class="list-group" v-for="project in tagged_projects" v-bind:key="project.name">
             <ProjectRow v-bind:project="project" class="list-group-item row" />
         </ul>
+        <div class="row">
+            <div class="col text-center my-2">
+                <router-link class="btn btn-primary" :to="`/map/${topic}`">View "{{ topic }}" on Map</router-link>
+            </div>
+        </div>
     </div>
 </template>
 
