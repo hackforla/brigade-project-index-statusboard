@@ -78,7 +78,15 @@ export default function getProjectIndex(org_type){
                     });
 
                     if(org_type != null){
-                        resolve(orgs.filter( o => org_type.test(o.type) ));
+                        resolve(orgs.filter( o => {
+                            var valid = true;
+                            org_type.forEach( t => {
+                                if(!o.tags.includes(t)){
+                                    valid = false;
+                                }
+                            })
+                            return valid;
+                        }));
                     }else{
                         resolve(orgs);
                     }

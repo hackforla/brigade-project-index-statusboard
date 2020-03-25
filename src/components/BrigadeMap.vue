@@ -6,9 +6,11 @@
             <span class="badge">🛡</span>
             New Achievement Unlocked for Open San Diego!
         </div>
+        <!--
         <div class="text-center"> 
             <router-link v-if="filter_tag" class="btn btn-primary" :to="`/topics/${filter_tag}`">"{{ filter_tag }}" Project List</router-link>
-        </div>
+        </div> 
+        -->
     </div>
 </template>
 
