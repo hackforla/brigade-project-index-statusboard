@@ -28,20 +28,27 @@ app.get('/api/data.json', (req, res ) => {
   const k = 'data.json';
   mc.get(k , (err, val) => { 
     if(err == null && val != null && typeof req.query.nocache === 'undefined' ){ 
-      //console.log("loaded from memcacehd");
+      res.write(val)
+      res.end()
+      console.log("loaded from memcacehd");
+      /* uncomment to retrieve as gzipped bson
       ungzip(val).then( (zval) => {
         const v = bson.deserialize(zval);
         res.json(v.brigades)
-      })
+      }) */
     }else{
       console.log("retrieving new copy");
       getProjectIndex(["Brigade", "Code for America"]).then( result => {
-        const cache_value = bson.serialize({"brigades":result}); // JSON.stringify(result);
-        //console.log("bson cache set for "+cache_value.length + 'bytes');
+        const cache_value = JSON.stringify(result); 
+        mc.set(k, cache_value , {expires: 360}, function(err, val){/* handle error */});
+
+        /* // uncomment to store gzipped and bson'd - takes more memory
+        const cache_value = bson.serialize({"brigades":result}); 
         gzip( cache_value ).then( (zcache_value) => {
-          //console.log("gzipped cache at " + zcache_value.length)
-          mc.set(k, zcache_value , {expires: 360}, function(err, val){/* handle error */});
+          mc.set(k, zcache_value , {expires: 360}, function(err, val){ console.log(err) });
         })
+        */
+
         res.json(result);
       }) 
     }
