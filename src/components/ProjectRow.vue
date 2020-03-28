@@ -3,9 +3,12 @@
         <div>
             <strong><router-link :to="`/brigade/${project.brigade_slug}`">{{ project.brigade }}</router-link>:</strong> {{ project.name }}
         </div>
+        <div class="project-description" v-if="project.description">
+            {{ project.description }}
+        </div>
         <div class="metrics">
             <span class="passed-metric" v-if="project.topics" :title="project.topics">
-                <i class="fa fa-check"></i> GithubTopics
+                <i class="fa fa-check"></i> Github Topics
             </span>
             <span class="passed-metric" v-if="project.description" :title="project.description">
                 <i class="fa fa-check"></i> Github Description
@@ -42,3 +45,10 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .project-description {
+        padding-left: 1.2rem;
+        font-style: italic;
+    }
+</style>
