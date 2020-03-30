@@ -36,6 +36,7 @@
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "toml": "^3.0.0",
+    "vue-gtag": "^1.6.2",
     "webpack": "^4.42.1"
   },
   "devDependencies": {
