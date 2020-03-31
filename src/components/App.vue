@@ -37,7 +37,7 @@ export default {
     created(){
         this.last_check = new Date();
         this.$store.dispatch("load_all");
-        window.setInterval(this.checkForUpdates, 30000); // Check for updates every minute
+        window.setInterval(this.checkForUpdates, 60*1000*10); // Check for updates every 10 minutes
     },
     methods: {
         checkForUpdates() {
