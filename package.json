@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node -r esm server.js",
+    "update-cache": "node -r esm updateCacheTask.js",
     "heroku-postbuild": "webpack -p",
     "watch": "webpack --watch",
     "build": "webpack",
