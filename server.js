@@ -17,7 +17,7 @@ const mc = memjs.Client.create(process.env.MEMCACHIER_SERVERS, {
 })
 
 // Clear on first load
-mc.delete('data.json');
+//mc.delete('data.json');
 
 // We will use Express 
 var app = express();
@@ -40,7 +40,7 @@ app.get('/api/data.json', (req, res ) => {
       console.log("retrieving new copy");
       getProjectIndex(["Brigade", "Code for America"]).then( result => {
         const cache_value = JSON.stringify(result); 
-        mc.set(k, cache_value , {expires: 360}, function(err, val){/* handle error */});
+        mc.set(k, cache_value , {expires: 360*3}, function(err, val){/* handle error */});
 
         /* // uncomment to store gzipped and bson'd - takes more memory
         const cache_value = bson.serialize({"brigades":result}); 

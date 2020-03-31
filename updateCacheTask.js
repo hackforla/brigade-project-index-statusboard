@@ -14,7 +14,7 @@ const k = "data.json"
 function updateIndexCache(){
     getProjectIndex(["Brigade", "Code for America"]).then( result => {
       const cache_value = JSON.stringify(result); 
-      mc.set(k, cache_value , {expires: 360}, function(err, val){/* handle error */});
+      mc.set(k, cache_value , {expires: 360*3}, function(err, val){/* handle error */});
       console.log("setting cache")
       process.exit()
     })
