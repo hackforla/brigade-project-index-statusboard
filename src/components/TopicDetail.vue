@@ -3,7 +3,7 @@
         <h2>Projects tagged with {{ topics }}</h2>
         <BrigadeMap v-bind:filter_topic="topics" />
         <div class="row">
-            <div class="col-sm-12 col-md-3 right mb-2" v-if="topic_list.length > 1">
+            <div class="col-sm-12 col-md-3 right mb-2">
                 <span class="badge badge-primary ml-1 topic-badge" v-for="t in topic_list" v-bind:key="t">{{ t }} <a @click="remove_topic(t)">X</a> </span>
             </div>
             <div class="col-sm-12 col-md-3 right mb-2">
@@ -69,6 +69,7 @@ export default {
         remove_topic(t){
             console.log("Removing ",t)
             const topics = this.topic_list
+            if(topics.length == 1){ return }
             const i = topics.indexOf(t)
             console.log("Splicing",t,i,topics)
             topics.splice(i,1)
