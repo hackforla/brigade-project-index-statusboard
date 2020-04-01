@@ -4,7 +4,7 @@
             <strong><router-link :to="`/brigade/${project.brigade_slug}`">{{ project.brigade }}</router-link>:</strong> {{ project.name }}
         </div>
         <div class="project-description" v-if="project.description">
-            {{ project.description }}
+            {{ project.description }} 
         </div>
         <div class="metrics">
             <span class="passed-metric" v-if="project.topics" :title="project.topics">
@@ -32,6 +32,7 @@
         <div class="links" v-if="project.code_url">
             <strong>Code:</strong> <a v-bind:href="project.code_url">{{ project.code_url }}</a>
         </div>
+        <router-link :to="`/project/${project.brigade_slug}/${project.slug}`" class="badge badge-primary">Improve your project's visibility and impact</router-link>
     </li>
 </template>
 

@@ -3,6 +3,7 @@ import * as _ from "lodash";
 import Vue from 'vue';
 import Vuex from 'vuex'
 import toml from 'toml';
+import slugify from './utils.js';
 
 Vue.use(Vuex);
 
@@ -57,6 +58,9 @@ export default new Vuex.Store({
                 const brigades = response.data;
                 brigades.forEach( b => {
                     b.tagged = b.projects.filter( p => typeof p.topics !== 'undefined' && p.topics.length ).length;
+                    b.projects.forEach( p => {
+                        p.slug = slugify(p.name);
+                    })
                 })
                 //console.log("loaded brigades",brigades);
                 commit('add_brigades', brigades);

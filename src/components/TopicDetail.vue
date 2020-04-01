@@ -1,8 +1,16 @@
 <template>
     <div class="container" id="topics">
-        <h2>Projects tagged with {{ topic }}</h2>
-        <BrigadeMap v-bind:filter_tag="topic" />
-        <ul class="list-group mb-2" v-for="project in tagged_projects" v-bind:key="project.name">
+        <h2>Projects tagged with {{ topics }}</h2>
+        <BrigadeMap v-bind:filter_topic="topics" />
+        <div class="row">
+            <div class="col-sm-12 col-md-3 right mb-2" v-if="topic_list.length > 1">
+                <span class="badge badge-primary ml-1 topic-badge" v-for="t in topic_list" v-bind:key="t">{{ t }} <a @click="remove_topic(t)">X</a> </span>
+            </div>
+            <div class="col-sm-12 col-md-3 right mb-2">
+                <input v-model="new_topic" type="text" placeholder="Filter Additional Topic" /> <button class="btn btn-primary" @click="add_topic">Add</button>
+            </div>
+        </div>
+        <ul class="list-group mb-2" v-for="project in topicged_projects" v-bind:key="project.name">
             <ProjectRow v-bind:project="project" class="list-group-item row" />
         </ul>
         <!--
@@ -18,18 +26,55 @@
 <script>
 import ProjectRow from "./ProjectRow.vue"
 import BrigadeMap from "./BrigadeMap.vue"
+import _ from 'lodash';
 
 export default {
     components: {
         ProjectRow,
         BrigadeMap,
     },
-    props: ['topic'],
+    data(){
+        return {
+            new_topic: null,
+        }
+    },
+    props: ['topics'],
     computed: {
-        tagged_projects(){
+        topic_list(){
+            const topic_list = _.sortBy(this.topics.split(','))
+            return topic_list;
+        },
+        topicged_projects(){
+            const topics = this.topic_list;
             return _.filter(this.$store.getters.projects, p => {
-                return (typeof p.topics !== 'undefined' && p.topics.indexOf( this.topic) >= 0 );
+                if(typeof p.topics === 'undefined'){ return false } 
+                var found = true;
+                topics.forEach( t => {
+                    if( p.topics.indexOf(t) < 0 ){ found = false }
+                })
+                return found;
             })
+        },
+    },
+    methods: {
+        add_topic(){
+            console.log("would add ",this.new_topic)
+            if(this.topic_list.includes(this.new_topic)){
+                return
+            }
+            const new_topics = this.topics + "," + this.new_topic;
+            this.$router.push({ name: 'topic-detail', params: { topics: new_topics } })
+            this.new_topic = ""
+        },
+        remove_topic(t){
+            console.log("Removing ",t)
+            const topics = this.topic_list
+            const i = topics.indexOf(t)
+            console.log("Splicing",t,i,topics)
+            topics.splice(i,1)
+            const new_topics = topics.join(',')
+            console.log("new topics",new_topics)
+            this.$router.push({ name: 'topic-detail', params: { topics: new_topics } })
         }
     }
 }
@@ -41,5 +86,9 @@ export default {
     }
     .other-topics {
         font-style: italic;
+    }
+
+    .topic-badge { 
+        cursor: pointer;
     }
 </style>
