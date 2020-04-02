@@ -1,7 +1,7 @@
 import express from 'express';
 import _ from 'lodash';
 import memjs from 'memjs';
-import getProjectIndex from './api';
+import { getProjectIndex } from './api';
 import * as enforce from 'express-sslify';
 import { BSON } from 'bson';
 import {gzip, ungzip}  from 'node-gzip';
