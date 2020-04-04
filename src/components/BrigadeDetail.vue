@@ -67,10 +67,9 @@ export default {
 #brigade {
   margin-top: 140px;
 }
-.passed-metric {
-  color: #00a175;
-}
+
 .topics {
   font-style: italic;
 }
+
 </style>

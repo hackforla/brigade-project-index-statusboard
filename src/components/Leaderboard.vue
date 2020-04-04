@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm">
                     <span class="passed-metric" v-if="brigade.tagged">
-                        <i class="fa fa-check"></i> GithubTopics
+                        <i class="fa fa-check"></i> Github topics
                     </span>
                     <!--
                     <div class="progress">
