@@ -8,10 +8,10 @@
         </div>
         <div class="metrics">
             <span class="passed-metric" v-if="project.topics" :title="project.topics">
-                <i class="fa fa-check"></i> Github Topics
+                <i class="fa fa-check"></i> Topics
             </span>
             <span class="passed-metric" v-if="project.description" :title="project.description">
-                <i class="fa fa-check"></i> Github Description
+                <i class="fa fa-check"></i> Description
             </span>
             <a v-if="project.git_url" :href="project.code_url">
                 <i class="fa fa-github"></i>

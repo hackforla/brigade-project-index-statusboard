@@ -6,7 +6,7 @@
                 <tr><th>topic</th><th>uses</th></tr>
             </thead>
             <tbody>
-                <tr v-for="t in topic_frequencies" v-bind:key="t">
+                <tr v-for="t in topic_frequencies" v-bind:key="t[0]">
                     <td><router-link :to="`/topics/${t[0]}`">{{ t[0] }}</router-link></td>
                     <td>{{ t[1] }}</td>
                 </tr>

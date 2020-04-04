@@ -11,11 +11,11 @@
                 Loading {{ loading }}
             </div>
         </header>
-        <router-view></router-view>
+        <router-view class="main-router-view"></router-view>
         <div class="leader-link">
             <router-link class="btn btn-primary" to="/">Map</router-link>
             <router-link class="btn btn-primary" to="/leaders">Brigades</router-link>
-            <router-link class="btn btn-primary" to="/topics">Topics</router-link>
+            <router-link class="btn btn-primary" to="/topics">Projects by Topic</router-link>
             <router-link class="btn btn-warning" to="/topics/covid-19">Covid-19 Related Projects</router-link> 
         </div>
     </div>
@@ -63,5 +63,8 @@ export default {
         position: fixed;
         left: 8px;
         bottom: 8px;
+    }
+    .main-router-view {
+        margin-bottom: 80px;
     }
 </style>

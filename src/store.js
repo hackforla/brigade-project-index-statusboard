@@ -12,6 +12,7 @@ export default new Vuex.Store({
         brigades: [],
         last_update: null,
         loading: "brigades",
+        discourse_tags: [],
     },
     getters: {
         brigades: state => {
@@ -48,22 +49,32 @@ export default new Vuex.Store({
         set_loading( state, value ){
             state.loading = value;
             state.last_update = new Date();
+        },
+        add_discourse_tags( state, tags ){
+            state.discourse_tags = tags;
         }
     },
     actions: {
         load_all( {commit, dispatch} ){
             const url = `/api/data.json`;
 
-            axios.get( url ).then( response => {
-                const brigades = response.data;
-                brigades.forEach( b => {
-                    b.tagged = b.projects.filter( p => typeof p.topics !== 'undefined' && p.topics.length ).length;
-                    b.projects.forEach( p => {
-                        p.slug = slugify(p.name);
+            Promise.all( [
+                axios.get( url ).then( response => {
+                    const brigades = response.data;
+                    brigades.forEach( b => {
+                        b.tagged = b.projects.filter( p => typeof p.topics !== 'undefined' && p.topics.length ).length;
+                        b.projects.forEach( p => {
+                            p.slug = slugify(p.name);
+                        })
                     })
+                    //console.log("loaded brigades",brigades);
+                    commit('add_brigades', brigades);
+                }),
+                axios.get( `/api/tags.json` ).then( response => {
+                    const discourse_tags = response.data;
+                    commit('add_discourse_tags', discourse_tags);
                 })
-                //console.log("loaded brigades",brigades);
-                commit('add_brigades', brigades);
+            ]).finally( () => {
                 commit('set_loading',false);
             })
         },
