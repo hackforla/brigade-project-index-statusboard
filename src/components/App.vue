@@ -2,7 +2,7 @@
 
     <div class="content">
         <header>
-            <h1><router-link to="/">Brigade Project Index</router-link></h1>
+            <h1><router-link to="/">Brigade Project Index</router-link> <span class="badge badge-warning" v-if="dev_site">DEV SITE</span></h1>
             <h2>STATUSBOARD</h2>
             <div class="loader" v-if="loading">
                 <div class="spinner-border" role="status">
@@ -32,6 +32,9 @@ export default {
     computed: {
         loading(){
             return this.$store.getters.loading;
+        },
+        dev_site(){
+            return this.$store.getters.is_dev_site;
         }
     },
     created(){

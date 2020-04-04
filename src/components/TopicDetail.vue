@@ -1,6 +1,13 @@
 <template>
     <div class="container" id="topics">
         <h2>Projects tagged with {{ topics }}</h2>
+
+        <div class="row" v-if="discourse_tags">
+            <p v-for="t in topic_list">
+                <a target="_blank" :href="`https://discourse.codeforamerica.org/tag/${t}`">Discourse Topic for {{ t }}</a>
+            </p>
+        </div>
+
         <BrigadeMap v-bind:filter_topic="topics" />
         <div class="row">
             <div class="col-sm-12 col-md-3 right mb-2">
@@ -10,7 +17,7 @@
                 <input v-model="new_topic" type="text" placeholder="Filter Additional Topic" /> <button class="btn btn-primary" @click="add_topic">Add</button>
             </div>
         </div>
-        <ul class="list-group mb-2" v-for="project in topicged_projects" v-bind:key="project.name">
+        <ul class="list-group mb-2" v-for="project in topiced_projects" v-bind:key="project.name">
             <ProjectRow v-bind:project="project" class="list-group-item row" />
         </ul>
         <!--
@@ -44,7 +51,7 @@ export default {
             const topic_list = _.sortBy(this.topics.split(','))
             return topic_list;
         },
-        topicged_projects(){
+        topiced_projects(){
             const topics = this.topic_list;
             return _.filter(this.$store.getters.projects, p => {
                 if(typeof p.topics === 'undefined'){ return false } 
@@ -55,6 +62,15 @@ export default {
                 return found;
             })
         },
+        discourse_tags() {
+            const matching = {}
+            this.$store.getters.discourse_tags.forEach( t => {
+                if(this.topic_list.includes(t.id.toLowerCase())){
+                    matching[t.id.toLowerCase()] = t
+                }
+            })
+            return matching;
+        }
     },
     methods: {
         add_topic(){

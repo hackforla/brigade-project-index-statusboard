@@ -3,11 +3,16 @@
         <h2>Github Tagging Topics</h2>
         <table class="col-sm table">
             <thead>
-                <tr><th>topic</th><th>uses</th></tr>
+                <tr><th>topic</th><th>Discourse</th><th>uses</th></tr>
             </thead>
             <tbody>
                 <tr v-for="t in topic_frequencies" v-bind:key="t[0]">
                     <td><router-link :to="`/topics/${t[0]}`">{{ t[0] }}</router-link></td>
+                    <td>
+                        <div v-if="discourse_tags[t[0]]">
+                            <a target="_blank" :href="`https://discourse.codeforamerica.org/tag/${t[0]}`">on discourse</a>
+                        </div>
+                     </td>
                     <td>{{ t[1] }}</td>
                 </tr>
             </tbody>
@@ -29,6 +34,9 @@ export default {
                 }
             })
             return _.reverse(_.sortBy(_.toPairs(fq),1));
+        },
+        discourse_tags(){
+            return this.$store.getters.discourse_tag_map
         }
     } 
 }

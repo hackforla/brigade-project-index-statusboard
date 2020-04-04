@@ -13,6 +13,7 @@ export default new Vuex.Store({
         last_update: null,
         loading: "brigades",
         discourse_tags: [],
+        is_dev_site: false, // OTOD pass info frorm ENV variables
     },
     getters: {
         brigades: state => {
@@ -41,6 +42,16 @@ export default new Vuex.Store({
         loading: state => {
             return state.loading;
         },
+        discourse_tags: state => {
+            return state.discourse_tags
+        },
+        discourse_tag_map: state => {
+            const map = {}
+            state.discourse_tags.forEach( t => {
+                map[t.id] = t
+            }) 
+            return map
+        }
     },
     mutations: {
         add_brigades( state, brigades ){
@@ -72,7 +83,7 @@ export default new Vuex.Store({
                 }),
                 axios.get( `/api/tags.json` ).then( response => {
                     const discourse_tags = response.data;
-                    commit('add_discourse_tags', discourse_tags);
+                    commit('add_discourse_tags', discourse_tags.tags);
                 })
             ]).finally( () => {
                 commit('set_loading',false);
