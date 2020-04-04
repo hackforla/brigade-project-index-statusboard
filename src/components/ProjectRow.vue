@@ -19,7 +19,7 @@
         </div>
         <div class='other-topics'>
             <span v-for="(t,index) in  other_topics(project.topics)" v-bind:key="index">
-                <strong v-if="index == 0">Other Topics:</strong>
+                <strong v-if="index == 0">Other topics:</strong>
                 <span v-if="index > 0">,</span>
                 <router-link :to="`/topics/${t}`">
                     {{ t }}
@@ -30,7 +30,15 @@
             <strong>Project:</strong> <a v-bind:href="project.link_url">{{ project.link_url }}</a>
         </div>
         <div class="links" v-if="project.code_url">
-            <strong>Code:</strong> <a v-bind:href="project.code_url">{{ project.code_url }}</a>
+             <i class="fa fa-github"></i> <strong>Code:</strong> <a v-bind:href="project.code_url">{{ project.code_url }}</a>
+        </div>
+        <div class="metrics">
+            <span class="passed-metric" v-if="project.topics" :title="project.topics">
+                <i class="fa fa-check"></i> Github topics
+            </span>
+            <span class="passed-metric" v-if="project.description" :title="project.description">
+                <i class="fa fa-check"></i> Github description
+            </span>
         </div>
         <router-link :to="`/project/${project.brigade_slug}/${project.slug}`" class="badge badge-primary">Improve your project's visibility and impact</router-link>
     </li>
@@ -49,7 +57,11 @@ export default {
 
 <style scoped>
     .project-description {
-        padding-left: 1.2rem;
+        margin-top: 0.5em;
         font-style: italic;
+    }
+    
+    .metrics {
+        margin: 10px 0 0 0;
     }
 </style>
