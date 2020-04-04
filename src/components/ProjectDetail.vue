@@ -52,8 +52,8 @@
                         <a href="#" target="_blank">Learn More</a>
                     </p>
                     <p v-else>
-                        Add "intended Audience" or "scope" to a <a :href="publiccode_yml_url" target="_blank">publiccode.yml</a> file, 
-                        or "categories" to a <a :href="civic_json_url" target="_blank">civic.json</a> file in your repo's root folder.
+                        Add "description" to a <a :href="publiccode_yml_url" target="_blank">publiccode.yml</a> file, 
+                        or "description" to a <a :href="civic_json_url" target="_blank">civic.json</a> file in your repo's root folder.
                     </p>
                 </li>
                 <li>
@@ -63,8 +63,8 @@
                         <a href="#" target="_blank">Learn More</a>
                     </p>
                     <p v-else>
-                        Add a "intended Audience" or "scope" to a <a :href="publiccode_yml_url" target="_blank">publiccode.yml</a> file, 
-                        or "categories" to a <a :href="civic_json_url" target="_blank">civic.json</a> file in your repo's root folder.
+                        Add a "landingUrl" to a <a :href="publiccode_yml_url" target="_blank">publiccode.yml</a> file, 
+                        or "homepage" to a <a :href="civic_json_url" target="_blank">civic.json</a> file in your repo's root folder.
                     </p>
                 </li>
                 <li>
