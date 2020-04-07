@@ -1,4 +1,4 @@
-# brigade-project-index statusboard 
+# Brigade Project Index Status Board 
 
 This branch contains a "statusboard" web app that is designed to display ongoing realtime information about each brigade's project-indexing opportunities. 
 
@@ -15,6 +15,5 @@ Once this is in place, you can install / run the app with the standard npm run c
 npm install .
 npm run watch
 ```
-
 
 
