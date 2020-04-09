@@ -3,6 +3,7 @@ import JSZip from 'jszip';
 import _ from 'lodash';
 import toml from 'toml';
 import fs from 'fs';
+import axios from 'axios';
 
 export function getLastUpdate(){
     // TODO Promise of last commit
@@ -12,7 +13,8 @@ function slugify(n){
     return n.toLowerCase().replace(/[^a-zA-Z0-9\-]+/g,"-")
 }
 
-export default function getProjectIndex(org_type){
+export function getProjectIndex(org_type){
+    console.log("getting project index")
     // We will make calls out to Github for the latest index information
     const octokit = Octokit({
         auth: process.env.GITHUB_TOKEN
@@ -101,7 +103,22 @@ export default function getProjectIndex(org_type){
     return promise;
 }
 
-/*
+
+export function getDiscourseTagList(){
+    console.log("getting tag list")
+    const URL = "https://discourse.codeforamerica.org/tags.json";
+    let promise = new Promise( (resolve, reject) => {
+        axios.get(URL).then( response => {
+            resolve(response.data);
+        }).catch( error => {
+            reject(error);
+         });
+    })
+    return promise;
+}
+
+export default function test(){ console.log("test") }
+    /*
 getProjectIndex().then( orgs => {
     console.log(`${orgs.length} promised orgs have been returned!`);
     fs.writeFile( 'out.json', JSON.stringify(orgs), (err) => {

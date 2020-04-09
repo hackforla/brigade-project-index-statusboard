@@ -3,6 +3,7 @@ import * as _ from "lodash";
 import Vue from 'vue';
 import Vuex from 'vuex'
 import toml from 'toml';
+import slugify from './utils.js';
 
 Vue.use(Vuex);
 
@@ -11,6 +12,8 @@ export default new Vuex.Store({
         brigades: [],
         last_update: null,
         loading: "brigades",
+        discourse_tags: [],
+        is_dev_site: false, // OTOD pass info frorm ENV variables
     },
     getters: {
         brigades: state => {
@@ -39,6 +42,16 @@ export default new Vuex.Store({
         loading: state => {
             return state.loading;
         },
+        discourse_tags: state => {
+            return state.discourse_tags
+        },
+        discourse_tag_map: state => {
+            const map = {}
+            state.discourse_tags.forEach( t => {
+                map[t.id] = t
+            }) 
+            return map
+        }
     },
     mutations: {
         add_brigades( state, brigades ){
@@ -47,19 +60,32 @@ export default new Vuex.Store({
         set_loading( state, value ){
             state.loading = value;
             state.last_update = new Date();
+        },
+        add_discourse_tags( state, tags ){
+            state.discourse_tags = tags;
         }
     },
     actions: {
         load_all( {commit, dispatch} ){
             const url = `/api/data.json`;
 
-            axios.get( url ).then( response => {
-                const brigades = response.data;
-                brigades.forEach( b => {
-                    b.tagged = b.projects.filter( p => typeof p.topics !== 'undefined' && p.topics.length ).length;
+            Promise.all( [
+                axios.get( url ).then( response => {
+                    const brigades = response.data;
+                    brigades.forEach( b => {
+                        b.tagged = b.projects.filter( p => typeof p.topics !== 'undefined' && p.topics.length ).length;
+                        b.projects.forEach( p => {
+                            p.slug = slugify(p.name);
+                        })
+                    })
+                    //console.log("loaded brigades",brigades);
+                    commit('add_brigades', brigades);
+                }),
+                axios.get( `/api/tags.json` ).then( response => {
+                    const discourse_tags = response.data;
+                    commit('add_discourse_tags', discourse_tags.tags);
                 })
-                //console.log("loaded brigades",brigades);
-                commit('add_brigades', brigades);
+            ]).finally( () => {
                 commit('set_loading',false);
             })
         },

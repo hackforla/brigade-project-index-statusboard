@@ -3,7 +3,7 @@
     <div class="content">
         <header>
             <h1><router-link to="/">Brigade Project Index</router-link></h1>
-            <h2>STATUSBOARD</h2>
+            <h2>status board</h2>
             <div class="loader" v-if="loading">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">loading...</span>
@@ -11,11 +11,11 @@
                 Loading {{ loading }}
             </div>
         </header>
-        <router-view></router-view>
+        <router-view class="main-router-view"></router-view>
         <div class="leader-link">
             <router-link class="btn btn-primary" to="/">Map</router-link>
             <router-link class="btn btn-primary" to="/leaders">Brigades</router-link>
-            <router-link class="btn btn-primary" to="/topics">Topics</router-link>
+            <router-link class="btn btn-primary" to="/topics">Projects by Topic</router-link>
             <router-link class="btn btn-warning" to="/topics/covid-19">Covid-19 Related Projects</router-link> 
         </div>
     </div>
@@ -32,12 +32,15 @@ export default {
     computed: {
         loading(){
             return this.$store.getters.loading;
+        },
+        dev_site(){
+            return this.$store.getters.is_dev_site;
         }
     },
     created(){
         this.last_check = new Date();
         this.$store.dispatch("load_all");
-        window.setInterval(this.checkForUpdates, 30000); // Check for updates every minute
+        window.setInterval(this.checkForUpdates, 60*1000*10); // Check for updates every 10 minutes
     },
     methods: {
         checkForUpdates() {
@@ -63,5 +66,8 @@ export default {
         position: fixed;
         left: 8px;
         bottom: 8px;
+    }
+    .main-router-view {
+        margin-bottom: 80px;
     }
 </style>

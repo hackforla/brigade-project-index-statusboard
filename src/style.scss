@@ -4,12 +4,33 @@ body {
     background-color: white;
 }
 
-h1,h2 {
-    color:  #cf1b41;
+h1, h2, a {
+    color:  #007bff;
+}
+
+h1, h2 {
     font-family: "Interstate", "Gotham A", "Gotham B", "Open Sans Regular", "Verdana", "Helvetica", "Arial";
     font-weight: 700;
     text-transform: uppercase;
 }
-a{
-    color:  #cf1b41;
+
+.list-group-item {
+    margin-bottom: 8px;
+}
+
+span.passed-metric {
+    background: #53d775;
+    color: white;
+    border-radius: 6px;
+    padding: 5px 7px 5px 7px;
+    margin: 0px;
+    margin-right: 0px;
+    font-size: 0.7em;
+    margin-right: 10px;
+}
+
+#leaders span.passed-metric {
+	font-size: 0.6em;
+	margin-top:10px;
+	display:inline-block;
 }
