@@ -3,7 +3,7 @@
     <div class="content">
         <header>
             <h1><router-link to="/">Brigade Project Index</router-link></h1>
-            <h2>STATUSBOARD</h2>
+            <h2>status board</h2>
             <div class="loader" v-if="loading">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">loading...</span>
