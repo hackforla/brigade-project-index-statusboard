@@ -47,6 +47,7 @@ export default new Vuex.Store({
         },
         discourse_tag_map: state => {
             const map = {}
+            if( state.discourse_tags == undefined) { return {} }
             state.discourse_tags.forEach( t => {
                 map[t.id] = t
             }) 
