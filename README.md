@@ -16,5 +16,13 @@ npm install .
 npm run watch
 ```
 
+To load the discourse tags, you need to run the separate npm task update-cache:
+
+```
+npm run update-cache
+```
+
+This builds both the projectIndex cache and tags cache (data.json and tags.json respectively), and in deployment is run on a scheduler every 10 min.
+
 
 
