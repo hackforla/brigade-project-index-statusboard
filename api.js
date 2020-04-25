@@ -1,4 +1,4 @@
-import Octokit from '@octokit/rest';
+import { Octokit } from '@octokit/rest';
 import JSZip from 'jszip';
 import _ from 'lodash';
 import toml from 'toml';
