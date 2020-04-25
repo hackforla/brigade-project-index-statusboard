@@ -5,7 +5,7 @@ This branch contains a "statusboard" web app that is designed to display ongoing
  
 ## Running It Locally
 
-At this point you need to download and unzip the [index branch](https://github.com/codeforamerica/brigade-project-index/archive/index.zip) into a "./dist/data" folder.
+At this point you need to download and unzip the [index branch](https://github.com/codeforamerica/brigade-project-index/tree/index/v1) into a "./dist/data" folder.
 
 You will also need [memcached](https://github.com/memcachier/memjs#ubuntu) running for the [MemJS](https://github.com/memcachier/memjs) dependency.
 
