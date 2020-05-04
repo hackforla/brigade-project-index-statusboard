@@ -116,8 +116,15 @@ export function getDiscourseTagList(){
     return promise;
 }
 
+// index project subcategories
+// https://discourse.codeforamerica.org/categories.json  -> projects.subcategory_ids => 30 (e.g. courbot)
+// https://discourse.codeforamerica.org/c/30/show.json => slug
+// translates into  https://discourse.codeforamerica.org/c/projects/courtbot/30
+// found via https://meta.discourse.org/t/how-do-i-get-subcategory-by-id-using-discourse-api/137790  
+// and digging in the json
+
 export default function test(){ console.log("test") }
-    /*
+/*
 getProjectIndex().then( orgs => {
     console.log(`${orgs.length} promised orgs have been returned!`);
     fs.writeFile( 'out.json', JSON.stringify(orgs), (err) => {

@@ -11,7 +11,7 @@
             <span v-for="(t,index) in  other_topics(project.topics)" v-bind:key="index">
                 <strong v-if="index == 0">Other topics:</strong>
                 <span v-if="index > 0">,</span>
-                <router-link :to="`/topics/${t}`">
+                <router-link :to="`/topics/${normalize(t)}`">
                     {{ t }}
                 </router-link>
             </span>
@@ -35,11 +35,16 @@
 </template>
 
 <script>
+import slugify from '../utils.js'
+
 export default {
     props: ['project'] ,
     methods: {
         other_topics(topics){
             return _.filter(topics, t => t != this.topic);
+        },
+        normalize(topic) {
+            return slugify(topic)
         }
     }
 }

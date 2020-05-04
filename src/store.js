@@ -28,8 +28,8 @@ export default new Vuex.Store({
             state.brigades.forEach( br => {
                 if(br.projects){
                     br.projects.forEach( prj => {
-                        if(typeof prj.topics !== 'undefined') {
-                            topics.push( ...prj.topics );
+                        if(typeof prj.normalized_topics.length ) {
+                            topics.push( ...prj.normalized_topics );
                         }
                     });
                 }
@@ -47,9 +47,9 @@ export default new Vuex.Store({
         },
         discourse_tag_map: state => {
             const map = {}
-            if( state.discourse_tags == undefined) { return {} }
+            if( !state.discourse_tags ) { return {} }
             state.discourse_tags.forEach( t => {
-                map[t.id] = t
+                map[slugify(t.id)] = t
             }) 
             return map
         }
@@ -77,6 +77,15 @@ export default new Vuex.Store({
                         b.tagged = b.projects.filter( p => typeof p.topics !== 'undefined' && p.topics.length ).length;
                         b.projects.forEach( p => {
                             p.slug = slugify(p.name);
+                            p.normalized_topics = []
+                            if( p.topics ){
+                                p.topics.forEach( t => {
+                                    const nt = t.toLowerCase().replace(/\-/g,"");
+                                    if( ! p.normalized_topics.includes(t) ){
+                                        p.normalized_topics.push( nt )
+                                    }
+                                })
+                            }
                         })
                     })
                     //console.log("loaded brigades",brigades);

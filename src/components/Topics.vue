@@ -1,6 +1,7 @@
 <template>
     <div class="container" id="topics">
-        <h1>Github Tagging Topics</h1>
+        <h2>Topics by Usage</h2>
+        <p>Topics have been normalized to be case insensitive and ignore dashes</p>
         <table class="col-sm table">
             <thead>
                 <tr><th>topic</th><th>Discourse</th><th>uses</th></tr>
@@ -17,6 +18,7 @@
                 </tr>
             </tbody>
         </table>
+        <p class="col-sm"><sup>1</sup>Topics are normalized case-insensitive and by removing dashes to consolidate</p>
     </div>
 </template>
 
