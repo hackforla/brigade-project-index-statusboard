@@ -14,7 +14,7 @@
                 <router-link to="/topics">Topics</router-link>
             </li>
             <li>
-                <router-link to="/topics/covid-19">Covid-19 Related Projects</router-link>
+                <router-link to="/topics/covid19">Covid-19 Related Projects</router-link>
             </li>
         </ul>
     </nav>
