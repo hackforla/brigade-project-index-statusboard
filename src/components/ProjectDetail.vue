@@ -2,9 +2,9 @@
     <div class="container" v-if="project">
         <h1 class="text-center">{{ project.name }}</h1>
         <div class="row">
-            <h3 class="col-sm-12">
+            <h2 class="col-sm-12">
                 <router-link :to="`/brigade/${project.brigade_slug}`">{{ project.brigade }}</router-link>
-            </h3>
+            </h2>
             <p class="col-sm-12 project-description" v-if="project.description">
                 {{ project.description }}
             </p>
@@ -160,7 +160,7 @@ export default {
 
 <style scoped>
     .container {
-        margin-top: 140px;
+        /* margin-top: 140px; */
     }
     .project-description {
         padding-left: 1.2rem;

@@ -1,12 +1,12 @@
 <template>
     <div>
-        <h2>status board</h2>
+        <h1>Status board</h1>
         <div id="tooltip"></div>
         <svg id="map" />
-        <div id="announce">
+        <!-- <div id="announce">
             <span class="badge">🛡</span>
             New Achievement Unlocked for Open San Diego!
-        </div>
+        </div> -->
         <!--
         <div class="text-center"> 
             <router-link v-if="filter_tag" class="btn btn-primary" :to="`/topics/${filter_tag}`">"{{ filter_tag }}" Project List</router-link>
@@ -174,7 +174,6 @@ export default {
 
 <style>
 #map {
-    width: 75%;
     display: block;
     margin: 100px auto;
 }
