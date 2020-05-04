@@ -158,9 +158,6 @@ export default {
 </script>
 
 <style scoped>
-    .container {
-        /* margin-top: 140px; */
-    }
     .project-description {
         padding-left: 1.2rem;
         font-style: italic;

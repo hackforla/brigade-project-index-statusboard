@@ -175,7 +175,6 @@ export default {
 <style>
 #map {
     display: block;
-    margin: 100px auto;
 }
 .states path {
     fill: #399fd3;

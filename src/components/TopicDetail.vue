@@ -98,9 +98,6 @@ export default {
 </script>
 
 <style scoped>
-    #topics {
-        margin-top: 140px;
-    }
     .other-topics {
         font-style: italic;
     }

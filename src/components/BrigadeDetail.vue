@@ -64,10 +64,6 @@ export default {
 </script>
 
 <style scoped>
-#brigade {
-  margin-top: 140px;
-}
-
 .topics {
   font-style: italic;
 }
