@@ -33,12 +33,13 @@ nav {
     padding: 1rem 1rem 0 1rem;
     display: flex;
     justify-content: space-between;
-    border-bottom: 2px solid #007bff;
+    border-bottom: 0.5rem solid #ae0518;
     background-color: white;
 }
 nav .home {
     width: fit-content;
     vertical-align: baseline;
+    font-size: 1.5rem;
 }
 nav ul {
     list-style: none;

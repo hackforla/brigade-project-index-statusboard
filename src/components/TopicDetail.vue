@@ -1,6 +1,6 @@
 <template>
     <div class="container" id="topics">
-        <h2>Projects tagged with {{ topics }}</h2>
+        <h1>Projects tagged with {{ topics }}</h1>
 
         <div class="row" v-if="discourse_tags">
             <p v-for="t in topic_list">

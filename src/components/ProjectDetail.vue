@@ -18,7 +18,7 @@
 
         <div class="row mt-3">
             <div class="col-sm">
-                <h4>How to Improve your Project's Visibility</h4>
+                <h2>How to Improve your Project's Visibility</h2>
 
                 <p>
                     The following guidelines will help you improve your projects "meta data" to increase visibility for potential
@@ -32,7 +32,6 @@
 
 
         <div class="row mt-3">
-            <h4 class="col-sm-12">Ways to Project's Visibility</h4>
             <ul class="col-sm">
                 <li>
                     <strong>Add Topics / Tags</strong> <i v-if="project.topics" class="fa fa-check"></i>  
