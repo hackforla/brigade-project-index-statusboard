@@ -1,6 +1,6 @@
 <template>
     <div class="container" id="topics">
-        <h2>Github Tagging Topics</h2>
+        <h1>Github Tagging Topics</h1>
         <table class="col-sm table">
             <thead>
                 <tr><th>topic</th><th>Discourse</th><th>uses</th></tr>
@@ -43,7 +43,4 @@ export default {
 </script>
 
 <style scoped>
-    #topics {
-        margin-top: 140px;
-    }
 </style>

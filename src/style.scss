@@ -4,8 +4,17 @@ body {
     background-color: white;
 }
 
+main {
+    width: 70%;
+    margin: 1rem 15% 0;
+
+    h1 {
+        margin-bottom: 0.5rem;
+    }
+}
+
 h1, h2, a {
-    color:  #007bff;
+    color: #0d77ac;
 }
 
 h1, h2 {
