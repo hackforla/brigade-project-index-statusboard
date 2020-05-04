@@ -17,7 +17,7 @@
 
 <script>
 import _ from "lodash";
-import usa_topojson from "us-atlas/states-albers-10m.json";
+import usa_topojson from "us-atlas/states-10m.json";
 import * as d3 from "d3";
 import * as topojson from "topojson";
 import * as d3_composite from "d3-composite-projections";
@@ -54,9 +54,12 @@ export default {
                 [0, 0],
                 [975, 610]
             ]);
-            const path = d3.geoPath();
+            const projection = this.get_projection();
+            const path = d3.geoPath().projection(projection);
 
+            //projection.getCompositionBorders())
             //console.log("making map of ",usa_topojson,svg)
+
             svg.append("g")
                 .attr("class", "states")
                 .selectAll("path")
@@ -71,9 +74,7 @@ export default {
             svg.append("g").attr("class", "brigades");
         },
         updateMap() {
-            const projection = d3_composite.geoAlbersUsaTerritories()
-                .scale(1280)
-                .translate([975 / 2, 610 / 2]);
+            const projection = this.get_projection();
             const brigade_r = 10;
             console.log("updating map with", this.brigades);
 
@@ -167,7 +168,12 @@ export default {
                 html += `<br>${projects.length} projects tagged with "${this.filter_tag}"`;
             }
             return html;
-        }
+       },
+       get_projection(){
+            return d3_composite.geoAlbersUsaTerritories()
+                .scale(1280)
+                .translate([975 / 2, 610 / 2]);
+       }
     }
 };
 </script>
