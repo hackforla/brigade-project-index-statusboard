@@ -20,6 +20,7 @@ import _ from "lodash";
 import usa_topojson from "us-atlas/states-albers-10m.json";
 import * as d3 from "d3";
 import * as topojson from "topojson";
+import * as d3_composite from "d3-composite-projections";
 
 const color3 = d3
     .scaleLinear()
@@ -70,8 +71,7 @@ export default {
             svg.append("g").attr("class", "brigades");
         },
         updateMap() {
-            const projection = d3
-                .geoAlbersUsa()
+            const projection = d3_composite.geoAlbersUsaTerritories()
                 .scale(1280)
                 .translate([975 / 2, 610 / 2]);
             const brigade_r = 10;
