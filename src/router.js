@@ -68,5 +68,8 @@ export default new Router({
                 store.dispatch("load_all").then(next)
             } 
         }
-    ]
+    ],
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 });
