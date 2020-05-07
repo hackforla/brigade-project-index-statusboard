@@ -10,10 +10,12 @@
                 </div>
                 Loading {{ loading }}
             </div>
+            <FilterControl></FilterControl>
         </header>
         <router-view class="main-router-view"></router-view>
         <div class="leader-link">
-            <router-link class="btn btn-primary" to="/">Map</router-link>
+            <router-link class="btn btn-primary" to="/by-loc">Projects by Location</router-link>
+            <router-link class="btn btn-primary" to="/map">Map</router-link>
             <router-link class="btn btn-primary" to="/leaders">Brigades</router-link>
             <router-link class="btn btn-primary" to="/topics">Projects by Topic</router-link>
             <router-link class="btn btn-warning" to="/topics/covid-19">Covid-19 Related Projects</router-link> 
@@ -22,11 +24,15 @@
 </template>
 
 <script>
+import FilterControl from './FilterControl.vue';
+
 export default {
+    components: {
+        FilterControl
+    },
     data() {
         return {
             last_check: null,
-            map_filter_topic: "covid-19",
         };
     },
     computed: {
@@ -46,10 +52,6 @@ export default {
         checkForUpdates() {
             this.$store.dispatch("check_for_updates", this.last_check);
             this.last_check = new Date();
-        },
-        filter_map(topic){
-            console.log("filtering map by" ,topic)
-            this.map_filter_topic = topic;
         }
     }
 }

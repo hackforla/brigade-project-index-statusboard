@@ -3,7 +3,7 @@
         <h2>Projects tagged with {{ topics }}</h2>
 
         <div class="row" v-if="discourse_tags">
-            <p v-for="t in topic_list">
+            <p v-for="t in topic_list" v-bind:key="t">
                 <a target="_blank" :href="`https://discourse.codeforamerica.org/tag/${t}`">Discourse Topic for {{ t }}</a>
             </p>
         </div>

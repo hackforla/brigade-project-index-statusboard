@@ -19,14 +19,23 @@ import _ from 'lodash';
 import usa_topojson from 'us-atlas/states-albers-10m.json';
 import * as d3 from 'd3';
 import * as topojson from 'topojson';
+import cfaColors from '../cfa_colors';
 
 const color3= d3.scaleLinear()
     .domain([0,1])
-    .range(['#fedd44','#00a175'])
+    .range([cfaColors.lightGray,cfaColors.red])
     .interpolate(d3.interpolateHcl); 
 
 export default {
    props: ["filter_tag"],
+   data: function () {
+       const viewBoxSize = [975, 610];
+       return {
+           viewBoxSize,
+           scalingFactor: 1280,
+           translation: viewBoxSize.map(s => s/2)
+       }
+   },
    computed: {
        brigades(){
            return this.$store.getters.brigades;
@@ -48,7 +57,7 @@ export default {
    methods: {
        createMap(){
             const svg = d3.select("#map")
-              .attr("viewBox",[[0,0],[975,610]]); 
+              .attr("viewBox",[[0,0],this.viewBoxSize]); 
             const path = d3.geoPath();
 
             //console.log("making map of ",usa_topojson,svg)
@@ -62,7 +71,9 @@ export default {
               svg.append("g").attr("class","brigades");
        },
        updateMap(){
-            const projection = d3.geoAlbersUsa().scale(1280).translate([975/2, 610/2])
+            const projection = d3.geoAlbersUsa()
+                .scale(this.scalingFactor)
+                .translate(this.translation)
             const brigade_r = 10;
             console.log("updating map with",this.brigades);
 
@@ -71,21 +82,21 @@ export default {
                 .data(this.brigades, d => d.name )
                 .join(
                     enter => enter.append("circle")
-                        .attr("r", this.brigade_radius )
+                        .attr("r", this.brigade_radius)
                         .attr("transform", d => { 
                             var p = projection(
                                 [d.longitude,d.latitude]
                             ); 
                             if(p){
-                                return `translate( ${p[0]},${p[1]})`;
+                                return `translate(${p[0]},${p[1]})`;
                             }else{
                                 console.log("unable to place",d.name,d)
                                 return `translate(-100,-100)`; // Sorry PR!
                             }
-                        } )
-                        .attr("fill", this.brigade_color )
+                        })
+                        .attr("fill", this.brigade_color)
                         .on("mouseover", d => {
-                            const div = d3.select("#tooltip")
+                            const div = d3.select("#tooltip");
                             div.transition().duration(200).style('opacity',.9);
 
                             div.html( this.brigade_html( d ) )
@@ -115,13 +126,16 @@ export default {
             }
             return projects;
        },
+       has_projects(brigade){
+           return this.filtered_projects(brigade).length == 0;
+       },
        brigade_radius(brigade){
-           return this.filtered_projects(brigade).length == 0? 2: 10;
+           return this.has_projects(brigade) ? 6 : 10;
        },
        brigade_color(brigade){
-            if(brigade.tagged == null){ return "lightgray" };
-            const p = brigade.tagged / brigade.projects.length;
-            return color3(p);
+            if(this.has_projects(brigade)){ return "lightgray" };
+            // const p = brigade.tagged / brigade.projects.length;
+            return color3(1.0);
        },
        brigade_html(brigade){
            const projects = this.filtered_projects(brigade)
@@ -150,7 +164,7 @@ export default {
 }
 
 .brigades circle {
-    stroke: #444444;
+    stroke: #e5e5e5;
     stroke-width: 1px;
     cursor: pointer;
     transition: r 200ms, fill 200ms;
@@ -167,7 +181,6 @@ export default {
     opacity: 0;
     pointer-events: none;
 }
-
 #announce {
     position: absolute;
     width: 50%;
@@ -187,5 +200,4 @@ export default {
     font-size: 100px; 
     vertical-align: middle;
 }
-
 </style>

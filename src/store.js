@@ -13,6 +13,8 @@ export default new Vuex.Store({
         last_update: null,
         loading: "brigades",
         discourse_tags: [],
+        location_filters: [],
+        topic_filters: [],
         is_dev_site: false, // OTOD pass info frorm ENV variables
     },
     getters: {
@@ -52,6 +54,18 @@ export default new Vuex.Store({
                 map[t.id] = t
             }) 
             return map
+        },
+        filters: state => {
+            return {
+                locations: state.location_filters,
+                topics: state.topic_filters
+            }
+        },
+        location_filters: state => {
+            return state.location_filters;
+        },
+        topic_filters: state => {
+            return state.topic_filters;
         }
     },
     mutations: {
@@ -64,6 +78,14 @@ export default new Vuex.Store({
         },
         add_discourse_tags( state, tags ){
             state.discourse_tags = tags;
+        },
+        set_filters(state, locations, topics) {
+            if (locations) {
+                state.location_filters = locations;
+            }
+            if (topics) {
+                state.topic_filters = topics;
+            }
         }
     },
     actions: {
@@ -90,9 +112,21 @@ export default new Vuex.Store({
                 commit('set_loading',false);
             })
         },
-       check_for_updates({commit, state, dispatch}, last_check) {
+        check_for_updates({commit, state, dispatch}, last_check) {
             console.log("TODO check for updates given last check was at ",last_check);
             dispatch("load_all");
         },
+        update_filters({ commit }, locations, topics) {
+            console.log("Updating filters:", locations, topics);
+            commit('set_filters', locations, topics);
+        },
+        update_location_filters({ commit }, locations) {
+            console.log("Updating location filters:", locations);
+            commit('set_filters', locations, null);
+        },
+        update_topic_filters({ commit }, topics) {
+            console.log("Updating topic filters:", topics);
+            commit('set_filters', null, topics);
+        }
     },
 });

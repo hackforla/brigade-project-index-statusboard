@@ -2,6 +2,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store.js';
+import ByLocation from './components/ByLocation.vue';
 import BrigadeMap from './components/BrigadeMap.vue';
 import Leaderboard from './components/Leaderboard.vue';
 import BrigadeDetail from './components/BrigadeDetail.vue';
@@ -15,7 +16,17 @@ Vue.use(Router)
 export default new Router({
     routes: [
         {
-            path: '/', 
+            path: '/',
+            redirect: '/map'
+        },
+        {
+            path: '/by-loc',
+            name: 'by-location',
+            component: ByLocation,
+            props: true,
+        },
+        {
+            path: '/map', 
             name: 'overview',
             component: BrigadeMap,
         },
