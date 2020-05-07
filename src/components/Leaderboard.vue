@@ -1,6 +1,6 @@
 <template>
     <div class="container" id="leaders">
-        <h2>Brigade List</h2>
+        <h1>Brigade List</h1>
         <ul class="list-group" v-for="brigade in leaders" v-bind:key="brigade.name">
             <li class="list-group-item row">
                 <div class="col-sm">
@@ -52,7 +52,4 @@ export default {
 </script>
 
 <style scoped>
-    #leaders {
-        margin-top: 140px;
-    }
 </style>
