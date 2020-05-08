@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store.js';
-import ByLocation from './components/ByLocation.vue';
+import ProjectFinder from './components/ProjectFinder.vue';
 import BrigadeMap from './components/BrigadeMap.vue';
 import Leaderboard from './components/Leaderboard.vue';
 import BrigadeDetail from './components/BrigadeDetail.vue';
@@ -17,13 +17,16 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/map'
+            redirect: '/projects'
         },
         {
-            path: '/by-loc',
-            name: 'by-location',
-            component: ByLocation,
+            path: '/projects',
+            name: 'projects',
+            component: ProjectFinder,
             props: true,
+            beforeEnter: (to, from, next) => {
+                store.dispatch("load_all").then(next)
+            } 
         },
         {
             path: '/map', 
@@ -79,5 +82,8 @@ export default new Router({
                 store.dispatch("load_all").then(next)
             } 
         }
-    ]
+    ],
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 });

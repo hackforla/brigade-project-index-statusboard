@@ -13,8 +13,7 @@ export default new Vuex.Store({
         last_update: null,
         loading: "brigades",
         discourse_tags: [],
-        location_filters: [],
-        topic_filters: [],
+        filters: [],
         is_dev_site: false, // OTOD pass info frorm ENV variables
     },
     getters: {
@@ -30,8 +29,8 @@ export default new Vuex.Store({
             state.brigades.forEach( br => {
                 if(br.projects){
                     br.projects.forEach( prj => {
-                        if(typeof prj.topics !== 'undefined') {
-                            topics.push( ...prj.topics );
+                        if(typeof prj.normalized_topics.length ) {
+                            topics.push( ...prj.normalized_topics );
                         }
                     });
                 }
@@ -49,23 +48,14 @@ export default new Vuex.Store({
         },
         discourse_tag_map: state => {
             const map = {}
-            if( state.discourse_tags == undefined) { return {} }
+            if( !state.discourse_tags ) { return {} }
             state.discourse_tags.forEach( t => {
-                map[t.id] = t
+                map[slugify(t.id)] = t
             }) 
             return map
         },
         filters: state => {
-            return {
-                locations: state.location_filters,
-                topics: state.topic_filters
-            }
-        },
-        location_filters: state => {
-            return state.location_filters;
-        },
-        topic_filters: state => {
-            return state.topic_filters;
+            return state.filters
         }
     },
     mutations: {
@@ -79,13 +69,8 @@ export default new Vuex.Store({
         add_discourse_tags( state, tags ){
             state.discourse_tags = tags;
         },
-        set_filters(state, locations, topics) {
-            if (locations) {
-                state.location_filters = locations;
-            }
-            if (topics) {
-                state.topic_filters = topics;
-            }
+        set_filters(state, filters) {
+            state.filters = filters;
         }
     },
     actions: {
@@ -99,6 +84,15 @@ export default new Vuex.Store({
                         b.tagged = b.projects.filter( p => typeof p.topics !== 'undefined' && p.topics.length ).length;
                         b.projects.forEach( p => {
                             p.slug = slugify(p.name);
+                            p.normalized_topics = []
+                            if( p.topics ){
+                                p.topics.forEach( t => {
+                                    const nt = t.toLowerCase().replace(/\-/g,"");
+                                    if( ! p.normalized_topics.includes(t) ){
+                                        p.normalized_topics.push( nt )
+                                    }
+                                })
+                            }
                         })
                     })
                     //console.log("loaded brigades",brigades);
@@ -116,17 +110,9 @@ export default new Vuex.Store({
             console.log("TODO check for updates given last check was at ",last_check);
             dispatch("load_all");
         },
-        update_filters({ commit }, locations, topics) {
-            console.log("Updating filters:", locations, topics);
-            commit('set_filters', locations, topics);
-        },
-        update_location_filters({ commit }, locations) {
-            console.log("Updating location filters:", locations);
-            commit('set_filters', locations, null);
-        },
-        update_topic_filters({ commit }, topics) {
-            console.log("Updating topic filters:", topics);
-            commit('set_filters', null, topics);
+        update_filters({ commit }, filters) {
+            console.log("Updating filters:", filters);
+            commit('set_filters', filters);
         }
     },
 });

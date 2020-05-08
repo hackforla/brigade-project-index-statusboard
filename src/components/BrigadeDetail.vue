@@ -1,6 +1,6 @@
 <template>
   <div class="container" id="brigade">
-    <h2>{{ brigade.name }}</h2>
+    <h1>{{ brigade.name }}</h1>
 
     <dl>
       <dt>City</dt>
@@ -19,7 +19,7 @@
 
     <div class="row mb-3">
       <div class="col-sm">
-        <h5>Github Topic Coverage</h5>
+        <h2>Github Topic Coverage</h2>
         <!--
         <div class="progress">
           <div
@@ -64,10 +64,6 @@ export default {
 </script>
 
 <style scoped>
-#brigade {
-  margin-top: 140px;
-}
-
 .topics {
   font-style: italic;
 }

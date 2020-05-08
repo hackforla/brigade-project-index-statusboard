@@ -1,6 +1,6 @@
 <template>
     <div class="container" id="topics">
-        <h2>Projects tagged with {{ topics }}</h2>
+        <h1>Projects tagged with {{ topics }}</h1>
 
         <div class="row" v-if="discourse_tags">
             <p v-for="t in topic_list" v-bind:key="t">
@@ -34,6 +34,7 @@
 import ProjectRow from "./ProjectRow.vue"
 import BrigadeMap from "./BrigadeMap.vue"
 import _ from 'lodash';
+import slugify from '../utils.js'
 
 export default {
     components: {
@@ -54,16 +55,18 @@ export default {
         topiced_projects(){
             const topics = this.topic_list;
             return _.filter(this.$store.getters.projects, p => {
-                if(typeof p.topics === 'undefined'){ return false } 
+                if(p.normalized_topics.length == 0){ return false } 
                 var found = true;
                 topics.forEach( t => {
-                    if( p.topics.indexOf(t) < 0 ){ found = false }
+                    if( p.normalized_topics.indexOf(t) < 0 ){ found = false }
                 })
                 return found;
             })
         },
         discourse_tags() {
             const matching = {}
+            if( ! this.$store.getters.discourse_tags ){ return {} }
+
             this.$store.getters.discourse_tags.forEach( t => {
                 if(this.topic_list.includes(t.id.toLowerCase())){
                     matching[t.id.toLowerCase()] = t
@@ -75,10 +78,11 @@ export default {
     methods: {
         add_topic(){
             console.log("would add ",this.new_topic)
-            if(this.topic_list.includes(this.new_topic)){
+            const new_topic = slugify(this.new_topic);
+            if(this.topic_list.includes(new_topic)){
                 return
             }
-            const new_topics = this.topics + "," + this.new_topic;
+            const new_topics = this.topics + "," + new_topic;
             this.$router.push({ name: 'topic-detail', params: { topics: new_topics } })
             this.new_topic = ""
         },
@@ -98,9 +102,6 @@ export default {
 </script>
 
 <style scoped>
-    #topics {
-        margin-top: 140px;
-    }
     .other-topics {
         font-style: italic;
     }
