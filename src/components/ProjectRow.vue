@@ -1,8 +1,14 @@
 <template>
     <li>
         <div>
-            <strong><router-link :to="`/brigade/${project.brigade_slug}`">{{ project.brigade }}</router-link>:</strong> <router-link :to="`/project/${project.brigade_slug}/${project.slug}`">{{project.name}}</router-link>
-
+            <strong>
+                <router-link :to="`/brigade/${project.brigade_slug}`">{{
+                    project.brigade
+                }}</router-link>:
+            </strong>
+            <router-link :to="`/project/${project.brigade_slug}/${project.slug}`">{{
+                project.name
+            }}</router-link>
         </div>
         <div class="project-description" v-if="project.description">
             {{ project.description }} 
@@ -41,6 +47,7 @@ export default {
     props: ['project'] ,
     methods: {
         other_topics(topics){
+            if (!this.topic) { return topics; }
             return _.filter(topics, t => t != this.topic);
         },
         normalize(topic) {

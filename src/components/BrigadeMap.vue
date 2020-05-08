@@ -43,6 +43,9 @@ export default {
     computed: {
         brigades() {
             return this.$store.getters.brigades;
+        },
+        filters() {
+            return this.$store.getters.filters;
         }
     },
     watch: {
@@ -51,6 +54,10 @@ export default {
             // TODO update map
         },
         filter_tag: function(newVal, oldVal) {
+            this.updateMap();
+        },
+        filters: function(newVal, oldVal) {
+            console.log('Updating map because filters changed...')
             this.updateMap();
         }
     },
@@ -143,13 +150,24 @@ export default {
                 );
         },
         filtered_projects(brigade) {
-            var projects = brigade.projects;
+            let projects = brigade.projects;
             if (this.filter_tag) {
                 projects = projects.filter(p => {
                     return !(
                         p.topics == undefined ||
                         p.topics.indexOf(this.filter_tag) < 0
                     );
+                });
+            } else {
+                const filtered = projects.filter((project) => {
+                    const topics = this.$store.state.filters
+                        .filter(f => f.type === 'Topic').map(f => f.value);
+                    if (topics.length === 0) { return true; }
+                    if (typeof project.topics === 'undefined') { return false; }
+                    for (const projectTopic of project.topics) {
+                        if (topics.includes(projectTopic)) { return true; }
+                    }
+                    return false;
                 });
             }
             return projects;
@@ -174,11 +192,12 @@ export default {
                 (brigade.tagged == null
                     ? ""
                     : `<br> ${brigade.tagged} have topics`);
-            if (
-                projects.length < brigade.projects.length &&
-                this.filter_tag != null
-            ) {
-                html += `<br>${projects.length} projects tagged with "${this.filter_tag}"`;
+            if (projects.length < brigade.projects.length) {
+                if (this.filter_tag != null) {
+                    html += `<br>${projects.length} projects tagged with "${this.filter_tag}"`;
+                } else {
+                    html += `<br>${projects.length} projects tagged with matching filters`;
+                }
             }
             return html;
        },

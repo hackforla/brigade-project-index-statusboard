@@ -14,7 +14,7 @@ export default new Vuex.Store({
         loading: "brigades",
         discourse_tags: [],
         filters: [],
-        is_dev_site: false, // OTOD pass info frorm ENV variables
+        is_dev_site: false, // OTOD pass info from ENV variables
     },
     getters: {
         brigades: state => {

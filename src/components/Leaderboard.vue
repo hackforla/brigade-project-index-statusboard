@@ -2,7 +2,7 @@
     <div class="container" id="leaders">
         <h1>Brigade List</h1>
         <ul class="list-group" v-for="brigade in leaders" v-bind:key="brigade.name">
-            <li class="list-group-item row">
+            <li class="list-group-item row" v-if="matches_filters(brigade.city)">
                 <div class="col-sm">
                     <router-link :to="{
                         name:'brigade-detail',
@@ -52,6 +52,13 @@ export default {
         },
     },
     methods: {
+        matches_filters(city) {
+            const locations = this.$store.state.filters
+                .filter(f => f.type === 'Location').map(f => f.value);
+            if (locations.length === 0) { return true; }
+            if (locations.includes(city)) { return true; }
+            return false;
+        },
         tagged_percent(brigade) {
             if(typeof brigade.projects !== 'undefined' && brigade.projects.length > 0) { 
                 return (brigade.tagged / brigade.projects.length * 100).toFixed(0);

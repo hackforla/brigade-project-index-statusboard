@@ -1,12 +1,19 @@
 <template>
-    <div id="projects-list" :class="collapsed ? 'collapsed' : ''">
+    <div
+        id="projects-list"
+        :class="collapsed ? 'collapsed' : ''"
+        v-if="has_projects(brigade)"
+    >
         <div class="list-title projects" v-on:click="collapsed = !collapsed">
               <span>{{ brigade.name }} Projects</span>
               <i :class="accordionIcon"></i>
         </div>
         <ul class="list-group projects"
-              v-for="project in brigade.projects" v-bind:key="project.name">
-              <ProjectRow v-bind:project="project" class="list-group-item" />
+              v-for="project in filtered_projects(brigade)"
+              v-bind:key="project.name" >
+              <ProjectRow
+                    v-bind:project="project"
+                    class="list-group-item" />
         </ul>
     </div>
 </template>
@@ -25,6 +32,25 @@ export default {
     computed: {
         accordionIcon: function () {
             return this.collapsed ? 'fa fa-chevron-down' : 'fa fa-times';
+        }
+    },
+    methods: {
+        filtered_projects(brigade) {
+            const filtered = brigade.projects.filter((project) => {
+                const topics = this.$store.state.filters
+                    .filter(f => f.type === 'Topic').map(f => f.value);
+                if (topics.length === 0) { return true; }
+                if (typeof project.topics === 'undefined') { return false; }
+                for (const projectTopic of project.topics) {
+                    if (topics.includes(projectTopic)) { return true; }
+                }
+                return false;
+            });
+            console.log(`FILTERED PROJECTS FOR ${brigade.name}:`, filtered);
+            return filtered;
+        },
+        has_projects(brigade) {
+            return this.filtered_projects(brigade).length > 0;
         }
     }
 }

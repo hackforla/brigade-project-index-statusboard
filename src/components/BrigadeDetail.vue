@@ -36,8 +36,12 @@
 
     </div>
 
-    <ul class="list-group projects" v-for="project in brigade.projects" v-bind:key="project.name">
-        <ProjectRow v-bind:project="project" class="list-group-item" />
+    <ul class="list-group projects"
+        v-for="project in brigade.projects"
+        v-bind:key="project.name" >
+        <ProjectRow
+            v-bind:project="project"
+            class="list-group-item" />
     </ul>
   </div>
 </template>
