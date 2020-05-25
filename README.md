@@ -12,9 +12,11 @@ You will also need [memcached](https://github.com/memcachier/memjs#ubuntu) runni
 Once this is in place, you can install / run the app with the standard npm run commands:
 
 ```
-npm install .
-npm run watch
+yarn install
+yarn test
 ```
+
+## TODO: UPDATE THIS SECTION ONCE THIS IS IMPLEMENTED IN THE REWRITE.
 
 To load the discourse tags, you need to run the separate npm task update-cache:
 
@@ -23,5 +25,3 @@ npm run update-cache
 ```
 
 This builds both the projectIndex cache and tags cache (data.json and tags.json respectively), and in deployment is run on a scheduler every 10 min.
-
-
