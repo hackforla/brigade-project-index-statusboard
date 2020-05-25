@@ -1,0 +1,31 @@
+:root {
+  /* BRAND COLORS */
+  --cfa-red: #cd1f42;
+  --cfa-green: #00891B;
+  --cfa-green-light: #00A175;
+  --cfa-grey: #CFC5BF;
+  --cfa-grey-dark: #5F5854;
+  --cfa-grey-darkest: #121111;
+  --cfa-magenta: #A6005E;
+  --cfa-magenta-dark: #66013A;
+  --cfa-turqoise: #399fd3;
+  --cfa-cyan: #4298bb;
+  --cfa-teal: #008060;
+  --cfa-teal-dark: #034E46;
+  --cfa-yellow: #FFAE00;
+  --cfa-orange: #e87d2b;
+  --cfa-blue-light: #399fd3;
+  --cfa-blue-dark: #004b6a;
+  --cfa-purple: #69579C;
+  --cfa-white: #E5E5E5;
+
+  /* DEFAULT COLORS */
+  --color-background: var(--cfa-white);
+  --color-text: var(--cfa-grey-darkest);
+  --color-text-help: var(--cfa-grey-dark);
+  --color-text-error: var(--cfa-red);
+
+  /* BASE STYLES */
+  background-color: var(--color-background);
+  color: var(--color-text);
+}

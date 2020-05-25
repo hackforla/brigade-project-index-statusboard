@@ -1,0 +1,43 @@
+/* Google Fonts: Source Sans Pro
+ * https://fonts.google.com/specimen/Source+Sans+Pro?selection.family=Source+Sans+Pro&sidebar.open
+ * for use in general text content
+ */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+/* Google Fonts: News Cycle
+ * https://fonts.google.com/specimen/News+Cycle?selection.family=News+Cycle&sidebar.open
+ * for use in header text content
+ */
+@import url('https://fonts.googleapis.com/css2?family=News+Cycle&display=swap');
+
+/* Google Fonts: Source Code Pro
+ * https://fonts.google.com/specimen/Source+Code+Pro?selection.family=Source+Code+Pro&sidebar.open
+ * for use in monospace/code text content
+ */
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+
+/* BASE FONT STYLES */
+:root {
+  /* DEFAULT FONTS */
+  --font-family-text: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Oxygen',
+                      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+                      'Helvetica Neue', sans-serif;
+  --font-family-header: 'News Cycle', 'Source Sans Pro', 'Segoe UI', 'Roboto',
+                        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+                        'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-family-code: 'Source Code Pro', 'Fira Code', Menlo, Monaco, Consolas,
+                      'Courier New', monospace;
+
+  /* BASE STYLES */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-family-text);
+}
+
+header {
+  font-family: var(-font-family-header);
+}
+
+pre, code {
+  font-family: var(--font-family-code);
+}
