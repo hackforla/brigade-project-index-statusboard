@@ -8,6 +8,7 @@
     "jszip": "^3.4.0",
     "lodash": "^4.17.15",
     "memjs": "^1.2.2",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
