@@ -6,7 +6,7 @@ function Projects() {
       <h2>Projects page!</h2>
       <p>This is where the project finder will go.</p>
     </>
-  )
+  );
 }
 
 export default Projects;
