@@ -6,11 +6,6 @@ nav {
   font-weight: bold;
   font-size: 24px;
 
-  .home {
-    width: fit-content;
-    vertical-align: baseline;
-    font-size: 1.5rem;
-  }
   ul {
     list-style: none;
     display: flex;
@@ -20,6 +15,7 @@ nav {
     li {
       margin-left: 1.5rem;
     }
+
     li a {
       border: 2px solid var(--cfa-white);
       border-radius: 5px;
@@ -27,6 +23,7 @@ nav {
       background-color: var(--cfa-teal);
       color: var(--cfa-white);
     }
+
     li a:hover,
     li a:focus {
       background-color: var(--cfa-white);
