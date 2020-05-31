@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: space-between;
   font-size: calc(20px);
-  background-color: var(--cfa-red);
+  background-color: var(--cfa-purple);
 }
 
 .App-header a {
