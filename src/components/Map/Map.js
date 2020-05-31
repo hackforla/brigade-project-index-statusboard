@@ -30,28 +30,40 @@ export default function Map({}) {
     svg = select(svgNode);
     statePathsGroup = svg.append('g');
 
-    statePathsGroup
-      .append('g')
-      .attr('class', 'states-group')
-      .selectAll('path')
-      .data(feature(us, us.objects.states).features)
-      .join('path')
-      // TODO: add keyboard nav
-      .on('click', clicked)
-      .attr('d', path)
-      .attr('tabindex', 0)
-      .append('title')
-      .text((d) => d.properties.name);
-
+    // This needs to come first so it doesn't interfere with click interactivity
     statePathsGroup
       .append('path')
       .attr('class', 'state-border')
       .attr('stroke-linejoin', 'round')
       .attr('d', path(mesh(us, us.objects.states, (a, b) => a !== b)));
 
+    statePathsGroup
+      .append('g')
+      .attr('class', 'states-group')
+      .selectAll('path')
+      .data(feature(us, us.objects.states).features)
+      .join('path')
+      .on('keyup', (d) => {
+        const { key } = event;
+        if (key === 'Enter') {
+          // TODO: this works but throws an error?
+          clicked(d);
+        }
+      })
+      .on('click', clicked)
+      .attr('d', path)
+      .attr('tabindex', 0)
+      .append('title')
+      .text((d) => d.properties.name);
+
     svg.call(zoom);
     reset();
   }, []);
+
+  // Show brigades on the map
+  // Filter projects by zoomed in area of map
+  // Add map zoom and region, state, brigade select menus?
+  // DEBUG: why can't you click on arkansas?
 
   return (
     <div className="map">
