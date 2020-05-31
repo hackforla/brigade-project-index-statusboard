@@ -6,7 +6,7 @@ function Brigades() {
       <h2>Brigades page!</h2>
       <p>This is the brigade search will go.</p>
     </>
-  )
+  );
 }
 
 export default Brigades;
