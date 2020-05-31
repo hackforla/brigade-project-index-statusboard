@@ -5,6 +5,9 @@
   "dependencies": {
     "@octokit/rest": "^17.9.2",
     "axios": "^0.19.2",
+    "d3-geo": "^1.12.1",
+    "d3-selection": "^1.4.1",
+    "d3-zoom": "^1.8.3",
     "jszip": "^3.4.0",
     "lodash": "^4.17.15",
     "memjs": "^1.2.2",
@@ -13,7 +16,8 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "toml": "^3.0.0"
+    "toml": "^3.0.0",
+    "topojson-client": "^3.1.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
