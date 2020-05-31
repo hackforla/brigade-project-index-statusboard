@@ -23,7 +23,7 @@ export function getProjectIndex(orgType) {
 
   // return promise the resolves once we have unzipped and merged
   // all the projects / organizations
-  const promise = new Promise((resolve, _reject) => {
+  const promise = new Promise((resolve) => {
     octokit.repos
       .getArchiveLink({
         owner: 'codeforamerica',
@@ -36,7 +36,7 @@ export function getProjectIndex(orgType) {
         const indexZip = new JSZip();
         indexZip
           .loadAsync(response.data)
-          .then((_archive) => {
+          .then(() => {
             // Iterate through all the .toml files
             const orgs = [];
             const projects = [];
@@ -80,7 +80,7 @@ export function getProjectIndex(orgType) {
 
             // After all async loads are finished, we combine the projects
             // into the orgs and keep our original promise
-            Promise.all(promises).then((_result) => {
+            Promise.all(promises).then(() => {
               // prettier-ignore
               // eslint-disable-next-line no-console
               console.log(

@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from '../../pages/Home';
 import About from '../../pages/About';
 import Projects from '../../pages/Projects';
-import Brigades from '../../pages/Brigades';
+import Brigades from '../../pages/Brigades/Brigades';
 import './PageContents.css';
 
 function PageContents() {

@@ -60,10 +60,10 @@ export default function Map({}) {
     reset();
   }, []);
 
-  // Show brigades on the map
-  // Filter projects by zoomed in area of map
+  // Show brigades on the map; if one is selected then make it a different color and shape
+  // Sidebar (under on mobile) for project list
   // Add map zoom and region, state, brigade select menus?
-  // DEBUG: why can't you click on arkansas?
+  // Add buttons for zoom and reset
 
   return (
     <div className="map">

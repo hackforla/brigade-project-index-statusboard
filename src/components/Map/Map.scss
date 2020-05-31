@@ -13,6 +13,12 @@
 
     path:hover,
     path:focus {
+      outline: none;
+      stroke: var(--cfa-blue-dark);
+      stroke-width: 4px;
+    }
+
+    path:focus {
       fill: var(--cfa-grey);
     }
   }

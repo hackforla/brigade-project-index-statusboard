@@ -8,6 +8,8 @@
     "d3-geo": "^1.12.1",
     "d3-selection": "^1.4.1",
     "d3-zoom": "^1.8.3",
+    "esm": "^3.2.25",
+    "express-sslify": "^1.2.0",
     "jszip": "^3.4.0",
     "lodash": "^4.17.15",
     "memjs": "^1.2.2",
@@ -38,7 +40,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "./node_modules/eslint/bin/eslint.js src/**/*.js *.js",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "update-cache": "node -r esm updateCacheTask.js",
+    "server": "node -r esm server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
