@@ -1,6 +1,12 @@
 .map {
   position: relative;
   height: 100%;
-  width: 100%;
-  padding: 1rem;
+  margin: 1rem 10%;
+  border: 4px solid var(--cfa-teal);
+  border-radius: 5px;
+
+  path {
+    fill: transparent;
+    stroke: var(--cfa-grey-dark);
+  }
 }

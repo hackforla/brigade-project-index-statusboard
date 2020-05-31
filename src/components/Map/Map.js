@@ -3,6 +3,7 @@ import { zoom as d3zoom, zoomIdentity, zoomTransform } from 'd3-zoom';
 import { select, event, mouse } from 'd3-selection';
 import { feature, mesh } from 'topojson-client';
 import { geoPath as path } from 'd3-geo';
+// TODO: FIND THE JSON FILE THAT INCLUDES PUERTO
 import us from '../../assets/states-albers-10m';
 import './Map.scss';
 
@@ -27,7 +28,6 @@ export default function Map({}) {
 
       statePathsGroup
         .append('g')
-        .attr('fill', '#444')
         .attr('cursor', 'pointer')
         .selectAll('path')
         .data(feature(us, us.objects.states).features)
@@ -40,6 +40,7 @@ export default function Map({}) {
 
       statePathsGroup
         .append('path')
+        // TODO: WHAT DOES THIS EVEN DO???
         .attr('fill', 'none')
         .attr('stroke', 'white')
         .attr('stroke-linejoin', 'round')
