@@ -5,8 +5,11 @@
   border: 4px solid var(--cfa-teal);
   border-radius: 5px;
 
-  path {
-    fill: transparent;
-    stroke: var(--cfa-grey-dark);
+  .states {
+    path {
+      fill: transparent;
+      stroke: var(--cfa-grey-dark);
+      cursor: pointer;
+    }
   }
 }

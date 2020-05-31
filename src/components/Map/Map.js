@@ -28,10 +28,11 @@ export default function Map({}) {
 
       statePathsGroup
         .append('g')
-        .attr('cursor', 'pointer')
+        .attr('class', 'states')
         .selectAll('path')
         .data(feature(us, us.objects.states).features)
         .join('path')
+        // TODO: add keyboard nav
         .on('click', clicked)
         .attr('d', path())
         // TODO: in example path was not called, but doesn't render unless it's called-- but calling it here breaks the zoom function :/
@@ -39,14 +40,15 @@ export default function Map({}) {
         .text((d) => d.properties.name);
 
       statePathsGroup
-        .append('path')
         // TODO: WHAT DOES THIS EVEN DO???
+        .append('path')
         .attr('fill', 'none')
         .attr('stroke', 'white')
         .attr('stroke-linejoin', 'round')
         .attr('d', path(mesh(us, us.objects.states, (a, b) => a !== b)));
 
       svg.call(zoom);
+      reset();
     }
   }, []);
 
@@ -62,10 +64,6 @@ export default function Map({}) {
   );
 
   function reset() {
-    if (!svg) {
-      return;
-    }
-
     svg
       .transition()
       .duration(750)
@@ -77,7 +75,6 @@ export default function Map({}) {
   }
 
   function clicked(d) {
-    console.log(d);
     const [[x0, y0], [x1, y1]] = path.bounds(d);
     event.stopPropagation();
     svg
