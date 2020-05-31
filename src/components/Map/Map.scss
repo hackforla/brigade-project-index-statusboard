@@ -10,6 +10,11 @@
       stroke: var(--cfa-grey-dark);
       cursor: pointer;
     }
+
+    path:hover,
+    path:focus {
+      fill: var(--cfa-grey);
+    }
   }
 
   path.state-border {

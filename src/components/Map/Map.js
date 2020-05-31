@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { zoom as d3zoom, zoomIdentity, zoomTransform } from 'd3-zoom';
 import { select, event, mouse } from 'd3-selection';
 import { feature, mesh } from 'topojson-client';
@@ -14,6 +14,10 @@ export default function Map({}) {
   let svg, statePathsGroup;
   let width = 0;
   let height = 0;
+  // Sort the states so that the tab index order makes sense
+  us.objects.states.geometries.sort((a, b) =>
+    a.properties.name.localeCompare(b.properties.name)
+  );
 
   const svgRef = useCallback((svgNode) => {
     if (!svgNode) return;
@@ -35,6 +39,7 @@ export default function Map({}) {
       // TODO: add keyboard nav
       .on('click', clicked)
       .attr('d', path)
+      .attr('tabindex', 0)
       .append('title')
       .text((d) => d.properties.name);
 
