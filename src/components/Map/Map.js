@@ -64,6 +64,7 @@ export default function Map({}) {
   );
 
   function reset() {
+    if (!svg) return;
     svg
       .transition()
       .duration(750)
@@ -75,6 +76,7 @@ export default function Map({}) {
   }
 
   function clicked(d) {
+    if (!svg) return;
     const [[x0, y0], [x1, y1]] = path.bounds(d);
     event.stopPropagation();
     svg
@@ -93,6 +95,7 @@ export default function Map({}) {
   }
 
   function zoomed() {
+    if (!statePathsGroup) return;
     const { transform } = event;
     statePathsGroup.attr('transform', transform);
     statePathsGroup.attr('stroke-width', 1 / transform.k);
