@@ -1,15 +1,20 @@
 .map {
   position: relative;
-  height: 100%;
-  margin: 1rem 10%;
+  margin: 2rem 20%;
   border: 4px solid var(--cfa-teal);
   border-radius: 5px;
 
-  .states {
+  .states-group {
     path {
       fill: transparent;
       stroke: var(--cfa-grey-dark);
       cursor: pointer;
     }
+  }
+
+  path.state-border {
+    fill: transparent;
+    stroke: var(--cfa-grey-dark);
+    cursor: pointer;
   }
 }
