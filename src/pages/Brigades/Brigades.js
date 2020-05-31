@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Map from '../../components/Map/Map';
 import { filterBy } from './utils';
-import axios from 'axios';
+import { getBaseApiUrl } from '../../utils';
 
 function Brigades() {
   // Filter projects by zoomed in area of map, unless a state or brigade is highlighted
@@ -13,8 +14,10 @@ function Brigades() {
   const [filterOpts, setFilterOpts] = useState();
   const projects = filterBy([], filterOpts);
 
+  console.log(brigadeData, tagData);
+
   useEffect(() => {
-    const url = `/api/data.json`;
+    const url = `${getBaseApiUrl()}/api/data.json`;
     let brigades, tags;
     const getData = async () => {
       brigades = await axios.get(url);

@@ -3,6 +3,7 @@ import _ from 'lodash';
 import memjs from 'memjs';
 import { getProjectIndex } from './api';
 import * as enforce from 'express-sslify';
+import cors from 'cors';
 
 const port = process.env.PORT || 8080;
 
@@ -84,6 +85,14 @@ if (process.env.REDIRECT_TO_DOMAIN != undefined) {
     }
   });
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
+} else {
+  console.log('Local development');
+  // app.use(
+  //   cors({
+  //     origin: 'http://localhost:3000',
+  //   })
+  // );
+  app.use(cors());
 }
 
 app.use(express.static(__dirname + '/dist'));

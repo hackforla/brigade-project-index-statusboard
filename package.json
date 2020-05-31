@@ -5,6 +5,7 @@
   "dependencies": {
     "@octokit/rest": "^17.9.2",
     "axios": "^0.19.2",
+    "cors": "^2.8.5",
     "d3-geo": "^1.12.1",
     "d3-selection": "^1.4.1",
     "d3-zoom": "^1.8.3",
