@@ -1,50 +1,44 @@
 import { geoAlbers, geoConicEqualArea } from 'd3-geo';
 
-// A modified d3.geo.albersUsa to include Puerto Rico.
+// A modified geo.albersUsa to include Puerto Rico.
 // gist.github.com/mbostock/5629120
-export default function albersUsaPr() {
-  var ε = 1e-6;
-
-  var lower48 = geoAlbers();
-
-  // EPSG:3338
-  var alaska = geoConicEqualArea()
-    .rotate([154, 0])
-    .center([-2, 58.5])
-    .parallels([55, 65]);
-
-  // ESRI:102007
-  var hawaii = geoConicEqualArea()
-    .rotate([157, 0])
-    .center([-3, 19.9])
-    .parallels([8, 18]);
-
-  // XXX? You should check that this is a standard PR projection!
-  var puertoRico = geoConicEqualArea()
-    .rotate([66, 0])
-    .center([0, 18])
-    .parallels([8, 18]);
-
-  var point,
+export default function geoAlbersUsaPr() {
+  var cache,
+    cacheStream,
+    lower48 = geoAlbers(),
+    lower48Point,
+    alaska = geoConicEqualArea()
+      .rotate([154, 0])
+      .center([-2, 58.5])
+      .parallels([55, 65]),
+    alaskaPoint,
+    hawaii = geoConicEqualArea()
+      .rotate([157, 0])
+      .center([-3, 19.9])
+      .parallels([8, 18]),
+    hawaiiPoint,
+    puertoRico = geoConicEqualArea()
+      .rotate([66, 0])
+      .center([0, 18])
+      .parallels([8, 18]),
+    puertoRicoPoint,
+    point,
     pointStream = {
       point: function (x, y) {
         point = [x, y];
       },
-    },
-    lower48Point,
-    alaskaPoint,
-    hawaiiPoint,
-    puertoRicoPoint;
+    };
 
   function albersUsa(coordinates) {
     var x = coordinates[0],
       y = coordinates[1];
-    point = null;
-    (lower48Point(x, y), point) ||
-      (alaskaPoint(x, y), point) ||
-      (hawaiiPoint(x, y), point) ||
-      (puertoRicoPoint(x, y), point);
-    return point;
+    return (
+      (point = null),
+      (lower48Point.point(x, y), point) ||
+        (alaskaPoint.point(x, y), point) ||
+        (hawaiiPoint.point(x, y), point) ||
+        (puertoRicoPoint.point(x, y), point)
+    );
   }
 
   albersUsa.invert = function (coordinates) {
@@ -62,69 +56,32 @@ export default function albersUsaPr() {
     ).invert(coordinates);
   };
 
-  // A naïve multi-projection stream.
-  // The projections must have mutually exclusive clip regions on the sphere,
-  // as this will avoid emitting interleaving lines and polygons.
   albersUsa.stream = function (stream) {
-    var lower48Stream = lower48.stream(stream),
-      alaskaStream = alaska.stream(stream),
-      hawaiiStream = hawaii.stream(stream),
-      puertoRicoStream = puertoRico.stream(stream);
-    return {
-      point: function (x, y) {
-        lower48Stream.point(x, y);
-        alaskaStream.point(x, y);
-        hawaiiStream.point(x, y);
-        puertoRicoStream.point(x, y);
-      },
-      sphere: function () {
-        lower48Stream.sphere();
-        alaskaStream.sphere();
-        hawaiiStream.sphere();
-        puertoRicoStream.sphere();
-      },
-      lineStart: function () {
-        lower48Stream.lineStart();
-        alaskaStream.lineStart();
-        hawaiiStream.lineStart();
-        puertoRicoStream.lineStart();
-      },
-      lineEnd: function () {
-        lower48Stream.lineEnd();
-        alaskaStream.lineEnd();
-        hawaiiStream.lineEnd();
-        puertoRicoStream.lineEnd();
-      },
-      polygonStart: function () {
-        lower48Stream.polygonStart();
-        alaskaStream.polygonStart();
-        hawaiiStream.polygonStart();
-        puertoRicoStream.polygonStart();
-      },
-      polygonEnd: function () {
-        lower48Stream.polygonEnd();
-        alaskaStream.polygonEnd();
-        hawaiiStream.polygonEnd();
-        puertoRicoStream.polygonEnd();
-      },
-    };
+    return cache && cacheStream === stream
+      ? cache
+      : (cache = multiplex([
+          lower48.stream((cacheStream = stream)),
+          alaska.stream(stream),
+          hawaii.stream(stream),
+          puertoRico.stream(stream),
+        ]));
   };
 
   albersUsa.precision = function (_) {
     if (!arguments.length) return lower48.precision();
-    lower48.precision(_);
-    alaska.precision(_);
-    hawaii.precision(_);
-    puertoRico.precision(_);
-    return albersUsa;
+    lower48.precision(_),
+      alaska.precision(_),
+      hawaii.precision(_),
+      puertoRico.precision(_);
+    return reset();
   };
 
   albersUsa.scale = function (_) {
     if (!arguments.length) return lower48.scale();
-    lower48.scale(_);
-    alaska.scale(_ * 0.35);
-    hawaii.scale(_);
-    puertoRico.scale(_);
+    lower48.scale(_),
+      alaska.scale(_ * 0.35),
+      hawaii.scale(_),
+      puertoRico.scale(_);
     return albersUsa.translate(lower48.translate());
   };
 
@@ -140,23 +97,23 @@ export default function albersUsaPr() {
         [x - 0.455 * k, y - 0.238 * k],
         [x + 0.455 * k, y + 0.238 * k],
       ])
-      .stream(pointStream).point;
+      .stream(pointStream);
 
     alaskaPoint = alaska
       .translate([x - 0.307 * k, y + 0.201 * k])
       .clipExtent([
-        [x - 0.425 * k + ε, y + 0.12 * k + ε],
-        [x - 0.214 * k - ε, y + 0.234 * k - ε],
+        [x - 0.425 * k + epsilon, y + 0.12 * k + epsilon],
+        [x - 0.214 * k - epsilon, y + 0.234 * k - epsilon],
       ])
-      .stream(pointStream).point;
+      .stream(pointStream);
 
     hawaiiPoint = hawaii
       .translate([x - 0.205 * k, y + 0.212 * k])
       .clipExtent([
-        [x - 0.214 * k + ε, y + 0.166 * k + ε],
-        [x - 0.115 * k - ε, y + 0.234 * k - ε],
+        [x - 0.214 * k + epsilon, y + 0.166 * k + epsilon],
+        [x - 0.115 * k - epsilon, y + 0.234 * k - epsilon],
       ])
-      .stream(pointStream).point;
+      .stream(pointStream);
 
     puertoRicoPoint = puertoRico
       .translate([x + 0.35 * k, y + 0.224 * k])
@@ -166,8 +123,39 @@ export default function albersUsaPr() {
       ])
       .stream(pointStream).point;
 
-    return albersUsa;
+    return reset();
   };
+
+  function reset() {
+    cache = cacheStream = null;
+    return albersUsa;
+  }
 
   return albersUsa.scale(1070);
 }
+
+function multiplex(streams) {
+  const n = streams.length;
+  return {
+    point(x, y) {
+      for (const s of streams) s.point(x, y);
+    },
+    sphere() {
+      for (const s of streams) s.sphere();
+    },
+    lineStart() {
+      for (const s of streams) s.lineStart();
+    },
+    lineEnd() {
+      for (const s of streams) s.lineEnd();
+    },
+    polygonStart() {
+      for (const s of streams) s.polygonStart();
+    },
+    polygonEnd() {
+      for (const s of streams) s.polygonEnd();
+    },
+  };
+}
+
+const epsilon = 1e-6;

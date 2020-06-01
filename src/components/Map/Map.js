@@ -13,7 +13,7 @@ import './Map.scss';
 // Taken from https://observablehq.com/@d3/zoom-to-bounding-box
 export default function Map({ brigadeData }) {
   const zoom = d3zoom().scaleExtent([1, 8]).on('zoom', zoomed);
-  const projection = albersUsaPr();
+  const projection = albersUsaPr().scale(1000).translate([487.5, 305]);
   const path = geoPath(projection);
   let svg, statePathsGroup, brigadePoints;
   let width = 0;
@@ -63,21 +63,21 @@ export default function Map({ brigadeData }) {
         .append('title')
         .text((d) => d.properties.name);
 
-      brigadePoints = svg
-        .append('g')
-        .selectAll('circle')
-        .data(brigadeData.filter((d) => d.longitude && d.latitude))
-        .enter()
-        .append('circle')
-        .attr('cx', function (d) {
-          console.log(d);
-          return projection([d.longitude, d.latitude])[0];
-        })
-        .attr('cy', function (d) {
-          return projection([d.longitude, d.latitude])[1];
-        })
-        .attr('r', 5)
-        .style('fill', 'red');
+      // brigadePoints = svg
+      //   .append('g')
+      //   .selectAll('circle')
+      //   .data(brigadeData.filter((d) => d.longitude && d.latitude))
+      //   .enter()
+      //   .append('circle')
+      //   .attr('cx', function (d) {
+      //     console.log(d);
+      //     return projection([d.longitude, d.latitude])[0];
+      //   })
+      //   .attr('cy', function (d) {
+      //     return projection([d.longitude, d.latitude])[1];
+      //   })
+      //   .attr('r', 5)
+      //   .style('fill', 'red');
 
       svg.call(zoom);
       reset();
