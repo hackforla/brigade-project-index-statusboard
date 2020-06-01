@@ -131,5 +131,6 @@ export default function Map({ brigadeData }) {
     statePathsGroup.attr('transform', transform);
     statePathsGroup.attr('stroke-width', 1 / transform.k);
     brigadePoints.attr('transform', transform);
+    brigadePoints.attr('r', 10 / transform.k);
   }
 }
