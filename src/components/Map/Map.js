@@ -72,6 +72,8 @@ export default function Map({ brigadeData }) {
         .attr('cy', (d) => projection([d.longitude, d.latitude])[1])
         .attr('r', 10);
 
+      brigadePoints.append('title').text((d) => d.name);
+
       svg.call(zoom);
       reset();
     },
