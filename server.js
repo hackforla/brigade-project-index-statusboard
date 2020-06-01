@@ -20,6 +20,13 @@ const mc = memjs.Client.create(process.env.MEMCACHIER_SERVERS, {
 // We will use Express
 var app = express();
 
+// TODO: set env variable and check it before doing this
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+  })
+);
+
 // maybe a last_update call?
 app.get('/api/tags.json', (req, res) => {
   mc.get('tags.json', (err, val) => {
@@ -49,10 +56,10 @@ app.get('/api/data.json', (req, res) => {
       res.end();
       console.log('loaded from memcacehd');
       /* uncomment to retrieve as gzipped bson
-      ungzip(val).then( (zval) => {
-        const v = bson.deserialize(zval);
-        res.json(v.brigades)
-      }) */
+        ungzip(val).then( (zval) => {
+          const v = bson.deserialize(zval);
+          res.json(v.brigades)
+        }) */
     } else {
       console.log('retrieving new copy');
       getProjectIndex(['Brigade', 'Code for America']).then((result) => {
@@ -62,11 +69,11 @@ app.get('/api/data.json', (req, res) => {
         });
 
         /* // uncomment to store gzipped and bson'd - takes more memory
-        const cache_value = bson.serialize({"brigades":result}); 
-        gzip( cache_value ).then( (zcache_value) => {
-          mc.set(k, zcache_value , {expires: 360}, function(err, val){ console.log(err) });
-        })
-        */
+          const cache_value = bson.serialize({"brigades":result}); 
+          gzip( cache_value ).then( (zcache_value) => {
+            mc.set(k, zcache_value , {expires: 360}, function(err, val){ console.log(err) });
+          })
+          */
 
         res.json(result);
       });
@@ -86,13 +93,6 @@ if (process.env.REDIRECT_TO_DOMAIN != undefined) {
   });
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
 } else {
-  console.log('Local development');
-  // app.use(
-  //   cors({
-  //     origin: 'http://localhost:3000',
-  //   })
-  // );
-  app.use(cors());
 }
 
 app.use(express.static(__dirname + '/dist'));
