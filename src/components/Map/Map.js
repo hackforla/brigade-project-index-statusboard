@@ -23,8 +23,6 @@ export default function Map({ brigadeData }) {
     a.properties.name.localeCompare(b.properties.name)
   );
 
-  console.log(brigadeData);
-
   const svgRef = useCallback(
     (svgNode) => {
       if (!svgNode || !brigadeData) return;
@@ -63,21 +61,21 @@ export default function Map({ brigadeData }) {
         .append('title')
         .text((d) => d.properties.name);
 
-      // brigadePoints = svg
-      //   .append('g')
-      //   .selectAll('circle')
-      //   .data(brigadeData.filter((d) => d.longitude && d.latitude))
-      //   .enter()
-      //   .append('circle')
-      //   .attr('cx', function (d) {
-      //     console.log(d);
-      //     return projection([d.longitude, d.latitude])[0];
-      //   })
-      //   .attr('cy', function (d) {
-      //     return projection([d.longitude, d.latitude])[1];
-      //   })
-      //   .attr('r', 5)
-      //   .style('fill', 'red');
+      brigadePoints = svg
+        .append('g')
+        .selectAll('circle')
+        .data(brigadeData.filter((d) => d.longitude && d.latitude))
+        .enter()
+        .append('circle')
+        .attr('cx', function (d) {
+          console.log(d);
+          return projection([d.longitude, d.latitude])[0];
+        })
+        .attr('cy', function (d) {
+          return projection([d.longitude, d.latitude])[1];
+        })
+        .attr('r', 5)
+        .style('fill', 'red');
 
       svg.call(zoom);
       reset();

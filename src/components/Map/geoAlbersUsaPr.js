@@ -121,7 +121,7 @@ export default function geoAlbersUsaPr() {
         [x + 0.32 * k, y + 0.204 * k],
         [x + 0.38 * k, y + 0.234 * k],
       ])
-      .stream(pointStream).point;
+      .stream(pointStream);
 
     return reset();
   };
