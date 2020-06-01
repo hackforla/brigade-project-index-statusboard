@@ -2,16 +2,18 @@ import React, { useCallback } from 'react';
 import { zoom as d3zoom, zoomIdentity, zoomTransform } from 'd3-zoom';
 import { select, event, mouse } from 'd3-selection';
 import { feature, mesh } from 'topojson-client';
-import { geoPath } from 'd3-geo';
-// TODO: FIND THE JSON FILE THAT INCLUDES PUERTO
+import { geoPath, geoAlbersUsa } from 'd3-geo';
+// TODO: FIND THE JSON FILE THAT INCLUDES PUERTO RICO
+// https://observablehq.com/@d3/u-s-map-with-puerto-rico
 import us from '../../assets/states-albers-10m';
 import './Map.scss';
 
 // Taken from https://observablehq.com/@d3/zoom-to-bounding-box
-export default function Map({}) {
+export default function Map({ brigadeData }) {
   const zoom = d3zoom().scaleExtent([1, 8]).on('zoom', zoomed);
-  const path = geoPath();
-  let svg, statePathsGroup;
+  const projection = geoAlbersUsa();
+  const path = geoPath(projection);
+  let svg, statePathsGroup, brigadePoints;
   let width = 0;
   let height = 0;
   // Sort the states so that the tab index order makes sense
@@ -19,46 +21,67 @@ export default function Map({}) {
     a.properties.name.localeCompare(b.properties.name)
   );
 
-  const svgRef = useCallback((svgNode) => {
-    if (!svgNode) return;
-    // Set height and width
-    const svgDimensions = svgNode.getBoundingClientRect();
-    width = svgDimensions.width;
-    height = svgDimensions.height;
+  console.log(brigadeData);
 
-    // Do all of the d3 things once the svg node exists
-    svg = select(svgNode);
-    statePathsGroup = svg.append('g');
+  const svgRef = useCallback(
+    (svgNode) => {
+      if (!svgNode || !brigadeData) return;
+      // Set height and width
+      const svgDimensions = svgNode.getBoundingClientRect();
+      width = svgDimensions.width;
+      height = svgDimensions.height;
 
-    // This needs to come first so it doesn't interfere with click interactivity
-    statePathsGroup
-      .append('path')
-      .attr('class', 'state-border')
-      .attr('stroke-linejoin', 'round')
-      .attr('d', path(mesh(us, us.objects.states, (a, b) => a !== b)));
+      // Do all of the d3 things once the svg node exists
+      svg = select(svgNode);
+      statePathsGroup = svg.append('g');
 
-    statePathsGroup
-      .append('g')
-      .attr('class', 'states-group')
-      .selectAll('path')
-      .data(feature(us, us.objects.states).features)
-      .join('path')
-      .on('keyup', (d) => {
-        const { key } = event;
-        if (key === 'Enter') {
-          // TODO: this works but throws an error?
-          clicked(d);
-        }
-      })
-      .on('click', clicked)
-      .attr('d', path)
-      .attr('tabindex', 0)
-      .append('title')
-      .text((d) => d.properties.name);
+      // This needs to come first so it doesn't interfere with click interactivity
+      statePathsGroup
+        .append('path')
+        .attr('class', 'state-border')
+        .attr('stroke-linejoin', 'round')
+        .attr('d', path(mesh(us, us.objects.states, (a, b) => a !== b)));
 
-    svg.call(zoom);
-    reset();
-  }, []);
+      statePathsGroup
+        .append('g')
+        .attr('class', 'states-group')
+        .selectAll('path')
+        .data(feature(us, us.objects.states).features)
+        .join('path')
+        .on('keyup', (d) => {
+          const { key } = event;
+          if (key === 'Enter') {
+            // TODO: this works but throws an error?
+            clicked(d);
+          }
+        })
+        .on('click', clicked)
+        .attr('d', path)
+        .attr('tabindex', 0)
+        .append('title')
+        .text((d) => d.properties.name);
+
+      brigadePoints = svg
+        .append('g')
+        .selectAll('circle')
+        .data(brigadeData.filter((d) => d.longitude && d.latitude))
+        .enter()
+        .append('circle')
+        .attr('cx', function (d) {
+          console.log(d);
+          return projection([d.longitude, d.latitude])[0];
+        })
+        .attr('cy', function (d) {
+          return projection([d.longitude, d.latitude])[1];
+        })
+        .attr('r', 5)
+        .style('fill', 'red');
+
+      svg.call(zoom);
+      reset();
+    },
+    [brigadeData]
+  );
 
   // Show brigades on the map; if one is selected then make it a different color and shape
   // Sidebar (under on mobile) for project list
