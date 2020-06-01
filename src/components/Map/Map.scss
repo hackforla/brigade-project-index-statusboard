@@ -28,4 +28,11 @@
     stroke: var(--cfa-grey-dark);
     cursor: pointer;
   }
+
+  .brigade-point {
+    fill-opacity: 0.5;
+    stroke: var(--cfa-purple);
+    fill: var(--cfa-purple);
+    cursor: pointer;
+  }
 }

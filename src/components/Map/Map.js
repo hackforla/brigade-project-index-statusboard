@@ -67,15 +67,10 @@ export default function Map({ brigadeData }) {
         .data(brigadeData.filter((d) => d.longitude && d.latitude))
         .enter()
         .append('circle')
-        .attr('cx', function (d) {
-          console.log(d);
-          return projection([d.longitude, d.latitude])[0];
-        })
-        .attr('cy', function (d) {
-          return projection([d.longitude, d.latitude])[1];
-        })
-        .attr('r', 5)
-        .style('fill', 'red');
+        .attr('class', 'brigade-point')
+        .attr('cx', (d) => projection([d.longitude, d.latitude])[0])
+        .attr('cy', (d) => projection([d.longitude, d.latitude])[1])
+        .attr('r', 10);
 
       svg.call(zoom);
       reset();
@@ -135,5 +130,6 @@ export default function Map({ brigadeData }) {
     const { transform } = event;
     statePathsGroup.attr('transform', transform);
     statePathsGroup.attr('stroke-width', 1 / transform.k);
+    brigadePoints.attr('transform', transform);
   }
 }
