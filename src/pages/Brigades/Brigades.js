@@ -7,8 +7,8 @@ import {
   getProjectsFromBrigadeData,
   getBaseApiUrl,
 } from '../../utils';
+import { ProjectsTable, Select } from '../../components';
 import './Brigades.scss';
-import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
 
 function Brigades() {
   // Filter projects by zoomed in area of map, unless a state or brigade is highlighted
@@ -30,8 +30,6 @@ function Brigades() {
     getData();
   }, []);
 
-  console.log(brigadeData);
-
   return (
     <>
       <h2>Projects by brigade, state, or geographic area</h2>
@@ -50,12 +48,11 @@ function Brigades() {
           {/* TODO: FIGURE OUT WHAT GOES HERE */}
           {brigadeData && (
             <div>
-              <label htmlFor="state-picker">Select a brigade</label>
-              <select id="state-picker">
-                {brigadeData.map((brigade) => (
-                  <option>{brigade.name}</option>
-                ))}
-              </select>
+              <Select
+                label="Select a brigade"
+                id="select-brigade"
+                options={brigadeData.map((b) => b.name)}
+              />
             </div>
           )}
         </div>
