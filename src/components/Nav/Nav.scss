@@ -20,14 +20,13 @@ nav {
       border: 2px solid var(--cfa-white);
       border-radius: 5px;
       padding: 0 1rem 0.3rem 1rem;
-      background-color: var(--cfa-teal);
+      background-color: var(--cfa-magenta);
       color: var(--cfa-white);
     }
 
     li a:hover,
     li a:focus {
-      background-color: var(--cfa-white);
-      color: var(--cfa-teal);
+      background-color: var(--cfa-magenta-dark);
     }
   }
 }
