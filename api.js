@@ -9,7 +9,7 @@ export function getLastUpdate() {
 }
 
 function slugify(n) {
-  return n.toLowerCase().replace(/[^a-zA-Z0-9\-]+/g, '-');
+  return n.toLowerCase().replace(/[^a-zA-Z0-9-]+/g, '-');
 }
 
 export function getProjectIndex(orgType) {
