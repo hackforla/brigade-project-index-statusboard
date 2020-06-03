@@ -5,8 +5,8 @@ import {
   filterBy,
   cleanBrigadeData,
   getProjectsFromBrigadeData,
-} from './utils';
-import { getBaseApiUrl } from '../../utils';
+  getBaseApiUrl,
+} from '../../utils';
 import './Brigades.scss';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
 
