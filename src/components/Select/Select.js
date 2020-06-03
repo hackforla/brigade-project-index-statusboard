@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Select.scss';
 
 export default function Select({ label, id, options, onChange }) {
@@ -13,3 +14,10 @@ export default function Select({ label, id, options, onChange }) {
     </div>
   );
 }
+
+Select.propTypes = {
+  label: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChange: PropTypes.func.isRequired,
+};

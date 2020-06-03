@@ -163,8 +163,14 @@ Map.defaultProps = {
   brigadeData: [],
 };
 
+export const filterOptsPropType = PropTypes.shape({
+  brigadeName: PropTypes.string,
+  state: PropTypes.string,
+  boundingBox: PropTypes.array,
+});
+
 Map.propTypes = {
   brigadeData: PropTypes.arrayOf(PropTypes.any),
-  filterOpts: PropTypes.func.isRequired,
+  filterOpts: filterOptsPropType.isRequired,
   setFilterOpts: PropTypes.func.isRequired,
 };
