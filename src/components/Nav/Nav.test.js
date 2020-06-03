@@ -4,7 +4,11 @@ import { render } from '@testing-library/react';
 import Nav from './Nav';
 
 test('renders the nav bar', () => {
-  const { getByRole } = render(<BrowserRouter><Nav /></BrowserRouter>);
+  const { getByRole } = render(
+    <BrowserRouter>
+      <Nav />
+    </BrowserRouter>
+  );
   const nav = getByRole('navigation');
   expect(nav).toBeInTheDocument();
 });

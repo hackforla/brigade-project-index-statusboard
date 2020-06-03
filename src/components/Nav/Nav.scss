@@ -1,0 +1,32 @@
+nav {
+  padding: 0 20px 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-family-header);
+  font-weight: bold;
+  font-size: 24px;
+
+  ul {
+    list-style: none;
+    display: flex;
+    align-items: flex-end;
+    margin: unset;
+
+    li {
+      margin-left: 1.5rem;
+    }
+
+    li a {
+      border: 2px solid var(--cfa-white);
+      border-radius: 5px;
+      padding: 0 1rem 0.3rem 1rem;
+      background-color: var(--cfa-magenta);
+      color: var(--cfa-white);
+    }
+
+    li a:hover,
+    li a:focus {
+      background-color: var(--cfa-magenta-dark);
+    }
+  }
+}
