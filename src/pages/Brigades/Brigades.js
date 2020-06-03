@@ -45,6 +45,7 @@ function Brigades() {
       <div className="brigades-page-content">
         <Map brigadeData={brigadeData} />
         <div className="map-info">
+          {/* TODO: FIGURE OUT WHAT GOES HERE */}
           <div>
             <label>Select a state</label>
             <select>

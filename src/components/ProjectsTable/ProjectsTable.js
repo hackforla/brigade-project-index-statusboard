@@ -82,8 +82,7 @@ export default function ProjectsTable({ projects }) {
         </tbody>
       </table>
       {/* 
-        Pagination can be built however you'd like. 
-        This is just a very basic UI implementation:
+        TODO: this was copied from the example and the accessibility is a hot mess
       */}
       <div className="pagination">
         <button
