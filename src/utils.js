@@ -6,9 +6,24 @@ export function getBaseApiUrl() {
   return '';
 }
 
-export function getProjectsFromBrigadeData(brigadeData) {
+export function getProjectsFromBrigadeData(
+  brigadeData,
+  filterOpts = {
+    brigadeName: undefined,
+    state: undefined,
+    boundingBox: undefined,
+  }
+) {
   if (!brigadeData) return [];
-  return brigadeData.reduce(
+  let dataToFilter = brigadeData;
+  const { brigadeName, state, boundingBox } = filterOpts;
+  if (brigadeName) {
+    dataToFilter = dataToFilter.filter((b) => b.name === brigadeName);
+  }
+  if (state || boundingBox) {
+    console.log('TODO: FILTER BY STATE AND BOUNDING BOX');
+  }
+  return dataToFilter.reduce(
     (projects, currentBrigade) => [
       ...projects,
       ...currentBrigade.projects.map((p) => ({
@@ -18,23 +33,6 @@ export function getProjectsFromBrigadeData(brigadeData) {
     ],
     []
   );
-}
-
-export function filterBy(
-  projects,
-  opts = { brigade: undefined, state: undefined, boundingBox: undefined }
-) {
-  // TODO: FINISH IMPLEMENTING THIS
-  if (!projects) return [];
-  return projects.filter((project) => {
-    let match = true;
-    Object.keys(opts).forEach((opt) => {
-      if (opt && project[opt] !== opts[opt]) {
-        match = false;
-      }
-    });
-    return match;
-  });
 }
 
 export function slugify(s) {

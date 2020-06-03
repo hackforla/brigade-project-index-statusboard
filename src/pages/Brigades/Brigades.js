@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Map from '../../components/Map/Map';
 import {
-  filterBy,
   cleanBrigadeData,
   getProjectsFromBrigadeData,
   getBaseApiUrl,
@@ -16,19 +15,25 @@ function Brigades() {
   // Changing map changes which filter function we use to filter projects
   // One filter func for brigades, one for state, one for bounding box
   const [brigadeData, setBrigadeData] = useState();
-  const [tagData, setTagData] = useState();
+  // const [tagData, setTagData] = useState();
   const [filterOpts, setFilterOpts] = useState();
-  const projects = getProjectsFromBrigadeData(brigadeData, filterOpts);
+  const [projects, setProjects] = useState(
+    getProjectsFromBrigadeData(brigadeData, filterOpts)
+  );
 
   useEffect(() => {
     const getData = async () => {
       const brigades = await axios.get(`${getBaseApiUrl()}/api/data.json`);
       setBrigadeData(cleanBrigadeData(brigades));
-      const tags = await axios.get(`${getBaseApiUrl()}/api/tags.json`);
-      setTagData(tags.data);
+      // const tags = await axios.get(`${getBaseApiUrl()}/api/tags.json`);
+      // setTagData(tags.data);
     };
     getData();
   }, []);
+
+  useEffect(() => {
+    setProjects(getProjectsFromBrigadeData(brigadeData, filterOpts));
+  }, [brigadeData, filterOpts]);
 
   return (
     <>
@@ -37,7 +42,7 @@ function Brigades() {
       {/* When map zooms or moves, re-filter geographically */}
       {/* Accessible filter by region, state, or a single brigade */}
       <div className="brigades-page-content">
-        <Map brigadeData={brigadeData} />
+        <Map brigadeData={brigadeData} filterOpts={filterOpts} />
         <div className="map-info">
           <p>
             Move the map or zoom in to filter by projects in a geographic area.
@@ -52,6 +57,12 @@ function Brigades() {
                 label="Select a brigade"
                 id="select-brigade"
                 options={brigadeData.map((b) => b.name)}
+                onChange={(event) =>
+                  setFilterOpts((currentFilterOpts) => ({
+                    ...currentFilterOpts,
+                    brigadeName: event.target.value,
+                  }))
+                }
               />
             </div>
           )}
