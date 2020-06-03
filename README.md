@@ -25,7 +25,7 @@ npm run update-cache
 
 This builds both the projectIndex cache and tags cache (data.json and tags.json respectively), and in deployment is run on a scheduler every 10 min.
 
------
+---
 
 ## Create React App project README
 

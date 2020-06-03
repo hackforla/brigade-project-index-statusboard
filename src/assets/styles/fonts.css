@@ -20,13 +20,13 @@
 :root {
   /* DEFAULT FONTS */
   --font-family-text: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Oxygen',
-                      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-                      'Helvetica Neue', sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   --font-family-header: 'News Cycle', 'Source Sans Pro', 'Segoe UI', 'Roboto',
-                        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-                        'Droid Sans', 'Helvetica Neue', sans-serif;
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   --font-family-code: 'Source Code Pro', 'Fira Code', Menlo, Monaco, Consolas,
-                      'Courier New', monospace;
+    'Courier New', monospace;
 
   /* BASE STYLES */
   -webkit-font-smoothing: antialiased;
@@ -38,6 +38,7 @@ header {
   font-family: var(-font-family-header);
 }
 
-pre, code {
+pre,
+code {
   font-family: var(--font-family-code);
 }
