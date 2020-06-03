@@ -1,8 +1,23 @@
+export function getProjectsFromBrigadeData(brigadeData) {
+  if (!brigadeData) return [];
+  return brigadeData.reduce(
+    (projects, currentBrigade) => [
+      ...projects,
+      ...currentBrigade.projects.map((p) => ({
+        ...p,
+        brigade: { ...currentBrigade, projects: undefined },
+      })),
+    ],
+    []
+  );
+}
+
 export function filterBy(
   projects,
   opts = { brigade: undefined, state: undefined, boundingBox: undefined }
 ) {
   if (!projects) return;
+  console.log(projects);
   return projects.filter((project) => {
     let match = true;
     Object.keys(opts).forEach((opt) => {

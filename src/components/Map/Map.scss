@@ -1,6 +1,6 @@
 .map {
   position: relative;
-  border: 4px solid var(--cfa-teal);
+  border: 4px solid var(--cfa-grey);
   border-radius: 5px;
 
   .states-group {
@@ -13,7 +13,7 @@
     path:hover,
     path:focus {
       outline: none;
-      stroke: var(--cfa-red);
+      stroke: var(--cfa-magenta);
       stroke-width: 4px;
     }
 
