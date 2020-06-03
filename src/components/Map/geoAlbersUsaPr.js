@@ -1,3 +1,5 @@
+/* eslint-disable */
+// Eslint is disabled becasue this is copied and pasted (with one fix) directly from Bostock
 import { geoAlbers, geoConicEqualArea } from 'd3-geo';
 
 // A modified geo.albersUsa to include Puerto Rico.

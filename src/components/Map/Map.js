@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { zoom as d3zoom, zoomIdentity, zoomTransform } from 'd3-zoom';
 import { select, event, mouse } from 'd3-selection';
 import { feature, mesh } from 'topojson-client';
@@ -9,17 +10,60 @@ import './Map.scss';
 
 // Taken from https://observablehq.com/@d3/zoom-to-bounding-box
 export default function Map({ brigadeData: inputBrigadeData }) {
+  // eslint-disable-next-line no-use-before-define
   const zoom = d3zoom().scaleExtent([1, 8]).on('zoom', zoomed);
   const projection = albersUsaPr().scale(1000).translate([487.5, 305]);
   const path = geoPath(projection);
   const brigadeData = inputBrigadeData || [];
-  let svg, statePathsGroup, brigadePoints;
+  let svg;
+  let statePathsGroup;
+  let brigadePoints;
   let width = 0;
   let height = 0;
   // Sort the states so that the tab index order makes sense
   us.objects.states.geometries.sort((a, b) =>
     a.properties.name.localeCompare(b.properties.name)
   );
+
+  function reset() {
+    if (!svg) return;
+    svg
+      .transition()
+      .duration(750)
+      .call(
+        zoom.transform,
+        zoomIdentity,
+        zoomTransform(svg.node()).invert([width / 2, height / 2])
+      );
+  }
+
+  function clicked(d) {
+    if (!svg) return;
+    const [[x0, y0], [x1, y1]] = path.bounds(d);
+    event.stopPropagation();
+    svg
+      .transition()
+      .duration(750)
+      .call(
+        zoom.transform,
+        zoomIdentity
+          .translate(width / 2, height / 2)
+          .scale(
+            Math.min(8, 0.9 / Math.max((x1 - x0) / width, (y1 - y0) / height))
+          )
+          .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
+        mouse(svg.node())
+      );
+  }
+
+  function zoomed() {
+    if (!statePathsGroup) return;
+    const { transform } = event;
+    statePathsGroup.attr('transform', transform);
+    statePathsGroup.attr('stroke-width', 1 / transform.k);
+    brigadePoints.attr('transform', transform);
+    brigadePoints.attr('r', 10 / transform.k);
+  }
 
   const svgRef = useCallback(
     (svgNode) => {
@@ -94,44 +138,8 @@ export default function Map({ brigadeData: inputBrigadeData }) {
       />
     </div>
   );
-
-  function reset() {
-    if (!svg) return;
-    svg
-      .transition()
-      .duration(750)
-      .call(
-        zoom.transform,
-        zoomIdentity,
-        zoomTransform(svg.node()).invert([width / 2, height / 2])
-      );
-  }
-
-  function clicked(d) {
-    if (!svg) return;
-    const [[x0, y0], [x1, y1]] = path.bounds(d);
-    event.stopPropagation();
-    svg
-      .transition()
-      .duration(750)
-      .call(
-        zoom.transform,
-        zoomIdentity
-          .translate(width / 2, height / 2)
-          .scale(
-            Math.min(8, 0.9 / Math.max((x1 - x0) / width, (y1 - y0) / height))
-          )
-          .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
-        mouse(svg.node())
-      );
-  }
-
-  function zoomed() {
-    if (!statePathsGroup) return;
-    const { transform } = event;
-    statePathsGroup.attr('transform', transform);
-    statePathsGroup.attr('stroke-width', 1 / transform.k);
-    brigadePoints.attr('transform', transform);
-    brigadePoints.attr('r', 10 / transform.k);
-  }
 }
+
+Map.propTypes = {
+  brigadeData: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
