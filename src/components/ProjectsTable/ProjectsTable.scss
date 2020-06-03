@@ -19,24 +19,5 @@
 
   .pagination {
     text-align: center;
-
-    button,
-    select,
-    input {
-      // TODO: MAKE THIS A GENERAL BUTTON STYLE, USE IT IN NAV BAR
-      font-size: 1.5rem;
-      border-radius: 5px;
-      border: 2px solid var(--cfa-white);
-      padding: 0 1rem 0.3rem 1rem;
-    }
-
-    button,
-    select {
-      background-color: var(--cfa-blue-dark);
-      color: var(--cfa-white);
-    }
-
-    input {
-    }
   }
 }
