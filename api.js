@@ -17,7 +17,7 @@ export function getProjectIndex(orgType) {
   // eslint-disable-next-line no-console
   console.log('getting project index');
   // We will make calls out to Github for the latest index information
-  const octokit = Octokit({
+  const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
   });
 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Map from '../../components/Map/Map';
 import { filterBy, cleanBrigadeData } from './utils';
 import { getBaseApiUrl } from '../../utils';
+import './Brigades.scss';
 
 function Brigades() {
   // Filter projects by zoomed in area of map, unless a state or brigade is highlighted

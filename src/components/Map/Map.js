@@ -4,17 +4,15 @@ import { select, event, mouse } from 'd3-selection';
 import { feature, mesh } from 'topojson-client';
 import { geoPath } from 'd3-geo';
 import albersUsaPr from './geoAlbersUsaPr';
-// TODO: FIND THE JSON FILE THAT INCLUDES PUERTO RICO
-// https://observablehq.com/@d3/u-s-map-with-puerto-rico
-// import us from '../../assets/states-albers-10m';
 import us from '../../assets/states-10m.json';
 import './Map.scss';
 
 // Taken from https://observablehq.com/@d3/zoom-to-bounding-box
-export default function Map({ brigadeData }) {
+export default function Map({ brigadeData: inputBrigadeData }) {
   const zoom = d3zoom().scaleExtent([1, 8]).on('zoom', zoomed);
   const projection = albersUsaPr().scale(1000).translate([487.5, 305]);
   const path = geoPath(projection);
+  const brigadeData = inputBrigadeData || [];
   let svg, statePathsGroup, brigadePoints;
   let width = 0;
   let height = 0;
@@ -25,7 +23,7 @@ export default function Map({ brigadeData }) {
 
   const svgRef = useCallback(
     (svgNode) => {
-      if (!svgNode || !brigadeData) return;
+      if (!svgNode) return;
       // Set height and width
       const svgDimensions = svgNode.getBoundingClientRect();
       width = svgDimensions.width;
@@ -33,6 +31,8 @@ export default function Map({ brigadeData }) {
 
       // Do all of the d3 things once the svg node exists
       svg = select(svgNode);
+      // Remove everything so that it fully rerenders on data change
+      svg.selectAll('*').remove();
       statePathsGroup = svg.append('g');
 
       // This needs to come first so it doesn't interfere with click interactivity
