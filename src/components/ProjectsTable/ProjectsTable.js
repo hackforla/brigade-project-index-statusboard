@@ -1,15 +1,22 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { memo } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTable, usePagination } from 'react-table';
+import './ProjectsTable.scss';
 
+// Helpful examples
 // https://github.com/tannerlinsley/react-table/blob/master/docs/examples/simple.md
+// This is probably what we want
+// github.com/tannerlinsley/react-table/blob/master/examples/sub-components/src/App.js
+
 export default function ProjectsTable({ projects }) {
   const columns = React.useMemo(
     () => [
       {
         Header: 'Project name',
-        accessor: 'name',
+        accessor: (project) => (
+          <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
+        ),
       },
       {
         Header: 'Description',
@@ -28,10 +35,7 @@ export default function ProjectsTable({ projects }) {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
-
-    // The rest of these things are super handy, too ;)
+    page,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -50,11 +54,6 @@ export default function ProjectsTable({ projects }) {
     usePagination
   );
 
-  console.log(projects[0]);
-  // <NavLink to={`/projects/${project.name}`}>
-  //   {project.name}
-  // </NavLink>;
-
   return (
     <div className="projects-table">
       <table {...getTableProps()}>
@@ -70,7 +69,6 @@ export default function ProjectsTable({ projects }) {
         <tbody {...getTableBodyProps()}>
           {page.map((row, i) => {
             prepareRow(row);
-            console.log(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {

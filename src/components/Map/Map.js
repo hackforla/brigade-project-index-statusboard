@@ -75,7 +75,6 @@ export default function Map({ brigadeData: inputBrigadeData }) {
       brigadePoints.append('title').text((d) => d.name);
 
       svg.call(zoom);
-      reset();
     },
     [brigadeData]
   );
@@ -92,7 +91,7 @@ export default function Map({ brigadeData: inputBrigadeData }) {
         onClick={reset}
         preserveAspectRatio="xMinYMin meet"
         viewBox={[0, 0, 975, 610]}
-      ></svg>
+      />
     </div>
   );
 

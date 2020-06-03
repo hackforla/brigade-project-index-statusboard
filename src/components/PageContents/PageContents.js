@@ -11,12 +11,12 @@ function PageContents() {
   return (
     <div className="contents">
       <Switch>
-        <Route path="/" component={Home} exact></Route>
-        <Route path="/projects/:id" component={ProjectDetail}></Route>
-        <Route path="/projects" component={Projects}></Route>
-        <Route path="/brigades" component={Brigades}></Route>
-        <Route path="/about" component={About}></Route>
-        <Route component={Home}></Route>
+        <Route path="/" component={Home} exact />
+        <Route path="/projects/:slug" component={ProjectDetail} />
+        <Route path="/projects" component={Projects} />
+        <Route path="/brigades" component={Brigades} />
+        <Route path="/about" component={About} />
+        <Route component={Home} />
         {/* ^ could also do an error page here... */}
       </Switch>
     </div>

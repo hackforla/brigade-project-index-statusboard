@@ -1,0 +1,33 @@
+.projects-table {
+  margin: 4rem;
+
+  th {
+    background-color: var(--cfa-blue-dark);
+    color: var(--cfa-white);
+    padding: 1.5rem;
+    text-align: left;
+  }
+
+  td {
+    padding: 1rem 1.5rem;
+  }
+
+  tr:nth-child(odd) {
+    background: var(--cfa-blue-lightest);
+  }
+
+  .pagination {
+    text-align: center;
+
+    button,
+    select {
+      // TODO: MAKE THIS A GENERAL BUTTON STYLE, USE IT IN NAV BAR
+      font-size: 1.5rem;
+      border: 2px solid var(--cfa-white);
+      border-radius: 5px;
+      padding: 0 1rem 0.3rem 1rem;
+      background-color: var(--cfa-blue-dark);
+      color: var(--cfa-white);
+    }
+  }
+}

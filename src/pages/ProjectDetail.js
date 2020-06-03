@@ -1,10 +1,15 @@
 import React from 'react';
 
-function ProjectDetail({ project }) {
+function ProjectDetail({
+  match: {
+    params: { slug },
+  },
+}) {
+  console.log(slug);
   return (
     <>
-      <h2>ProjectDetail page!</h2>
-      <p>This is the ProjectDetail page.</p>
+      <h2>Project detail page!</h2>
+      <p>This is the project detail page.</p>
     </>
   );
 }

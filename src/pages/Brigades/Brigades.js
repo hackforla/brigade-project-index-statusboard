@@ -44,8 +44,16 @@ function Brigades() {
       {/* Accessible filter by region, state, or a single brigade */}
       <div className="brigades-page-content">
         <Map brigadeData={brigadeData} />
-        <ProjectsTable projects={projects} />
+        <div className="map-info">
+          <div>
+            <label>Select a state</label>
+            <select>
+              <option>state</option>
+            </select>
+          </div>
+        </div>
       </div>
+      <ProjectsTable projects={projects} />
     </>
   );
 }
