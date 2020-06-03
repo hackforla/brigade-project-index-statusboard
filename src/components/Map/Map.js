@@ -8,7 +8,10 @@ import albersUsaPr from './geoAlbersUsaPr';
 import us from '../../assets/states-10m.json';
 import './Map.scss';
 
-// Taken from https://observablehq.com/@d3/zoom-to-bounding-box
+// TODO: improve keyboard interactivity by putting the tabindex on the groups and using arrow keys for brigades and states
+// Make focused state and focused brigade states so that a user can go back to the map without tabbing through everything again
+
+// Draws heavily from https://observablehq.com/@d3/zoom-to-bounding-box
 export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
   // eslint-disable-next-line no-use-before-define
   const zoom = d3zoom().scaleExtent([1, 8]).on('zoom', zoomed);
