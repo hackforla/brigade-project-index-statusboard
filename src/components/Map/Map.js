@@ -9,12 +9,11 @@ import us from '../../assets/states-10m.json';
 import './Map.scss';
 
 // Taken from https://observablehq.com/@d3/zoom-to-bounding-box
-export default function Map({ brigadeData: inputBrigadeData }) {
+export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
   // eslint-disable-next-line no-use-before-define
   const zoom = d3zoom().scaleExtent([1, 8]).on('zoom', zoomed);
   const projection = albersUsaPr().scale(1000).translate([487.5, 305]);
   const path = geoPath(projection);
-  const brigadeData = inputBrigadeData || [];
   let svg;
   let statePathsGroup;
   let brigadePoints;
@@ -37,7 +36,7 @@ export default function Map({ brigadeData: inputBrigadeData }) {
       );
   }
 
-  function clicked(d) {
+  function stateClicked(d) {
     if (!svg) return;
     const [[x0, y0], [x1, y1]] = path.bounds(d);
     event.stopPropagation();
@@ -56,13 +55,23 @@ export default function Map({ brigadeData: inputBrigadeData }) {
       );
   }
 
+  function brigadeClicked(d) {
+    setFilterOpts((currentFilterOpts) => ({
+      ...currentFilterOpts,
+      brigadeName: d.name,
+    }));
+  }
+
   function zoomed() {
     if (!statePathsGroup) return;
     const { transform } = event;
+    // States
     statePathsGroup.attr('transform', transform);
-    statePathsGroup.attr('stroke-width', 1 / transform.k);
+    statePathsGroup.selectAll('path').attr('stroke-width', 1 / transform.k);
+    // Brigade circles
     brigadePoints.attr('transform', transform);
     brigadePoints.attr('r', 10 / transform.k);
+    brigadePoints.attr('stroke-width', 4 / transform.k);
   }
 
   const svgRef = useCallback(
@@ -95,13 +104,13 @@ export default function Map({ brigadeData: inputBrigadeData }) {
         .on('keyup', (d) => {
           const { key } = event;
           if (key === 'Enter') {
-            // TODO: this works but throws an error?
-            clicked(d);
+            stateClicked(d);
           }
         })
-        .on('click', clicked)
+        .on('click', stateClicked)
         .attr('d', path)
         .attr('tabindex', 0)
+        .attr('aria-role', 'button')
         .append('title')
         .text((d) => d.properties.name);
 
@@ -112,8 +121,18 @@ export default function Map({ brigadeData: inputBrigadeData }) {
         .enter()
         .append('circle')
         .attr('class', 'brigade-point')
+        .attr('aria-role', 'button')
+        .attr('tabindex', 0)
+        .on('keyup', (d) => {
+          const { key } = event;
+          if (key === 'Enter') {
+            brigadeClicked(d);
+          }
+        })
+        .on('click', brigadeClicked)
         .attr('cx', (d) => projection([d.longitude, d.latitude])[0])
         .attr('cy', (d) => projection([d.longitude, d.latitude])[1])
+        .attr('stroke-width', '3px')
         .attr('r', 10);
 
       brigadePoints.append('title').text((d) => d.name);
@@ -140,6 +159,12 @@ export default function Map({ brigadeData: inputBrigadeData }) {
   );
 }
 
+Map.defaultProps = {
+  brigadeData: [],
+};
+
 Map.propTypes = {
-  brigadeData: PropTypes.arrayOf(PropTypes.any).isRequired,
+  brigadeData: PropTypes.arrayOf(PropTypes.any),
+  filterOpts: PropTypes.func.isRequired,
+  setFilterOpts: PropTypes.func.isRequired,
 };

@@ -11,7 +11,6 @@ import './Brigades.scss';
 
 function Brigades() {
   // Filter projects by zoomed in area of map, unless a state or brigade is highlighted
-
   // Changing map changes which filter function we use to filter projects
   // One filter func for brigades, one for state, one for bounding box
   const [brigadeData, setBrigadeData] = useState();
@@ -42,7 +41,11 @@ function Brigades() {
       {/* When map zooms or moves, re-filter geographically */}
       {/* Accessible filter by region, state, or a single brigade */}
       <div className="brigades-page-content">
-        <Map brigadeData={brigadeData} filterOpts={filterOpts} />
+        <Map
+          brigadeData={brigadeData}
+          filterOpts={filterOpts}
+          setFilterOpts={setFilterOpts}
+        />
         <div className="map-info">
           <p>
             Move the map or zoom in to filter by projects in a geographic area.

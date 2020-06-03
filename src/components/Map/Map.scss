@@ -1,6 +1,6 @@
 .map {
   position: relative;
-  border: 4px solid var(--cfa-grey);
+  border: 2px solid var(--cfa-grey);
   border-radius: 5px;
 
   .states-group {
@@ -14,7 +14,7 @@
     path:focus {
       outline: none;
       stroke: var(--cfa-magenta);
-      stroke-width: 4px;
+      stroke-width: 3px;
     }
 
     path:focus {
@@ -33,5 +33,11 @@
     stroke: var(--cfa-purple);
     fill: var(--cfa-purple);
     cursor: pointer;
+
+    &:hover,
+    &:focus {
+      fill-opacity: 1;
+      stroke: var(--cfa-yellow);
+    }
   }
 }
