@@ -129,6 +129,7 @@ export default function ProjectsTable({ projects }) {
             }}
             options={[10, 20, 30, 40, 50]}
             label="Projects per page"
+            id="projects-per-page"
           />
         </div>
       </div>

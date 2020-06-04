@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { zoom as d3zoom, zoomIdentity, zoomTransform } from 'd3-zoom';
 import { select, event, mouse } from 'd3-selection';
@@ -61,8 +61,23 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
   function brigadeClicked(d) {
     setFilterOpts((currentFilterOpts) => ({
       ...currentFilterOpts,
-      brigadeName: d.name,
+      selectedBrigade: d,
     }));
+  }
+
+  function zoomToBrigade(brigade) {
+    const [x, y] = projection([brigade.longitude, brigade.latitude]);
+    svg
+      .transition()
+      .duration(750)
+      .call(
+        zoom.transform,
+        zoomIdentity
+          .translate(width / 2, height / 2)
+          .scale(40)
+          .translate(-x, -y),
+        mouse(svg.node())
+      );
   }
 
   function zoomed() {
@@ -124,6 +139,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
         .enter()
         .append('circle')
         .attr('class', 'brigade-point')
+        .attr('id', (d) => d.slug)
         .attr('aria-role', 'button')
         .attr('tabindex', 0)
         .on('keyup', (d) => {
@@ -150,6 +166,12 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
   // Add map zoom and region, state, brigade select menus?
   // Add buttons for zoom and reset
 
+  useEffect(() => {
+    if (svg && filterOpts.selectedBrigade) {
+      zoomToBrigade(filterOpts.selectedBrigade);
+    }
+  }, [filterOpts, svg]);
+
   return (
     <div className="map">
       <svg
@@ -167,7 +189,7 @@ Map.defaultProps = {
 };
 
 export const filterOptsPropType = PropTypes.shape({
-  brigadeName: PropTypes.string,
+  selectedBrigade: PropTypes.shape(),
   state: PropTypes.string,
   boundingBox: PropTypes.array,
 });

@@ -9,16 +9,16 @@ export function getBaseApiUrl() {
 export function getProjectsFromBrigadeData(
   brigadeData,
   filterOpts = {
-    brigadeName: undefined,
+    selectedBrigade: undefined,
     state: undefined,
     boundingBox: undefined,
   }
 ) {
   if (!brigadeData) return [];
   let dataToFilter = brigadeData;
-  const { brigadeName, state, boundingBox } = filterOpts;
-  if (brigadeName) {
-    dataToFilter = dataToFilter.filter((b) => b.name === brigadeName);
+  const { selectedBrigade, state, boundingBox } = filterOpts;
+  if (selectedBrigade) {
+    dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade.name);
   }
   if (state || boundingBox) {
     console.log('TODO: FILTER BY STATE AND BOUNDING BOX');

@@ -15,7 +15,7 @@ function Brigades() {
   // One filter func for brigades, one for state, one for bounding box
   const [brigadeData, setBrigadeData] = useState();
   // const [tagData, setTagData] = useState();
-  const [filterOpts, setFilterOpts] = useState();
+  const [filterOpts, setFilterOpts] = useState({});
   const [projects, setProjects] = useState(
     getProjectsFromBrigadeData(brigadeData, filterOpts)
   );
@@ -59,10 +59,17 @@ function Brigades() {
               label="Select a brigade"
               id="select-brigade"
               options={(brigadeData || []).map((b) => b.name)}
+              selected={
+                filterOpts && filterOpts.selectedBrigade
+                  ? filterOpts.selectedBrigade.name
+                  : undefined
+              }
               onChange={(event) =>
                 setFilterOpts((currentFilterOpts) => ({
                   ...currentFilterOpts,
-                  brigadeName: event.target.value,
+                  selectedBrigade: brigadeData.find(
+                    (b) => b.name === event.target.value
+                  ),
                 }))
               }
             />
