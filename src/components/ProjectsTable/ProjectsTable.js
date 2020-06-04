@@ -18,6 +18,8 @@ export default function ProjectsTable({ projects }) {
         accessor: (project) => (
           <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
         ),
+        // TODO: this doesn't seem to be working, and the table adjusts width in weird ways between pages
+        width: '25%',
       },
       {
         Header: 'Description',
@@ -26,6 +28,7 @@ export default function ProjectsTable({ projects }) {
       {
         Header: 'Brigade',
         accessor: 'brigade.name',
+        width: '25%',
       },
     ],
     []
@@ -68,7 +71,7 @@ export default function ProjectsTable({ projects }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -82,9 +85,6 @@ export default function ProjectsTable({ projects }) {
           })}
         </tbody>
       </table>
-      {/* 
-        TODO: this was copied from the example and the accessibility is a hot mess
-      */}
       <div className="pagination">
         <div>
           <Button
