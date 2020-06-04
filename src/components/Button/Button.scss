@@ -1,18 +1,19 @@
-// button,
-// select,
-// input {
-//   // TODO: MAKE THIS A GENERAL BUTTON STYLE, USE IT IN NAV BAR
-//   font-size: 1.5rem;
-//   border-radius: 5px;
-//   border: 2px solid var(--cfa-white);
-//   padding: 0 1rem 0.3rem 1rem;
-// }
+button.button {
+  font-size: 1.5rem;
+  border-radius: 5px;
+  border: 2px solid var(--cfa-magenta);
+  background-color: var(--cfa-magenta-lightest);
+  padding: 0.3rem 1rem;
+  cursor: pointer;
 
-// button,
-// select {
-//   background-color: var(--cfa-blue-dark);
-//   color: var(--cfa-white);
-// }
+  &:hover,
+  &:focus {
+    background-color: var(--cfa-magenta-lighter);
+  }
 
-// input {
-// }
+  &:disabled {
+    cursor: default;
+    background-color: var(--cfa-grey-light);
+    border: 2px solid var(--cfa-grey);
+  }
+}

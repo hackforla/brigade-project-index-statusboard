@@ -9,7 +9,7 @@ export default function Select({ label, id, options, onChange }) {
         <div>{label}</div>
       </label>
       <select id={id} onChange={onChange}>
-        <option>Select a brigade</option>
+        <option>Select</option>
         {options.map((option) => {
           return <option key={option}>{option}</option>;
         })}

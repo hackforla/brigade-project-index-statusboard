@@ -2,6 +2,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTable, usePagination } from 'react-table';
+import { Button, Select, TextInput } from '..';
 import './ProjectsTable.scss';
 
 // Helpful examples
@@ -85,64 +86,45 @@ export default function ProjectsTable({ projects }) {
         TODO: this was copied from the example and the accessibility is a hot mess
       */}
       <div className="pagination">
-        <button
-          type="button"
+        <Button
           onClick={() => gotoPage(0)}
           disabled={!canPreviousPage}
-        >
-          {'<<'}
-        </button>{' '}
-        <button
-          type="button"
-          onClick={() => previousPage()}
+          text="First"
+        />
+        <Button
+          onClick={previousPage}
           disabled={!canPreviousPage}
-        >
-          {'<'}
-        </button>{' '}
-        <button
-          type="button"
-          onClick={() => nextPage()}
-          disabled={!canNextPage}
-        >
-          {'>'}
-        </button>{' '}
-        <button
-          type="button"
+          text="Previous"
+        />
+        <Button onClick={nextPage} disabled={!canNextPage} text="Next" />
+        <Button
           onClick={() => gotoPage(pageCount - 1)}
           disabled={!canNextPage}
-        >
-          {'>>'}
-        </button>{' '}
-        <span>
+          text="Last"
+        />
+        <div>
           Page{' '}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
           </strong>{' '}
-        </span>
-        <span>
-          | Go to page:{' '}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={(e) => {
-              const p = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(p);
-            }}
-            style={{ width: '100px' }}
-          />
-        </span>{' '}
-        <select
+        </div>
+        <TextInput
+          label="Go to page"
+          id="go-to-page"
+          type="number"
+          onChange={(e) => {
+            const p = e.target.value ? Number(e.target.value) - 1 : 0;
+            gotoPage(p);
+          }}
+        />
+        <Select
           value={pageSize}
           onChange={(e) => {
             setPageSize(Number(e.target.value));
           }}
-        >
-          {[10, 20, 30, 40, 50].map((_pageSize) => (
-            <option key={_pageSize} value={_pageSize}>
-              Show {_pageSize}
-            </option>
-          ))}
-        </select>
+          options={[10, 20, 30, 40, 50]}
+          label="Projects per page"
+        />
       </div>
     </div>
   );

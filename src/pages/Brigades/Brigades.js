@@ -54,21 +54,19 @@ function Brigades() {
             projects owned by a single brigade.
           </p>
           {/* TODO: FIGURE OUT WHAT GOES HERE */}
-          {brigadeData && (
-            <div>
-              <Select
-                label="Select a brigade"
-                id="select-brigade"
-                options={brigadeData.map((b) => b.name)}
-                onChange={(event) =>
-                  setFilterOpts((currentFilterOpts) => ({
-                    ...currentFilterOpts,
-                    brigadeName: event.target.value,
-                  }))
-                }
-              />
-            </div>
-          )}
+          <div>
+            <Select
+              label="Select a brigade"
+              id="select-brigade"
+              options={(brigadeData || []).map((b) => b.name)}
+              onChange={(event) =>
+                setFilterOpts((currentFilterOpts) => ({
+                  ...currentFilterOpts,
+                  brigadeName: event.target.value,
+                }))
+              }
+            />
+          </div>
         </div>
       </div>
       <ProjectsTable projects={projects} />

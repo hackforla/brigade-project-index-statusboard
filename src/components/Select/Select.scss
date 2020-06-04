@@ -2,8 +2,7 @@
   position: relative;
   width: fit-content;
   max-width: 25rem;
-
-  label div {
+  display: inline-block label div {
     padding: 1rem 0 0.5rem 0;
   }
 
@@ -26,7 +25,7 @@
     // TODO: MAKE THIS A GENERAL BUTTON STYLE, USE IT IN NAV BAR
     font-size: 1.5rem;
     border-radius: 5px;
-    padding: 0.3rem 1rem;
+    padding: 0.3rem 3rem 0.3rem 1rem;
     border: 2px solid var(--cfa-magenta);
     background-color: var(--cfa-magenta-lightest);
     -webkit-appearance: none;

@@ -17,5 +17,12 @@
 
   .pagination {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    > * {
+      margin: 1rem 0.5rem;
+    }
   }
 }
