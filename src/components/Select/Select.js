@@ -4,9 +4,12 @@ import './Select.scss';
 
 export default function Select({ label, id, options, onChange }) {
   return (
-    <div>
-      <label htmlFor={id}>{label}</label>
+    <div className="select-container">
+      <label htmlFor={id}>
+        <div>{label}</div>
+      </label>
       <select id={id} onChange={onChange}>
+        <option>Select a brigade</option>
         {options.map((option) => {
           return <option key={option}>{option}</option>;
         })}

@@ -1,18 +1,48 @@
-button,
-select,
-input {
-  // TODO: MAKE THIS A GENERAL BUTTON STYLE, USE IT IN NAV BAR
-  font-size: 1.5rem;
-  border-radius: 5px;
-  border: 2px solid var(--cfa-white);
-  padding: 0 1rem 0.3rem 1rem;
-}
+.select-container {
+  position: relative;
+  width: fit-content;
+  max-width: 25rem;
 
-button,
-select {
-  background-color: var(--cfa-blue-dark);
-  color: var(--cfa-white);
-}
+  label div {
+    padding: 1rem 0 0.5rem 0;
+  }
 
-input {
+  &:after {
+    content: '<>';
+    font-family: 'Consolas', monospace;
+    font-style: bold;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    right: 1rem;
+    bottom: 0.5rem;
+
+    position: absolute;
+    pointer-events: none;
+  }
+
+  select {
+    // TODO: MAKE THIS A GENERAL BUTTON STYLE, USE IT IN NAV BAR
+    font-size: 1.5rem;
+    border-radius: 5px;
+    padding: 0.3rem 1rem;
+    border: 2px solid var(--cfa-magenta);
+    background-color: var(--cfa-magenta-lightest);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Add some styling */
+
+    display: inline-block;
+    width: 100%;
+    background-image: none;
+    -ms-word-break: normal;
+    word-break: normal;
+
+    /*To remove button from IE11, thank you Matt */
+    &::-ms-expand {
+      display: none;
+    }
+  }
 }

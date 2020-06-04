@@ -8,7 +8,8 @@
   --cfa-grey-darkest: #121111;
   --cfa-magenta: #a6005e;
   --cfa-magenta-dark: #66013a;
-  --cfa-magenta-light: #ffe6f4;
+  --cfa-magenta-light: hsl(326, 100%, 60%);
+  --cfa-magenta-lightest: hsl(326, 100%, 96%);
   --cfa-turqoise: #399fd3;
   --cfa-cyan: #4298bb;
   --cfa-teal: #008060;
