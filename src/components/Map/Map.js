@@ -66,6 +66,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
   }
 
   function zoomToBrigade(brigade) {
+    // This doesn't work-- I have another branch to simplify the map to a more react-y paradigm
     const [x, y] = projection([brigade.longitude, brigade.latitude]);
     svg
       .transition()
