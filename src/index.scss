@@ -5,3 +5,12 @@ body {
   margin: 0;
   font-size: 1.25rem;
 }
+
+a {
+  color: inherit;
+
+  &:hover,
+  &:focus {
+    color: var(--cfa-grey-dark);
+  }
+}

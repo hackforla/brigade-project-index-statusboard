@@ -2,8 +2,6 @@
 }
 
 .form-label {
-  font-size: 1rem;
-
   div {
     padding: 1rem 0 0.25rem 0;
     text-align: left;
@@ -16,6 +14,7 @@
 }
 
 .form-control {
+  font-size: 1.15rem;
   border-radius: 5px;
   border: 2px solid var(--cfa-magenta);
   background-color: var(--cfa-magenta-lightest);
