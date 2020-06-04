@@ -18,11 +18,12 @@
   .pagination {
     text-align: center;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: flex-end;
 
-    > * {
-      margin: 1rem 0.5rem;
+    > * > * {
+      display: inline-block;
+      margin: 0.5rem;
     }
   }
 }

@@ -50,7 +50,7 @@ export default function ProjectsTable({ projects }) {
     {
       columns,
       data: projects,
-      initialState: { pageIndex: 2 },
+      initialState: { pageIndex: 0 },
     },
     usePagination
   );
@@ -86,45 +86,51 @@ export default function ProjectsTable({ projects }) {
         TODO: this was copied from the example and the accessibility is a hot mess
       */}
       <div className="pagination">
-        <Button
-          onClick={() => gotoPage(0)}
-          disabled={!canPreviousPage}
-          text="First"
-        />
-        <Button
-          onClick={previousPage}
-          disabled={!canPreviousPage}
-          text="Previous"
-        />
-        <Button onClick={nextPage} disabled={!canNextPage} text="Next" />
-        <Button
-          onClick={() => gotoPage(pageCount - 1)}
-          disabled={!canNextPage}
-          text="Last"
-        />
         <div>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
+          <Button
+            onClick={() => gotoPage(0)}
+            disabled={!canPreviousPage}
+            text="First"
+          />
+          <Button
+            onClick={previousPage}
+            disabled={!canPreviousPage}
+            text="Previous"
+          />
+
+          <div>
+            Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>{' '}
+          </div>
+
+          <Button onClick={nextPage} disabled={!canNextPage} text="Next" />
+          <Button
+            onClick={() => gotoPage(pageCount - 1)}
+            disabled={!canNextPage}
+            text="Last"
+          />
         </div>
-        <TextInput
-          label="Go to page"
-          id="go-to-page"
-          type="number"
-          onChange={(e) => {
-            const p = e.target.value ? Number(e.target.value) - 1 : 0;
-            gotoPage(p);
-          }}
-        />
-        <Select
-          value={pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value));
-          }}
-          options={[10, 20, 30, 40, 50]}
-          label="Projects per page"
-        />
+        <div>
+          <TextInput
+            label="Go to page"
+            id="go-to-page"
+            type="number"
+            onChange={(e) => {
+              const p = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(p);
+            }}
+          />
+          <Select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+            }}
+            options={[10, 20, 30, 40, 50]}
+            label="Projects per page"
+          />
+        </div>
       </div>
     </div>
   );
