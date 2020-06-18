@@ -1,0 +1,14 @@
+.brigades-page-content {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+
+  .map {
+    flex: 1;
+  }
+
+  .map-info {
+    flex: 1;
+    padding: 0 2rem;
+  }
+}

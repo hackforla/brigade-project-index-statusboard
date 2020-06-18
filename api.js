@@ -9,7 +9,7 @@ export function getLastUpdate() {
 }
 
 function slugify(n) {
-  return n.toLowerCase().replace(/[^a-zA-Z0-9\-]+/g, '-');
+  return n.toLowerCase().replace(/[^a-zA-Z0-9-]+/g, '-');
 }
 
 export function getProjectIndex(orgType) {
@@ -17,13 +17,13 @@ export function getProjectIndex(orgType) {
   // eslint-disable-next-line no-console
   console.log('getting project index');
   // We will make calls out to Github for the latest index information
-  const octokit = Octokit({
+  const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
   });
 
   // return promise the resolves once we have unzipped and merged
   // all the projects / organizations
-  const promise = new Promise((resolve, _reject) => {
+  const promise = new Promise((resolve) => {
     octokit.repos
       .getArchiveLink({
         owner: 'codeforamerica',
@@ -36,7 +36,7 @@ export function getProjectIndex(orgType) {
         const indexZip = new JSZip();
         indexZip
           .loadAsync(response.data)
-          .then((_archive) => {
+          .then(() => {
             // Iterate through all the .toml files
             const orgs = [];
             const projects = [];
@@ -80,7 +80,7 @@ export function getProjectIndex(orgType) {
 
             // After all async loads are finished, we combine the projects
             // into the orgs and keep our original promise
-            Promise.all(promises).then((_result) => {
+            Promise.all(promises).then(() => {
               // prettier-ignore
               // eslint-disable-next-line no-console
               console.log(

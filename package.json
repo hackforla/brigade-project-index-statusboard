@@ -5,15 +5,24 @@
   "dependencies": {
     "@octokit/rest": "^17.9.2",
     "axios": "^0.19.2",
+    "cors": "^2.8.5",
+    "d3-geo": "^1.12.1",
+    "d3-selection": "^1.4.1",
+    "d3-zoom": "^1.8.3",
+    "esm": "^3.2.25",
+    "express-sslify": "^1.2.0",
     "jszip": "^3.4.0",
     "lodash": "^4.17.15",
     "memjs": "^1.2.2",
     "node-sass": "^4.14.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "toml": "^3.0.0"
+    "react-table": "^7.1.0",
+    "toml": "^3.0.0",
+    "topojson-client": "^3.1.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -34,7 +43,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "./node_modules/eslint/bin/eslint.js src/**/*.js *.js",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "update-cache": "node -r esm updateCacheTask.js",
+    "server": "node -r esm server.js"
   },
   "eslintConfig": {
     "extends": "react-app"

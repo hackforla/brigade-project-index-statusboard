@@ -8,19 +8,24 @@
   --cfa-grey-darkest: #121111;
   --cfa-magenta: #a6005e;
   --cfa-magenta-dark: #66013a;
+  --cfa-magenta-light: hsl(326, 100%, 60%);
+  --cfa-magenta-lighter: hsl(326, 100%, 92%);
+  --cfa-magenta-lightest: hsl(326, 100%, 96%);
   --cfa-turqoise: #399fd3;
   --cfa-cyan: #4298bb;
   --cfa-teal: #008060;
   --cfa-teal-dark: #034e46;
   --cfa-yellow: #ffae00;
   --cfa-orange: #e87d2b;
+  --cfa-blue-lightest: #e6f7ff;
   --cfa-blue-light: #399fd3;
   --cfa-blue-dark: #004b6a;
   --cfa-purple: #69579c;
   --cfa-white: #e5e5e5;
+  --cfa-white-light: hsl(0, 0%, 96%);
 
   /* DEFAULT COLORS */
-  --color-background: var(--cfa-white);
+  --color-background: var(--cfa-white-light);
   --color-text: var(--cfa-grey-darkest);
   --color-text-help: var(--cfa-grey-dark);
   --color-text-error: var(--cfa-red);

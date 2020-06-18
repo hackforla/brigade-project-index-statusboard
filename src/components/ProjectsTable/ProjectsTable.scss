@@ -1,0 +1,39 @@
+.projects-table {
+  width: 100%;
+  border: 4px solid var(--cfa-blue-light);
+
+  table {
+    width: 100%;
+  }
+
+  th {
+    background-color: var(--cfa-blue-dark);
+    color: var(--cfa-white);
+    padding: 1.5rem;
+    text-align: left;
+    font-size: 1.5rem;
+  }
+
+  td {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+
+  tr:nth-child(odd) {
+    background: var(--cfa-blue-lightest);
+  }
+
+  .pagination {
+    margin: 0.25rem 0.5rem;
+    border-top: 1px solid var(--cfa-grey);
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    > * > * {
+      display: inline-block;
+      margin: 0.5rem;
+    }
+  }
+}
