@@ -1,4 +1,4 @@
-# Brigade Project Index Status Board
+# Brigade Project Index Status Board and API
 
 This branch contains a "statusboard" web app that is designed to display ongoing realtime information about each brigade's project-indexing opportunities.
 
