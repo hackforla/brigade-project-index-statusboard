@@ -1,0 +1,65 @@
+{
+  "name": "brigade-project-index-api",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@octokit/rest": "^17.9.2",
+    "axios": "^0.19.2",
+    "cors": "^2.8.5",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "express-sslify": "^1.2.0",
+    "helmet": "^3.23.1",
+    "jszip": "^3.4.0",
+    "lodash": "^4.17.15",
+    "memjs": "^1.2.2",
+    "toml": "^3.0.0",
+    "topojson-client": "^3.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "babel-jest": "^26.0.1",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5"
+  },
+  "scripts": {
+    "start": "node -r esm server.js",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "lint": "./node_modules/eslint/bin/eslint.js *.js",
+    "prettier": "prettier --write .",
+    "update-cache": "node -r esm updateCacheTask.js"
+  },
+  "enginesStrict": {
+    "node": ">=10"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest"
+    },
+    "testEnvironment": "node",
+    "testURL": "http://localhost",
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
+  }
+}

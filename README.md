@@ -1,4 +1,4 @@
-# Brigade Project Index Status Board
+# Brigade Project Index Status Board and API
 
 > TODO: UPDATE THIS README ONCE THIS IS IMPLEMENTED IN REACT.
 

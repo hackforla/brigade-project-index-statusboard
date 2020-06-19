@@ -10,6 +10,7 @@
     "d3-selection": "^1.4.1",
     "d3-zoom": "^1.8.3",
     "esm": "^3.2.25",
+    "express": "^4.17.1",
     "express-sslify": "^1.2.0",
     "jszip": "^3.4.0",
     "lodash": "^4.17.15",

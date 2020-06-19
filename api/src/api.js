@@ -25,7 +25,7 @@ export function getProjectIndex(orgType) {
   // all the projects / organizations
   const promise = new Promise((resolve) => {
     octokit.repos
-      .getArchiveLink({
+      .downloadArchive({
         owner: 'codeforamerica',
         repo: 'brigade-project-index',
         archive_format: 'zipball',
