@@ -8,7 +8,7 @@ export default function RadioButton({ value, label, id, onChange, selected }) {
       <input
         type="radio"
         key={value}
-        selected={value === selected}
+        selected={selected}
         className="form-control"
         onChange={onChange}
       />
@@ -20,7 +20,7 @@ export default function RadioButton({ value, label, id, onChange, selected }) {
 }
 
 RadioButton.defaultProps = {
-  selected: undefined,
+  selected: false,
   label: undefined,
 };
 
@@ -29,5 +29,5 @@ RadioButton.propTypes = {
   id: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string || PropTypes.element,
-  selected: PropTypes.string,
+  selected: PropTypes.bool,
 };

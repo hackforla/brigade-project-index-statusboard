@@ -60,7 +60,7 @@ export function cleanBrigadeData(brigades) {
       p.normalized_topics = [];
       if (p.topics) {
         p.topics.forEach((t) => {
-          const nt = t.toLowerCase().replace(/\-/g, '');
+          const nt = t.toLowerCase().replace(/-/g, '');
           if (!p.normalized_topics.includes(t)) {
             p.normalized_topics.push(nt);
           }

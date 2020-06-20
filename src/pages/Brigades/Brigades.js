@@ -51,7 +51,7 @@ function Brigades() {
           setFilterOpts={setFilterOpts}
         />
         <div className="map-info">
-          <RadioGroup options={['red']} />
+          {/* <RadioGroup options={['red']} selected={'red'} /> */}
           <p>
             Move the map or zoom in to filter by projects in a geographic area.
             Click a brigade or select from the dropdown to look for projects
