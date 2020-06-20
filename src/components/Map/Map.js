@@ -58,6 +58,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
               key={b.name}
               icon={myIcon}
             >
+              {/* TODO: center the dot-- it's off from the cities */}
               <Popup>
                 <Button
                   onClick={() => setFilterOpts({ selectedBrigade: b })}

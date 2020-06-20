@@ -90,7 +90,7 @@ function Brigades() {
               }
               onChange={(event) =>
                 setFilterOpts(() => ({
-                  selectedBrigade: filteredBrigadeData.find(
+                  selectedBrigade: brigadeData.find(
                     (b) => b.name === event.target.value
                   ),
                 }))
