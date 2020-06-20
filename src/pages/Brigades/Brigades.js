@@ -7,7 +7,7 @@ import {
   getBaseApiUrl,
   filterBrigades,
 } from '../../utils';
-import { ProjectsTable, Select } from '../../components';
+import { ProjectsTable, Select, RadioGroup } from '../../components';
 import './Brigades.scss';
 
 function Brigades() {
@@ -51,6 +51,7 @@ function Brigades() {
           setFilterOpts={setFilterOpts}
         />
         <div className="map-info">
+          <RadioGroup options={['red']} />
           <p>
             Move the map or zoom in to filter by projects in a geographic area.
             Click a brigade or select from the dropdown to look for projects
@@ -78,7 +79,7 @@ function Brigades() {
               }
             />
           </div>
-          {filterOpts.bounds && (
+          {!filterOpts.selectedBrigade && filterOpts.bounds && (
             <p>
               Showing projects from{' '}
               {filteredBrigadeData.map((b) => b.name).join(', ')}

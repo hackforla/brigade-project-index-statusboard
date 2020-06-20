@@ -5,10 +5,15 @@ import './Toggle.scss';
 
 export default function Toggle({ label, id, onChange }) {
   return (
-    <label className="switch" htmlFor={id}>
-      <input type="checkbox" id={id} onChange={onChange} />
-      <span className="slider round" />
-    </label>
+    <div className="form-control-container">
+      <label htmlFor={id} className="form-label form-label--inline">
+        <div>{label}</div>
+      </label>
+      <div className="switch">
+        <input type="checkbox" id={id} onChange={onChange} />
+        <span className="slider round" />
+      </div>
+    </div>
   );
 }
 
