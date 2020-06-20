@@ -1,34 +1,46 @@
-.map {
+.leaflet-container {
   position: relative;
+  height: 80vh;
+  min-height: 400px;
   border: 2px solid var(--cfa-grey);
   border-radius: 5px;
 
-  .states-group {
-    path {
-      fill: transparent;
-      stroke: var(--cfa-grey-dark);
-      cursor: pointer;
-    }
+  .leaflet-control-zoom-in,
+  .leaflet-control-zoom-out {
+    border: 3px solid transparent;
 
-    path:hover,
-    path:focus {
-      outline: none;
-      stroke: var(--cfa-magenta);
-      stroke-width: 3px;
-    }
-
-    path:focus {
-      fill: var(--cfa-grey);
+    &:hover,
+    &:focus {
+      border: 3px solid var(--cfa-magenta);
     }
   }
 
-  path.state-border {
-    fill: transparent;
-    stroke: var(--cfa-grey-dark);
-    cursor: pointer;
-  }
+  // .states-group {
+  //   path {
+  //     fill: transparent;
+  //     stroke: var(--cfa-grey-dark);
+  //     cursor: pointer;
+  //   }
 
-  .brigade-point {
+  //   path:hover,
+  //   path:focus {
+  //     outline: none;
+  //     stroke: var(--cfa-magenta);
+  //     stroke-width: 3px;
+  //   }
+
+  //   path:focus {
+  //     fill: var(--cfa-grey);
+  //   }
+  // }
+
+  // path.state-border {
+  //   fill: transparent;
+  //   stroke: var(--cfa-grey-dark);
+  //   cursor: pointer;
+  // }
+
+  .brigade-point circle {
     fill-opacity: 0.5;
     stroke: var(--cfa-purple);
     fill: var(--cfa-purple);
@@ -37,7 +49,7 @@
     &:hover,
     &:focus {
       fill-opacity: 1;
-      stroke: var(--cfa-yellow);
+      fill: var(--cfa-magenta);
     }
   }
 }
