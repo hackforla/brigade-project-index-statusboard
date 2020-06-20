@@ -63,43 +63,43 @@ function Brigades() {
       {/* List projects by brigades that are shown on accompanying map */}
       {/* When map zooms or moves, re-filter geographically */}
       {/* Accessible filter by region, state, or a single brigade */}
+      <div className="map-info">
+        {/* <RadioGroup options={['red']} selected={'red'} /> */}
+        <p>Zoom in on the map to filter by projects in a geographic area.</p>
+        <p>{brigadesShowingString}</p>
+        <p>
+          Click a brigade or select from the dropdown to look for projects owned
+          by a single brigade.
+        </p>
+        <div>
+          <Select
+            label="Select a brigade"
+            id="select-brigade"
+            emptyOptionText="All brigades/filter with map"
+            options={(brigadeData || [])
+              .filter((b) => !!b.latitude && !!b.longitude)
+              .map((b) => b.name)}
+            selected={
+              filterOpts && selectedBrigade ? selectedBrigade.name : undefined
+            }
+            onChange={(event) =>
+              setFilterOpts(() => ({
+                selectedBrigade: brigadeData.find(
+                  (b) => b.name === event.target.value
+                ),
+              }))
+            }
+          />
+        </div>
+      </div>
       <div className="brigades-page-content">
         <Map
           brigadeData={brigadeData}
           filterOpts={filterOpts}
           setFilterOpts={setFilterOpts}
         />
-        <div className="map-info">
-          {/* <RadioGroup options={['red']} selected={'red'} /> */}
-          <p>Zoom in on the map to filter by projects in a geographic area.</p>
-          <p>{brigadesShowingString}</p>
-          <p>
-            Click a brigade or select from the dropdown to look for projects
-            owned by a single brigade.
-          </p>
-          <div>
-            <Select
-              label="Select a brigade"
-              id="select-brigade"
-              emptyOptionText="All brigades/filter with map"
-              options={(brigadeData || [])
-                .filter((b) => !!b.latitude && !!b.longitude)
-                .map((b) => b.name)}
-              selected={
-                filterOpts && selectedBrigade ? selectedBrigade.name : undefined
-              }
-              onChange={(event) =>
-                setFilterOpts(() => ({
-                  selectedBrigade: brigadeData.find(
-                    (b) => b.name === event.target.value
-                  ),
-                }))
-              }
-            />
-          </div>
-        </div>
+        <ProjectsTable projects={projects} />
       </div>
-      <ProjectsTable projects={projects} />
     </>
   );
 }
