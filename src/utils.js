@@ -1,3 +1,5 @@
+import L from 'leaflet';
+
 export function getBaseApiUrl() {
   if (process.env.NODE_ENV === 'development') {
     return 'http://localhost:8080';
@@ -6,24 +8,32 @@ export function getBaseApiUrl() {
   return '';
 }
 
-export function getProjectsFromBrigadeData(
+export function filterBrigades(
   brigadeData,
   filterOpts = {
     selectedBrigade: undefined,
-    state: undefined,
-    boundingBox: undefined,
+    // state: undefined,
+    bounds: undefined,
   }
 ) {
   if (!brigadeData) return [];
   let dataToFilter = brigadeData;
-  const { selectedBrigade, state, boundingBox } = filterOpts;
+  const { selectedBrigade, bounds } = filterOpts;
   if (selectedBrigade) {
     dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade.name);
   }
-  if (state || boundingBox) {
-    console.log('TODO: FILTER BY STATE AND BOUNDING BOX');
+  if (bounds) {
+    dataToFilter = dataToFilter.filter((b) => {
+      if (!b.latitude || !b.longitude) return false;
+      return bounds.contains(L.latLng(b.latitude, b.longitude));
+    });
   }
-  return dataToFilter.reduce(
+  return dataToFilter;
+}
+
+export function getProjectsFromBrigadeData(brigadeData) {
+  if (!brigadeData) return [];
+  return brigadeData.reduce(
     (projects, currentBrigade) => [
       ...projects,
       ...currentBrigade.projects.map((p) => ({

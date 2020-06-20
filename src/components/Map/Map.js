@@ -28,11 +28,18 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
       const { latitude, longitude } = filterOpts.selectedBrigade || {};
       setCenter([latitude, longitude]);
     }
-  }, [filterOpts]);
+  }, [selectedBrigadeName]);
 
   return (
     <div className="map leaflet-container">
-      <LeafletMap zoom={zoom} center={center}>
+      <LeafletMap
+        zoom={zoom}
+        center={center}
+        onMoveend={(e) =>
+          setFilterOpts({ ...filterOpts, bounds: e.target.getBounds() })
+        }
+      >
+        {/* TODO: ADD STATE OVERLAY? https://leafletjs.com/reference-1.6.0.html#svgoverlay */}
         {brigadeData.map((b) => {
           if (!b.latitude || !b.longitude)
             return <React.Fragment key={b.name} />;

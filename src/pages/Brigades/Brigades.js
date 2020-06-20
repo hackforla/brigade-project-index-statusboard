@@ -5,6 +5,7 @@ import {
   cleanBrigadeData,
   getProjectsFromBrigadeData,
   getBaseApiUrl,
+  filterBrigades,
 } from '../../utils';
 import { ProjectsTable, Select } from '../../components';
 import './Brigades.scss';
@@ -14,10 +15,11 @@ function Brigades() {
   // Changing map changes which filter function we use to filter projects
   // One filter func for brigades, one for state, one for bounding box
   const [brigadeData, setBrigadeData] = useState();
+  const [filteredBrigadeData, setFilteredBrigadeData] = useState();
   // const [tagData, setTagData] = useState();
   const [filterOpts, setFilterOpts] = useState({});
   const [projects, setProjects] = useState(
-    getProjectsFromBrigadeData(brigadeData, filterOpts)
+    getProjectsFromBrigadeData(filteredBrigadeData, filterOpts)
   );
 
   useEffect(() => {
@@ -31,7 +33,9 @@ function Brigades() {
   }, []);
 
   useEffect(() => {
-    setProjects(getProjectsFromBrigadeData(brigadeData, filterOpts));
+    const newlyFilteredBrigadeData = filterBrigades(brigadeData, filterOpts);
+    setFilteredBrigadeData(newlyFilteredBrigadeData);
+    setProjects(getProjectsFromBrigadeData(newlyFilteredBrigadeData));
   }, [brigadeData, filterOpts]);
 
   return (
@@ -49,31 +53,36 @@ function Brigades() {
         <div className="map-info">
           <p>
             Move the map or zoom in to filter by projects in a geographic area.
-            Click a state on the map or use the dropdown to filter projects by
-            state. Click a brigade or select from the dropdown to look for
-            projects owned by a single brigade.
+            Click a brigade or select from the dropdown to look for projects
+            owned by a single brigade.
           </p>
-          {/* TODO: FIGURE OUT WHAT GOES HERE */}
           <div>
             <Select
               label="Select a brigade"
               id="select-brigade"
-              options={(brigadeData || []).map((b) => b.name)}
+              options={(brigadeData || [])
+                .filter((b) => !!b.latitude && !!b.longitude)
+                .map((b) => b.name)}
               selected={
                 filterOpts && filterOpts.selectedBrigade
                   ? filterOpts.selectedBrigade.name
                   : undefined
               }
               onChange={(event) =>
-                setFilterOpts((currentFilterOpts) => ({
-                  ...currentFilterOpts,
-                  selectedBrigade: brigadeData.find(
+                setFilterOpts(() => ({
+                  selectedBrigade: filteredBrigadeData.find(
                     (b) => b.name === event.target.value
                   ),
                 }))
               }
             />
           </div>
+          {filterOpts.bounds && (
+            <p>
+              Showing projects from{' '}
+              {filteredBrigadeData.map((b) => b.name).join(', ')}
+            </p>
+          )}
         </div>
       </div>
       <ProjectsTable projects={projects} />
