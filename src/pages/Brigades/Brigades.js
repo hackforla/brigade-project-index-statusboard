@@ -60,6 +60,7 @@ function Brigades() {
             <Select
               label="Select a brigade"
               id="select-brigade"
+              emptyOptionText="All brigades"
               options={(brigadeData || [])
                 .filter((b) => !!b.latitude && !!b.longitude)
                 .map((b) => b.name)}
