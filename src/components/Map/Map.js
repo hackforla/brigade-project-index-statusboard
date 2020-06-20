@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import L from 'leaflet';
 import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet';
 import { ReactComponent as Circle } from './Icon.svg';
-import { Button } from '../../components';
+import { Button } from '..';
 import 'leaflet/dist/leaflet.css';
 import './Map.scss';
 
