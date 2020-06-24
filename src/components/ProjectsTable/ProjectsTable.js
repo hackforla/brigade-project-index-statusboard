@@ -66,13 +66,11 @@ export default function ProjectsTable({ projects }) {
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render('Header')}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? ' 🔽'
-                        : ' 🔼'
-                      : ''}
-                  </span>
+                  {column.isSorted && (
+                    // TODO: REAL ICON HERE
+                    // TODO: MAKE THIS A BUTTON
+                    <span>{column.isSortedDesc ? ' 🔽' : ' 🔼'}</span>
+                  )}
                 </th>
               ))}
             </tr>
