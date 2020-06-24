@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useTable, usePagination } from 'react-table';
+import { useTable, usePagination, useSortBy } from 'react-table';
 import './ProjectsTable.scss';
 
 // Helpful examples
@@ -17,16 +17,22 @@ export default function ProjectsTable({ projects }) {
         accessor: (project) => (
           <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
         ),
-        // TODO: this doesn't seem to be working, and the table adjusts width in weird ways between pages
-        minWidth: 100,
+        // TODO: TEXT FILTER
+        // TODO: width doesn't seem to be working, and the table adjusts width in weird ways between pages
+        width: 100,
+        sortType: 'basic',
       },
       {
         Header: 'Description',
         accessor: 'description',
+        // TODO: TEXT FILTER
       },
       {
         Header: 'Brigade',
         accessor: 'brigade.name',
+        sortType: 'basic',
+
+        // TODO: DROPDOWN FILTER
       },
     ],
     []
@@ -38,6 +44,8 @@ export default function ProjectsTable({ projects }) {
       data: projects,
       initialState: { pageIndex: 0 },
     },
+    // TODO: use pagination to not load all of the rows every time
+    useSortBy,
     usePagination
   );
 
@@ -56,13 +64,22 @@ export default function ProjectsTable({ projects }) {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render('Header')}
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? ' 🔽'
+                        : ' 🔼'
+                      : ''}
+                  </span>
+                </th>
               ))}
             </tr>
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {rows.slice(0, 10).map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
