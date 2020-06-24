@@ -2,7 +2,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTable, usePagination } from 'react-table';
-import { Button, Select, TextInput } from '..';
 import './ProjectsTable.scss';
 
 // Helpful examples
@@ -19,7 +18,7 @@ export default function ProjectsTable({ projects }) {
           <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
         ),
         // TODO: this doesn't seem to be working, and the table adjusts width in weird ways between pages
-        width: '25%',
+        minWidth: 100,
       },
       {
         Header: 'Description',
@@ -28,28 +27,12 @@ export default function ProjectsTable({ projects }) {
       {
         Header: 'Brigade',
         accessor: 'brigade.name',
-        width: '25%',
       },
     ],
     []
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-  } = useTable(
+  const tableAttributes = useTable(
     {
       columns,
       data: projects,
@@ -57,6 +40,14 @@ export default function ProjectsTable({ projects }) {
     },
     usePagination
   );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    rows,
+  } = tableAttributes;
 
   return (
     <div className="projects-table">
@@ -71,7 +62,7 @@ export default function ProjectsTable({ projects }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
+          {rows.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -85,54 +76,6 @@ export default function ProjectsTable({ projects }) {
           })}
         </tbody>
       </table>
-      <div className="pagination">
-        <div>
-          <Button
-            onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}
-            text="First"
-          />
-          <Button
-            onClick={previousPage}
-            disabled={!canPreviousPage}
-            text="Previous"
-          />
-
-          <div>
-            Page{' '}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{' '}
-          </div>
-
-          <Button onClick={nextPage} disabled={!canNextPage} text="Next" />
-          <Button
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-            text="Last"
-          />
-        </div>
-        <div>
-          <TextInput
-            label="Go to page"
-            id="go-to-page"
-            type="number"
-            onChange={(e) => {
-              const p = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(p);
-            }}
-          />
-          <Select
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-            options={[10, 20, 30, 40, 50]}
-            label="Projects per page"
-            id="projects-per-page"
-          />
-        </div>
-      </div>
     </div>
   );
 }

@@ -40,17 +40,17 @@ function Brigades() {
   }, [brigadeData, filterOpts]);
 
   let brigadesShowingString = 'Showing projects from ';
-  const firstTenBrigades = filteredBrigadeData.map((b) => b.name).slice(0, 10);
+  const firstFiveBrigades = filteredBrigadeData.map((b) => b.name).slice(0, 5);
   if (selectedBrigade) {
     brigadesShowingString = `${brigadesShowingString} ${selectedBrigade.name}`;
   } else {
-    brigadesShowingString = `${brigadesShowingString} ${firstTenBrigades.join(
+    brigadesShowingString = `${brigadesShowingString} ${firstFiveBrigades.join(
       ', '
     )}`;
   }
-  if (filteredBrigadeData.length > 10) {
+  if (filteredBrigadeData.length > 5) {
     brigadesShowingString = `${brigadesShowingString} and ${
-      filteredBrigadeData.length - 10
+      filteredBrigadeData.length - 5
     } other brigades`;
   }
   if (filteredBrigadeData.length === 0 && !selectedBrigade) {
@@ -59,15 +59,14 @@ function Brigades() {
 
   return (
     <>
-      <h2>Projects by brigade, state, or geographic area</h2>
       {/* List projects by brigades that are shown on accompanying map */}
       {/* When map zooms or moves, re-filter geographically */}
       {/* Accessible filter by region, state, or a single brigade */}
-      <div className="map-info">
-        {/* <RadioGroup options={['red']} selected={'red'} /> */}
-        <p>Zoom in on the map to filter by projects in a geographic area.</p>
-        <p>{brigadesShowingString}</p>
-        <p>
+      <h2>Projects by brigade, state, or geographic area</h2>
+      <p>{brigadesShowingString}</p>
+      <p>Zoom in on the map to filter by projects in a geographic area.</p>
+      <div className="brigades-page-content">
+        {/* <p>
           Click a brigade or select from the dropdown to look for projects owned
           by a single brigade.
         </p>
@@ -90,9 +89,7 @@ function Brigades() {
               }))
             }
           />
-        </div>
-      </div>
-      <div className="brigades-page-content">
+        </div> */}
         <Map
           brigadeData={brigadeData}
           filterOpts={filterOpts}

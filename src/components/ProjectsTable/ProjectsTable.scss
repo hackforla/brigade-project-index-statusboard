@@ -1,16 +1,23 @@
 .projects-table {
   width: 100%;
+  height: 100%;
+  height: inherit;
+  overflow-y: scroll;
 
   table {
     width: 100%;
   }
 
+  a {
+    word-break: break-all;
+  }
+
   th {
     background-color: var(--cfa-blue-dark);
     color: var(--cfa-white);
-    padding: 1.5rem;
+    padding: 0.5rem;
     text-align: left;
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 
   td {
