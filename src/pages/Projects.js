@@ -16,9 +16,29 @@ function Projects() {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'Project name',
+        Header: 'Project',
         accessor: (project) => (
           <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
+        ),
+        disableSortBy: true,
+        // TODO: TEXT FILTER
+      },
+      {
+        Header: 'Live site',
+        accessor: (project) => (
+          <a href={project.link_url} rel="noopener noreferrer" target="_blank">
+            {project.link_url}
+          </a>
+        ),
+        disableSortBy: true,
+        // TODO: TEXT FILTER
+      },
+      {
+        Header: 'Code link',
+        accessor: (project) => (
+          <a href={project.code_url} rel="noopener noreferrer" target="_blank">
+            {project.code_url}
+          </a>
         ),
         disableSortBy: true,
         // TODO: TEXT FILTER
