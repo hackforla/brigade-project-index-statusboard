@@ -21,22 +21,19 @@ export default function ProjectsTable({ projects }) {
         accessor: (project) => (
           <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
         ),
+        disableSortBy: true,
         // TODO: TEXT FILTER
-        // TODO: width doesn't seem to be working, and the table adjusts width in weird ways between pages
-        width: 100,
-        sortType: 'basic',
       },
       {
         Header: 'Description',
         accessor: 'description',
+        disableSortBy: true,
         // TODO: TEXT FILTER
       },
       {
         Header: 'Brigade',
         accessor: 'brigade.name',
         sortType: 'basic',
-
-        // TODO: DROPDOWN FILTER
       },
     ],
     []
@@ -69,33 +66,41 @@ export default function ProjectsTable({ projects }) {
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  <Button type="button" linkButton className="sort-button">
-                    <div>
+              {headerGroup.headers.map((column) => {
+                if (!column.canSort) {
+                  return (
+                    <th {...column.getHeaderProps()}>
+                      {' '}
                       {column.render('Header')}
-                      <Arrow
-                        className={cx(
-                          {
-                            sorted: column.isSorted,
-                            asc: !column.isSortedDesc,
-                            desc: column.isSortedDesc,
-                          },
-                          'sort-arrow'
-                        )}
-                      />
-                    </div>
-                    <span className="sr-only">Toggle sort</span>
-                    {column.isSorted && (
-                      // TODO: REAL ICON HERE
-                      // TODO: MAKE THIS A BUTTON
-                      <span className="sr-only">
-                        {column.isSortedDesc ? 'Descending' : 'Ascending'}
-                      </span>
-                    )}
-                  </Button>
-                </th>
-              ))}
+                    </th>
+                  );
+                }
+                return (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    <Button type="button" linkButton className="sort-button">
+                      <div>
+                        {column.render('Header')}
+                        <Arrow
+                          className={cx(
+                            {
+                              sorted: column.isSorted,
+                              asc: !column.isSortedDesc,
+                              desc: column.isSortedDesc,
+                            },
+                            'sort-arrow'
+                          )}
+                        />
+                      </div>
+                      <span className="sr-only">Toggle sort</span>
+                      {column.isSorted && (
+                        <span className="sr-only">
+                          {column.isSortedDesc ? 'Descending' : 'Ascending'}
+                        </span>
+                      )}
+                    </Button>
+                  </th>
+                );
+              })}
             </tr>
           ))}
         </thead>
