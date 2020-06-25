@@ -24,6 +24,9 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
       setZoom(8);
       const { latitude, longitude } = filterOpts.selectedBrigade || {};
       setCenter([latitude, longitude]);
+    } else {
+      setZoom(defaultZoom);
+      setCenter(defaultCenter);
     }
   }, [selectedBrigadeName]);
 

@@ -74,7 +74,9 @@ function Brigades() {
             .filter((b) => !!b.latitude && !!b.longitude)
             .map((b) => b.name)}
           selected={
-            filterOpts && selectedBrigade ? selectedBrigade.name : undefined
+            filterOpts && selectedBrigade
+              ? selectedBrigade.name
+              : 'All brigades'
           }
           onChange={(event) =>
             setFilterOpts(() => ({

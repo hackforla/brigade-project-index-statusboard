@@ -21,8 +21,7 @@ export function filterBrigades(
   const { selectedBrigade, bounds } = filterOpts;
   if (selectedBrigade) {
     dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade.name);
-  }
-  if (bounds) {
+  } else if (bounds) {
     dataToFilter = dataToFilter.filter((b) => {
       if (!b.latitude || !b.longitude) return false;
       return bounds.contains(L.latLng(b.latitude, b.longitude));

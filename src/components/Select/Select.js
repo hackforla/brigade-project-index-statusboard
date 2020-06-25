@@ -23,7 +23,7 @@ export default function Select({
         className="form-control"
         value={selected}
       >
-        <option>{emptyOptionText}</option>
+        <option value={emptyOptionText}>{emptyOptionText}</option>
         {options.map((option) => {
           return <option key={option}>{option}</option>;
         })}
