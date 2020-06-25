@@ -34,13 +34,15 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
         zoom={zoom}
         center={center}
         onMoveend={(e) => {
-          const {
-            _zoom: newZoom,
-            _lastCenter: { lat: newLat, lng: newLon },
-          } = e.target;
+          const { _zoom: newZoom, _lastCenter } = e.target || {};
+          const { lat: newLat, lng: newLon } = _lastCenter || {};
           setFilterOpts({ ...filterOpts, bounds: e.target.getBounds() });
-          setZoom(newZoom);
-          setCenter([newLat, newLon]);
+          if (newZoom) {
+            setZoom(newZoom);
+          }
+          if (_lastCenter) {
+            setCenter([newLat, newLon]);
+          }
         }}
       >
         {/* TODO: ADD STATE OVERLAY? https://leafletjs.com/reference-1.6.0.html#svgoverlay */}

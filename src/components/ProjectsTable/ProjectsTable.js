@@ -2,6 +2,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTable, usePagination, useSortBy } from 'react-table';
+import Button from '../Button/Button';
 import './ProjectsTable.scss';
 
 // Helpful examples
@@ -42,7 +43,7 @@ export default function ProjectsTable({ projects }) {
     {
       columns,
       data: projects,
-      initialState: { pageIndex: 0 },
+      initialState: { pageIndex: 0, pageSize: 50 },
     },
     // TODO: use pagination to not load all of the rows every time
     useSortBy,
@@ -54,7 +55,12 @@ export default function ProjectsTable({ projects }) {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    rows,
+    page,
+    canPreviousPage,
+    canNextPage,
+    nextPage,
+    previousPage,
+    state: { pageIndex },
   } = tableAttributes;
 
   return (
@@ -77,7 +83,10 @@ export default function ProjectsTable({ projects }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.slice(0, 10).map((row) => {
+          {canPreviousPage && (
+            <Button text="Load previous 50 projects" onClick={previousPage} />
+          )}
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -89,6 +98,9 @@ export default function ProjectsTable({ projects }) {
               </tr>
             );
           })}
+          {canNextPage && (
+            <Button text="Load next 50 projects" onClick={nextPage} />
+          )}
         </tbody>
       </table>
     </div>
