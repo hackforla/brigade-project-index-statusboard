@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
@@ -42,7 +43,7 @@ export default function ProjectsTable({ projects }) {
   const tableAttributes = useTable(
     {
       columns,
-      data: projects,
+      data: projects || [],
       initialState: { pageIndex: 0, pageSize: 50 },
     },
     // TODO: use pagination to not load all of the rows every time
@@ -70,12 +71,13 @@ export default function ProjectsTable({ projects }) {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  <Button
-                    type="button"
-                    aria-label={column.isSortedDesc ? 'Desc.' : 'Asc.'}
-                    linkButton
-                  >
+                  <Button type="button" linkButton>
                     {column.render('Header')}
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? 'Descending'
+                        : 'Ascending'
+                      : undefined}
                     <span className="sr-only">Toggle sort</span>
                     {column.isSorted && (
                       // TODO: REAL ICON HERE
@@ -91,6 +93,8 @@ export default function ProjectsTable({ projects }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
+          {!projects && <span>Loading...</span>}
+          {projects && projects.length === 0 && <span>No projects</span>}
           {canPreviousPage && (
             <Button text="Load previous 50 projects" onClick={previousPage} />
           )}

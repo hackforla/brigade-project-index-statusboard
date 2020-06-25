@@ -32,7 +32,7 @@ export function filterBrigades(
 }
 
 export function getProjectsFromBrigadeData(brigadeData) {
-  if (!brigadeData) return [];
+  if (!brigadeData) return undefined;
   return brigadeData.reduce(
     (projects, currentBrigade) => [
       ...projects,

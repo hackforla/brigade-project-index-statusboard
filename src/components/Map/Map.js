@@ -67,13 +67,14 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
               icon={myIcon}
             >
               <Popup>
+                <div>{b.name}</div>
+                <div>{`${b.projects.length} projects`}</div>
                 <Button
                   onClick={() => setFilterOpts({ selectedBrigade: b })}
                   type="button"
-                  text={b.name}
+                  text={`Filter by ${b.name} projects`}
                   linkButton
                 />
-                <div>{`${b.projects.length} projects`}</div>
               </Popup>
             </Marker>
           );
@@ -88,6 +89,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
         onClick={() => {
           setZoom(defaultZoom);
           setCenter(defaultCenter);
+          setFilterOpts({});
         }}
         text="Reset"
         disabled={zoom === defaultZoom && center[0] === defaultCenter[0]}
