@@ -1,15 +1,25 @@
 .brigades-page-content {
   display: flex;
   margin-bottom: 3rem;
-  height: 80vh;
+  height: 90vh;
   min-height: 400px;
+  background-color: var(--cfa-blue-dark);
+  border-radius: 5px;
+
+  > * {
+    background-color: white;
+    margin: 4px;
+  }
 
   .map {
     width: 40%;
     height: auto;
+    border-radius: 5px 0 0 5px;
   }
 
   .projects-table {
     width: 60%;
+    margin-left: 0;
+    border-radius: 0 5px 5px 0;
   }
 }

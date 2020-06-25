@@ -17,8 +17,10 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
   // Add map zoom and region, state, brigade select menus?
   // Add buttons for zoom and reset
 
-  const [zoom, setZoom] = useState(3);
-  const [center, setCenter] = useState([44.967243, -103.771556]);
+  const defaultZoom = 3;
+  const defaultCenter = [44.967243, -103.771556];
+  const [zoom, setZoom] = useState(defaultZoom);
+  const [center, setCenter] = useState(defaultCenter);
   const { name: selectedBrigadeName } = filterOpts.selectedBrigade || {};
 
   useEffect(() => {
@@ -33,11 +35,18 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
   return (
     <div className="map leaflet-container">
       <LeafletMap
+        // TODO: WHY IS FOCUS STYLING NOT WORKING ON ZOOM BUTTONS??
         zoom={zoom}
         center={center}
-        onMoveend={(e) =>
-          setFilterOpts({ ...filterOpts, bounds: e.target.getBounds() })
-        }
+        onMoveend={(e) => {
+          const {
+            _zoom: newZoom,
+            _lastCenter: { lat: newLat, lng: newLon },
+          } = e.target;
+          setFilterOpts({ ...filterOpts, bounds: e.target.getBounds() });
+          setZoom(newZoom);
+          setCenter([newLat, newLon]);
+        }}
       >
         {/* TODO: ADD STATE OVERLAY? https://leafletjs.com/reference-1.6.0.html#svgoverlay */}
         {brigadeData.map((b) => {
@@ -76,6 +85,15 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
       </LeafletMap>
+      <Button
+        className="reset-button"
+        onClick={() => {
+          setZoom(defaultZoom);
+          setCenter(defaultCenter);
+        }}
+        text="Reset map"
+        disabled={zoom === defaultZoom && center[0] === defaultCenter[0]}
+      />
     </div>
   );
 }

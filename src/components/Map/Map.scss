@@ -1,8 +1,6 @@
 .leaflet-container {
   position: relative;
   height: 100%;
-  border: 1px solid var(--cfa-grey);
-  border-radius: 5px;
 
   .leaflet-control-zoom-in,
   .leaflet-control-zoom-out {
@@ -57,5 +55,12 @@
       stroke: var(--cfa-yellow);
       fill: var(--cfa-yellow);
     }
+  }
+
+  .reset-button {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    z-index: 999;
   }
 }
