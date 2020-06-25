@@ -1,8 +1,8 @@
+// TODO: DEAL WITH ALL OF THESE
+/* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useTable, usePagination, useSortBy } from 'react-table';
 import cx from 'classnames';
 import Button from '../Button/Button';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
@@ -13,43 +13,7 @@ import './ProjectsTable.scss';
 // This is probably what we want
 // github.com/tannerlinsley/react-table/blob/master/examples/sub-components/src/App.js
 
-export default function ProjectsTable({ projects }) {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Project name',
-        accessor: (project) => (
-          <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
-        ),
-        disableSortBy: true,
-        // TODO: TEXT FILTER
-      },
-      {
-        Header: 'Description',
-        accessor: 'description',
-        disableSortBy: true,
-        // TODO: TEXT FILTER
-      },
-      {
-        Header: 'Brigade',
-        accessor: 'brigade.name',
-        sortType: 'basic',
-      },
-    ],
-    []
-  );
-
-  const tableAttributes = useTable(
-    {
-      columns,
-      data: projects || [],
-      initialState: { pageIndex: 0, pageSize: 50 },
-    },
-    // TODO: use pagination to not load all of the rows every time
-    useSortBy,
-    usePagination
-  );
-
+export default function ProjectsTable({ projects, tableAttributes }) {
   const {
     getTableProps,
     getTableBodyProps,

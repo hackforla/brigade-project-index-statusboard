@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useTable, usePagination, useSortBy } from 'react-table';
 import axios from 'axios';
 import Map from '../../components/Map/Map';
 import {
@@ -20,11 +22,47 @@ function Brigades() {
     getProjectsFromBrigadeData(filteredBrigadeData, filterOpts)
   );
 
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: 'Project name',
+        accessor: (project) => (
+          <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
+        ),
+        disableSortBy: true,
+        // TODO: TEXT FILTER
+      },
+      {
+        Header: 'Description',
+        accessor: 'description',
+        disableSortBy: true,
+        // TODO: TEXT FILTER
+      },
+      {
+        Header: 'Brigade',
+        accessor: 'brigade.name',
+        sortType: 'basic',
+      },
+    ],
+    []
+  );
+
+  const tableAttributes = useTable(
+    {
+      columns,
+      data: projects || [],
+      initialState: { pageIndex: 0, pageSize: 50 },
+    },
+    // TODO: use pagination to not load all of the rows every time
+    useSortBy,
+    usePagination
+  );
+
   useEffect(() => {
     const getData = async () => {
       const brigades = await axios.get(`${getBaseApiUrl()}/api/data.json`);
       setBrigadeData(cleanBrigadeData(brigades));
-      const tags = await axios.get(`${getBaseApiUrl()}/api/tags.json`);
+      // const tags = await axios.get(`${getBaseApiUrl()}/api/tags.json`);
       // setTagData(tags.data);
     };
     getData();
@@ -92,7 +130,11 @@ function Brigades() {
           filterOpts={filterOpts}
           setFilterOpts={setFilterOpts}
         />
-        <ProjectsTable projects={projects} />
+        <ProjectsTable
+          projects={projects}
+          columns={columns}
+          tableAttributes={tableAttributes}
+        />
       </div>
     </>
   );
