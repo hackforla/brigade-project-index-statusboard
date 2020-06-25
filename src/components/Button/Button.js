@@ -10,6 +10,7 @@ export default function Button({
   disabled,
   linkButton,
   className,
+  children,
 }) {
   return (
     <button
@@ -22,6 +23,7 @@ export default function Button({
       disabled={disabled}
     >
       {text}
+      {children}
     </button>
   );
 }
@@ -30,10 +32,13 @@ Button.defaultProps = {
   disabled: false,
   linkButton: false,
   className: '',
+  text: undefined,
+  children: undefined,
 };
 
 Button.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
+  children: PropTypes.element,
   onClick: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   linkButton: PropTypes.bool,

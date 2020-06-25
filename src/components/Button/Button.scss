@@ -1,6 +1,9 @@
 .button {
   cursor: pointer;
   &.link-button {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
     text-decoration: underline;
     background-color: inherit;
     padding: unset;

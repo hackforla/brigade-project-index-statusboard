@@ -60,7 +60,6 @@ export default function ProjectsTable({ projects }) {
     canNextPage,
     nextPage,
     previousPage,
-    state: { pageIndex },
   } = tableAttributes;
 
   return (
@@ -71,12 +70,21 @@ export default function ProjectsTable({ projects }) {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
-                  {column.isSorted && (
-                    // TODO: REAL ICON HERE
-                    // TODO: MAKE THIS A BUTTON
-                    <span>{column.isSortedDesc ? ' 🔽' : ' 🔼'}</span>
-                  )}
+                  <Button
+                    type="button"
+                    aria-label={column.isSortedDesc ? 'Desc.' : 'Asc.'}
+                    linkButton
+                  >
+                    {column.render('Header')}
+                    <span className="sr-only">Toggle sort</span>
+                    {column.isSorted && (
+                      // TODO: REAL ICON HERE
+                      // TODO: MAKE THIS A BUTTON
+                      <span className="sr-only">
+                        {column.isSortedDesc ? 'Descending' : 'Ascending'}
+                      </span>
+                    )}
+                  </Button>
                 </th>
               ))}
             </tr>
