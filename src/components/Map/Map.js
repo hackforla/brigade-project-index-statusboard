@@ -71,13 +71,25 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
             >
               <Popup>
                 <div>{b.name}</div>
-                <div>{`${b.projects.length} projects`}</div>
-                <Button
-                  onClick={() => setFilterOpts({ selectedBrigade: b })}
-                  type="button"
-                  text={`Filter by ${b.name} projects`}
-                  linkButton
-                />
+                <div>{`${b.projects.length}`}</div>
+                {b.name !== selectedBrigadeName ? (
+                  <Button
+                    onClick={() => setFilterOpts({ selectedBrigade: b })}
+                    type="button"
+                    text={`Show only ${b.name} projects`}
+                    linkButton
+                  />
+                ) : (
+                  <>
+                    <div>{`Showing only ${b.name} projects`}</div>
+                    <Button
+                      onClick={() => setFilterOpts({})}
+                      type="button"
+                      text="Show all projects"
+                      linkButton
+                    />
+                  </>
+                )}
               </Popup>
             </Marker>
           );
