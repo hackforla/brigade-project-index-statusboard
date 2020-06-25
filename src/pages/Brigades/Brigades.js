@@ -61,7 +61,7 @@ function Brigades() {
       {/* List projects by brigades that are shown on accompanying map */}
       {/* When map zooms or moves, re-filter geographically */}
       {/* Accessible filter by region, state, or a single brigade */}
-      <h2>Projects by brigade, state, or geographic area</h2>
+      <h2>Projects by brigade or geographic area</h2>
       <p>{brigadesShowingString}</p>
       <p>
         Zoom in on the map to filter by projects in a geographic area or{' '}
