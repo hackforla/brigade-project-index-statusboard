@@ -3,7 +3,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTable, usePagination, useSortBy } from 'react-table';
+import cx from 'classnames';
 import Button from '../Button/Button';
+import { ReactComponent as Arrow } from '../../assets/arrow.svg';
 import './ProjectsTable.scss';
 
 // Helpful examples
@@ -69,13 +71,20 @@ export default function ProjectsTable({ projects }) {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  <Button type="button" linkButton>
-                    {column.render('Header')}
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? 'Descending'
-                        : 'Ascending'
-                      : undefined}
+                  <Button type="button" linkButton className="sort-button">
+                    <div>
+                      {column.render('Header')}
+                      <Arrow
+                        className={cx(
+                          {
+                            sorted: column.isSorted,
+                            asc: !column.isSortedDesc,
+                            desc: column.isSortedDesc,
+                          },
+                          'sort-arrow'
+                        )}
+                      />
+                    </div>
                     <span className="sr-only">Toggle sort</span>
                     {column.isSorted && (
                       // TODO: REAL ICON HERE
