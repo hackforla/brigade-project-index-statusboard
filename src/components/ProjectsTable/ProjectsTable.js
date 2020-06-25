@@ -57,10 +57,8 @@ export default function ProjectsTable({ projects }) {
     headerGroups,
     prepareRow,
     page,
-    canPreviousPage,
-    canNextPage,
-    nextPage,
-    previousPage,
+    setPageSize,
+    state: { pageSize },
   } = tableAttributes;
 
   return (
@@ -95,9 +93,6 @@ export default function ProjectsTable({ projects }) {
         <tbody {...getTableBodyProps()}>
           {!projects && <span>Loading...</span>}
           {projects && projects.length === 0 && <span>No projects</span>}
-          {canPreviousPage && (
-            <Button text="Load previous 50 projects" onClick={previousPage} />
-          )}
           {page.map((row) => {
             prepareRow(row);
             return (
@@ -110,11 +105,16 @@ export default function ProjectsTable({ projects }) {
               </tr>
             );
           })}
-          {canNextPage && (
-            <Button text="Load next 50 projects" onClick={nextPage} />
-          )}
         </tbody>
       </table>
+      {projects && pageSize < projects.length && (
+        <div className="load-projects-button">
+          <Button
+            text="Load next 50 projects"
+            onClick={() => setPageSize(pageSize + 50)}
+          />
+        </div>
+      )}
     </div>
   );
 }

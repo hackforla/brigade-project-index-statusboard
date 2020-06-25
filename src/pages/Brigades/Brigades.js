@@ -24,7 +24,7 @@ function Brigades() {
     const getData = async () => {
       const brigades = await axios.get(`${getBaseApiUrl()}/api/data.json`);
       setBrigadeData(cleanBrigadeData(brigades));
-      // const tags = await axios.get(`${getBaseApiUrl()}/api/tags.json`);
+      const tags = await axios.get(`${getBaseApiUrl()}/api/tags.json`);
       // setTagData(tags.data);
     };
     getData();
@@ -38,7 +38,7 @@ function Brigades() {
 
   let brigadesShowingString = 'No brigades selected or showing on map.';
   if (filteredBrigadeData && filteredBrigadeData.length > 0) {
-    brigadesShowingString = 'Showing projects from ';
+    brigadesShowingString = `${projects.length} projects from `;
     const firstFiveBrigades = filteredBrigadeData
       .map((b) => b.name)
       .slice(0, 5);
