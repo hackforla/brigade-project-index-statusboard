@@ -12,13 +12,8 @@ import './Map.scss';
 // Make focused state and focused brigade states so that a user can go back to the map without tabbing through everything again
 
 export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
-  // Show brigades on the map; if one is selected then make it a different color and shape
-  // Sidebar (under on mobile) for project list
-  // Add map zoom and region, state, brigade select menus?
-  // Add buttons for zoom and reset
-
-  const defaultZoom = 3;
-  const defaultCenter = [44.967243, -103.771556];
+  const defaultZoom = 2;
+  const defaultCenter = [44.967243, -104.771556];
   const [zoom, setZoom] = useState(defaultZoom);
   const [center, setCenter] = useState(defaultCenter);
   const { name: selectedBrigadeName } = filterOpts.selectedBrigade || {};
@@ -62,12 +57,13 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
             riseOnHover: true,
           });
           return (
+            // TODO: DIFFERENT MARKER FOR SELECTED BRIGADE
+            // TODO: center the dot-- it's off from the cities
             <Marker
               position={[+b.latitude, +b.longitude]}
               key={b.name}
               icon={myIcon}
             >
-              {/* TODO: center the dot-- it's off from the cities */}
               <Popup>
                 <Button
                   onClick={() => setFilterOpts({ selectedBrigade: b })}
@@ -91,7 +87,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
           setZoom(defaultZoom);
           setCenter(defaultCenter);
         }}
-        text="Reset map"
+        text="Reset"
         disabled={zoom === defaultZoom && center[0] === defaultCenter[0]}
       />
     </div>
