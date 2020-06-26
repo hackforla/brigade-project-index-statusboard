@@ -115,13 +115,13 @@ function Brigades() {
               ? selectedBrigade.name
               : 'All brigades'
           }
-          onChange={(event) =>
+          onChange={(event) => {
+            if (!event || !event.target) return;
+            const newVal = event.target.value;
             setFilterOpts(() => ({
-              selectedBrigade: brigadeData.find(
-                (b) => b.name === event.target.value
-              ),
-            }))
-          }
+              selectedBrigade: brigadeData.find((b) => b.name === newVal),
+            }));
+          }}
         />
       </p>
       <div className="brigades-page-content">
