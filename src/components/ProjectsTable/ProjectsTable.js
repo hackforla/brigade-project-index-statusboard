@@ -36,32 +36,40 @@ export default function ProjectsTable({ projects, tableAttributes }) {
                     <th {...column.getHeaderProps()}>
                       {' '}
                       {column.render('Header')}
+                      <div>
+                        {column.canFilter ? column.render('Filter') : null}
+                      </div>
                     </th>
                   );
                 }
                 return (
                   <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    <Button type="button" linkButton className="sort-button">
+                    <div>
+                      <Button type="button" linkButton className="sort-button">
+                        <div>
+                          {column.render('Header')}
+                          <Arrow
+                            className={cx(
+                              {
+                                sorted: column.isSorted,
+                                asc: !column.isSortedDesc,
+                                desc: column.isSortedDesc,
+                              },
+                              'sort-arrow'
+                            )}
+                          />
+                        </div>
+                        <span className="sr-only">Toggle sort</span>
+                        {column.isSorted && (
+                          <span className="sr-only">
+                            {column.isSortedDesc ? 'Descending' : 'Ascending'}
+                          </span>
+                        )}
+                      </Button>
                       <div>
-                        {column.render('Header')}
-                        <Arrow
-                          className={cx(
-                            {
-                              sorted: column.isSorted,
-                              asc: !column.isSortedDesc,
-                              desc: column.isSortedDesc,
-                            },
-                            'sort-arrow'
-                          )}
-                        />
+                        {column.canFilter ? column.render('Filter') : null}
                       </div>
-                      <span className="sr-only">Toggle sort</span>
-                      {column.isSorted && (
-                        <span className="sr-only">
-                          {column.isSortedDesc ? 'Descending' : 'Ascending'}
-                        </span>
-                      )}
-                    </Button>
+                    </div>
                   </th>
                 );
               })}

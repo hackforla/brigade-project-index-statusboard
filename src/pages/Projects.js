@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import { useTable, usePagination, useSortBy } from 'react-table';
+import { useTable, usePagination, useSortBy, useFilters } from 'react-table';
 import {
   cleanBrigadeData,
   getProjectsFromBrigadeData,
   getBaseApiUrl,
 } from '../utils';
-import ProjectsTable from '../components/ProjectsTable/ProjectsTable';
+import { ProjectsTable, TextFilter, fuzzyTextFilterFn } from '../components';
 
 function Projects() {
   const [brigadeData, setBrigadeData] = useState();
   const [projects, setProjects] = useState();
+
+  // eslint-disable-next-line import/prefer-default-export
+  const filterTypes = React.useMemo(
+    () => ({
+      // Add a new fuzzyTextFilterFn filter type.
+      fuzzyText: fuzzyTextFilterFn,
+    }),
+    []
+  );
 
   const columns = React.useMemo(
     () => [
@@ -21,7 +30,8 @@ function Projects() {
           <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
         ),
         disableSortBy: true,
-        // TODO: TEXT FILTER
+        Filter: TextFilter,
+        filter: 'fuzzyText',
       },
       {
         Header: 'Live site',
@@ -31,7 +41,7 @@ function Projects() {
           </a>
         ),
         disableSortBy: true,
-        // TODO: TEXT FILTER
+        disableFilters: true,
       },
       {
         Header: 'Code link',
@@ -41,18 +51,20 @@ function Projects() {
           </a>
         ),
         disableSortBy: true,
-        // TODO: TEXT FILTER
+        disableFilters: true,
       },
       {
         Header: 'Description',
         accessor: 'description',
         disableSortBy: true,
-        // TODO: TEXT FILTER
+        Filter: TextFilter,
+        filter: 'fuzzyText',
       },
       {
         Header: 'Brigade',
         accessor: 'brigade.name',
         sortType: 'basic',
+        disableFilters: true,
       },
     ],
     []
@@ -62,8 +74,13 @@ function Projects() {
     {
       columns,
       data: projects || [],
-      initialState: { pageIndex: 0, pageSize: projects ? projects.length : 50 },
+      initialState: {
+        pageIndex: 0,
+        pageSize: projects ? projects.length : 50,
+      },
+      filterTypes,
     },
+    useFilters,
     useSortBy,
     usePagination
   );
