@@ -29,19 +29,14 @@ function Brigades() {
         accessor: (project) => (
           <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
         ),
-        disableSortBy: true,
-        // TODO: TEXT FILTER
       },
       {
         Header: 'Description',
         accessor: 'description',
-        disableSortBy: true,
-        // TODO: TEXT FILTER
       },
       {
         Header: 'Brigade',
         accessor: 'brigade.name',
-        sortType: 'basic',
       },
     ],
     []

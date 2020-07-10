@@ -1,0 +1,14 @@
+.text-input {
+  position: relative;
+  label {
+    color: var(--cfa-magenta);
+    position: absolute;
+    transform-origin: top left;
+    transform: translate(0.15rem, 0.15rem) scale(0.75);
+    left: 0;
+  }
+
+  input {
+    text-align: right;
+  }
+}

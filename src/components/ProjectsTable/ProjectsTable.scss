@@ -20,33 +20,6 @@
     text-align: left;
     font-size: 1rem;
     min-width: 12rem;
-
-    .sort-button {
-      padding: 0.5rem;
-      width: 100%;
-      text-align: left;
-
-      .sort-arrow {
-        height: 0.75em;
-        opacity: 0.25;
-        display: inline-block;
-        padding-left: 1rem;
-
-        &.sorted {
-          opacity: 1;
-        }
-
-        &.asc {
-          transform: rotate(-90deg);
-          vertical-align: sub;
-        }
-
-        &.desc {
-          transform: rotate(90deg);
-          vertical-align: super;
-        }
-      }
-    }
   }
 
   td {

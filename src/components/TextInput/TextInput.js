@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../commonFormControlStyles.scss';
+import './TextInput.scss';
 
 export default function TextInput({ label, id, onChange, defaultValue }) {
   return (
-    <div className="form-control-container">
-      <label htmlFor={id} className="form-label form-label--inline">
-        <div>{label}</div>
-      </label>
+    <div className="text-input form-control-container">
+      <label htmlFor={id}>{label}</label>
       <input
         id={id}
         onChange={onChange}

@@ -29,42 +29,20 @@ function Projects() {
         accessor: (project) => (
           <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
         ),
-        disableSortBy: true,
         Filter: TextFilter,
         filter: 'fuzzyText',
       },
       {
-        Header: 'Live site',
-        accessor: (project) => (
-          <a href={project.link_url} rel="noopener noreferrer" target="_blank">
-            {project.link_url}
-          </a>
-        ),
-        disableSortBy: true,
-        disableFilters: true,
-      },
-      {
-        Header: 'Code link',
-        accessor: (project) => (
-          <a href={project.code_url} rel="noopener noreferrer" target="_blank">
-            {project.code_url}
-          </a>
-        ),
-        disableSortBy: true,
-        disableFilters: true,
-      },
-      {
         Header: 'Description',
         accessor: 'description',
-        disableSortBy: true,
         Filter: TextFilter,
         filter: 'fuzzyText',
       },
       {
         Header: 'Brigade',
         accessor: 'brigade.name',
-        sortType: 'basic',
-        disableFilters: true,
+        Filter: TextFilter,
+        filter: 'fuzzyText',
       },
     ],
     []

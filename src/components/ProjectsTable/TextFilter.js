@@ -19,7 +19,8 @@ export function fuzzyTextFilterFn(rows, id, filterValue) {
 // Let the table remove the filter if the string is empty
 fuzzyTextFilterFn.autoRemove = (val) => !val;
 
-// Define a default UI for filtering
+// TODO: ADD PROPTYPES
+// eslint-disable-next-line react/prop-types
 export default function TextFilter({ column: { filterValue, setFilter } }) {
   return (
     <TextInput

@@ -1,17 +1,11 @@
 // TODO: DEAL WITH ALL OF THESE
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import cx from 'classnames';
 import Button from '../Button/Button';
-import { ReactComponent as Arrow } from '../../assets/arrow.svg';
+import ColumnHeader from './ColumnHeader';
 import './ProjectsTable.scss';
-
-// Helpful examples
-// https://github.com/tannerlinsley/react-table/blob/master/docs/examples/simple.md
-// This is probably what we want
-// github.com/tannerlinsley/react-table/blob/master/examples/sub-components/src/App.js
 
 export default function ProjectsTable({ projects, tableAttributes }) {
   const {
@@ -30,49 +24,9 @@ export default function ProjectsTable({ projects, tableAttributes }) {
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => {
-                if (!column.canSort) {
-                  return (
-                    <th {...column.getHeaderProps()}>
-                      {' '}
-                      {column.render('Header')}
-                      <div>
-                        {column.canFilter ? column.render('Filter') : null}
-                      </div>
-                    </th>
-                  );
-                }
-                return (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    <div>
-                      <Button type="button" linkButton className="sort-button">
-                        <div>
-                          {column.render('Header')}
-                          <Arrow
-                            className={cx(
-                              {
-                                sorted: column.isSorted,
-                                asc: !column.isSortedDesc,
-                                desc: column.isSortedDesc,
-                              },
-                              'sort-arrow'
-                            )}
-                          />
-                        </div>
-                        <span className="sr-only">Toggle sort</span>
-                        {column.isSorted && (
-                          <span className="sr-only">
-                            {column.isSortedDesc ? 'Descending' : 'Ascending'}
-                          </span>
-                        )}
-                      </Button>
-                      <div>
-                        {column.canFilter ? column.render('Filter') : null}
-                      </div>
-                    </div>
-                  </th>
-                );
-              })}
+              {headerGroup.headers.map((column) => (
+                <ColumnHeader column={column} key={column.id} />
+              ))}
             </tr>
           ))}
         </thead>
