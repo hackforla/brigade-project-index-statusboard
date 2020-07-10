@@ -21,9 +21,10 @@ fuzzyTextFilterFn.autoRemove = (val) => !val;
 
 // TODO: ADD PROPTYPES
 // eslint-disable-next-line react/prop-types
-export default function TextFilter({ column: { filterValue, setFilter } }) {
+export default function TextFilter({ column: { filterValue, setFilter, id } }) {
   return (
     <TextInput
+      id={id}
       label="Filter"
       defaultValue={filterValue}
       onChange={(e) => {

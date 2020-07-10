@@ -17,7 +17,7 @@ function Brigades() {
   const [filteredBrigadeData, setFilteredBrigadeData] = useState();
   // const [tagData, setTagData] = useState();
   const [filterOpts, setFilterOpts] = useState({});
-  const { selectedBrigade, bounds } = filterOpts;
+  const { selectedBrigade } = filterOpts; // also has bounds
   const [projects, setProjects] = useState(
     getProjectsFromBrigadeData(filteredBrigadeData, filterOpts)
   );
@@ -48,7 +48,6 @@ function Brigades() {
       data: projects || [],
       initialState: { pageIndex: 0, pageSize: 50 },
     },
-    // TODO: use pagination to not load all of the rows every time
     useSortBy,
     usePagination
   );
@@ -95,8 +94,8 @@ function Brigades() {
       {/* When map zooms or moves, re-filter geographically */}
       <h2>Projects by brigade or geographic area</h2>
       <p>{brigadesShowingString}</p>
-      <p>
-        Zoom in on the map to filter by projects in a geographic area or{' '}
+      <div>
+        Zoom in on the map to filter by projects in a geographic area or &nbsp;
         <Select
           label="select a brigade"
           id="select-brigade"
@@ -118,7 +117,8 @@ function Brigades() {
             }));
           }}
         />
-      </p>
+      </div>
+      <br />
       <div className="brigades-page-content">
         <Map
           brigadeData={brigadeData}

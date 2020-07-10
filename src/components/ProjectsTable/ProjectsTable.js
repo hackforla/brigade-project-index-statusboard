@@ -35,8 +35,20 @@ export default function ProjectsTable({ projects, tableAttributes }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {!projects && <span>Loading...</span>}
-          {projects && projects.length === 0 && <span>No projects</span>}
+          {!projects && (
+            <tr>
+              <td colSpan="3">
+                <span>Loading...</span>
+              </td>
+            </tr>
+          )}
+          {projects && projects.length === 0 && (
+            <tr>
+              <td colSpan="3">
+                <span>No projects</span>
+              </td>
+            </tr>
+          )}
           {page.map((row) => {
             prepareRow(row);
             return (

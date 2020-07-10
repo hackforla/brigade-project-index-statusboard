@@ -28,6 +28,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
       setZoom(defaultZoom);
       setCenter(defaultCenter);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBrigadeName]);
 
   return (

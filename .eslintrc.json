@@ -1,5 +1,6 @@
 {
   "extends": ["airbnb", "plugin:prettier/recommended", "prettier/react"],
+  "plugins": ["react", "react-hooks"],
   "env": {
     "browser": true,
     "commonjs": true,
