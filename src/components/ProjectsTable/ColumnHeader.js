@@ -25,7 +25,7 @@ export default function ColumnHeader({ column }) {
               className="sort-button"
               onClick={sortProps ? sortProps.onClick : undefined}
             >
-              <div>
+              <>
                 {column.isSorted && (
                   <span className="sr-only">
                     {column.isSortedDesc ? 'Descending' : 'Ascending'}
@@ -43,7 +43,7 @@ export default function ColumnHeader({ column }) {
                     })}
                   />
                 </div>
-              </div>
+              </>
             </Button>
           </div>
         )}

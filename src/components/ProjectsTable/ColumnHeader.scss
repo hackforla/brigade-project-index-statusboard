@@ -6,29 +6,32 @@
   }
 
   .sort-button {
-    text-align: center;
-    position: relative;
     height: 100%;
     width: 2rem;
+    padding: 0;
+  }
+
+  .sort-arrows {
+    position: relative;
+    height: 100%;
+    width: 100%;
 
     .sort-arrow {
-      height: 0.75rem;
+      height: 45%;
+      padding: 2.5%;
       opacity: 0.5;
       position: absolute;
-      left: 0.55rem;
 
       &.sorted {
         opacity: 1;
       }
 
       &.asc {
-        top: 0.25rem;
-        transform: rotate(-90deg);
+        transform: translate(-50%, 10%) rotate(-90deg);
       }
 
       &.desc {
-        bottom: 0.25rem;
-        transform: rotate(90deg);
+        transform: translate(-50%, 90%) rotate(90deg);
       }
     }
   }
