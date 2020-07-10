@@ -10,6 +10,7 @@ import './ColumnHeader.scss';
 export default function ColumnHeader({ column }) {
   const headerProps = column.getHeaderProps();
   let sortProps;
+  console.log(column);
   if (column.canSort) {
     sortProps = column.getHeaderProps(column.getSortByToggleProps());
   }
@@ -24,6 +25,7 @@ export default function ColumnHeader({ column }) {
               type="button"
               className="sort-button"
               onClick={sortProps ? sortProps.onClick : undefined}
+              disabled={column.filteredRows.length === 0}
             >
               <>
                 {column.isSorted && (
