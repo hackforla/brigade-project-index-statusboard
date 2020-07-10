@@ -1,6 +1,11 @@
 .column-header__contents {
   display: flex;
   padding-right: 2rem;
+  align-items: stretch;
+
+  > *:first-child {
+    align-self: center;
+  }
 
   > *:not(:first-child) {
     margin-left: 1rem;
