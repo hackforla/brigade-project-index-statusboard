@@ -9,7 +9,9 @@ function ProjectDetail({
   return (
     <>
       <h1>Project detail page!</h1>
-      <p>This is the project detail page.</p>
+      <p>
+        This is the project detail page. Looks like we need to add some details!
+      </p>
     </>
   );
 }
