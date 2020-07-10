@@ -10,7 +10,6 @@ import './ColumnHeader.scss';
 export default function ColumnHeader({ column }) {
   const headerProps = column.getHeaderProps();
   let sortProps;
-  console.log(column);
   if (column.canSort) {
     sortProps = column.getHeaderProps(column.getSortByToggleProps());
   }
