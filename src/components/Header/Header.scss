@@ -1,10 +1,10 @@
 .App-header {
-  min-height: 100px;
+  min-height: 5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  font-size: calc(20px);
+  font-size: 2rem;
   background-color: var(--cfa-blue-dark);
 
   a {
@@ -12,7 +12,7 @@
   }
 
   .home-link {
-    padding: 0 20px;
+    padding: 0.5rem 1rem;
     border: 4px solid transparent;
     display: flex;
     flex-direction: row;
@@ -20,14 +20,13 @@
     align-items: flex-start;
 
     .App-logo {
-      width: 200px;
-      height: 74px;
+      width: 10rem;
       display: inline-block;
       pointer-events: none;
     }
 
     .App-title {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: bold;
       display: inline-block;
       margin-left: 1.3rem;

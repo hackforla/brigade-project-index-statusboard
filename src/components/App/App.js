@@ -2,7 +2,6 @@ import React from 'react';
 import AppRouter from '../AppRouter/AppRouter';
 import Header from '../Header/Header';
 import PageContents from '../PageContents/PageContents';
-import './App.css';
 
 function App() {
   return (
