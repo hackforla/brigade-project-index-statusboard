@@ -7,23 +7,27 @@
 
   .sort-button {
     text-align: center;
+    position: relative;
+    height: 100%;
+    width: 2rem;
 
     .sort-arrow {
-      height: 0.75em;
+      height: 0.75rem;
       opacity: 0.5;
-      display: inline-block;
-      padding-left: 1rem;
+      position: absolute;
+      left: 0.55rem;
 
       &.sorted {
         opacity: 1;
       }
 
       &.asc {
+        top: 0.25rem;
         transform: rotate(-90deg);
-        vertical-align: sub;
       }
 
       &.desc {
+        bottom: 0.25rem;
         transform: rotate(90deg);
       }
     }

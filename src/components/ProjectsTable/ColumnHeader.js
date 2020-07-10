@@ -26,26 +26,23 @@ export default function ColumnHeader({ column }) {
               onClick={sortProps ? sortProps.onClick : undefined}
             >
               <div>
-                {column.isSorted ? (
-                  <>
-                    <Arrow
-                      className={cx(
-                        {
-                          sorted: column.isSorted,
-                          asc: !column.isSortedDesc,
-                          desc: column.isSortedDesc,
-                        },
-                        'sort-arrow'
-                      )}
-                    />
-
-                    <span className="sr-only">
-                      {column.isSortedDesc ? 'Descending' : 'Ascending'}
-                    </span>
-                  </>
-                ) : (
-                  <>Sort</>
+                {column.isSorted && (
+                  <span className="sr-only">
+                    {column.isSortedDesc ? 'Descending' : 'Ascending'}
+                  </span>
                 )}
+                <div className="sort-arrows">
+                  <Arrow
+                    className={cx('asc', 'sort-arrow', {
+                      sorted: column.isSorted && !column.isSortedDesc,
+                    })}
+                  />
+                  <Arrow
+                    className={cx('desc', 'sort-arrow', {
+                      sorted: column.isSortedDesc,
+                    })}
+                  />
+                </div>
               </div>
             </Button>
           </div>
