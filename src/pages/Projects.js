@@ -77,7 +77,7 @@ function Projects() {
 
   return (
     <>
-      <h2>All projects</h2>
+      <h1>All projects</h1>
       {/* This is just a stand-in-- we should probably make it so that we can pass column props to the table */}
       <ProjectsTable projects={projects} tableAttributes={tableAttributes} />
     </>

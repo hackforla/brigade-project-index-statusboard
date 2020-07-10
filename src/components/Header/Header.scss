@@ -14,13 +14,10 @@
   .home-link {
     padding: 0 20px;
     border: 4px solid transparent;
-
-    h1 {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: flex-start;
-    }
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
 
     .App-logo {
       width: 200px;
@@ -30,6 +27,8 @@
     }
 
     .App-title {
+      font-size: 2.5rem;
+      font-weight: bold;
       display: inline-block;
       margin-left: 1.3rem;
       color: var(--cfa-white);

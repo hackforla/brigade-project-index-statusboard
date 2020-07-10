@@ -9,7 +9,7 @@ import './PageContents.css';
 
 function PageContents() {
   return (
-    <div className="contents">
+    <main className="contents">
       <Switch>
         <Route path="/" component={Projects} exact />
         <Route path="/projects/:slug" component={ProjectDetail} />
@@ -19,7 +19,7 @@ function PageContents() {
         <Route component={Projects} />
         {/* ^ could also do an error page here... */}
       </Switch>
-    </div>
+    </main>
   );
 }
 
