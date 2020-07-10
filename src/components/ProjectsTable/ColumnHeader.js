@@ -7,7 +7,7 @@ import Button from '../Button/Button';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
 import './ColumnHeader.scss';
 
-export default function ColumnHeader({ column }) {
+export default function ColumnHeader({ column, disableSort }) {
   const headerProps = column.getHeaderProps();
   let sortProps;
   if (column.canSort) {
@@ -24,7 +24,7 @@ export default function ColumnHeader({ column }) {
               type="button"
               className="sort-button"
               onClick={sortProps ? sortProps.onClick : undefined}
-              disabled={column.filteredRows.length === 0}
+              disabled={disableSort}
             >
               <>
                 {column.isSorted && (

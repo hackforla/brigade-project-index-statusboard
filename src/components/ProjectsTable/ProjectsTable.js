@@ -25,7 +25,11 @@ export default function ProjectsTable({ projects, tableAttributes }) {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <ColumnHeader column={column} key={column.id} />
+                <ColumnHeader
+                  column={column}
+                  key={column.id}
+                  disableSort={!projects || projects.length === 0}
+                />
               ))}
             </tr>
           ))}
