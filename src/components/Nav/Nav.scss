@@ -74,10 +74,12 @@ nav {
       .hamburger {
         margin: 0;
         position: absolute;
+        right: 3rem;
+        padding: 1rem;
         top: 50%;
-        right: 50%;
         -ms-transform: translateY(-50%);
         transform: translateY(-50%);
+        text-align: center;
       }
 
       .hamburger span {
@@ -95,11 +97,17 @@ nav {
       }
 
       .hamburger span:first-child {
-        transform-origin: 0% 0%;
+        // Top bar goes away when the hamburger becomes an x
+        transform-origin: 0% 100%;
       }
 
       .hamburger span:nth-last-child(2) {
+        // This becomes the x bar that starts at the bottom left
         transform-origin: 0% 100%;
+      }
+
+      input:focus ~ .hamburger {
+        border: 4px solid var(--cfa-magenta);
       }
 
       input:checked ~ .hamburger span {
@@ -120,14 +128,12 @@ nav {
       ul {
         padding: 0;
         position: fixed;
-        list-style-type: none;
         -webkit-font-smoothing: antialiased;
         /* to stop flickering of text in safari */
         transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
         display: unset;
         width: calc(100vw);
-        height: unset;
-        transform: translate(calc(6rem), 0);
+        transform: translate(6rem);
       }
 
       input:checked ~ ul {
@@ -136,19 +142,16 @@ nav {
 
       ul li {
         margin: unset;
-        height: auto;
         width: 100%;
-        border-bottom: 2px solid var(--cfa-white);
+        border-top: 2px solid var(--cfa-white);
       }
 
       ul li a {
         border-radius: 0;
         display: block;
         font-size: 1.5rem;
-        margin: unset;
         border: unset;
         padding: 0.5rem 1rem;
-        margin: 0;
       }
     }
   }
