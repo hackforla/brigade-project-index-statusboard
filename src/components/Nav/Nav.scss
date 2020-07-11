@@ -36,16 +36,14 @@ nav {
   }
 
   @media only screen and (max-width: 800px) {
-    // https://codepen.io/erikterwan/pen/EVzeRP
-    padding: 0;
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    // right: 2rem;
-
     .navigation__desktop {
       display: none;
     }
+
+    // https://codepen.io/erikterwan/pen/EVzeRP
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
 
     .navigation__mobile {
       display: block;

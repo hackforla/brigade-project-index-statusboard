@@ -13,10 +13,10 @@ function Header() {
         <img
           src={logo}
           className="App-logo"
-          alt="Code for America brigade program logo"
+          alt="Code for America brigade"
           role="presentation"
         />
-        <span className="App-title">Brigade Project Index</span>
+        <span className="App-title">Project Index</span>
       </NavLink>
       <Nav />
     </header>
