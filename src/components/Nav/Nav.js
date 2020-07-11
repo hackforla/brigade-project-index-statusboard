@@ -24,10 +24,12 @@ function Nav() {
           type="button"
           onClick={() => setIsOpen((oldIsOpen) => !oldIsOpen)}
         >
-          <span className="sr-only">{`${isOpen ? 'Close' : 'Open'} nav`}</span>
-          <span />
-          <span />
-          <span />
+          <span className="sr-only">{`${isOpen ? 'Close' : 'Open'} menu`}</span>
+          <div className="hamburger-bars">
+            <span />
+            <span />
+            <span />
+          </div>
         </button>
         <ul>
           <li>
