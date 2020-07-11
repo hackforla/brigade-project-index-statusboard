@@ -8,7 +8,7 @@
 
     &:hover,
     &:focus {
-      border: 3px solid var(--cfa-magenta);
+      border: 3px solid var(--cfa-blue);
     }
   }
 
@@ -22,7 +22,7 @@
   //   path:hover,
   //   path:focus {
   //     outline: none;
-  //     stroke: var(--cfa-magenta);
+  //     stroke: var(--cfa-blue);
   //     stroke-width: 3px;
   //   }
 
@@ -48,7 +48,7 @@
       &:hover,
       &:focus {
         fill-opacity: 1;
-        fill: var(--cfa-magenta);
+        fill: var(--cfa-blue);
       }
     }
     &.selected circle {

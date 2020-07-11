@@ -18,9 +18,13 @@
   --cfa-yellow: #ffae00;
   --cfa-orange: #e87d2b;
   --cfa-blue-lightest: #e6f7ff;
+  --cfa-blue-lighter: #d5ebf6;
   --cfa-blue-light: #399fd3;
+  --cfa-blue: #005980;
   --cfa-blue-dark: #004b6a;
+  --cfa-purple-lightest: #f1eff6;
   --cfa-purple: #69579c;
+  --cfa-purple-dark: #433762;
   --cfa-white: #e5e5e5;
   --cfa-white-light: hsl(0, 0%, 96%);
 

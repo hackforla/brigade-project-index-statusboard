@@ -14,7 +14,7 @@
   }
 
   th {
-    background-color: var(--cfa-blue-dark);
+    background-color: var(--cfa-purple-dark);
     color: var(--cfa-white);
     padding: 0.25rem;
     text-align: left;
@@ -28,7 +28,7 @@
   }
 
   tr:nth-child(odd) {
-    background: var(--cfa-blue-lightest);
+    background: var(--cfa-purple-lightest);
   }
 
   .load-projects-button {
