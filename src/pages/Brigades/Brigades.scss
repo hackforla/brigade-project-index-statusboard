@@ -25,9 +25,11 @@
 
   @media only screen and (max-width: 600px) {
     display: unset;
+    background-color: inherit;
 
     .map {
       height: 50vh;
+      border: 1px solid var(--cfa-blue-dark);
     }
 
     .map,

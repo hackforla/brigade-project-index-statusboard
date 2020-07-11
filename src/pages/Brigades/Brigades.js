@@ -95,7 +95,7 @@ function Brigades() {
       <h1>Projects by brigade or geographic area</h1>
       <p>{brigadesShowingString}</p>
       <div>
-        Zoom in on the map to filter by projects in a geographic area or &nbsp;
+        Zoom in on the map to filter by projects in a geographic area or&nbsp;
         <Select
           label="select a brigade"
           id="select-brigade"
