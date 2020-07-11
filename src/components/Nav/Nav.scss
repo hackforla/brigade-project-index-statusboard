@@ -49,37 +49,19 @@ nav {
 
     .navigation__mobile {
       display: block;
-      width: 100%;
-      height: 100%;
-      top: 0rem;
-      z-index: 3;
-      -webkit-user-select: none;
-      user-select: none;
 
       a {
         transition: color 0.3s ease;
       }
 
-      input {
-        top: 0;
-        display: block;
-        width: 100%;
-        height: 100%;
-        cursor: pointer;
-        opacity: 0;
-        z-index: 999;
-        -webkit-touch-callout: none;
-      }
-
       .hamburger {
-        margin: 0;
         position: absolute;
-        right: 3rem;
         padding: 1rem;
         top: 50%;
         -ms-transform: translateY(-50%);
         transform: translateY(-50%);
-        text-align: center;
+        background-color: inherit;
+        border: 4px solid transparent;
       }
 
       .hamburger span {
@@ -106,27 +88,29 @@ nav {
         transform-origin: 0% 100%;
       }
 
-      input:focus ~ .hamburger {
+      .hamburger:focus,
+      .hamburger:hover {
         border: 4px solid var(--cfa-magenta);
       }
 
-      input:checked ~ .hamburger span {
+      .hamburger.open span {
         opacity: 1;
         transform: rotate(45deg) translate(-2px, -1px);
         background: var(--cfa-magenta);
       }
 
-      input:checked ~ .hamburger span:nth-last-child(3) {
+      .hamburger.open span:nth-last-child(3) {
         opacity: 0;
         transform: rotate(0deg) scale(0.2, 0.2);
       }
 
-      input:checked ~ .hamburger span:nth-last-child(2) {
+      .hamburger.open span:nth-last-child(2) {
         transform: rotate(-45deg) translate(0, -1px);
       }
 
       ul {
         padding: 0;
+        margin: 4rem 0 0;
         position: fixed;
         -webkit-font-smoothing: antialiased;
         /* to stop flickering of text in safari */
@@ -136,7 +120,7 @@ nav {
         transform: translate(6rem);
       }
 
-      input:checked ~ ul {
+      .hamburger.open ~ ul {
         transform: translate(calc(-100vw + 6rem), 0);
       }
 
