@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import axios from 'axios';
 import Map from '../../components/Map/Map';
@@ -27,7 +27,9 @@ function Brigades() {
       {
         Header: 'Project name',
         accessor: (project) => (
-          <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
+          // TODO: CHANGE THIS WHEN WE MAKE PROJECT PAGES
+          // <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
+          <a href={project.code_url}>{project.name}</a>
         ),
       },
       {

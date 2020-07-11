@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { useTable, usePagination, useSortBy, useFilters } from 'react-table';
 import {
@@ -27,7 +27,9 @@ function Projects() {
       {
         Header: 'Project',
         accessor: (project) => (
-          <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
+          // TODO: CHANGE THIS WHEN WE HAVE A PROJECT DETAIL PAGE TO GO TO
+          // <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
+          <a href={project.code_url}>{project.name}</a>
         ),
         Filter: TextFilter,
         filter: 'fuzzyText',
