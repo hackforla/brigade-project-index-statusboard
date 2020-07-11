@@ -17,10 +17,13 @@ function Nav() {
         </li>
       </ul>
       <div className="navigation__mobile">
-        <input type="checkbox" />
-        <span />
-        <span />
-        <span />
+        {/* TODO: ADD ALT TEXT */}
+        <input type="checkbox" role="button" />
+        <div className="hamburger">
+          <span />
+          <span />
+          <span />
+        </div>
         <ul>
           <li>
             <NavLink to="/projects">Projects</NavLink>
