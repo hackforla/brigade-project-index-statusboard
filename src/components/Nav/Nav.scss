@@ -1,10 +1,14 @@
 nav {
-  padding: 0 20px 0 2rem;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   font-family: var(--font-family-header);
   font-weight: bold;
-  font-size: 24px;
+  font-size: 1.5rem;
+
+  .navigation__mobile {
+    display: none;
+  }
 
   ul {
     list-style: none;
@@ -19,7 +23,7 @@ nav {
     li a {
       border: 2px solid var(--cfa-white);
       border-radius: 5px;
-      padding: 0 1rem 0.3rem 1rem;
+      padding: 0 0.75rem 0.1rem 0.75rem;
       background-color: var(--cfa-magenta);
       color: var(--cfa-white);
     }
@@ -28,6 +32,110 @@ nav {
     li a:focus {
       background-color: var(--cfa-magenta-dark);
       color: var(--cfa-white);
+    }
+  }
+
+  @media only screen and (max-width: 800px) {
+    .navigation__desktop {
+      display: none;
+    }
+
+    padding: 0 1rem;
+    display: inline-block;
+    height: 4rem;
+    width: 4rem;
+    position: relative;
+    z-index: 2;
+
+    .navigation__mobile {
+      display: block;
+
+      a {
+        transition: color 0.3s ease;
+      }
+
+      ul {
+        padding: 0;
+        margin: 0.25rem 0 0;
+        -webkit-font-smoothing: antialiased;
+        /* to stop flickering of text in safari */
+        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+        display: unset;
+        width: 100vw;
+        transform: translate(6rem);
+        position: absolute;
+        li {
+          margin: unset;
+          width: 100%;
+          border-top: 2px solid var(--cfa-white);
+        }
+
+        li a {
+          border-radius: 0;
+          display: block;
+          font-size: 1.5rem;
+          border: unset;
+          padding: 0.5rem 1rem;
+        }
+      }
+
+      .hamburger {
+        display: block;
+        height: 100%;
+        padding: 1rem;
+        background-color: inherit;
+        border: 4px solid transparent;
+
+        &:focus,
+        &:hover {
+          border: 4px solid var(--cfa-magenta);
+        }
+
+        .hamburger-bars span {
+          display: block;
+          width: 2rem;
+          height: 4px;
+          margin-bottom: 5px;
+          position: relative;
+          background: var(--cfa-white);
+          border-radius: 3px;
+          transform-origin: 4px 0px;
+          transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+            background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+
+          &:first-child {
+            transform-origin: 0% 0%;
+          }
+
+          &:nth-last-child(2) {
+            // Middle bar
+            transform-origin: 0% 100%;
+          }
+        }
+
+        &.open {
+          ~ ul {
+            transform: translate(calc(-100vw + 5rem), 0);
+          }
+          // TODO: figure out why this is wonky and fix it
+          //   .hamburger-bars span {
+          //     // All of the bars turn opaque and have a pink background
+          //     opacity: 1;
+          //     background: var(--cfa-magenta);
+          //     // The bottom bar rotates 45 deg; other two are overridden
+          //     transform: rotate(45deg) translate(-2px, -1px);
+          //   }
+          //   .hamburger-bars span:first-child {
+          //     // Top bar goes away when the hamburger becomes an x
+          //     opacity: 0;
+          //     transform: rotate(0deg) scale(0.2, 0.2);
+          //   }
+          //   .hamburger-bars span:nth-last-child(2) {
+          //     // Middle bar becomes the x bar that starts at the bottom left
+          //     transform: rotate(-45deg) translate(0, -1px);
+          //   }
+        }
+      }
     }
   }
 }

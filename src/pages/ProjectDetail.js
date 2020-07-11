@@ -8,8 +8,10 @@ function ProjectDetail({
   console.log(slug);
   return (
     <>
-      <h2>Project detail page!</h2>
-      <p>This is the project detail page.</p>
+      <h1>Project detail page!</h1>
+      <p>
+        This is the project detail page. Looks like we need to add some details!
+      </p>
     </>
   );
 }

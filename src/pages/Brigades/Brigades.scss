@@ -1,14 +1,42 @@
 .brigades-page-content {
   display: flex;
-  align-items: flex-start;
   margin-bottom: 3rem;
+  height: 70vh;
+  min-height: 400px;
+  background-color: var(--cfa-blue-dark);
+  border-radius: 5px;
 
-  .map {
-    flex: 1;
+  > * {
+    background-color: white;
+    margin: 4px;
   }
 
-  .map-info {
-    flex: 1;
-    padding: 0 2rem;
+  .map {
+    width: 40%;
+    height: auto;
+    border-radius: 5px 0 0 5px;
+  }
+
+  .projects-table {
+    width: 60%;
+    margin-left: 0;
+    border-radius: 0 5px 5px 0;
+  }
+
+  @media only screen and (max-width: 600px) {
+    display: unset;
+    background-color: inherit;
+
+    .map {
+      height: 50vh;
+      border: 1px solid var(--cfa-blue-dark);
+    }
+
+    .map,
+    .projects-table {
+      display: inline-block;
+      width: 100%;
+      border-radius: 5px;
+    }
   }
 }

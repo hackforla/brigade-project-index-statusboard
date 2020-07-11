@@ -3,7 +3,7 @@ import React from 'react';
 function About() {
   return (
     <div className="text-content">
-      <h2>About page!</h2>
+      <h1>About page!</h1>
       <p>
         The Brigade Project Index is a collaborative project involving core
         contributorts from across many brigades. We design, develop, and

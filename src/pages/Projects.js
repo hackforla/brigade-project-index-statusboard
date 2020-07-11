@@ -1,15 +1,69 @@
 import React, { useState, useEffect } from 'react';
+// import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { useTable, usePagination, useSortBy, useFilters } from 'react-table';
 import {
   cleanBrigadeData,
   getProjectsFromBrigadeData,
   getBaseApiUrl,
 } from '../utils';
-import ProjectsTable from '../components/ProjectsTable/ProjectsTable';
+import { ProjectsTable, TextFilter, fuzzyTextFilterFn } from '../components';
 
 function Projects() {
   const [brigadeData, setBrigadeData] = useState();
-  const projects = getProjectsFromBrigadeData(brigadeData);
+  const [projects, setProjects] = useState();
+
+  // eslint-disable-next-line import/prefer-default-export
+  const filterTypes = React.useMemo(
+    () => ({
+      // Add a new fuzzyTextFilterFn filter type.
+      fuzzyText: fuzzyTextFilterFn,
+    }),
+    []
+  );
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: 'Project',
+        accessor: (project) => (
+          // TODO: CHANGE THIS WHEN WE HAVE A PROJECT DETAIL PAGE TO GO TO
+          // <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
+          <a href={project.code_url}>{project.name}</a>
+        ),
+        Filter: TextFilter,
+        filter: 'fuzzyText',
+      },
+      {
+        Header: 'Description',
+        accessor: 'description',
+        Filter: TextFilter,
+        filter: 'fuzzyText',
+      },
+      {
+        Header: 'Brigade',
+        accessor: 'brigade.name',
+        Filter: TextFilter,
+        filter: 'fuzzyText',
+      },
+    ],
+    []
+  );
+
+  const tableAttributes = useTable(
+    {
+      columns,
+      data: projects || [],
+      initialState: {
+        pageIndex: 0,
+        pageSize: projects ? projects.length : 50,
+      },
+      filterTypes,
+    },
+    useFilters,
+    useSortBy,
+    usePagination
+  );
 
   useEffect(() => {
     const getData = async () => {
@@ -19,11 +73,15 @@ function Projects() {
     getData();
   }, []);
 
+  useEffect(() => {
+    setProjects(getProjectsFromBrigadeData(brigadeData, {}));
+  }, [brigadeData]);
+
   return (
     <>
-      <h2>Projects page!</h2>
+      <h1>All projects</h1>
       {/* This is just a stand-in-- we should probably make it so that we can pass column props to the table */}
-      <ProjectsTable projects={projects} />
+      <ProjectsTable projects={projects} tableAttributes={tableAttributes} />
     </>
   );
 }

@@ -95,6 +95,6 @@ if (process.env.REDIRECT_TO_DOMAIN != undefined) {
 } else {
 }
 
-app.use(express.static(__dirname + '/dist'));
+// app.use(express.static(__dirname + '/dist'));
 
 app.listen(port);

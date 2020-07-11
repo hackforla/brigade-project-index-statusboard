@@ -27,10 +27,13 @@
 
   &:disabled {
     cursor: default;
-    background-color: var(--cfa-grey-light);
+    color: var(--cfa-grey-dark);
+    background-color: var(--cfa-grey);
     border: 2px solid var(--cfa-grey);
   }
 
   &--dark-background {
+    // TODO: implement styles for nav bar buttons here
+    // use for map reset button too?
   }
 }

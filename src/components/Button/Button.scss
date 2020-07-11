@@ -1,3 +1,17 @@
 .button {
   cursor: pointer;
+  &.link-button {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-decoration: underline;
+    background-color: inherit;
+    padding: unset;
+    border: none;
+    border: 2px solid transparent;
+    &:hover,
+    &:focus {
+      border: 2px solid rgba($color: #fff, $alpha: 0.5);
+    }
+  }
 }

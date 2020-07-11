@@ -1,3 +1,5 @@
+import L from 'leaflet';
+
 export function getBaseApiUrl() {
   if (process.env.NODE_ENV === 'development') {
     return 'http://localhost:8080';
@@ -6,24 +8,31 @@ export function getBaseApiUrl() {
   return '';
 }
 
-export function getProjectsFromBrigadeData(
+export function filterBrigades(
   brigadeData,
   filterOpts = {
     selectedBrigade: undefined,
-    state: undefined,
-    boundingBox: undefined,
+    // state: undefined,
+    bounds: undefined,
   }
 ) {
   if (!brigadeData) return [];
   let dataToFilter = brigadeData;
-  const { selectedBrigade, state, boundingBox } = filterOpts;
+  const { selectedBrigade, bounds } = filterOpts;
   if (selectedBrigade) {
     dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade.name);
+  } else if (bounds) {
+    dataToFilter = dataToFilter.filter((b) => {
+      if (!b.latitude || !b.longitude) return false;
+      return bounds.contains(L.latLng(b.latitude, b.longitude));
+    });
   }
-  if (state || boundingBox) {
-    console.log('TODO: FILTER BY STATE AND BOUNDING BOX');
-  }
-  return dataToFilter.reduce(
+  return dataToFilter;
+}
+
+export function getProjectsFromBrigadeData(brigadeData) {
+  if (!brigadeData) return undefined;
+  return brigadeData.reduce(
     (projects, currentBrigade) => [
       ...projects,
       ...currentBrigade.projects.map((p) => ({
@@ -50,7 +59,7 @@ export function cleanBrigadeData(brigades) {
       p.normalized_topics = [];
       if (p.topics) {
         p.topics.forEach((t) => {
-          const nt = t.toLowerCase().replace(/\-/g, '');
+          const nt = t.toLowerCase().replace(/-/g, '');
           if (!p.normalized_topics.includes(t)) {
             p.normalized_topics.push(nt);
           }

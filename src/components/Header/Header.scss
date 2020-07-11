@@ -1,10 +1,11 @@
 .App-header {
-  min-height: 100px;
+  width: 100%;
+  min-height: 5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  font-size: calc(20px);
+  font-size: 2rem;
   background-color: var(--cfa-blue-dark);
 
   a {
@@ -12,26 +13,26 @@
   }
 
   .home-link {
-    padding: 0 20px;
+    padding: 0.5rem 1rem;
     border: 4px solid transparent;
-
-    h1 {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: flex-start;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: left;
+    align-items: flex-start;
 
     .App-logo {
-      width: 200px;
-      height: 74px;
+      width: 10rem;
       display: inline-block;
       pointer-events: none;
+      margin-right: 1.3rem;
     }
 
     .App-title {
+      white-space: nowrap;
+      font-size: 2rem;
+      font-weight: bold;
       display: inline-block;
-      margin-left: 1.3rem;
       color: var(--cfa-white);
       font-family: var(--font-family-header);
     }
@@ -40,5 +41,20 @@
   .home-link:focus,
   .home-link:hover {
     border: 4px solid var(--cfa-magenta);
+  }
+
+  @media only screen and (max-width: 800px) {
+    .home-link {
+      padding: 0.5rem;
+      justify-content: start;
+
+      .App-logo {
+        width: 7rem;
+        text-align: left;
+      }
+      .App-title {
+        font-size: 1.75rem;
+      }
+    }
   }
 }
