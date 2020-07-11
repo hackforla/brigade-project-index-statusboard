@@ -57,13 +57,13 @@ nav {
       ul {
         padding: 0;
         margin: 0.25rem 0 0;
-        position: fixed;
         -webkit-font-smoothing: antialiased;
         /* to stop flickering of text in safari */
         transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
         display: unset;
-        width: calc(100vw);
+        width: 100vw;
         transform: translate(6rem);
+        position: absolute;
         li {
           margin: unset;
           width: 100%;
