@@ -117,22 +117,23 @@ nav {
           ~ ul {
             transform: translate(calc(-100vw + 5rem), 0);
           }
-          .hamburger-bars span {
-            // All of the bars turn opaque and have a pink background
-            opacity: 1;
-            background: var(--cfa-magenta);
-            // The bottom bar rotates 45 deg; other two are overridden
-            transform: rotate(45deg) translate(-2px, -1px);
-          }
-          .hamburger-bars span:first-child {
-            // Top bar goes away when the hamburger becomes an x
-            opacity: 0;
-            transform: rotate(0deg) scale(0.2, 0.2);
-          }
-          .hamburger-bars span:nth-last-child(2) {
-            // Middle bar becomes the x bar that starts at the bottom left
-            transform: rotate(-45deg) translate(0, -1px);
-          }
+          // TODO: figure out why this is wonky and fix it
+          //   .hamburger-bars span {
+          //     // All of the bars turn opaque and have a pink background
+          //     opacity: 1;
+          //     background: var(--cfa-magenta);
+          //     // The bottom bar rotates 45 deg; other two are overridden
+          //     transform: rotate(45deg) translate(-2px, -1px);
+          //   }
+          //   .hamburger-bars span:first-child {
+          //     // Top bar goes away when the hamburger becomes an x
+          //     opacity: 0;
+          //     transform: rotate(0deg) scale(0.2, 0.2);
+          //   }
+          //   .hamburger-bars span:nth-last-child(2) {
+          //     // Middle bar becomes the x bar that starts at the bottom left
+          //     transform: rotate(-45deg) translate(0, -1px);
+          //   }
         }
       }
     }
