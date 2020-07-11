@@ -40,7 +40,7 @@ nav {
       display: none;
     }
 
-    // https://codepen.io/erikterwan/pen/EVzeRP
+    padding: 0 1rem;
     display: inline-block;
     height: 4rem;
     width: 4rem;
@@ -64,6 +64,11 @@ nav {
         border: 4px solid transparent;
       }
 
+      .hamburger:focus,
+      .hamburger:hover {
+        border: 4px solid var(--cfa-magenta);
+      }
+
       .hamburger span {
         display: block;
         position: relative;
@@ -72,25 +77,17 @@ nav {
         margin-bottom: 5px;
         background: var(--cfa-white);
         border-radius: 3px;
-        z-index: 1;
         transform-origin: 4px 0px;
         transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
           background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
       }
 
       .hamburger span:first-child {
-        // Top bar goes away when the hamburger becomes an x
-        transform-origin: 0% 100%;
+        transform-origin: 0% 0%;
       }
 
       .hamburger span:nth-last-child(2) {
-        // This becomes the x bar that starts at the bottom left
         transform-origin: 0% 100%;
-      }
-
-      .hamburger:focus,
-      .hamburger:hover {
-        border: 4px solid var(--cfa-magenta);
       }
 
       .hamburger.open span {
@@ -100,17 +97,19 @@ nav {
       }
 
       .hamburger.open span:nth-last-child(3) {
+        // Top bar goes away when the hamburger becomes an x
         opacity: 0;
         transform: rotate(0deg) scale(0.2, 0.2);
       }
 
       .hamburger.open span:nth-last-child(2) {
+        // This becomes the x bar that starts at the bottom left
         transform: rotate(-45deg) translate(0, -1px);
       }
 
       ul {
         padding: 0;
-        margin: 4rem 0 0;
+        margin: 4.25rem 0 0;
         position: fixed;
         -webkit-font-smoothing: antialiased;
         /* to stop flickering of text in safari */
@@ -121,7 +120,7 @@ nav {
       }
 
       .hamburger.open ~ ul {
-        transform: translate(calc(-100vw + 6rem), 0);
+        transform: translate(calc(-100vw + 5rem), 0);
       }
 
       ul li {
