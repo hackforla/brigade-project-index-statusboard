@@ -5,7 +5,7 @@ export function getBaseApiUrl() {
     return 'http://localhost:8080';
   }
   // TODO: WHAT SHOULD THIS RETURN?
-  return '';
+  return process.env.REACT_APP_API_URL;
 }
 
 export function filterBrigades(
