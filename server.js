@@ -5,6 +5,7 @@ import { getProjectIndex } from './api';
 import * as enforce from 'express-sslify';
 import { BSON } from 'bson';
 import {gzip, ungzip}  from 'node-gzip';
+import cors from 'cors';
 
 const port = process.env.PORT || 8080;
 const bson = new BSON();
@@ -21,6 +22,9 @@ const mc = memjs.Client.create(process.env.MEMCACHIER_SERVERS, {
 
 // We will use Express 
 var app = express();
+
+// Add CORS headers so the frontend can pull the data easily.
+app.use(cors());
 
 // maybe a last_update call?
 app.get('/api/tags.json', (req, res ) => {
