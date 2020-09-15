@@ -48,10 +48,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "./node_modules/eslint/bin/eslint.js src/**/*.js *.js",
+    "lint": "./node_modules/eslint/bin/eslint.js statusboard/src/**/*.js *.js",
     "prettier": "prettier --write .",
-    "update-cache": "node -r esm updateCacheTask.js",
-    "server": "node -r esm server.js"
+    "update-cache": "node -r esm updateCacheTask.js"
   },
   "eslintConfig": {
     "extends": "react-app"
