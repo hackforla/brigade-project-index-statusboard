@@ -15,7 +15,7 @@ To load the discourse tags, you need to run the separate npm task update-cache:
 
 ## Running the backend locally
 
-You will also need to run a copy of the backend API for the React app to load data from.
+The frontend will by default look for a local copy of the backend API for the React app to load data from.
 
 ```
 yarn server
@@ -25,6 +25,12 @@ Currently, the server fetches a new copy of the project index from Github every 
 
 ```
 docker run --publish 11211:11211 --detach memcached:alpine
+```
+
+You can also tell your local React app to use the production API using an environment variable like this:
+
+```
+REACT_APP_API_URL=https://statusboard.brigade.cloud yarn start
 ```
 
 ## Other commands
