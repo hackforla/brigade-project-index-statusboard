@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTable, usePagination, useSortBy, useFilters } from 'react-table';
 import {
-  cleanBrigadeData,
   getProjectsFromBrigadeData,
   getBaseApiUrl,
 } from '../utils';
@@ -28,7 +27,7 @@ function Projects() {
         Header: 'Project',
         accessor: (project) => (
           // TODO: CHANGE THIS WHEN WE HAVE A PROJECT DETAIL PAGE TO GO TO
-          // <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
+          // <NavLink to={`/projects/${slugify(project.slug)}`}>{project.name}</NavLink>
           <a href={project.code_url}>{project.name}</a>
         ),
         Filter: TextFilter,
@@ -68,7 +67,7 @@ function Projects() {
   useEffect(() => {
     const getData = async () => {
       const brigades = await axios.get(`${getBaseApiUrl()}/api/data.json`);
-      setBrigadeData(cleanBrigadeData(brigades));
+      setBrigadeData(brigades.data);
     };
     getData();
   }, []);
