@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders Brigade Project Index header', () => {
   const { getByText } = render(<App />);
-  const title = getByText(/Brigade Project Index/i);
+  const title = getByText(/Project Index/i);
   expect(title).toBeInTheDocument();
 });
