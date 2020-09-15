@@ -9,7 +9,7 @@ export function getBaseApiUrl() {
     return 'http://localhost:8080';
   }
 
-  return '/';
+  return '';
 }
 
 export function filterBrigades(

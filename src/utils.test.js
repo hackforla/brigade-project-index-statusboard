@@ -9,7 +9,7 @@ const SAMPLE_PROJECT = {
   "brigade_slug": "betanyc"
 };
 
-const SAMPLE_BRIGADE = {
+export const SAMPLE_BRIGADE = {
   "city": "New York, NY",
   "events_url": "https://www.meetup.com/betanyc/",
   "latitude": "40.7144",
@@ -41,7 +41,6 @@ const SAMPLE_BRIGADE = {
 
 test('getProjectsFromBrigadeData', () => {
   const result = getProjectsFromBrigadeData([SAMPLE_BRIGADE]);
-
   const expected = [
     { ...SAMPLE_PROJECT, brigade: { ...SAMPLE_BRIGADE, projects: undefined } },
   ];

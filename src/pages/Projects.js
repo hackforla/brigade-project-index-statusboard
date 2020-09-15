@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-// import { NavLink } from 'react-router-dom';
-import axios from 'axios';
 import { useTable, usePagination, useSortBy, useFilters } from 'react-table';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+import { ProjectsTable, TextFilter, fuzzyTextFilterFn } from '../components';
 import {
   getProjectsFromBrigadeData,
   getBaseApiUrl,
 } from '../utils';
-import { ProjectsTable, TextFilter, fuzzyTextFilterFn } from '../components';
+import TopicsFilter from '../components/ProjectsTable/TopicsFilter';
 
 function Projects() {
   const [brigadeData, setBrigadeData] = useState();
@@ -38,6 +39,12 @@ function Projects() {
         accessor: 'description',
         Filter: TextFilter,
         filter: 'fuzzyText',
+      },
+      {
+        Header: 'Topics',
+        accessor: (project) => (project.topics || []).join(', '),
+        Filter: TopicsFilter,
+        filter: 'includes',
       },
       {
         Header: 'Brigade',

@@ -56,7 +56,7 @@ function Brigades() {
   useEffect(() => {
     const getData = async () => {
       const brigades = await axios.get(`${getBaseApiUrl()}/api/data.json`);
-      setBrigadeData(brigades);
+      setBrigadeData(brigades.data);
       // const tags = await axios.get(`${getBaseApiUrl()}/api/tags.json`);
       // setTagData(tags.data);
     };
