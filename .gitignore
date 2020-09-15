@@ -4,7 +4,8 @@
 dist
 
 # dependencies
-/node_modules
+/api/node_modules
+/statusboard/node_modules
 /.pnp
 .pnp.js
 
@@ -12,7 +13,7 @@ dist
 /coverage
 
 # production
-/build
+/statusboard/build
 
 # misc
 .DS_Store
@@ -20,6 +21,7 @@ dist
 .env.development.local
 .env.test.local
 .env.production.local
+.netlify
 
 npm-debug.log*
 yarn-debug.log*
