@@ -16,13 +16,13 @@
 .form-control {
   font-size: 1.15rem;
   border-radius: 5px;
-  border: 2px solid var(--cfa-magenta);
-  background-color: var(--cfa-magenta-lightest);
+  border: 2px solid var(--cfa-blue);
+  background-color: var(--cfa-blue-lighter);
   padding: 0.3rem 1rem;
 
   &:hover,
   &:focus {
-    background-color: var(--cfa-magenta-lighter);
+    background-color: var(--cfa-blue-lightest);
   }
 
   &:disabled {
