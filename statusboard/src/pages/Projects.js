@@ -4,8 +4,9 @@ import axios from 'axios';
 
 import { ProjectsTable, TextFilter, fuzzyTextFilterFn } from '../components';
 import {
-  getProjectsFromBrigadeData,
+  filterActiveProjects,
   getBaseApiUrl,
+  getProjectsFromBrigadeData,
 } from '../utils';
 import TopicsFilter from '../components/ProjectsTable/TopicsFilter';
 
@@ -80,7 +81,7 @@ function Projects() {
   }, []);
 
   useEffect(() => {
-    setProjects(getProjectsFromBrigadeData(brigadeData, {}));
+    setProjects(filterActiveProjects(getProjectsFromBrigadeData(brigadeData)));
   }, [brigadeData]);
 
   return (

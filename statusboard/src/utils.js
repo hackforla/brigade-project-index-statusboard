@@ -48,6 +48,13 @@ export function getProjectsFromBrigadeData(brigadeData) {
   );
 }
 
+export function filterActiveProjects(projects) {
+  if (!projects) return undefined;
+  return projects.filter(
+    (project) => project.last_pushed_within !== 'over_a_year'
+  );
+}
+
 export function slugify(s) {
   return s.toLowerCase().replace(/[^\w]+/g, '');
 }
