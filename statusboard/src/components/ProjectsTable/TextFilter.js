@@ -13,6 +13,7 @@ export function fuzzyTextFilterFn(rows, id, filterValue) {
         return rowText;
       },
     ],
+    threshold: matchSorter.rankings.ACRONYM,
   });
 }
 
