@@ -4,7 +4,6 @@ import { useTable, usePagination, useSortBy } from 'react-table';
 import axios from 'axios';
 import Map from '../../components/Map/Map';
 import {
-  cleanBrigadeData,
   getProjectsFromBrigadeData,
   getBaseApiUrl,
   filterBrigades,
@@ -28,7 +27,7 @@ function Brigades() {
         Header: 'Project name',
         accessor: (project) => (
           // TODO: CHANGE THIS WHEN WE MAKE PROJECT PAGES
-          // <NavLink to={`/projects/${project.slug}`}>{project.name}</NavLink>
+          // <NavLink to={`/projects/${slugify(project.slug)}`}>{project.name}</NavLink>
           <a href={project.code_url}>{project.name}</a>
         ),
       },
@@ -57,7 +56,7 @@ function Brigades() {
   useEffect(() => {
     const getData = async () => {
       const brigades = await axios.get(`${getBaseApiUrl()}/api/data.json`);
-      setBrigadeData(cleanBrigadeData(brigades));
+      setBrigadeData(brigades.data);
       // const tags = await axios.get(`${getBaseApiUrl()}/api/tags.json`);
       // setTagData(tags.data);
     };
