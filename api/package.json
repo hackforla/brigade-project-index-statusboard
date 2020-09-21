@@ -34,8 +34,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "./node_modules/eslint/bin/eslint.js *.js",
-    "prettier": "prettier --write .",
-    "update-cache": "node -r esm updateCacheTask.js"
+    "prettier": "prettier --write ."
   },
   "enginesStrict": {
     "node": ">=10"
