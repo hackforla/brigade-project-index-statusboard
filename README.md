@@ -28,10 +28,10 @@ yarn install
 yarn start
 ```
 
-Currently, the server fetches a new copy of the project index from Github every time (very expensive). If memcached is running locally on port 11211, the API will use this to cache the results. We recommend installing it via Docker:
+Currently, the server fetches a new copy of the project index from Github every time (very expensive). If redis is running locally on port 6379, the API will use this to cache the results. We recommend installing it via Docker:
 
 ```
-docker run --publish 11211:11211 --detach memcached:alpine
+docker run --publish 6379:6379 redis:alpine
 ```
 
 You don't have to run the API locally -- you can instead tell your local React app to use the production API using an environment variable like this:

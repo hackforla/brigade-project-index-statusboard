@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@octokit/rest": "^17.9.2",
+    "apicache": "^1.5.3",
     "axios": "^0.19.2",
     "cors": "^2.8.5",
     "esm": "^3.2.25",
@@ -12,7 +13,7 @@
     "helmet": "^3.23.1",
     "jszip": "^3.4.0",
     "lodash": "^4.17.15",
-    "memjs": "^1.2.2",
+    "redis": "^3.0.2",
     "toml": "^3.0.0",
     "topojson-client": "^3.1.0"
   },
