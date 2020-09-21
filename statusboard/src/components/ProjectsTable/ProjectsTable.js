@@ -13,6 +13,7 @@ export default function ProjectsTable({ projects, tableAttributes }) {
     getTableBodyProps,
     headerGroups,
     prepareRow,
+    rows,
     page,
     setPageSize,
     state: { pageSize },
@@ -63,7 +64,7 @@ export default function ProjectsTable({ projects, tableAttributes }) {
           })}
         </tbody>
       </table>
-      {projects && pageSize < projects.length && (
+      {projects && pageSize < rows.length && (
         <div className="load-projects-button">
           <Button
             text="Load next 50 projects"
