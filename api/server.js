@@ -20,12 +20,8 @@ app.cache = apicache.options({ redisClient }).middleware;
 
 app.use(helmet());
 
-// TODO: set env variable and check it before doing this
-app.use(
-  cors({
-    origin: 'http://localhost:3000',
-  })
-);
+// Add CORS headers so the frontend can pull the data easily.
+app.use(cors());
 
 app.use('/api', createRoutes(app));
 
