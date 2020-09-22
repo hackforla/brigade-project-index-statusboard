@@ -1,4 +1,4 @@
-import { useTable, usePagination, useSortBy, useFilters } from 'react-table';
+import { useTable, usePagination, useFilters } from 'react-table';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -68,7 +68,6 @@ function Projects() {
       filterTypes,
     },
     useFilters,
-    useSortBy,
     usePagination
   );
 
