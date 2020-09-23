@@ -48,10 +48,10 @@ export function getProjectsFromBrigadeData(brigadeData) {
   );
 }
 
-export function filterActiveProjects(projects) {
+export function filterActiveProjects(projects, timeRanges = ['over_a_year']) {
   if (!projects) return undefined;
   return projects.filter(
-    (project) => project.last_pushed_within !== 'over_a_year'
+    (project) => timeRanges.includes(project.last_pushed_within)
   );
 }
 

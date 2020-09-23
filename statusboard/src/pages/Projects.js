@@ -8,11 +8,22 @@ import {
   getBaseApiUrl,
   getProjectsFromBrigadeData,
 } from '../utils';
+import Select from '../components/Select/Select';
 import TopicsFilter from '../components/ProjectsTable/TopicsFilter';
+
+const ACTIVE_THRESHOLDS = {
+  // key: user-facing string that represents the threshold
+  // value: array of values for `last_pushed_within` that match the threshold
+  'all time': ['month', 'week', 'year', 'over_a_year'],
+  'last year': ['month', 'week', 'year'],
+  'last month': ['month', 'week'],
+  'last week': ['week'],
+};
 
 function Projects() {
   const [brigadeData, setBrigadeData] = useState();
   const [projects, setProjects] = useState();
+  const [activeThreshold, setActiveThreshold] = useState('last year');
 
   // eslint-disable-next-line import/prefer-default-export
   const filterTypes = React.useMemo(
@@ -80,12 +91,31 @@ function Projects() {
   }, []);
 
   useEffect(() => {
-    setProjects(filterActiveProjects(getProjectsFromBrigadeData(brigadeData)));
-  }, [brigadeData]);
+    setProjects(
+      filterActiveProjects(
+        getProjectsFromBrigadeData(brigadeData),
+        ACTIVE_THRESHOLDS[activeThreshold]
+      )
+    );
+  }, [brigadeData, activeThreshold]);
 
   return (
     <>
-      <h1>All projects</h1>
+      <h1>Active projects</h1>
+
+      {projects && (
+        <div>
+          Showing {projects.length} projects with changes on Github in the
+          <Select
+            label=""
+            id="active_time_range"
+            onChange={(e) => setActiveThreshold(e.target.value)}
+            selected={activeThreshold}
+            options={Object.keys(ACTIVE_THRESHOLDS)}
+            className="form-control--inline"
+          />
+        </div>
+      )}
       {/* This is just a stand-in-- we should probably make it so that we can pass column props to the table */}
       <ProjectsTable projects={projects} tableAttributes={tableAttributes} />
     </>
