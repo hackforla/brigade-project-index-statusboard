@@ -102,6 +102,7 @@ function Brigades() {
           id="select-brigade"
           emptyOptionText="All brigades"
           className="display-inline-block"
+          inline
           options={(brigadeData || [])
             .filter((b) => !!b.latitude && !!b.longitude)
             .map((b) => b.name)}

@@ -1,15 +1,20 @@
 .form-control-container {
+  &--inline {
+    display: inline-block;
+    width: max-content;
+  }
 }
 
 .form-label {
   div {
-    padding: 1rem 0 0.25rem 0;
+    // padding: 1rem 0 0.25rem 0;
     text-align: left;
   }
 
   &--inline {
     display: inline-block;
     margin-right: 0.5rem;
+    align-self: center;
   }
 }
 

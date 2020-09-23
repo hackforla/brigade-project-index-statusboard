@@ -3,18 +3,21 @@ import React from 'react';
 
 import Select from '../Select/Select';
 
-export default function TopicFilter({ column: { setFilter, preFilteredRows } }) {
+export default function TopicFilter({
+  column: { setFilter, preFilteredRows },
+}) {
   const topicsByFrequency = {};
 
   preFilteredRows.forEach((row) => {
     const topics = (row.values.Topics || '').split(', ');
-    if (topics.length === 1 && topics[0] === "") {
+    if (topics.length === 1 && topics[0] === '') {
       return;
     }
 
-    topics.forEach((topic) =>
-      topicsByFrequency[topic] = (topicsByFrequency[topic] || 0) + 1
-    )
+    topics.forEach(
+      (topic) =>
+        (topicsByFrequency[topic] = (topicsByFrequency[topic] || 0) + 1)
+    );
   });
 
   const sortedTopics = Object.entries(topicsByFrequency)
@@ -24,10 +27,11 @@ export default function TopicFilter({ column: { setFilter, preFilteredRows } }) 
   return (
     <Select
       id="topic"
-      label=""
+      label="Topics"
       emptyOptionText=""
       options={sortedTopics}
       onChange={(e) => setFilter(e.target.value)}
+      inline
     />
   );
 }

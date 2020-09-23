@@ -15,15 +15,15 @@ const ACTIVE_THRESHOLDS = {
   // key: user-facing string that represents the threshold
   // value: array of values for `last_pushed_within` that match the threshold
   'all time': ['month', 'week', 'year', 'over_a_year'],
-  'last year': ['month', 'week', 'year'],
-  'last month': ['month', 'week'],
-  'last week': ['week'],
+  year: ['month', 'week', 'year'],
+  month: ['month', 'week'],
+  week: ['week'],
 };
 
 function Projects() {
   const [brigadeData, setBrigadeData] = useState();
   const [projects, setProjects] = useState();
-  const [activeThreshold, setActiveThreshold] = useState('last year');
+  const [activeThreshold, setActiveThreshold] = useState('year');
 
   // eslint-disable-next-line import/prefer-default-export
   const filterTypes = React.useMemo(
@@ -53,7 +53,8 @@ function Projects() {
         filter: 'fuzzyText',
       },
       {
-        Header: 'Topics',
+        id: 'Topics',
+        Header: <span className="sr-only">Topics</span>,
         accessor: (project) => (project.topics || []).join(', '),
         Filter: TopicsFilter,
         filter: 'includes',
@@ -102,20 +103,19 @@ function Projects() {
   return (
     <>
       <h1>Active projects</h1>
-
-      {projects && (
-        <div>
-          Showing {projects.length} projects with changes on Github in the
+      <div>
+        {projects && (
           <Select
-            label=""
+            label={`Showing ${projects.length} projects with changes on Github in the last`}
             id="active_time_range"
             onChange={(e) => setActiveThreshold(e.target.value)}
             selected={activeThreshold}
             options={Object.keys(ACTIVE_THRESHOLDS)}
-            className="form-control--inline"
+            inline
           />
-        </div>
-      )}
+        )}
+      </div>
+      <br />
       {/* This is just a stand-in-- we should probably make it so that we can pass column props to the table */}
       <ProjectsTable projects={projects} tableAttributes={tableAttributes} />
     </>

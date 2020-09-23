@@ -11,19 +11,31 @@ export default function Select({
   selected,
   emptyOptionText,
   className,
+  inline = false,
 }) {
   return (
-    <div className={cx('form-control-container', className)}>
-      <label htmlFor={id} className="form-label form-label--inline">
+    <div
+      className={cx(
+        'form-control-container',
+        { 'form-control-container--inline': inline },
+        className
+      )}
+    >
+      <label
+        htmlFor={id}
+        className={cx('form-label', { 'form-label--inline': inline })}
+      >
         <div>{label}</div>
       </label>
       <select
         id={id}
         onChange={onChange}
-        className="form-control"
+        className={cx('form-control', { 'form-control--inline': inline })}
         value={selected}
       >
-        <option value={emptyOptionText}>{emptyOptionText}</option>
+        {emptyOptionText && (
+          <option value={emptyOptionText}>{emptyOptionText}</option>
+        )}
         {options.map((option) => {
           return <option key={option}>{option}</option>;
         })}
@@ -34,7 +46,6 @@ export default function Select({
 
 Select.defaultProps = {
   selected: undefined,
-  emptyOptionText: 'Select',
   options: [],
   className: '',
 };
@@ -49,4 +60,5 @@ Select.propTypes = {
   selected: PropTypes.string,
   emptyOptionText: PropTypes.string,
   className: PropTypes.string,
+  inline: PropTypes.bool,
 };
