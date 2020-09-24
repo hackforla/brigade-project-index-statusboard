@@ -3,7 +3,14 @@
   height: auto;
   overflow-y: scroll;
 
+  // Make top scrollbar show rather than bottom
+  .ps__rail-x {
+    bottom: auto;
+    top: 0px;
+  }
+
   table {
+    padding: 1rem 0;
     width: 100%;
     border-spacing: 0;
     border-radius: inherit;
