@@ -1,7 +1,6 @@
 .projects-table {
   width: 100%;
   height: auto;
-  overflow-y: scroll;
 
   // Make top scrollbar show rather than bottom
   .ps__rail-x {
@@ -9,8 +8,11 @@
     top: 0px;
   }
 
-  table {
+  .ps--active-x table {
     padding: 1rem 0;
+  }
+
+  table {
     width: 100%;
     border-spacing: 0;
     border-radius: inherit;
