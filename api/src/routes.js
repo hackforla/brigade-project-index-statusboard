@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import apicache from 'apicache';
+
 import { getProjectIndex } from './api';
 
 export function createRoutes(app) {
@@ -8,11 +10,15 @@ export function createRoutes(app) {
     res.json({});
   });
 
-  router.get('/data.json', app.cache('15 minutes'), (req, res) => {
+  router.get('/data.json', app.cache('90 minutes'), (req, res) => {
     getProjectIndex(['Brigade', 'Code for America']).then((result) => {
-      const cache_value = JSON.stringify(result);
       res.json(result);
     });
+  });
+
+  router.get('/force-refresh/data.json', (req, res) => {
+    apicache.clear('/api/data.json');
+    res.redirect('/api/data.json');
   });
 
   return router;
