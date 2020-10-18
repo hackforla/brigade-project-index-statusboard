@@ -48,13 +48,53 @@ export function getProjectsFromBrigadeData(brigadeData) {
   );
 }
 
-export function filterActiveProjects(projects, timeRanges = ['over_a_year']) {
+function numTopicsIntersecting(filterByTopics, projectTopics) {
+  if (!filterByTopics?.length) return 1;
+  if (!projectTopics || !projectTopics.length) return -1;
+  const intersection = filterByTopics.filter((t) => projectTopics.includes(t));
+  return intersection.length;
+}
+
+export function filterActiveProjects(projects, options = {}) {
   if (!projects) return undefined;
-  return projects.filter(
-    (project) => timeRanges.includes(project.last_pushed_within)
-  );
+
+  // Set destructuring and allow defaults to be overwritten
+  const { timeRanges, topics } = {
+    timeRanges: ['year'],
+    topics: [],
+    ...options,
+  };
+
+  return projects
+    .map((p) => ({
+      ...p,
+      numberTopicsMatched: numTopicsIntersecting(topics, p.topics),
+    }))
+    .sort((a, b) => b.numberTopicsMatched - a.numberTopicsMatched)
+    .filter(
+      (project) =>
+        timeRanges.includes(project.last_pushed_within) &&
+        project.numberTopicsMatched > 0
+    );
 }
 
 export function slugify(s) {
   return s.toLowerCase().replace(/[^\w]+/g, '');
+}
+
+export function getTopicsFromProjects(projects) {
+  // Sorted by frequency
+  const allTopics = projects.reduce(
+    (topics, project) => topics.concat(project.topics || []),
+    []
+  );
+  const topicsByFrequency = {};
+
+  allTopics.forEach(
+    (topic) => (topicsByFrequency[topic] = (topicsByFrequency[topic] || 0) + 1)
+  );
+
+  return Object.entries(topicsByFrequency)
+    .sort((a, b) => b[1] - a[1])
+    .map((topicAndCount) => topicAndCount[0]);
 }

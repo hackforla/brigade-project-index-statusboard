@@ -8,6 +8,7 @@ export default function TextInput({ label, id, onChange, defaultValue }) {
     <div className="text-input form-control-container">
       <label htmlFor={id}>{label}</label>
       <input
+        type="text"
         id={id}
         onChange={onChange}
         className="form-control"
