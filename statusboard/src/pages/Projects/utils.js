@@ -46,7 +46,7 @@ export const getTableColumns = (filterTopics = [], setFilterTopics) => [
 export const ACTIVE_THRESHOLDS = {
   // key: user-facing string that represents the threshold
   // value: array of values for `last_pushed_within` that match the threshold
-  'all time': ['month', 'week', 'year', 'over_a_year'],
+  'all time': ['month', 'week', 'year', 'over_a_year', undefined],
   year: ['month', 'week', 'year'],
   month: ['month', 'week'],
   week: ['week'],
