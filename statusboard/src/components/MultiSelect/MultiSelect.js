@@ -36,10 +36,14 @@ export const MultiSelect = ({
         <div className="multi-select">
           <div className="text-input form-control-container">
             <label {...getLabelProps()}>{labelText}</label>
-            <input {...getInputProps()} type="text" className="form-control" />
+            <input
+              {...getInputProps()}
+              type="text"
+              className="form-control form-control--left"
+            />
             <Button
               {...getToggleButtonProps({
-                className: 'button-primary',
+                className: 'button-primary form-control--right',
               })}
             >
               <>
@@ -49,12 +53,12 @@ export const MultiSelect = ({
             </Button>
             {selectedItem || selectedItems.length > 0 ? (
               <Button
-                className="button-primary"
+                className="button-primary clear-button"
                 onClick={() => {
                   setSelectedItems([]);
                   clearSelection();
                 }}
-                text="Clear all"
+                text="Clear"
               />
             ) : null}
           </div>
@@ -84,11 +88,12 @@ export const MultiSelect = ({
             </ul>
           ) : null}
 
-          <div>
+          <div className="tags">
             {selectedItems.map((value, i) => {
               return (
                 <span key={value}>
                   <Button
+                    className="form-control--dark-background tag"
                     onClick={() =>
                       removeSelectedItemByIndex(
                         i,
@@ -99,9 +104,10 @@ export const MultiSelect = ({
                     }
                   >
                     <>
-                      {value}
+                      <span className="sr-only">Remove</span>
+                      <span className="tag__name">{value}</span>
                       {/* TODO THIS IS UGLY and maybe inaccessible */}
-                      {'  '}x{' '}
+                      <span className="tag__close">x</span>
                     </>
                   </Button>{' '}
                 </span>

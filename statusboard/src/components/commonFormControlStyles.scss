@@ -37,8 +37,23 @@
   }
 
   &--dark-background {
-    // TODO: implement styles for nav bar buttons here
-    // use for map reset button too?
+    // TODO: use for map reset button and nav bar
+    background-color: var(--cfa-blue);
+    color: var(--cfa-white);
+    &:hover,
+    &:focus {
+      background-color: var(--cfa-blue-dark);
+      color: var(--cfa-white);
+    }
+  }
+
+  &--left {
+    border-radius: 5px 0 0 5px;
+  }
+
+  &--right {
+    border-radius: 0 5px 5px 0;
+    border-left: none;
   }
 
   &--inline {
