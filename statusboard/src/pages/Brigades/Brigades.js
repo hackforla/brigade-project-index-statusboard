@@ -1,25 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 // import { NavLink } from 'react-router-dom';
 import { usePagination, useSortBy } from 'react-table';
-import axios from 'axios';
 import Map from '../../components/Map/Map';
-import {
-  getProjectsFromBrigadeData,
-  getBaseApiUrl,
-  filterBrigades,
-} from '../../utils';
+import { getProjectsFromBrigadeData, filterBrigades } from '../../utils';
+import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { ProjectsTable, Select } from '../../components';
 import './Brigades.scss';
 
 function Brigades() {
-  const [brigadeData, setBrigadeData] = useState();
-  const [filteredBrigadeData, setFilteredBrigadeData] = useState();
+  const { allBrigadeData, allProjects } = useContext(BrigadeDataContext);
+  const [filteredBrigadeData, setFilteredBrigadeData] = useState(
+    allBrigadeData
+  );
   // const [tagData, setTagData] = useState();
   const [filterOpts, setFilterOpts] = useState({});
   const { selectedBrigade } = filterOpts; // also has bounds
-  const [projects, setProjects] = useState(
-    getProjectsFromBrigadeData(filteredBrigadeData, filterOpts)
-  );
+  const [projects, setProjects] = useState(allProjects);
 
   const columns = React.useMemo(
     () => [
@@ -54,20 +50,10 @@ function Brigades() {
   ];
 
   useEffect(() => {
-    const getData = async () => {
-      const brigades = await axios.get(`${getBaseApiUrl()}/api/data.json`);
-      setBrigadeData(brigades.data);
-      // const tags = await axios.get(`${getBaseApiUrl()}/api/tags.json`);
-      // setTagData(tags.data);
-    };
-    getData();
-  }, []);
-
-  useEffect(() => {
-    const newlyFilteredBrigadeData = filterBrigades(brigadeData, filterOpts);
+    const newlyFilteredBrigadeData = filterBrigades(allBrigadeData, filterOpts);
     setFilteredBrigadeData(newlyFilteredBrigadeData);
     setProjects(getProjectsFromBrigadeData(newlyFilteredBrigadeData));
-  }, [brigadeData, filterOpts]);
+  }, [allBrigadeData, filterOpts]);
 
   let brigadesShowingString = 'No brigades selected or showing on map.';
   if (filteredBrigadeData && filteredBrigadeData.length > 0) {
@@ -103,7 +89,7 @@ function Brigades() {
           emptyOptionText="All brigades"
           className="display-inline-block"
           inline
-          options={(brigadeData || [])
+          options={(allBrigadeData || [])
             .filter((b) => !!b.latitude && !!b.longitude)
             .map((b) => b.name)}
           selected={
@@ -115,7 +101,7 @@ function Brigades() {
             if (!event || !event.target) return;
             const newVal = event.target.value;
             setFilterOpts(() => ({
-              selectedBrigade: brigadeData.find((b) => b.name === newVal),
+              selectedBrigade: allBrigadeData.find((b) => b.name === newVal),
             }));
           }}
         />
@@ -123,7 +109,7 @@ function Brigades() {
       <br />
       <div className="brigades-page-content">
         <Map
-          brigadeData={brigadeData}
+          brigadeData={allBrigadeData}
           filterOpts={filterOpts}
           setFilterOpts={setFilterOpts}
         />
