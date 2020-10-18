@@ -48,12 +48,19 @@ export function getProjectsFromBrigadeData(brigadeData) {
   );
 }
 
+function topicsIntersect(filterByTopics, projectTopics) {
+  if (!filterByTopics.length) return true;
+  if (!projectTopics || !projectTopics.length) return false;
+  const intersection = filterByTopics.filter((t) => projectTopics.includes(t));
+  return intersection.length > 0;
+}
+
 export function filterActiveProjects(projects, options = {}) {
   if (!projects) return undefined;
 
   // Set destructuring and allow defaults to be overwritten
   const { timeRanges, topics } = {
-    timeRanges: ['over_a_year'],
+    timeRanges: ['year'],
     topics: [],
     ...options,
   };
@@ -61,7 +68,7 @@ export function filterActiveProjects(projects, options = {}) {
   return projects.filter(
     (project) =>
       timeRanges.includes(project.last_pushed_within) &&
-      project.topics?.filter((t) => topics.includes(t))
+      topicsIntersect(topics, project.topics)
   );
 }
 

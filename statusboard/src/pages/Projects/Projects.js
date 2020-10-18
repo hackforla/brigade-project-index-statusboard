@@ -68,10 +68,9 @@ function Projects() {
           initialSelectedItems={filterTopics}
           items={allTopics}
           labelText="Topics"
-          onSelectionItemsChange={(newFilterTopics) => {
-            console.log(newFilterTopics);
-            setFilterTopics(newFilterTopics);
-          }}
+          onSelectionItemsChange={(newFilterTopics) =>
+            setFilterTopics(newFilterTopics)
+          }
         />
       )}
       {/* This is just a stand-in-- we should probably make it so that we can pass column props to the table */}
