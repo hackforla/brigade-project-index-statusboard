@@ -26,7 +26,7 @@
   --cfa-purple: #69579c;
   --cfa-purple-dark: #433762;
   --cfa-white: #e5e5e5;
-  --cfa-white-light: hsl(0, 0%, 96%);
+  --cfa-white-light: hsl(0, 0%, 97%);
 
   /* DEFAULT COLORS */
   --color-background: var(--cfa-white-light);

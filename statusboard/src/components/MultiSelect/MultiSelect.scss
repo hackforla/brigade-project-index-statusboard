@@ -4,4 +4,28 @@
     width: 1em;
     transform: rotate(90deg);
   }
+
+  ul {
+    position: absolute;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid var(--cfa-blue);
+    z-index: 999;
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      border: 2px solid var(--cfa-white-light);
+      padding: 0.5em;
+      margin: 0;
+      background-color: var(--cfa-blue-lightest);
+
+      &:hover,
+      &[aria-selected='true'] {
+        background-color: var(--cfa-blue-lighter);
+        cursor: pointer;
+      }
+    }
+  }
 }

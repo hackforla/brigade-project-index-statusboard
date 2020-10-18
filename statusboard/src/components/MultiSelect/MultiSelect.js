@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import Button from '../Button/Button';
@@ -55,26 +55,26 @@ export const MultiSelect = ({
                     className: 'button-primary',
                   })}
                 >
-                  <Arrow className="dropdown-arrow" />
-                  <span className="sr-only">{isOpen ? 'close' : 'open'}</span>
+                  <>
+                    <Arrow className="dropdown-arrow" />
+                    <span className="sr-only">{isOpen ? 'close' : 'open'}</span>
+                  </>
                 </Button>
+                {selectedItem || selectedItems.length > 0 ? (
+                  <Button
+                    className="button-primary"
+                    onClick={() => {
+                      setSelectedItems([]);
+                      clearSelection();
+                    }}
+                    text="Clear all topic filters"
+                  />
+                ) : null}
               </div>
 
-              {selectedItem || selectedItems.length > 0 ? (
-                <Button
-                  className="button-primary"
-                  onClick={() => {
-                    setSelectedItems([]);
-                    clearSelection();
-                  }}
-                  text="X"
-                >
-                  <span className="sr-only">Clear</span>
-                </Button>
-              ) : null}
-
-              {isOpen
-                ? items
+              {isOpen ? (
+                <ul>
+                  {items
                     .filter(
                       (item) =>
                         !selectedItems.find(
@@ -87,23 +87,20 @@ export const MultiSelect = ({
                           {...getItemProps({
                             item,
                             key: item,
-                            style: {
-                              backgroundColor:
-                                index === highlightedIndex ? 'lightgray' : null,
-                            },
                           })}
                         >
                           {' '}
                           {item}{' '}
                         </li>
                       );
-                    })
-                : null}
+                    })}
+                </ul>
+              ) : null}
 
               <div>
                 {selectedItems.map((value, i) => {
                   return (
-                    <span key={value.id}>
+                    <span key={value}>
                       <Button
                         onClick={() =>
                           removeSelectedItemByIndex(
@@ -114,8 +111,10 @@ export const MultiSelect = ({
                           )
                         }
                       >
-                        {value}
-                        {'  '}X{' '}
+                        <>
+                          {value}
+                          {'  '}X{' '}
+                        </>
                       </Button>{' '}
                     </span>
                   );
