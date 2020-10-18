@@ -2,7 +2,7 @@ import React from 'react';
 import matchSorter from 'match-sorter';
 import { TextInput } from '..';
 
-export function fuzzyTextFilterFn(rows, id, filterValue) {
+export function fuzzyTextFilter(rows, id, filterValue) {
   return matchSorter(rows, filterValue, {
     keys: [
       (row) => {
@@ -18,7 +18,7 @@ export function fuzzyTextFilterFn(rows, id, filterValue) {
 }
 
 // Let the table remove the filter if the string is empty
-fuzzyTextFilterFn.autoRemove = (val) => !val;
+fuzzyTextFilter.autoRemove = (val) => !val;
 
 // TODO: ADD PROPTYPES
 // eslint-disable-next-line react/prop-types

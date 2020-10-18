@@ -11,7 +11,7 @@ export function filterByTopics(rows, id, filterValue) {
   }
   const valueKey = id[0];
   return rows.filter(
-    (r) => r.values[valueKey].split(',').indexOf(filterValue) !== -1
+    (r) => r.values[valueKey].split(', ').indexOf(filterValue) !== -1
   );
 }
 

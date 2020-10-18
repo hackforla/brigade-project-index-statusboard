@@ -11,9 +11,11 @@ export default function Button({
   linkButton,
   className,
   children,
+  ...rest
 }) {
   return (
     <button
+      {...rest}
       className={cx('button', className, {
         'link-button': linkButton,
         'form-control': !linkButton,
