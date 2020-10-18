@@ -36,25 +36,22 @@
     margin-left: 1rem;
   }
 
-  .tags {
+  .tag {
     margin-top: 0.5rem;
+    padding: 0.3rem 0.5rem;
 
-    .tag {
-      padding: 0.3rem 0.5rem;
+    &__name {
+      margin-right: 1rem;
+    }
+    &__close {
+      font-weight: bold;
+      opacity: 0.75;
+    }
 
-      &__name {
-        margin-right: 1rem;
-      }
-      &__close {
-        font-weight: bold;
-        opacity: 0.75;
-      }
-
-      &:hover,
-      &:focus {
-        .tag__close {
-          opacity: 1;
-        }
+    &:hover,
+    &:focus {
+      .tag__close {
+        opacity: 1;
       }
     }
   }

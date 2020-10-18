@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo, useContext } from 'react';
 import { usePagination, useFilters } from 'react-table';
+import { useHistory, useLocation } from 'react-router-dom';
+import { parse, stringify } from 'query-string';
 
 import { ProjectsTable, fuzzyTextFilter } from '../../components';
 import { filterActiveProjects } from '../../utils';
@@ -11,8 +13,11 @@ import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 function Projects() {
   const { allProjects, allTopics } = useContext(BrigadeDataContext);
   const [filteredProjects, setFilteredProjects] = useState();
-  const [activeThreshold, setActiveThreshold] = useState('year');
+  const { search } = useLocation();
+  const { tags, timeRange } = parse(search, { arrayFormat: 'comma' }) || {};
   const [filterTopics, setFilterTopics] = useState([]);
+  const [activeThreshold, setActiveThreshold] = useState(timeRange || 'year');
+  const history = useHistory();
 
   // eslint-disable-next-line import/prefer-default-export
   const filterTypes = useMemo(
@@ -44,6 +49,15 @@ function Projects() {
         timeRanges: ACTIVE_THRESHOLDS[activeThreshold],
         topics: filterTopics,
       })
+    );
+    history.replace(
+      `?${stringify(
+        {
+          tags: filterTopics,
+          timeRange: activeThreshold,
+        },
+        { arrayFormat: 'comma' }
+      )}`
     );
   }, [allProjects, activeThreshold, filterTopics]);
 

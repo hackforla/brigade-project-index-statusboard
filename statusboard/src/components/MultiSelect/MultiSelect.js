@@ -88,7 +88,7 @@ export const MultiSelect = ({
             </ul>
           ) : null}
 
-          <div className="tags">
+          <div>
             {selectedItems.map((value, i) => {
               return (
                 <span key={value}>
