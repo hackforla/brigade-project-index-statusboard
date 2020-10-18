@@ -67,7 +67,7 @@ export const MultiSelect = ({
                       setSelectedItems([]);
                       clearSelection();
                     }}
-                    text="Clear all topic filters"
+                    text="Clear all"
                   />
                 ) : null}
               </div>
@@ -113,7 +113,7 @@ export const MultiSelect = ({
                       >
                         <>
                           {value}
-                          {'  '}X{' '}
+                          {'  '}x{' '}
                         </>
                       </Button>{' '}
                     </span>

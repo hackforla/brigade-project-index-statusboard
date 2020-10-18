@@ -10,13 +10,16 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
-    border: 1px solid var(--cfa-blue);
+    border: 2px solid var(--cfa-blue-light);
+    background-color: var(--cfa-white-light);
     z-index: 999;
     display: flex;
     flex-wrap: wrap;
+    border-radius: 0 5px 5px;
 
     li {
       border: 2px solid var(--cfa-white-light);
+      border-radius: 5px;
       padding: 0.5em;
       margin: 0;
       background-color: var(--cfa-blue-lightest);
