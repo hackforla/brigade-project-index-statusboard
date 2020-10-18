@@ -48,7 +48,7 @@ export function getProjectsFromBrigadeData(brigadeData) {
   );
 }
 
-function topicsIntersect(filterByTopics, projectTopics) {
+function numTopicsIntersecting(filterByTopics, projectTopics) {
   if (!filterByTopics?.length) return 1;
   if (!projectTopics || !projectTopics.length) return -1;
   const intersection = filterByTopics.filter((t) => projectTopics.includes(t));
@@ -68,7 +68,7 @@ export function filterActiveProjects(projects, options = {}) {
   return projects
     .map((p) => ({
       ...p,
-      numberTopicsMatched: topicsIntersect(topics, p.topics),
+      numberTopicsMatched: numTopicsIntersecting(topics, p.topics),
     }))
     .sort((a, b) => b.numberTopicsMatched - a.numberTopicsMatched)
     .filter(
