@@ -22,12 +22,14 @@ const BrigadeDataContextProvider = ({ children: childNodes }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const brigades = await axios.get(`${getBaseApiUrl()}/api/data.json`);
-      const _brigadeData = brigades.data;
-      setBrigadeData(_brigadeData);
-      const _projects = getProjectsFromBrigadeData(_brigadeData);
-      setProjects(_projects);
-      setTopics(getTopicsFromProjects(_projects));
+      if (!brigadeData.length) {
+        const brigades = await axios.get(`${getBaseApiUrl()}/api/data.json`);
+        const _brigadeData = brigades.data;
+        setBrigadeData(_brigadeData);
+        const _projects = getProjectsFromBrigadeData(_brigadeData);
+        setProjects(_projects);
+        setTopics(getTopicsFromProjects(_projects));
+      }
     };
     getData();
   }, []);

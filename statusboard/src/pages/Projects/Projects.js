@@ -89,7 +89,6 @@ function Projects() {
         />
       )}
       <br />
-      {/* This is just a stand-in-- we should probably make it so that we can pass column props to the table */}
       <ProjectsTable
         projects={filteredProjects || []}
         tableAttributes={tableAttributes}
