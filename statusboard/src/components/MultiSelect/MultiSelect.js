@@ -106,7 +106,6 @@ export const MultiSelect = ({
                     <>
                       <span className="sr-only">Remove</span>
                       <span className="tag__name">{value}</span>
-                      {/* TODO THIS IS UGLY and maybe inaccessible */}
                       <span className="tag__close">x</span>
                     </>
                   </Button>{' '}
