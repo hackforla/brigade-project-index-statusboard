@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import Button from '../Button/Button';
+import { ReactComponent as Arrow } from '../../assets/arrow.svg';
+import './MultiSelect.scss';
 
 // From https://www.axelerant.com/resources/team-blog/using-downshift-create-multi-select-widget-react
 export const MultiSelect = ({
@@ -40,18 +42,23 @@ export const MultiSelect = ({
           inputValue,
         }) => {
           return (
-            <div>
-              <label {...getLabelProps()}>{labelText}</label>
-
-              <input {...getInputProps()} type="text" />
-
-              <Button
-                {...getToggleButtonProps({
-                  className: 'button-primary',
-                })}
-              >
-                {isOpen ? 'close' : 'open'}
-              </Button>
+            <div className="multi-select">
+              <div className="text-input form-control-container">
+                <label {...getLabelProps()}>{labelText}</label>
+                <input
+                  {...getInputProps()}
+                  type="text"
+                  className="form-control"
+                />
+                <Button
+                  {...getToggleButtonProps({
+                    className: 'button-primary',
+                  })}
+                >
+                  <Arrow className="dropdown-arrow" />
+                  <span className="sr-only">{isOpen ? 'close' : 'open'}</span>
+                </Button>
+              </div>
 
               {selectedItem || selectedItems.length > 0 ? (
                 <Button
