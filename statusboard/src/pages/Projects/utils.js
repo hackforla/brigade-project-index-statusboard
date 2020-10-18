@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { Button, TextFilter } from '../../components';
 
-export const getTableColumns = (filterTopics, setFilterTopics) => [
+export const getTableColumns = (filterTopics = [], setFilterTopics) => [
   {
     Header: 'Project',
     accessor: (project) => (

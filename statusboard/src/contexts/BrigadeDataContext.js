@@ -32,6 +32,8 @@ const BrigadeDataContextProvider = ({ children: childNodes }) => {
       }
     };
     getData();
+    // Disabling bc brigade data length isn't going to change outside of this hook
+    // eslint-disable-next-line
   }, []);
 
   return (

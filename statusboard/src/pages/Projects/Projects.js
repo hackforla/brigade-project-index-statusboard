@@ -66,7 +66,8 @@ function Projects() {
         { arrayFormat: 'comma' }
       )}`
     );
-  }, [allProjects, activeThreshold, filterTopics]);
+    // eslint-disable-next-line
+  }, [history, allProjects, activeThreshold, filterTopics]);
 
   return (
     <>
