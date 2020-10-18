@@ -44,6 +44,12 @@
     text-align: center;
   }
 
+  .tag-link {
+    &--active {
+      background-color: var(--cfa-yellow-light);
+    }
+  }
+
   // .pagination {
   //   margin: 0.25rem 0.5rem;
   //   border-top: 1px solid var(--cfa-grey);

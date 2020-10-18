@@ -33,7 +33,7 @@ function Projects() {
 
   const columns = useMemo(
     () => getTableColumns(filterTopics, setFilterTopics),
-    []
+    [filterTopics, setFilterTopics]
   );
 
   const tableAttributes = [
