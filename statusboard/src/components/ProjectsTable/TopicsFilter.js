@@ -10,7 +10,9 @@ export function filterByTopics(rows, id, filterValue) {
     return rows;
   }
   const valueKey = id[0];
-  return rows.filter((r) => r.values[valueKey].search(filterValue) !== -1);
+  return rows.filter(
+    (r) => r.values[valueKey].split(',').indexOf(filterValue) !== -1
+  );
 }
 
 export default function TopicFilter({
