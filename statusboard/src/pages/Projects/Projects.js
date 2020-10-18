@@ -15,7 +15,11 @@ function Projects() {
   const [filteredProjects, setFilteredProjects] = useState();
   const { search } = useLocation();
   const { tags, timeRange } = parse(search, { arrayFormat: 'comma' }) || {};
-  const [filterTopics, setFilterTopics] = useState([]);
+  let initialTags = [];
+  if (tags && tags.length) {
+    initialTags = Array.isArray(tags) ? initialTags : [tags];
+  }
+  const [filterTopics, setFilterTopics] = useState(initialTags);
   const [activeThreshold, setActiveThreshold] = useState(timeRange || 'year');
   const history = useHistory();
 
@@ -27,7 +31,10 @@ function Projects() {
     []
   );
 
-  const columns = useMemo(() => getTableColumns(setFilterTopics), []);
+  const columns = useMemo(
+    () => getTableColumns(filterTopics, setFilterTopics),
+    []
+  );
 
   const tableAttributes = [
     {

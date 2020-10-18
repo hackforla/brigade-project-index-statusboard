@@ -1,7 +1,8 @@
 import React from 'react';
+import cx from 'classnames';
 import { Button, TextFilter } from '../../components';
 
-export const getTableColumns = (setFilteredTopics) => [
+export const getTableColumns = (filterTopics, setFilterTopics) => [
   {
     Header: 'Project',
     accessor: (project) => (
@@ -23,10 +24,13 @@ export const getTableColumns = (setFilteredTopics) => [
     accessor: (project) =>
       (project.topics || []).map((t) => (
         <Button
+          className={cx('tag-link', {
+            'tag-link--active': filterTopics.includes(t),
+          })}
           key={`${project.name}-${t}`}
           linkButton
           text={t}
-          onClick={() => setFilteredTopics([t])}
+          onClick={() => setFilterTopics([t])}
         />
       )),
     disableFilters: true,
