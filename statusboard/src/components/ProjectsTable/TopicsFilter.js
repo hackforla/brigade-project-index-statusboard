@@ -3,6 +3,18 @@ import React from 'react';
 
 import Select from '../Select/Select';
 
+const emptyOptionText = '- Select -';
+
+export function filterByTopics(rows, id, filterValue) {
+  if (filterValue === emptyOptionText) {
+    return rows;
+  }
+  const valueKey = id[0];
+  return rows.filter(
+    (r) => r.values[valueKey].split(',').indexOf(filterValue) !== -1
+  );
+}
+
 export default function TopicFilter({
   column: { setFilter, preFilteredRows },
 }) {
@@ -28,7 +40,7 @@ export default function TopicFilter({
     <Select
       id="topic"
       label="Topics"
-      emptyOptionText=""
+      emptyOptionText={emptyOptionText}
       options={sortedTopics}
       onChange={(e) => setFilter(e.target.value)}
       inline

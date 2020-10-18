@@ -9,7 +9,9 @@ import {
   getProjectsFromBrigadeData,
 } from '../utils';
 import Select from '../components/Select/Select';
-import TopicsFilter from '../components/ProjectsTable/TopicsFilter';
+import TopicsFilter, {
+  filterByTopics,
+} from '../components/ProjectsTable/TopicsFilter';
 
 const ACTIVE_THRESHOLDS = {
   // key: user-facing string that represents the threshold
@@ -30,6 +32,7 @@ function Projects() {
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
       fuzzyText: fuzzyTextFilterFn,
+      filterByTopics,
     }),
     []
   );
@@ -57,7 +60,7 @@ function Projects() {
         Header: <span className="sr-only">Topics</span>,
         accessor: (project) => (project.topics || []).join(', '),
         Filter: TopicsFilter,
-        filter: 'includes',
+        filter: 'filterByTopics',
       },
       {
         Header: 'Brigade',
