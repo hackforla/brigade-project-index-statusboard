@@ -22,7 +22,12 @@ export const getTableColumns = (setFilteredTopics) => [
     Header: 'Topics',
     accessor: (project) =>
       (project.topics || []).map((t) => (
-        <Button linkButton text={t} onClick={() => setFilteredTopics([t])} />
+        <Button
+          key={`${project.name}-${t}`}
+          linkButton
+          text={t}
+          onClick={() => setFilteredTopics([t])}
+        />
       )),
     disableFilters: true,
   },
