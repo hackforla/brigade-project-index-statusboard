@@ -4,7 +4,7 @@ import { usePagination, useFilters } from 'react-table';
 import { ProjectsTable, fuzzyTextFilter } from '../../components';
 import { filterActiveProjects } from '../../utils';
 import Select from '../../components/Select/Select';
-import { tableColumns, ACTIVE_THRESHOLDS } from './utils';
+import { ACTIVE_THRESHOLDS, getTableColumns } from './utils';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 
@@ -22,7 +22,7 @@ function Projects() {
     []
   );
 
-  const columns = useMemo(() => tableColumns, []);
+  const columns = useMemo(() => getTableColumns(setFilterTopics), []);
 
   const tableAttributes = [
     {
@@ -65,7 +65,8 @@ function Projects() {
       <br />
       {allTopics && (
         <MultiSelect
-          initialSelectedItems={filterTopics}
+          selectedItems={filterTopics}
+          setSelectedItems={setFilterTopics}
           items={allTopics}
           labelText="Topics"
           onSelectionItemsChange={(newFilterTopics) =>

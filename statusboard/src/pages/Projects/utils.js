@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextFilter } from '../../components';
+import { Button, TextFilter } from '../../components';
 
-export const tableColumns = [
+export const getTableColumns = (setFilteredTopics) => [
   {
     Header: 'Project',
     accessor: (project) => (
@@ -20,7 +20,10 @@ export const tableColumns = [
   },
   {
     Header: 'Topics',
-    accessor: (project) => (project.topics || []).join(', '),
+    accessor: (project) =>
+      (project.topics || []).map((t) => (
+        <Button linkButton text={t} onClick={() => setFilteredTopics([t])} />
+      )),
     disableFilters: true,
   },
   {

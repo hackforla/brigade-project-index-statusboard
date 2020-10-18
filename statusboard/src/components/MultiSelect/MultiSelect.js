@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import Button from '../Button/Button';
@@ -10,123 +10,109 @@ export const MultiSelect = ({
   items,
   labelText,
   onSelectionItemsChange,
-  initialSelectedItems,
+  selectedItems,
+  setSelectedItems,
   ...rest
-}) => {
-  // TODO: do we really need to duplicate this useState here?
-  const [selectedItems, setSelectedItems] = useState(initialSelectedItems);
-  useEffect(() => {
-    setSelectedItems(initialSelectedItems);
-  }, [initialSelectedItems]);
+}) => (
+  <>
+    <Downshift
+      {...rest}
+      onChange={changeHandler(
+        selectedItems,
+        setSelectedItems,
+        onSelectionItemsChange
+      )}
+    >
+      {({
+        getLabelProps,
+        getInputProps,
+        getItemProps,
+        getToggleButtonProps,
+        clearSelection,
+        isOpen,
+        selectedItem,
+        inputValue,
+      }) => (
+        <div className="multi-select">
+          <div className="text-input form-control-container">
+            <label {...getLabelProps()}>{labelText}</label>
+            <input {...getInputProps()} type="text" className="form-control" />
+            <Button
+              {...getToggleButtonProps({
+                className: 'button-primary',
+              })}
+            >
+              <>
+                <Arrow className="dropdown-arrow" />
+                <span className="sr-only">{isOpen ? 'close' : 'open'}</span>
+              </>
+            </Button>
+            {selectedItem || selectedItems.length > 0 ? (
+              <Button
+                className="button-primary"
+                onClick={() => {
+                  setSelectedItems([]);
+                  clearSelection();
+                }}
+                text="Clear all"
+              />
+            ) : null}
+          </div>
 
-  return (
-    <>
-      <Downshift
-        {...rest}
-        onChange={changeHandler(
-          selectedItems,
-          setSelectedItems,
-          onSelectionItemsChange
-        )}
-      >
-        {({
-          getLabelProps,
-          getInputProps,
-          getMenuProps,
-          getItemProps,
-          getToggleButtonProps,
-          clearSelection,
-          highlightedIndex,
-          isOpen,
-          selectedItem,
-          inputValue,
-        }) => {
-          return (
-            <div className="multi-select">
-              <div className="text-input form-control-container">
-                <label {...getLabelProps()}>{labelText}</label>
-                <input
-                  {...getInputProps()}
-                  type="text"
-                  className="form-control"
-                />
-                <Button
-                  {...getToggleButtonProps({
-                    className: 'button-primary',
-                  })}
-                >
-                  <>
-                    <Arrow className="dropdown-arrow" />
-                    <span className="sr-only">{isOpen ? 'close' : 'open'}</span>
-                  </>
-                </Button>
-                {selectedItem || selectedItems.length > 0 ? (
-                  <Button
-                    className="button-primary"
-                    onClick={() => {
-                      setSelectedItems([]);
-                      clearSelection();
-                    }}
-                    text="Clear all"
-                  />
-                ) : null}
-              </div>
-
-              {isOpen ? (
-                <ul>
-                  {items
-                    .filter(
-                      (item) =>
-                        !selectedItems.find(
-                          (selectedItem) => selectedItem === item
-                        ) && item.includes(inputValue)
-                    )
-                    .map((item, index) => {
-                      return (
-                        <li
-                          {...getItemProps({
-                            item,
-                            key: item,
-                          })}
-                        >
-                          {' '}
-                          {item}{' '}
-                        </li>
-                      );
-                    })}
-                </ul>
-              ) : null}
-
-              <div>
-                {selectedItems.map((value, i) => {
+          {isOpen ? (
+            <ul>
+              {items
+                .filter(
+                  (item) =>
+                    !selectedItems.find(
+                      (selectedItem) => selectedItem === item
+                    ) && item.includes(inputValue)
+                )
+                .map((item) => {
                   return (
-                    <span key={value}>
-                      <Button
-                        onClick={() =>
-                          removeSelectedItemByIndex(
-                            i,
-                            selectedItems,
-                            setSelectedItems,
-                            onSelectionItemsChange
-                          )
-                        }
-                      >
-                        <>
-                          {value}
-                          {'  '}x{' '}
-                        </>
-                      </Button>{' '}
-                    </span>
+                    <li
+                      {...getItemProps({
+                        item,
+                        key: item,
+                      })}
+                    >
+                      {' '}
+                      {item}{' '}
+                    </li>
                   );
                 })}
-              </div>
-            </div>
-          );
-        }}
-      </Downshift>
-    </>
-  );
-};
+            </ul>
+          ) : null}
+
+          <div>
+            {selectedItems.map((value, i) => {
+              return (
+                <span key={value}>
+                  <Button
+                    onClick={() =>
+                      removeSelectedItemByIndex(
+                        i,
+                        selectedItems,
+                        setSelectedItems,
+                        onSelectionItemsChange
+                      )
+                    }
+                  >
+                    <>
+                      {value}
+                      {/* TODO THIS IS UGLY and maybe inaccessible */}
+                      {'  '}x{' '}
+                    </>
+                  </Button>{' '}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </Downshift>
+  </>
+);
 
 /* Helper functions */
 function changeHandler(
