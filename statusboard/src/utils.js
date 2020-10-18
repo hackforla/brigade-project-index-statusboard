@@ -48,10 +48,20 @@ export function getProjectsFromBrigadeData(brigadeData) {
   );
 }
 
-export function filterActiveProjects(projects, timeRanges = ['over_a_year']) {
+export function filterActiveProjects(projects, options = {}) {
   if (!projects) return undefined;
-  return projects.filter((project) =>
-    timeRanges.includes(project.last_pushed_within)
+
+  // Set destructuring and allow defaults to be overwritten
+  const { timeRanges, topics } = {
+    timeRanges: ['over_a_year'],
+    topics: [],
+    ...options,
+  };
+
+  return projects.filter(
+    (project) =>
+      timeRanges.includes(project.last_pushed_within) &&
+      project.topics?.filter((t) => topics.includes(t))
   );
 }
 
@@ -62,7 +72,7 @@ export function slugify(s) {
 export function getTopicsFromProjects(projects) {
   // Sorted by frequency
   const allTopics = projects.reduce(
-    (topics, brigade) => topics.concat(brigade.topics || []),
+    (topics, project) => topics.concat(project.topics || []),
     []
   );
   const topicsByFrequency = {};

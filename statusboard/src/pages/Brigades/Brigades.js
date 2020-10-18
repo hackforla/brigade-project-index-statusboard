@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import { NavLink } from 'react-router-dom';
-import { useTable, usePagination, useSortBy } from 'react-table';
+import { usePagination, useSortBy } from 'react-table';
 import axios from 'axios';
 import Map from '../../components/Map/Map';
 import {
@@ -43,15 +43,15 @@ function Brigades() {
     []
   );
 
-  const tableAttributes = useTable(
+  const tableAttributes = [
     {
       columns,
       data: projects || [],
       initialState: { pageIndex: 0, pageSize: 50 },
     },
     useSortBy,
-    usePagination
-  );
+    usePagination,
+  ];
 
   useEffect(() => {
     const getData = async () => {

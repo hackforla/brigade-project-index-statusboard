@@ -1,5 +1,4 @@
 import React from 'react';
-import TopicsFilter from '../../components/ProjectsTable/TopicsFilter';
 import { TextFilter } from '../../components';
 
 export const tableColumns = [
@@ -20,11 +19,9 @@ export const tableColumns = [
     filter: 'fuzzyTextFilter',
   },
   {
-    id: 'Topics',
-    Header: <span className="sr-only">Topics</span>,
+    Header: 'Topics',
     accessor: (project) => (project.topics || []).join(', '),
-    Filter: TopicsFilter,
-    filter: 'filterByTopics',
+    disableFilters: true,
   },
   {
     Header: 'Brigade',

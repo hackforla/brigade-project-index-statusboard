@@ -10,6 +10,7 @@ import {
 const BrigadeDataContext = createContext({
   allBrigadeData: [],
   allProjects: [],
+  allTopics: [],
 });
 
 const { Provider, Consumer } = BrigadeDataContext;

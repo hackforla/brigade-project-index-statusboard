@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useMemo, useContext } from 'react';
-import { useTable, usePagination, useFilters } from 'react-table';
+import { usePagination, useFilters } from 'react-table';
 
 import { ProjectsTable, fuzzyTextFilter } from '../../components';
 import { filterActiveProjects } from '../../utils';
 import Select from '../../components/Select/Select';
-import { filterByTopics } from '../../components/ProjectsTable/TopicsFilter';
 import { tableColumns, ACTIVE_THRESHOLDS } from './utils';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
@@ -13,19 +12,19 @@ function Projects() {
   const { allProjects, allTopics } = useContext(BrigadeDataContext);
   const [filteredProjects, setFilteredProjects] = useState();
   const [activeThreshold, setActiveThreshold] = useState('year');
+  const [filterTopics, setFilterTopics] = useState([]);
 
   // eslint-disable-next-line import/prefer-default-export
   const filterTypes = useMemo(
     () => ({
       fuzzyTextFilter,
-      filterByTopics,
     }),
     []
   );
 
   const columns = useMemo(() => tableColumns, []);
 
-  const tableAttributes = useTable(
+  const tableAttributes = [
     {
       columns,
       data: filteredProjects || [],
@@ -36,16 +35,17 @@ function Projects() {
       filterTypes,
     },
     useFilters,
-    usePagination
-  );
+    usePagination,
+  ];
 
   useEffect(() => {
     setFilteredProjects(
-      filterActiveProjects(allProjects, ACTIVE_THRESHOLDS[activeThreshold])
+      filterActiveProjects(allProjects, {
+        timeRanges: ACTIVE_THRESHOLDS[activeThreshold],
+        topics: filterTopics,
+      })
     );
-  }, [allProjects, activeThreshold]);
-
-  console.log(allTopics);
+  }, [allProjects, activeThreshold, filterTopics]);
 
   return (
     <>
@@ -65,14 +65,18 @@ function Projects() {
       <br />
       {allTopics && (
         <MultiSelect
+          initialSelectedItems={filterTopics}
           items={allTopics}
           labelText="Topics"
-          onSelectionItemsChange={(...args) => console.log(args)}
+          onSelectionItemsChange={(newFilterTopics) => {
+            console.log(newFilterTopics);
+            setFilterTopics(newFilterTopics);
+          }}
         />
       )}
       {/* This is just a stand-in-- we should probably make it so that we can pass column props to the table */}
       <ProjectsTable
-        projects={filteredProjects}
+        projects={filteredProjects || []}
         tableAttributes={tableAttributes}
       />
     </>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import Button from '../Button/Button';
@@ -8,9 +8,14 @@ export const MultiSelect = ({
   items,
   labelText,
   onSelectionItemsChange,
+  initialSelectedItems,
   ...rest
 }) => {
-  const [selectedItems, setSelectedItems] = useState([]);
+  // TODO: do we really need to duplicate this useState here?
+  const [selectedItems, setSelectedItems] = useState(initialSelectedItems);
+  useEffect(() => {
+    setSelectedItems(initialSelectedItems);
+  }, [initialSelectedItems]);
 
   return (
     <>
@@ -102,7 +107,7 @@ export const MultiSelect = ({
                           )
                         }
                       >
-                        {value.value}
+                        {value}
                         {'  '}X{' '}
                       </Button>{' '}
                     </span>
@@ -113,13 +118,6 @@ export const MultiSelect = ({
           );
         }}
       </Downshift>
-
-      <hr />
-
-      <pre>
-        <strong>Downshift selectedItems state :</strong>
-        <br /> {JSON.stringify(selectedItems)}
-      </pre>
     </>
   );
 };

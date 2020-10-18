@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 import React from 'react';
+import { useTable } from 'react-table';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Button from '../Button/Button';
@@ -19,7 +20,7 @@ export default function ProjectsTable({ projects, tableAttributes }) {
     page,
     setPageSize,
     state: { pageSize },
-  } = tableAttributes;
+  } = useTable(...tableAttributes);
 
   return (
     <div className="projects-table">
