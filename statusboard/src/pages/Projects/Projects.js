@@ -15,7 +15,7 @@ function Projects() {
   const [filteredProjects, setFilteredProjects] = useState();
   const { search } = useLocation();
   const { tags, timeRange } = parse(search, { arrayFormat: 'comma' }) || {};
-  let initialTags = [];
+  let initialTags;
   if (tags && tags.length) {
     initialTags = Array.isArray(tags) ? initialTags : [tags];
   }
@@ -60,8 +60,8 @@ function Projects() {
     history.replace(
       `?${stringify(
         {
-          tags: filterTopics,
-          timeRange: activeThreshold,
+          tags: filterTopics || tags,
+          timeRange: activeThreshold || timeRange,
         },
         { arrayFormat: 'comma' }
       )}`
@@ -86,7 +86,7 @@ function Projects() {
       <br />
       {allTopics && (
         <MultiSelect
-          selectedItems={filterTopics}
+          selectedItems={filterTopics || []}
           setSelectedItems={setFilterTopics}
           items={allTopics}
           labelText="Topics"
