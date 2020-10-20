@@ -53,3 +53,9 @@ To run the test suite, run:
 ```
 yarn test
 ```
+
+To access the server, use:
+
+```
+curl http://localhost:8080/api/data.json
+```
