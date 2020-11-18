@@ -14,7 +14,15 @@ const app = express();
 
 // We rely on redis because Github has limits API requests
 const REDIS_URL = process.env.REDISCLOUD_URL || 'redis://localhost:6379';
-const redisClient = redis.createClient(REDIS_URL, { retry_strategy: () => false });
+const redisClient = redis.createClient(REDIS_URL, {
+  retry_strategy: ({ attempt, error }) => {
+    if (attempt >= 5) {
+      throw new Error(`Redis Command Failed After 5 Retries: ${error}`);
+    } else {
+      return true;
+    }
+  }
+});
 redisClient.on("error", (e) => console.warn("Redis Error: ", e));
 app.cache = apicache.options({ redisClient }).middleware;
 
