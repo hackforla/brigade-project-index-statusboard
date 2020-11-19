@@ -42,15 +42,15 @@ export async function getProjectIndex(orgType) {
     const projects = [];
     const promises = [];
     indexZip.folder('').forEach((path) => {
-      const f = indexZip.file(path);
-      if (!f) return;
+      const _file = indexZip.file(path);
+      if (!_file) return;
       // Parse them into organizations / projects
       const parts = path.split('/');
       const itemType = parts[1];
       // Tag projects with org name / project name per path
       if (itemType === 'projects' && parts.length === 4) {
         promises.push(
-          f.async('string').then((data) => {
+          _file.async('string').then((data) => {
             const project = toml.parse(data);
             project.name = parts[parts.length - 1].replace('.toml', '');
             project.brigade = parts[parts.length - 2];
@@ -80,8 +80,7 @@ export async function getProjectIndex(orgType) {
       `Loaded ${orgs.length} orgs and ${projects.length} projects.. joining them`
     );
 
-    // After all async loads are finished, we combine the projects
-    // into the orgs and keep our original promise
+    // Add projects to orgs
     const orgsByName = _.keyBy(orgs, 'name');
     projects.forEach((proj) => {
       if (orgsByName[proj.brigade]) {
@@ -96,15 +95,9 @@ export async function getProjectIndex(orgType) {
       return orgs;
     }
 
-    return orgs.filter((o) => {
-      let valid = true;
-      orgType.forEach((t) => {
-        if (!o.tags.includes(t)) {
-          valid = false;
-        }
-      });
-      return valid;
-    });
+    return orgs.filter((_thisOrg) =>
+      orgType.some((t) => _thisOrg.tags.includes(t))
+    );
   } catch (err) {
     console.error(err);
     throw new Error('Could not parse data after fetch');
