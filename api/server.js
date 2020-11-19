@@ -21,9 +21,9 @@ const redisClient = redis.createClient(REDIS_URL, {
     } else {
       return true;
     }
-  }
+  },
 });
-redisClient.on("error", (e) => console.warn("Redis Error: ", e));
+redisClient.on('error', (e) => console.warn('Redis Error: ', e));
 app.cache = apicache.options({ redisClient }).middleware;
 
 app.use(helmet());
