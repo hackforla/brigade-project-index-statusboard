@@ -29,6 +29,8 @@ export const getTableColumns = (filterTopics = [], setFilterTopics) => [
           })}
           key={`${project.name}-${t}`}
           linkButton
+          disabled={false} // TODO: convert components to ts
+          children={undefined}
           text={t}
           onClick={() => setFilterTopics([t])}
         />

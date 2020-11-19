@@ -12,14 +12,14 @@ import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 
 function Projects() {
   const { allProjects, allTopics } = useContext(BrigadeDataContext);
-  const [filteredProjects, setFilteredProjects] = useState();
+  const [filteredProjects, setFilteredProjects] = useState<string[]>();
   const { search } = useLocation();
-  const { tags, timeRange } = parse(search, { arrayFormat: 'comma' }) || {};
-  let initialTags;
+  const { tags, timeRange } = (parse(search, { arrayFormat: 'comma' }) || {}) as { tags: string[], timeRange: string }
+  let initialTags: string[];
   if (tags && tags.length) {
     initialTags = Array.isArray(tags) ? initialTags : [tags];
   }
-  const [filterTopics, setFilterTopics] = useState(initialTags);
+  const [filterTopics, setFilterTopics] = useState<string[] | undefined>(initialTags);
   const [activeThreshold, setActiveThreshold] = useState(timeRange || 'year');
   const history = useHistory();
 
@@ -42,7 +42,7 @@ function Projects() {
       data: filteredProjects || [],
       initialState: {
         pageIndex: 0,
-        pageSize: filteredProjects ? filteredProjects.length : 50,
+        pageSize: filteredProjects?.length || 50,
       },
       filterTypes,
     },
