@@ -1,11 +1,15 @@
 import React from 'react';
 import cx from 'classnames';
 import { Button, TextFilter } from '../../components';
+import { Project } from '../../utils/types';
 
-export const getTableColumns = (filterTopics: string[] = [], setFilterTopics: (_: any) => any) => [
+export const getTableColumns = (
+  filterTopics: string[] = [],
+  setFilterTopics: (_: string[] | undefined) => void
+) => [
   {
     Header: 'Project',
-    accessor: (project: any) => (
+    accessor: (project: Project) => (
       // TODO: CHANGE THIS WHEN WE HAVE A PROJECT DETAIL PAGE TO GO TO
       // <NavLink to={`/projects/${slugify(project.slug)}`}>{project.name}</NavLink>
       <a href={project.code_url}>{project.name}</a>
@@ -21,7 +25,7 @@ export const getTableColumns = (filterTopics: string[] = [], setFilterTopics: (_
   },
   {
     Header: 'Topics',
-    accessor: (project: any) =>
+    accessor: (project: Project) =>
       (project.topics || []).map((t: string) => (
         <Button
           className={cx('tag-link', {

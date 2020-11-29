@@ -9,10 +9,10 @@ import {
 import { Brigade, Project } from '../utils/types';
 
 type BrigadeDataContextType = {
-  allBrigadeData: Brigade[],
-  allProjects: Project[],
-  allTopics: string[],
-}
+  allBrigadeData: Brigade[];
+  allProjects: Project[];
+  allTopics: string[];
+};
 
 const BrigadeDataContext = createContext<BrigadeDataContextType>({
   allBrigadeData: [],
@@ -22,7 +22,11 @@ const BrigadeDataContext = createContext<BrigadeDataContextType>({
 
 const { Provider, Consumer } = BrigadeDataContext;
 
-const BrigadeDataContextProvider = ({ children: childNodes }: { children: JSX.Element }) => {
+const BrigadeDataContextProvider = ({
+  children: childNodes,
+}: {
+  children: JSX.Element;
+}) => {
   const [brigadeData, setBrigadeData] = useState<Brigade[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [topics, setTopics] = useState<string[]>([]);

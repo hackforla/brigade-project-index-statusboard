@@ -57,6 +57,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-remote-api": "REACT_APP_API_URL=https://statusboard.brigade.cloud yarn start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

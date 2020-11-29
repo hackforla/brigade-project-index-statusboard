@@ -14,12 +14,15 @@ function Projects() {
   const { allProjects, allTopics } = useContext(BrigadeDataContext);
   const [filteredProjects, setFilteredProjects] = useState<string[]>();
   const { search } = useLocation();
-  const { tags, timeRange } = (parse(search, { arrayFormat: 'comma' }) || {}) as { tags: string[], timeRange: string }
+  const { tags, timeRange } = (parse(search, { arrayFormat: 'comma' }) ||
+    {}) as { tags: string[]; timeRange: string };
   let initialTags: string[] | undefined;
   if (tags?.length) {
     initialTags = Array.isArray(tags) ? initialTags : [tags];
   }
-  const [filterTopics, setFilterTopics] = useState<string[] | undefined>(initialTags);
+  const [filterTopics, setFilterTopics] = useState<string[] | undefined>(
+    initialTags
+  );
   const [activeThreshold, setActiveThreshold] = useState(timeRange || 'year');
   const history = useHistory();
 
@@ -91,9 +94,9 @@ function Projects() {
           setSelectedItems={setFilterTopics}
           items={allTopics}
           labelText="Topics"
-          onSelectionItemsChange={(newFilterTopics: React.SetStateAction<string[] | undefined>) =>
-            setFilterTopics(newFilterTopics)
-          }
+          onSelectionItemsChange={(
+            newFilterTopics: React.SetStateAction<string[] | undefined>
+          ) => setFilterTopics(newFilterTopics)}
         />
       )}
       <br />
