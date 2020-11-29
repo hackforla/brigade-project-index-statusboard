@@ -36,6 +36,8 @@ const BrigadeDataContextProvider = ({ children: childNodes }) => {
     // eslint-disable-next-line
   }, []);
 
+  console.log(brigadeData, projects);
+
   return (
     <Provider
       value={{

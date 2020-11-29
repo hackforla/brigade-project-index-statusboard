@@ -16,7 +16,6 @@ export function filterBrigades(
   brigadeData,
   filterOpts = {
     selectedBrigade: undefined,
-    // state: undefined,
     bounds: undefined,
   }
 ) {
