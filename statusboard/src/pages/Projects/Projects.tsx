@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { parse, stringify } from 'query-string';
 
 import { ProjectsTable, fuzzyTextFilter } from '../../components';
-import { filterActiveProjects } from '../../utils';
+import { filterActiveProjects } from '../../utils/utils';
 import Select from '../../components/Select/Select';
 import { ACTIVE_THRESHOLDS, getTableColumns } from './utils';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
@@ -15,8 +15,8 @@ function Projects() {
   const [filteredProjects, setFilteredProjects] = useState<string[]>();
   const { search } = useLocation();
   const { tags, timeRange } = (parse(search, { arrayFormat: 'comma' }) || {}) as { tags: string[], timeRange: string }
-  let initialTags: string[];
-  if (tags && tags.length) {
+  let initialTags: string[] | undefined;
+  if (tags?.length) {
     initialTags = Array.isArray(tags) ? initialTags : [tags];
   }
   const [filterTopics, setFilterTopics] = useState<string[] | undefined>(initialTags);
@@ -91,7 +91,7 @@ function Projects() {
           setSelectedItems={setFilterTopics}
           items={allTopics}
           labelText="Topics"
-          onSelectionItemsChange={(newFilterTopics) =>
+          onSelectionItemsChange={(newFilterTopics: React.SetStateAction<string[] | undefined>) =>
             setFilterTopics(newFilterTopics)
           }
         />

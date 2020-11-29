@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-// import { NavLink } from 'react-router-dom';
 import { usePagination, useSortBy } from 'react-table';
 import Map from '../../components/Map/Map';
-import { getProjectsFromBrigadeData, filterBrigades } from '../../utils';
+import { getProjectsFromBrigadeData, filterBrigades } from '../../utils/utils';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { ProjectsTable, Select } from '../../components';
 import './Brigades.scss';
@@ -12,7 +11,6 @@ function Brigades() {
   const [filteredBrigadeData, setFilteredBrigadeData] = useState(
     allBrigadeData
   );
-  // const [tagData, setTagData] = useState();
   const [filterOpts, setFilterOpts] = useState({});
   const { selectedBrigade } = filterOpts; // also has bounds
   const [projects, setProjects] = useState(allProjects);
@@ -21,11 +19,7 @@ function Brigades() {
     () => [
       {
         Header: 'Project name',
-        accessor: (project) => (
-          // TODO: CHANGE THIS WHEN WE MAKE PROJECT PAGES
-          // <NavLink to={`/projects/${slugify(project.slug)}`}>{project.name}</NavLink>
-          <a href={project.code_url}>{project.name}</a>
-        ),
+        accessor: (project) => <a href={project.code_url}>{project.name}</a>,
       },
       {
         Header: 'Description',

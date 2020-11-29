@@ -5,7 +5,7 @@ import {
   getBaseApiUrl,
   getProjectsFromBrigadeData,
   getTopicsFromProjects,
-} from '../utils';
+} from '../utils/utils';
 
 const BrigadeDataContext = createContext({
   allBrigadeData: [],
