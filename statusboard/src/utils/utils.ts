@@ -104,7 +104,8 @@ export function filterActiveProjects(
       }))
       .sort((a, b) => b.numberTopicsMatched - a.numberTopicsMatched)
       .filter(
-        (project: ProjectWithTopicsMatched) => !!project.numberTopicsMatched
+        (project: ProjectWithTopicsMatched) =>
+          (project.numberTopicsMatched || -1) > 0
       );
   }
   return newProjects.filter((p) =>

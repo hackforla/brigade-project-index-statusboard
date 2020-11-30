@@ -1,9 +1,9 @@
 import React, { useMemo, useContext } from 'react';
 import { usePagination, useFilters } from 'react-table';
 import { ProjectsTable, fuzzyTextFilter } from '../../components';
-import { getTopicsFromProjects } from '../../utils/utils';
+import { ACTIVE_THRESHOLDS, getTopicsFromProjects } from '../../utils/utils';
 import Select from '../../components/Select/Select';
-import { ACTIVE_THRESHOLDS, getTableColumns } from './utils';
+import { getTableColumns } from './utils';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';

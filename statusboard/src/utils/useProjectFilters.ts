@@ -39,23 +39,23 @@ export const useProjectFilters = (): ProjectFilterReturn => {
 
   const projectsFilteredByTime = useMemo<Project[]>(
     () => filterActiveProjects({ timeRanges }, allProjects),
-    [timeRanges]
+    [timeRanges, allProjects]
   );
 
   const projectsFilteredByTopics = useMemo<Project[]>(
     () => filterActiveProjects({ topics }, allProjects),
-    [topics]
+    [topics, allProjects]
   );
 
   // TODO
   const projectsFilteredByBrigades = useMemo<Project[]>(
     () => filterActiveProjects({ brigades }, allProjects),
-    [brigades]
+    [brigades, allProjects]
   );
 
   const projectsFilteredByAllParams = useMemo<Project[]>(
     () => filterActiveProjects({ topics, timeRanges, brigades }, allProjects),
-    [topics, timeRanges, brigades]
+    [topics, timeRanges, brigades, allProjects]
   );
 
   const history = useHistory();
