@@ -22,9 +22,9 @@ function Projects() {
 
   // Topics
   const availableTopics = useMemo(() => {
-    if (!filteredProjects) return allTopics;
+    if (!projectsFilteredByTime) return allTopics;
     return getTopicsFromProjects(projectsFilteredByTime);
-  }, [projectsFilteredByTime]);
+  }, [projectsFilteredByTime, allTopics]);
 
   // eslint-disable-next-line import/prefer-default-export
   const filterTypes = useMemo(
@@ -74,14 +74,14 @@ function Projects() {
           <br />
           {availableTopics && (
             <MultiSelect
-              selectedItems={topics || []}
+              selectedItems={topics}
               setSelectedItems={(newTopics: string[]) =>
                 setFilters({ topics: newTopics })
               }
               items={availableTopics}
               labelText="Topics"
-              onSelectionItemsChange={(newFilterTopics: string[] | undefined) =>
-                setFilters({ topics: newFilterTopics })
+              onSelectionItemsChange={(newTopics: string[] | undefined) =>
+                setFilters({ topics: newTopics })
               }
             />
           )}
