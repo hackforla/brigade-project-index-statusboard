@@ -14,7 +14,7 @@ type Filter = {
 type ProjectFilterReturn = Filter & {
   projectsFilteredByTime: Project[];
   projectsFilteredByTopics: Project[];
-  // projectsFilteredByBrigades: Project[],
+  projectsFilteredByBrigades: Project[],
   projectsFilteredByAllParams: Project[];
   setFilters: (filter: Filter) => void;
 };
@@ -28,21 +28,21 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   }) || {}) as { topics: string[]; timeRange: string; brigades: string[] };
 
   const projectsFilteredByTime = useMemo<Project[]>(
-    () => filterActiveProjects(allProjects, { timeRanges: [timeRange] }),
+    () => filterActiveProjects({ timeRanges: [timeRange] }, allProjects),
     [timeRange]
   );
 
   const projectsFilteredByTopics = useMemo<Project[]>(
-    () => filterActiveProjects(allProjects, { topics }),
+    () => filterActiveProjects({ topics }, allProjects),
     [topics]
   );
 
   // TODO
-  // const projectsFilteredByBrigades = useMemo<Project[]>(filterActiveProjects(allProjects, { brigades }), [topics]);
+  const projectsFilteredByBrigades = useMemo<Project[]>(() => filterActiveProjects({ brigades }, allProjects), [topics]);
 
   const projectsFilteredByAllParams = useMemo<Project[]>(
     () =>
-      filterActiveProjects(allProjects, { topics, timeRanges: [timeRange] }),
+      filterActiveProjects({ topics, timeRanges: [timeRange], brigades }, allProjects),
     [topics, timeRange]
   );
 
@@ -71,7 +71,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     setFilters,
     projectsFilteredByTime,
     projectsFilteredByTopics,
-    // projectsFilteredByBrigades,
+    projectsFilteredByBrigades,
     projectsFilteredByAllParams,
   };
 };

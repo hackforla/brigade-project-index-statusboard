@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import { latLng, Bounds } from 'leaflet';
 import { Brigade, Project } from './types';
 
 export function getBaseApiUrl() {
@@ -15,20 +15,21 @@ export function getBaseApiUrl() {
 
 export function filterBrigades(
   brigadeData: Brigade[],
-  filterOpts = {
-    selectedBrigade: undefined,
-    bounds: undefined,
+  filterOpts?: {
+    selectedBrigade?: Brigade,
+    bounds?: Bounds
   }
 ) {
+  // TODO: collapse this in with the filter active projects stuff
   if (!brigadeData) return [];
   let dataToFilter = brigadeData;
-  const { selectedBrigade, bounds } = filterOpts;
+  const { selectedBrigade, bounds } = filterOpts || {};
   if (selectedBrigade) {
-    dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade?.name);
+    dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade!.name!);
   } else if (bounds) {
     dataToFilter = dataToFilter.filter((b) => {
       if (!b.latitude || !b.longitude) return false;
-      return bounds?.contains(L.latLng(+b.latitude, +b.longitude));
+      return bounds.contains(latLng(+b.latitude, +b.longitude));
     });
   }
   return dataToFilter;
@@ -39,7 +40,7 @@ export function getProjectsFromBrigadeData(brigadeData: Brigade[]) {
   return brigadeData.reduce<Project[]>(
     (projects, currentBrigade) => [
       ...projects,
-      ...currentBrigade.projects?.map((p) => ({
+      ...(currentBrigade.projects || []).map((p) => ({
         ...p,
         brigade: { ...currentBrigade, projects: undefined },
       })),
@@ -64,8 +65,8 @@ type ProjectWithTopicsMatched = Project & {
 };
 // TODO: fix active thresholds typing
 export function filterActiveProjects(
-  projects: Project[],
-  options: { timeRanges?: string[]; topics?: string[]; brigades?: string[] }
+  options: { timeRanges?: string[]; topics?: string[]; brigades?: string[] },
+  projects?: Project[],
 ) {
   if (!projects) return [];
 
