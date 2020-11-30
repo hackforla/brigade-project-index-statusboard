@@ -1,5 +1,14 @@
-import { latLng, Bounds } from 'leaflet';
+import { Bounds } from 'leaflet';
 import { Brigade, Project } from './types';
+
+export const ACTIVE_THRESHOLDS: { [key: string]: (string | undefined)[] } = {
+  // key: user-facing string that represents the threshold
+  // value: array of values for `last_pushed_within` that match the threshold
+  'all time': ['month', 'week', 'year', 'over_a_year', undefined],
+  year: ['month', 'week', 'year'],
+  month: ['month', 'week'],
+  week: ['week'],
+};
 
 export function getBaseApiUrl() {
   if (process.env.REACT_APP_API_URL) {
@@ -16,22 +25,22 @@ export function getBaseApiUrl() {
 export function filterBrigades(
   brigadeData: Brigade[],
   filterOpts?: {
-    selectedBrigade?: Brigade,
-    bounds?: Bounds
+    selectedBrigade?: Brigade;
+    bounds?: Bounds;
   }
 ) {
   // TODO: collapse this in with the filter active projects stuff
   if (!brigadeData) return [];
   let dataToFilter = brigadeData;
-  const { selectedBrigade, bounds } = filterOpts || {};
-  if (selectedBrigade) {
-    dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade!.name!);
-  } else if (bounds) {
-    dataToFilter = dataToFilter.filter((b) => {
-      if (!b.latitude || !b.longitude) return false;
-      return bounds.contains(latLng(+b.latitude, +b.longitude));
-    });
-  }
+  // const { selectedBrigade, bounds } = filterOpts || {};
+  // if (selectedBrigade) {
+  //   dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade!.name!);
+  // } else if (bounds) {
+  //   dataToFilter = dataToFilter.filter((b) => {
+  //     if (!b.latitude || !b.longitude) return false;
+  //     return bounds.contains(latLng(+b.latitude, +b.longitude));
+  //   });
+  // }
   return dataToFilter;
 }
 
@@ -65,8 +74,12 @@ type ProjectWithTopicsMatched = Project & {
 };
 // TODO: fix active thresholds typing
 export function filterActiveProjects(
-  options: { timeRanges?: string[]; topics?: string[]; brigades?: string[] },
-  projects?: Project[],
+  options: {
+    timeRanges?: (string | undefined)[];
+    topics?: string[];
+    brigades?: string[];
+  },
+  projects?: Project[]
 ) {
   if (!projects) return [];
 
@@ -99,7 +112,7 @@ export function filterActiveProjects(
   );
 }
 
-export function slugify(s) {
+export function slugify(s: string) {
   return s.toLowerCase().replace(/[^\w]+/g, '');
 }
 

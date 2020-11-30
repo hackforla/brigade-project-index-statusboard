@@ -74,7 +74,7 @@ function Projects() {
           <br />
           {availableTopics && (
             <MultiSelect
-              selectedItems={topics}
+              selectedItems={topics || []}
               setSelectedItems={(newTopics: string[]) =>
                 setFilters({ topics: newTopics })
               }
