@@ -10,14 +10,14 @@ import { Brigade, Project } from '../utils/types';
 
 type BrigadeDataContextType = {
   allBrigadeData: Brigade[];
-  allProjects: Project[];
+  allProjects?: Project[];
   allTopics: string[];
   loading: boolean;
 };
 
 const BrigadeDataContext = createContext<BrigadeDataContextType>({
   allBrigadeData: [],
-  allProjects: [],
+  allProjects: undefined,
   allTopics: [],
   loading: false,
 });
@@ -30,7 +30,7 @@ const BrigadeDataContextProvider = ({
   children: JSX.Element;
 }) => {
   const [brigadeData, setBrigadeData] = useState<Brigade[]>([]);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[] | undefined>([]);
   const [topics, setTopics] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 

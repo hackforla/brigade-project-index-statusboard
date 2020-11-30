@@ -50,7 +50,7 @@ export function getProjectsFromBrigadeData(brigadeData: Brigade[]) {
 
 function numTopicsIntersecting(
   filterByTopics: any[],
-  projectTopics: string | any[]
+  projectTopics?: string | any[]
 ) {
   if (!filterByTopics?.length) return 1;
   if (!projectTopics || !projectTopics.length) return -1;
@@ -58,6 +58,10 @@ function numTopicsIntersecting(
   return intersection.length;
 }
 
+type ProjectWithTopicsMatched = Project & {
+  numberTopicsMatched?: number;
+  last_pushed_within?: string;
+};
 // TODO: fix active thresholds typing
 export function filterActiveProjects(
   projects: Project[],
@@ -69,30 +73,37 @@ export function filterActiveProjects(
   const { timeRanges, topics, brigades } = {
     //
     timeRanges: ['year'],
-    topics: [],
-    brigades: [],
     ...options,
   };
 
-  return projects
-    .filter((p) => (brigades ? brigades.includes(p?.brigade?.name) : true))
-    .map((p) => ({
-      ...p,
-      numberTopicsMatched: numTopicsIntersecting(topics, p.topics),
-    }))
-    .sort((a, b) => b.numberTopicsMatched - a.numberTopicsMatched)
-    .filter(
-      (project: Project) =>
-        timeRanges.includes(project.last_pushed_within) &&
-        project.numberTopicsMatched > 0
+  let newProjects: ProjectWithTopicsMatched[] = projects;
+  if (brigades) {
+    newProjects = newProjects.filter((p: Project) =>
+      p.brigade ? brigades.includes(p.brigade.name) : false
     );
+  }
+  if (topics) {
+    newProjects = newProjects
+      .map((p) => ({
+        ...p,
+        numberTopicsMatched: numTopicsIntersecting(topics, p.topics),
+      }))
+      .sort((a, b) => b.numberTopicsMatched - a.numberTopicsMatched)
+      .filter(
+        (project: ProjectWithTopicsMatched) => !!project.numberTopicsMatched
+      );
+  }
+  return newProjects.filter((p) =>
+    p.last_pushed_within ? timeRanges.includes(p.last_pushed_within) : false
+  );
 }
 
 export function slugify(s) {
   return s.toLowerCase().replace(/[^\w]+/g, '');
 }
 
-export function getTopicsFromProjects(projects: Project[]) {
+export function getTopicsFromProjects(projects?: Project[]) {
+  if (!projects) return [];
   // Sorted by frequency
   const allTopics: string[] = projects.reduce<string[]>(
     (topics, project) => topics.concat(project.topics || []),
