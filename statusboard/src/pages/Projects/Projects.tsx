@@ -4,27 +4,37 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { parse, stringify } from 'query-string';
 
 import { ProjectsTable, fuzzyTextFilter } from '../../components';
-import { filterActiveProjects } from '../../utils/utils';
+import { filterActiveProjects, getTopicsFromProjects } from '../../utils/utils';
 import Select from '../../components/Select/Select';
 import { ACTIVE_THRESHOLDS, getTableColumns } from './utils';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
+import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
 
 function Projects() {
-  const { allProjects, allTopics } = useContext(BrigadeDataContext);
+  const { allProjects, allTopics, loading } = useContext(BrigadeDataContext);
   const [filteredProjects, setFilteredProjects] = useState<string[]>();
+
+  // Get query params
   const { search } = useLocation();
-  const { tags, timeRange } = (parse(search, { arrayFormat: 'comma' }) ||
-    {}) as { tags: string[]; timeRange: string };
-  let initialTags: string[] | undefined;
-  if (tags?.length) {
-    initialTags = Array.isArray(tags) ? initialTags : [tags];
+  const { topics, timeRange } = (parse(search, { arrayFormat: 'comma' }) ||
+    {}) as { topics: string[]; timeRange: string };
+
+  // Topics
+  const filteredTopics = useMemo(() => {
+    if (!filteredProjects) return allTopics;
+    return getTopicsFromProjects(filterActiveProjects(allProjects, { timeRanges: timeRange }));
+  }, [filteredProjects])
+  let initialTopics: string[] | undefined;
+  if (topics?.length) {
+    initialTopics = Array.isArray(topics) ? initialTopics : [topics];
   }
   const [filterTopics, setFilterTopics] = useState<string[] | undefined>(
-    initialTags
+    initialTopics
   );
+
+  // Time
   const [activeThreshold, setActiveThreshold] = useState(timeRange || 'year');
-  const history = useHistory();
 
   // eslint-disable-next-line import/prefer-default-export
   const filterTypes = useMemo(
@@ -53,6 +63,7 @@ function Projects() {
     usePagination,
   ];
 
+  const history = useHistory();
   useEffect(() => {
     setFilteredProjects(
       filterActiveProjects(allProjects, {
@@ -63,7 +74,7 @@ function Projects() {
     history.replace(
       `?${stringify(
         {
-          tags: filterTopics || tags,
+          topics: filterTopics || topics,
           timeRange: activeThreshold || timeRange,
         },
         { arrayFormat: 'comma' }
@@ -75,35 +86,39 @@ function Projects() {
   return (
     <>
       <h1>Active projects</h1>
-      <div>
-        {filteredProjects && (
-          <Select
-            label={`Showing ${filteredProjects.length} projects with changes on Github in the last`}
-            id="active_time_range"
-            onChange={(e) => setActiveThreshold(e.target.value)}
-            selected={activeThreshold}
-            options={Object.keys(ACTIVE_THRESHOLDS)}
-            inline
+      <LoadingIndicator loading={loading}>
+        <>
+          <div>
+            {filteredProjects && (
+              <Select
+                label={`Showing ${filteredProjects.length} projects with changes on Github in the last`}
+                id="active_time_range"
+                onChange={(e) => setActiveThreshold(e.target.value)}
+                selected={activeThreshold}
+                options={Object.keys(ACTIVE_THRESHOLDS)}
+                inline
+              />
+            )}
+          </div>
+          <br />
+          {filteredTopics && (
+            <MultiSelect
+              selectedItems={filterTopics || []}
+              setSelectedItems={setFilterTopics}
+              items={filteredTopics}
+              labelText="Topics"
+              onSelectionItemsChange={(
+                newFilterTopics: React.SetStateAction<string[] | undefined>
+              ) => setFilterTopics(newFilterTopics)}
+            />
+          )}
+          <br />
+          <ProjectsTable
+            projects={filteredProjects || []}
+            tableAttributes={tableAttributes}
           />
-        )}
-      </div>
-      <br />
-      {allTopics && (
-        <MultiSelect
-          selectedItems={filterTopics || []}
-          setSelectedItems={setFilterTopics}
-          items={allTopics}
-          labelText="Topics"
-          onSelectionItemsChange={(
-            newFilterTopics: React.SetStateAction<string[] | undefined>
-          ) => setFilterTopics(newFilterTopics)}
-        />
-      )}
-      <br />
-      <ProjectsTable
-        projects={filteredProjects || []}
-        tableAttributes={tableAttributes}
-      />
+        </>
+      </LoadingIndicator>
     </>
   );
 }
