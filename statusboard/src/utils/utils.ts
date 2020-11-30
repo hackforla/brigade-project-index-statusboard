@@ -1,4 +1,5 @@
 import L from 'leaflet';
+import Brigades from '../pages/Brigades/Brigades';
 import { Brigade, Project } from './types';
 
 export function getBaseApiUrl() {
@@ -39,7 +40,7 @@ export function getProjectsFromBrigadeData(brigadeData: Brigade[]) {
   return brigadeData.reduce<Project[]>(
     (projects, currentBrigade) => [
       ...projects,
-      ...currentBrigade.projects.map((p) => ({
+      ...currentBrigade.projects?.map((p) => ({
         ...p,
         brigade: { ...currentBrigade, projects: undefined },
       })),
@@ -48,24 +49,31 @@ export function getProjectsFromBrigadeData(brigadeData: Brigade[]) {
   );
 }
 
-function numTopicsIntersecting(filterByTopics: any[], projectTopics: string | any[]) {
+function numTopicsIntersecting(
+  filterByTopics: any[],
+  projectTopics: string | any[]
+) {
   if (!filterByTopics?.length) return 1;
   if (!projectTopics || !projectTopics.length) return -1;
   const intersection = filterByTopics.filter((t) => projectTopics.includes(t));
   return intersection.length;
 }
 
-export function filterActiveProjects(projects: Project[], options = {}) {
+// TODO: fix active thresholds typing
+export function filterActiveProjects(projects: Project[], options: { timeRanges?: string[], topics?: string[], brigades?: string[] }) {
   if (!projects) return [];
 
   // Set destructuring and allow defaults to be overwritten
-  const { timeRanges, topics } = {
+  const { timeRanges, topics, brigades } = {
+    // 
     timeRanges: ['year'],
     topics: [],
+    brigades: [],
     ...options,
   };
 
   return projects
+    .filter(p => brigades ? brigades.includes(p?.brigade?.name) : true)
     .map((p) => ({
       ...p,
       numberTopicsMatched: numTopicsIntersecting(topics, p.topics),

@@ -10,11 +10,12 @@ import { ACTIVE_THRESHOLDS, getTableColumns } from './utils';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
+import { useProjectFilters } from '../../utils/useProjectFilters';
 
 function Projects() {
   const { allProjects, allTopics, loading } = useContext(BrigadeDataContext);
 
-  const [filteredProjects, setFilteredProjects] = useState<string[]>();
+  const { projectsFilteredByAllParams: filteredProjects } = useProjectFilters();
 
   // Get query params
   const { search } = useLocation();
@@ -24,8 +25,10 @@ function Projects() {
   // Topics
   const filteredTopics = useMemo(() => {
     if (!filteredProjects) return allTopics;
-    return getTopicsFromProjects(filterActiveProjects(allProjects, { timeRanges: timeRange }));
-  }, [filteredProjects])
+    return getTopicsFromProjects(
+      filterActiveProjects(allProjects, { timeRanges: timeRange })
+    );
+  }, [filteredProjects]);
   let initialTopics: string[] | undefined;
   if (topics?.length) {
     initialTopics = Array.isArray(topics) ? initialTopics : [topics];

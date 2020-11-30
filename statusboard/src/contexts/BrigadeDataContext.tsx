@@ -19,7 +19,7 @@ const BrigadeDataContext = createContext<BrigadeDataContextType>({
   allBrigadeData: [],
   allProjects: [],
   allTopics: [],
-  loading: false
+  loading: false,
 });
 
 const { Provider, Consumer } = BrigadeDataContext;
@@ -58,7 +58,7 @@ const BrigadeDataContextProvider = ({
         allBrigadeData: brigadeData,
         allProjects: projects,
         allTopics: topics,
-        loading
+        loading,
       }}
     >
       {childNodes}
