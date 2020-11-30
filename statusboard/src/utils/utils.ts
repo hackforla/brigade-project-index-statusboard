@@ -84,11 +84,7 @@ export function filterActiveProjects(
   if (!projects) return [];
 
   // Set destructuring and allow defaults to be overwritten
-  const { timeRanges, topics, brigades } = {
-    //
-    timeRanges: ['year'],
-    ...options,
-  };
+  const { timeRanges, topics, brigades } = options || {};
 
   let newProjects: ProjectWithTopicsMatched[] = projects;
   if (brigades) {
@@ -108,9 +104,12 @@ export function filterActiveProjects(
           (project.numberTopicsMatched || -1) > 0
       );
   }
-  return newProjects.filter((p) =>
-    p.last_pushed_within ? timeRanges.includes(p.last_pushed_within) : false
-  );
+  if (timeRanges) {
+    newProjects = newProjects.filter((p) =>
+      p.last_pushed_within ? timeRanges.includes(p.last_pushed_within) : false
+    );
+  }
+  return newProjects;
 }
 
 export function slugify(s: string) {

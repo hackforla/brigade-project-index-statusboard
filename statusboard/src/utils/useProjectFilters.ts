@@ -1,5 +1,5 @@
 import { parse, stringify } from 'query-string';
-import { useContext, useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import BrigadeDataContext from '../contexts/BrigadeDataContext';
 import { Project } from './types';
@@ -74,6 +74,13 @@ export const useProjectFilters = (): ProjectFilterReturn => {
         { arrayFormat: 'comma' }
       )}`
     );
+
+  useEffect(() => {
+    // On the first render, if there are no other filters, set time range to a year
+    if (!search) {
+      setFilters({ timeRange: 'year' })
+    }
+  }, [])
 
   return {
     topics,
