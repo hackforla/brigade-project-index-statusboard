@@ -9,15 +9,15 @@ type Filter = {
   topics?: string[];
   timeRange?: string;
   brigades?: string[];
-}
+};
 
-type ProjectFilterReturn = {
-  projectsFilteredByTime: Project[],
-  projectsFilteredByTopics: Project[],
-  projectsFilteredByBrigades: Project[],
-  projectsFilteredByAllParams: Project[],
-  setFilters: (filter: Filter) => void,
-}
+type ProjectFilterReturn = Filter & {
+  projectsFilteredByTime: Project[];
+  projectsFilteredByTopics: Project[];
+  // projectsFilteredByBrigades: Project[],
+  projectsFilteredByAllParams: Project[];
+  setFilters: (filter: Filter) => void;
+};
 
 export const useProjectFilters = (): ProjectFilterReturn => {
   const { allProjects } = useContext(BrigadeDataContext);
@@ -27,17 +27,24 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     arrayFormat: 'comma',
   }) || {}) as { topics: string[]; timeRange: string; brigades: string[] };
 
-  const projectsFilteredByTime = useMemo<Project[]>(() => filterActiveProjects(allProjects, { timeRanges: [timeRange] }), [timeRange]);
+  const projectsFilteredByTime = useMemo<Project[]>(
+    () => filterActiveProjects(allProjects, { timeRanges: [timeRange] }),
+    [timeRange]
+  );
 
-  const projectsFilteredByTopics = useMemo<Project[]>(() =>
-    filterActiveProjects(allProjects, { topics })
-    , [topics]);
+  const projectsFilteredByTopics = useMemo<Project[]>(
+    () => filterActiveProjects(allProjects, { topics }),
+    [topics]
+  );
 
   // TODO
-  const projectsFilteredByBrigades = useMemo<Project[]>(filterActiveProjects(allProjects, { brigades }), [topics]);
+  // const projectsFilteredByBrigades = useMemo<Project[]>(filterActiveProjects(allProjects, { brigades }), [topics]);
 
   const projectsFilteredByAllParams = useMemo<Project[]>(
-    filterActiveProjects(allProjects, { topics, timeRanges: [timeRange], brigades }), [topics]);
+    () =>
+      filterActiveProjects(allProjects, { topics, timeRanges: [timeRange] }),
+    [topics, timeRange]
+  );
 
   const history = useHistory();
   // TODO: FIX TYPING OF ACTIVE THRESHOLD
@@ -58,10 +65,13 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     );
 
   return {
+    topics,
+    timeRange,
+    brigades,
+    setFilters,
     projectsFilteredByTime,
     projectsFilteredByTopics,
-    projectsFilteredByBrigades,
+    // projectsFilteredByBrigades,
     projectsFilteredByAllParams,
-    setFilters,
   };
 };

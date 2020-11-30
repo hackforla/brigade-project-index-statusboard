@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useMemo, useContext } from 'react';
+import React, { useMemo, useContext } from 'react';
 import { usePagination, useFilters } from 'react-table';
-import { useHistory, useLocation } from 'react-router-dom';
-import { parse, stringify } from 'query-string';
-
 import { ProjectsTable, fuzzyTextFilter } from '../../components';
-import { filterActiveProjects, getTopicsFromProjects } from '../../utils/utils';
+import { getTopicsFromProjects } from '../../utils/utils';
 import Select from '../../components/Select/Select';
 import { ACTIVE_THRESHOLDS, getTableColumns } from './utils';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
@@ -13,32 +10,21 @@ import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndic
 import { useProjectFilters } from '../../utils/useProjectFilters';
 
 function Projects() {
-  const { allProjects, allTopics, loading } = useContext(BrigadeDataContext);
+  const { allTopics, loading } = useContext(BrigadeDataContext);
 
-  const { projectsFilteredByAllParams: filteredProjects } = useProjectFilters();
-
-  // Get query params
-  const { search } = useLocation();
-  const { topics, timeRange } = (parse(search, { arrayFormat: 'comma' }) ||
-    {}) as { topics: string[]; timeRange: string };
+  const {
+    topics,
+    timeRange,
+    setFilters,
+    projectsFilteredByTime,
+    projectsFilteredByAllParams: filteredProjects,
+  } = useProjectFilters();
 
   // Topics
-  const filteredTopics = useMemo(() => {
+  const availableTopics = useMemo(() => {
     if (!filteredProjects) return allTopics;
-    return getTopicsFromProjects(
-      filterActiveProjects(allProjects, { timeRanges: timeRange })
-    );
-  }, [filteredProjects]);
-  let initialTopics: string[] | undefined;
-  if (topics?.length) {
-    initialTopics = Array.isArray(topics) ? initialTopics : [topics];
-  }
-  const [filterTopics, setFilterTopics] = useState<string[] | undefined>(
-    initialTopics
-  );
-
-  // Time
-  const [activeThreshold, setActiveThreshold] = useState(timeRange || 'year');
+    return getTopicsFromProjects(projectsFilteredByTime);
+  }, [projectsFilteredByTime]);
 
   // eslint-disable-next-line import/prefer-default-export
   const filterTypes = useMemo(
@@ -49,8 +35,9 @@ function Projects() {
   );
 
   const columns = useMemo(
-    () => getTableColumns(filterTopics, setFilterTopics),
-    [filterTopics, setFilterTopics]
+    () =>
+      getTableColumns(topics, (newTopics) => setFilters({ topics: newTopics })),
+    [topics]
   );
 
   const tableAttributes = [
@@ -67,26 +54,6 @@ function Projects() {
     usePagination,
   ];
 
-  const history = useHistory();
-  useEffect(() => {
-    setFilteredProjects(
-      filterActiveProjects(allProjects, {
-        timeRanges: ACTIVE_THRESHOLDS[activeThreshold],
-        topics: filterTopics,
-      })
-    );
-    history.replace(
-      `?${stringify(
-        {
-          topics: filterTopics || topics,
-          timeRange: activeThreshold || timeRange,
-        },
-        { arrayFormat: 'comma' }
-      )}`
-    );
-    // eslint-disable-next-line
-  }, [history, allProjects, activeThreshold, filterTopics]);
-
   return (
     <>
       <h1>Active projects</h1>
@@ -97,23 +64,25 @@ function Projects() {
               <Select
                 label={`Showing ${filteredProjects.length} projects with changes on Github in the last`}
                 id="active_time_range"
-                onChange={(e) => setActiveThreshold(e.target.value)}
-                selected={activeThreshold}
+                onChange={(e) => setFilters({ timeRange: e.target.value })}
+                selected={timeRange}
                 options={Object.keys(ACTIVE_THRESHOLDS)}
                 inline
               />
             )}
           </div>
           <br />
-          {filteredTopics && (
+          {availableTopics && (
             <MultiSelect
-              selectedItems={filterTopics || []}
-              setSelectedItems={setFilterTopics}
-              items={filteredTopics}
+              selectedItems={topics}
+              setSelectedItems={(newTopics: string[]) =>
+                setFilters({ topics: newTopics })
+              }
+              items={availableTopics}
               labelText="Topics"
-              onSelectionItemsChange={(
-                newFilterTopics: React.SetStateAction<string[] | undefined>
-              ) => setFilterTopics(newFilterTopics)}
+              onSelectionItemsChange={(newFilterTopics: string[] | undefined) =>
+                setFilters({ topics: newFilterTopics })
+              }
             />
           )}
           <br />

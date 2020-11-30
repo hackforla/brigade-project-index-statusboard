@@ -1,5 +1,4 @@
 import L from 'leaflet';
-import Brigades from '../pages/Brigades/Brigades';
 import { Brigade, Project } from './types';
 
 export function getBaseApiUrl() {
@@ -60,12 +59,15 @@ function numTopicsIntersecting(
 }
 
 // TODO: fix active thresholds typing
-export function filterActiveProjects(projects: Project[], options: { timeRanges?: string[], topics?: string[], brigades?: string[] }) {
+export function filterActiveProjects(
+  projects: Project[],
+  options: { timeRanges?: string[]; topics?: string[]; brigades?: string[] }
+) {
   if (!projects) return [];
 
   // Set destructuring and allow defaults to be overwritten
   const { timeRanges, topics, brigades } = {
-    // 
+    //
     timeRanges: ['year'],
     topics: [],
     brigades: [],
@@ -73,7 +75,7 @@ export function filterActiveProjects(projects: Project[], options: { timeRanges?
   };
 
   return projects
-    .filter(p => brigades ? brigades.includes(p?.brigade?.name) : true)
+    .filter((p) => (brigades ? brigades.includes(p?.brigade?.name) : true))
     .map((p) => ({
       ...p,
       numberTopicsMatched: numTopicsIntersecting(topics, p.topics),
