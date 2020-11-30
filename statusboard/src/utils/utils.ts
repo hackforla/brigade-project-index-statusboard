@@ -1,4 +1,5 @@
 import L from 'leaflet';
+import { Brigade, Project } from './types';
 
 export function getBaseApiUrl() {
   if (process.env.REACT_APP_API_URL) {
@@ -13,7 +14,7 @@ export function getBaseApiUrl() {
 }
 
 export function filterBrigades(
-  brigadeData,
+  brigadeData: Brigade[],
   filterOpts = {
     selectedBrigade: undefined,
     bounds: undefined,
@@ -23,19 +24,19 @@ export function filterBrigades(
   let dataToFilter = brigadeData;
   const { selectedBrigade, bounds } = filterOpts;
   if (selectedBrigade) {
-    dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade.name);
+    dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade?.name);
   } else if (bounds) {
     dataToFilter = dataToFilter.filter((b) => {
       if (!b.latitude || !b.longitude) return false;
-      return bounds.contains(L.latLng(b.latitude, b.longitude));
+      return bounds?.contains(L.latLng(+b.latitude, +b.longitude));
     });
   }
   return dataToFilter;
 }
 
-export function getProjectsFromBrigadeData(brigadeData) {
+export function getProjectsFromBrigadeData(brigadeData: Brigade[]) {
   if (!brigadeData) return undefined;
-  return brigadeData.reduce(
+  return brigadeData.reduce<Project[]>(
     (projects, currentBrigade) => [
       ...projects,
       ...currentBrigade.projects.map((p) => ({
@@ -47,15 +48,15 @@ export function getProjectsFromBrigadeData(brigadeData) {
   );
 }
 
-function numTopicsIntersecting(filterByTopics, projectTopics) {
+function numTopicsIntersecting(filterByTopics: any[], projectTopics: string | any[]) {
   if (!filterByTopics?.length) return 1;
   if (!projectTopics || !projectTopics.length) return -1;
   const intersection = filterByTopics.filter((t) => projectTopics.includes(t));
   return intersection.length;
 }
 
-export function filterActiveProjects(projects, options = {}) {
-  if (!projects) return undefined;
+export function filterActiveProjects(projects: Project[], options = {}) {
+  if (!projects) return [];
 
   // Set destructuring and allow defaults to be overwritten
   const { timeRanges, topics } = {
@@ -71,7 +72,7 @@ export function filterActiveProjects(projects, options = {}) {
     }))
     .sort((a, b) => b.numberTopicsMatched - a.numberTopicsMatched)
     .filter(
-      (project) =>
+      (project: Project) =>
         timeRanges.includes(project.last_pushed_within) &&
         project.numberTopicsMatched > 0
     );
@@ -81,14 +82,13 @@ export function slugify(s) {
   return s.toLowerCase().replace(/[^\w]+/g, '');
 }
 
-export function getTopicsFromProjects(projects) {
+export function getTopicsFromProjects(projects: Project[]) {
   // Sorted by frequency
-  const allTopics = projects.reduce(
+  const allTopics: string[] = projects.reduce<string[]>(
     (topics, project) => topics.concat(project.topics || []),
     []
   );
-  const topicsByFrequency = {};
-
+  const topicsByFrequency: { [key: string]: number } = {};
   allTopics.forEach(
     (topic) => (topicsByFrequency[topic] = (topicsByFrequency[topic] || 0) + 1)
   );

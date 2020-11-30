@@ -13,6 +13,7 @@ import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndic
 
 function Projects() {
   const { allProjects, allTopics, loading } = useContext(BrigadeDataContext);
+
   const [filteredProjects, setFilteredProjects] = useState<string[]>();
 
   // Get query params
