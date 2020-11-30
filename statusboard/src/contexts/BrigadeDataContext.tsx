@@ -5,9 +5,16 @@ import {
   getBaseApiUrl,
   getProjectsFromBrigadeData,
   getTopicsFromProjects,
-} from '../utils';
+} from '../utils/utils';
+import { Brigade, Project } from '../utils/types';
 
-const BrigadeDataContext = createContext({
+type BrigadeDataContextType = {
+  allBrigadeData: Brigade[];
+  allProjects: Project[];
+  allTopics: string[];
+};
+
+const BrigadeDataContext = createContext<BrigadeDataContextType>({
   allBrigadeData: [],
   allProjects: [],
   allTopics: [],
@@ -15,10 +22,14 @@ const BrigadeDataContext = createContext({
 
 const { Provider, Consumer } = BrigadeDataContext;
 
-const BrigadeDataContextProvider = ({ children: childNodes }) => {
-  const [brigadeData, setBrigadeData] = useState([]);
-  const [projects, setProjects] = useState([]);
-  const [topics, setTopics] = useState([]);
+const BrigadeDataContextProvider = ({
+  children: childNodes,
+}: {
+  children: JSX.Element;
+}) => {
+  const [brigadeData, setBrigadeData] = useState<Brigade[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [topics, setTopics] = useState<string[]>([]);
 
   useEffect(() => {
     const getData = async () => {

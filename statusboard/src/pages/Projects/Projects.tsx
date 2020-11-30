@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { parse, stringify } from 'query-string';
 
 import { ProjectsTable, fuzzyTextFilter } from '../../components';
-import { filterActiveProjects } from '../../utils';
+import { filterActiveProjects } from '../../utils/utils';
 import Select from '../../components/Select/Select';
 import { ACTIVE_THRESHOLDS, getTableColumns } from './utils';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
@@ -12,14 +12,17 @@ import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 
 function Projects() {
   const { allProjects, allTopics } = useContext(BrigadeDataContext);
-  const [filteredProjects, setFilteredProjects] = useState();
+  const [filteredProjects, setFilteredProjects] = useState<string[]>();
   const { search } = useLocation();
-  const { tags, timeRange } = parse(search, { arrayFormat: 'comma' }) || {};
-  let initialTags;
-  if (tags && tags.length) {
+  const { tags, timeRange } = (parse(search, { arrayFormat: 'comma' }) ||
+    {}) as { tags: string[]; timeRange: string };
+  let initialTags: string[] | undefined;
+  if (tags?.length) {
     initialTags = Array.isArray(tags) ? initialTags : [tags];
   }
-  const [filterTopics, setFilterTopics] = useState(initialTags);
+  const [filterTopics, setFilterTopics] = useState<string[] | undefined>(
+    initialTags
+  );
   const [activeThreshold, setActiveThreshold] = useState(timeRange || 'year');
   const history = useHistory();
 
@@ -42,7 +45,7 @@ function Projects() {
       data: filteredProjects || [],
       initialState: {
         pageIndex: 0,
-        pageSize: filteredProjects ? filteredProjects.length : 50,
+        pageSize: filteredProjects?.length || 50,
       },
       filterTypes,
     },
@@ -91,9 +94,9 @@ function Projects() {
           setSelectedItems={setFilterTopics}
           items={allTopics}
           labelText="Topics"
-          onSelectionItemsChange={(newFilterTopics) =>
-            setFilterTopics(newFilterTopics)
-          }
+          onSelectionItemsChange={(
+            newFilterTopics: React.SetStateAction<string[] | undefined>
+          ) => setFilterTopics(newFilterTopics)}
         />
       )}
       <br />

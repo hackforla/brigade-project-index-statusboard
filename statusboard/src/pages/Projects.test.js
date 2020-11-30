@@ -5,7 +5,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import Projects from './Projects';
-import { SAMPLE_BRIGADE } from '../utils.test';
+import { SAMPLE_BRIGADE } from '../utils/utils.test';
 
 const fakeServer = setupServer(
   rest.get('/api/data.json', (req, res, ctx) => {
@@ -24,4 +24,4 @@ describe('Page: <Projects>', () => {
     expect(await screen.findByText(/Loading/i)).toBeInTheDocument();
     expect(await screen.findByText(/311-index/)).toBeInTheDocument();
   });
-})
+});
