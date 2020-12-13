@@ -56,20 +56,18 @@ function Projects() {
 
   return (
     <>
-      <h1>Active projects</h1>
+      <h1>CfA brigade projects</h1>
       <LoadingIndicator loading={loading}>
         <>
           <div>
-            {filteredProjects && (
-              <Select
-                label={`Showing ${filteredProjects.length} projects with changes on Github in the last`}
-                id="active_time_range"
-                onChange={(e) => setFilters({ timeRange: e.target.value })}
-                selected={timeRange}
-                options={Object.keys(ACTIVE_THRESHOLDS)}
-                inline
-              />
-            )}
+            <Select
+              label={`Showing ${filteredProjects.length} projects with changes on Github in the last`}
+              id="active_time_range"
+              onChange={(e) => setFilters({ timeRange: e.target.value })}
+              selected={timeRange}
+              options={Object.keys(ACTIVE_THRESHOLDS)}
+              inline
+            />
           </div>
           <br />
           {availableTopics && (
