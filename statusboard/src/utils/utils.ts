@@ -1,7 +1,10 @@
-import { Bounds } from 'leaflet';
+import { Bounds, latLng } from 'leaflet';
 import { Brigade, Project } from './types';
 
-export const ACTIVE_THRESHOLDS: { [key: string]: (string | undefined)[] } = {
+export type ActiveThresholdsKeys = 'all time' | 'year' | 'month' | 'week';
+export const ACTIVE_THRESHOLDS: {
+  [key in ActiveThresholdsKeys]: (string | undefined)[];
+} = {
   // key: user-facing string that represents the threshold
   // value: array of values for `last_pushed_within` that match the threshold
   'all time': ['month', 'week', 'year', 'over_a_year', undefined],
@@ -32,15 +35,18 @@ export function filterBrigades(
   // TODO: collapse this in with the filter active projects stuff
   if (!brigadeData) return [];
   let dataToFilter = brigadeData;
-  // const { selectedBrigade, bounds } = filterOpts || {};
-  // if (selectedBrigade) {
-  //   dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade!.name!);
-  // } else if (bounds) {
-  //   dataToFilter = dataToFilter.filter((b) => {
-  //     if (!b.latitude || !b.longitude) return false;
-  //     return bounds.contains(latLng(+b.latitude, +b.longitude));
-  //   });
-  // }
+  const { selectedBrigade, bounds } = filterOpts || {};
+  if (selectedBrigade) {
+    dataToFilter = dataToFilter.filter(
+      (b) => b.name === selectedBrigade!.name!
+    );
+  } else if (bounds) {
+    dataToFilter = dataToFilter.filter((b) => {
+      if (!b.latitude || !b.longitude) return false;
+      // @ts-ignore
+      return bounds.contains(latLng(+b.latitude, +b.longitude));
+    });
+  }
   return dataToFilter;
 }
 
@@ -75,7 +81,7 @@ type ProjectWithTopicsMatched = Project & {
 // TODO: fix active thresholds typing
 export function filterActiveProjects(
   options: {
-    timeRanges?: (string | undefined)[];
+    timeRange?: ActiveThresholdsKeys;
     topics?: string[];
     brigades?: string[];
   },
@@ -84,7 +90,8 @@ export function filterActiveProjects(
   if (!projects) return [];
 
   // Set destructuring and allow defaults to be overwritten
-  const { timeRanges, topics, brigades } = options || {};
+  const { timeRange, topics, brigades } = options || {};
+  const timeRanges = timeRange ? ACTIVE_THRESHOLDS[timeRange] : undefined;
 
   let newProjects: ProjectWithTopicsMatched[] = projects;
   if (brigades) {
