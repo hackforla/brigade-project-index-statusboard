@@ -26,6 +26,7 @@ export type Project = {
   code_url?: string;
   topics?: string[];
   brigade?: Brigade;
+  last_pushed_within?: string;
 };
 
 export type Location = {

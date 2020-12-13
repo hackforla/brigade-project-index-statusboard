@@ -46,7 +46,6 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     [topics, allProjects]
   );
 
-  // TODO
   const projectsFilteredByBrigades = useMemo<Project[]>(
     () => filterActiveProjects({ brigades }, allProjects),
     [brigades, allProjects]
