@@ -74,7 +74,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   useEffect(() => {
     // On the first render, if there are no other filters, set time range to a year
     if (!search) {
-      setFilters({ timeRange: 'year' });
+      setFilters({ timeRange: 'year' }, false);
     }
   }, []);
 
