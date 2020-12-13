@@ -3,7 +3,13 @@ import { useContext, useEffect, useMemo } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import BrigadeDataContext from '../contexts/BrigadeDataContext';
 import { Project } from './types';
-import { ActiveThresholdsKeys, filterActiveProjects } from './utils';
+import {
+  ActiveThresholdsKeys,
+  filterActiveProjects,
+  filterProjectsByBrigades,
+  filterProjectsByTime,
+  filterProjectsByTopics,
+} from './utils';
 
 type Filter = {
   topics?: string[];
@@ -16,7 +22,7 @@ type ProjectFilterReturn = Filter & {
   projectsFilteredByTopics: Project[];
   projectsFilteredByBrigades: Project[];
   projectsFilteredByAllParams: Project[];
-  setFilters: (filter: Filter) => void;
+  setFilters: (filter: Filter, preserveFilters?: boolean) => void;
 };
 
 export const useProjectFilters = (): ProjectFilterReturn => {
@@ -37,17 +43,17 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   }
 
   const projectsFilteredByTime = useMemo<Project[]>(
-    () => filterActiveProjects({ timeRange }, allProjects),
+    () => filterProjectsByTime(allProjects || [], timeRange),
     [timeRange, allProjects]
   );
 
   const projectsFilteredByTopics = useMemo<Project[]>(
-    () => filterActiveProjects({ topics }, allProjects),
+    () => filterProjectsByTopics(allProjects || [], topics),
     [topics, allProjects]
   );
 
   const projectsFilteredByBrigades = useMemo<Project[]>(
-    () => filterActiveProjects({ brigades }, allProjects),
+    () => filterProjectsByBrigades(allProjects || [], brigades),
     [brigades, allProjects]
   );
 
@@ -57,21 +63,13 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   );
 
   const history = useHistory();
-  // TODO: FIX TYPING OF ACTIVE THRESHOLD
-  const setFilters = (newFilter: Filter) =>
-    history.replace(
-      `?${stringify(
-        {
-          ...{
-            topics,
-            timeRange: timeRange,
-            brigades,
-          },
-          ...newFilter,
-        },
-        { arrayFormat: 'comma' }
-      )}`
-    );
+  const setFilters = (newFilter: Filter, preserveFilters = true) => {
+    let _newFilter = newFilter;
+    if (preserveFilters) {
+      _newFilter = { topics, timeRange, brigades, ...newFilter };
+    }
+    history.replace(`?${stringify(_newFilter, { arrayFormat: 'comma' })}`);
+  };
 
   useEffect(() => {
     // On the first render, if there are no other filters, set time range to a year
