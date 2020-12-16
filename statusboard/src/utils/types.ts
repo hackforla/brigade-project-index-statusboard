@@ -16,15 +16,17 @@ export type Brigade = {
     twitter?: string;
     facebook?: string;
   };
-  projects: Project[];
+  projects?: Project[];
 };
 
 export type Project = {
   name: string;
-  description: string;
-  link_url: string;
-  code_url: string;
-  topics: string[];
+  description?: string;
+  link_url?: string;
+  code_url?: string;
+  topics?: string[];
+  brigade?: Brigade;
+  last_pushed_within?: string;
 };
 
 export type Location = {
