@@ -127,3 +127,65 @@ export function getDiscourseTagList() {
 // translates into  https://discourse.codeforamerica.org/c/projects/courtbot/30
 // found via https://meta.discourse.org/t/how-do-i-get-subcategory-by-id-using-discourse-api/137790
 // and digging in the json
+
+
+export async function getTaxonomy() {
+  console.log('Getting taxonomy');
+
+  let downloadedRepos;
+  try {
+    // Getting the Github repository
+    const octokit = new Octokit({
+      auth: process.env.GITHUB_TOKEN,
+    });
+    // return promise the resolves once we have unzipped and merged
+    // all the data
+    downloadedRepos = await octokit.repos.downloadArchive({
+      owner: 'codeforamerica',
+      repo: 'civic-tech-taxonomy',
+      archive_format: 'zipball',
+      ref: 'master',
+    });
+  } catch (err) {
+    console.error(err);
+    throw new Error('Could not fetch data from GitHub');
+  }
+
+  try {
+    // Download the latest brigade index in a zip archive
+    const indexZip = new JSZip();
+    await indexZip.loadAsync(downloadedRepos.data);
+
+    // Iterate through all the .toml files
+    const orgs = [];
+    const issues = [];
+    const promises = [];
+    indexZip.folder('').forEach((path) => {
+      const _file = indexZip.file(path);
+      if (!_file) return;
+	  console.log(_file);
+      // Parse them into issues and then other sets of data
+      const parts = path.split('/');
+      const itemType = parts[1];
+      // for now limiting to "issues" set of data
+	  if (itemType === 'issues') {
+        promises.push(
+          _file.async('string').then((data) => {
+            const topic = toml.parse(data);
+			console.log(topic);
+            issues.push(topic);
+          })
+        );
+      }
+    });
+
+    await Promise.all(promises);
+    // eslint-disable-next-line no-console
+    console.log(`Loaded ${issues.length} issues.`);
+    return issues;
+	
+  } catch (err) {
+    console.error(err);
+    throw new Error('Could not parse data after fetch');
+  }
+}

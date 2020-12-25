@@ -2,6 +2,7 @@ import { Router } from 'express';
 import apicache from 'apicache';
 
 import { getProjectIndex } from './api';
+import { getTaxonomy } from './api';
 
 export function createRoutes(app) {
   const router = Router();
@@ -26,5 +27,21 @@ export function createRoutes(app) {
     res.redirect('/api/data.json');
   });
 
+  router.get(['/', '/taxonomy.json'], app.cache('90 minutes'), (_, res) => {
+    getTaxonomy()
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Could not fetch taxonomy data');
+      });
+  });
+
+  router.get('/force-refresh/taxonomy.json', (_, res) => {
+    apicache.clear('/api/taxonomy.json');
+    res.redirect('/api/taxonomy.json');
+  });
+  
   return router;
 }
