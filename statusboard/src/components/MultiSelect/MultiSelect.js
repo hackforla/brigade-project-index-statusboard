@@ -70,7 +70,7 @@ export const MultiSelect = ({
                   (item) =>
                     !selectedItems.find(
                       (selectedItem) => selectedItem === item
-                    ) && item.includes(inputValue)
+                    ) && item.toLowerCase().includes(inputValue.toLowerCase())
                 )
                 .map((item) => {
                   return (
