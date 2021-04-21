@@ -79,13 +79,12 @@ function Brigades() {
       <h1>Projects by brigade or geographic area</h1>
       <p>{brigadesShowingString}</p>
       <div>
-        Zoom in on the map to filter by projects in a geographic area or&nbsp;
+        Zoom in on the map to filter by projects in a geographic area or
         <Select
-          label="select a brigade"
+          label=" select a brigade "
           id="select-brigade"
           emptyOptionText="All brigades"
-          className="display-inline-block"
-          inline
+          className="display-inline"
           options={(allBrigadeData || [])
             .filter((b) => !!b.latitude && !!b.longitude)
             .map((b) => b.name)}

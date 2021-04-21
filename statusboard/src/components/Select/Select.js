@@ -25,7 +25,7 @@ export default function Select({
         htmlFor={id}
         className={cx('form-label', { 'form-label--inline': inline })}
       >
-        <div>{label}</div>
+        {label}
       </label>
       <select
         id={id}
