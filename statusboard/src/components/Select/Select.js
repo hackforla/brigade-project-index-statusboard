@@ -11,7 +11,7 @@ export default function Select({
   selected,
   emptyOptionText,
   className,
-  inline = false,
+  inline,
 }) {
   return (
     <div
@@ -48,6 +48,8 @@ Select.defaultProps = {
   selected: undefined,
   options: [],
   className: '',
+  emptyOptionText: undefined,
+  inline: false,
 };
 
 Select.propTypes = {

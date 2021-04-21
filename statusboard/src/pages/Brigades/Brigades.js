@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { usePagination, useSortBy } from 'react-table';
 import Map from '../../components/Map/Map';
-import { getProjectsFromBrigadeData, filterBrigades } from '../../utils/utils';
-import BrigadeDataContext from '../../contexts/BrigadeDataContext';
+import {
+  getProjectsFromBrigadeData,
+  filterBrigades,
+} from '../../utils/utils.ts';
+import BrigadeDataContext from '../../contexts/BrigadeDataContext.tsx';
 import { ProjectsTable, Select } from '../../components';
 import './Brigades.scss';
 
@@ -107,11 +110,7 @@ function Brigades() {
           filterOpts={filterOpts}
           setFilterOpts={setFilterOpts}
         />
-        <ProjectsTable
-          projects={projects}
-          columns={columns}
-          tableAttributes={tableAttributes}
-        />
+        <ProjectsTable projects={projects} tableAttributes={tableAttributes} />
       </div>
     </>
   );
