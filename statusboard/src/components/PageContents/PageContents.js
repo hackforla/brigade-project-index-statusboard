@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import About from '../../pages/About/About';
-import Projects from '../../pages/Projects/Projects.tsx';
+import Projects from '../../pages/Projects/Projects';
 import Brigades from '../../pages/Brigades/Brigades';
 import './PageContents.css';
 
