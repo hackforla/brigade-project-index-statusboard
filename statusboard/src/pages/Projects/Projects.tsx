@@ -48,6 +48,7 @@ function Projects() {
         pageIndex: 0,
         pageSize: filteredProjects?.length || 50,
       },
+      autoResetFilters: false,
       filterTypes,
     },
     useFilters,
