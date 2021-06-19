@@ -16,28 +16,42 @@ yarn install
 yarn start
 ```
 
-This is a Create-React-App, so other commands come out of the box including `yarn test` and `yarn build`.
+This is a Create-React-App,
+so other commands come out of the box including `yarn test` and `yarn build`.
+
+The frontend will by default look for a **local copy of the backend API**
+for the React app to load data from.
+
+You don't have to run the API locally --
+you can instead tell your local React app to use the production API
+using an environment variable like this:
+
+```
+REACT_APP_API_URL=https://statusboard.brigade.cloud yarn start
+```
 
 ## Running the API locally
 
-The frontend will by default look for a local copy of the backend API for the React app to load data from.
+If you choose to run the API locally (the default behaviour),
+you will need to use an older version of Node;
+install [NVM](https://github.com/nvm-sh/nvm) and run:
 
 ```
 cd api
+nvm install 12
+nvm use 12
 yarn install
 yarn start
 ```
 
-Currently, the server fetches a new copy of the project index from Github every time (very expensive). If redis is running locally on port 6379, the API will use this to cache the results. We recommend installing it via Docker:
+Currently, the server fetches a new copy
+of the project index from Github every time (very expensive).
+If redis is running locally on port 6379,
+the API will use this to cache the results.
+We recommend installing and running Redis via Docker:
 
 ```
 docker run --publish 6379:6379 redis:alpine
-```
-
-You don't have to run the API locally -- you can instead tell your local React app to use the production API using an environment variable like this:
-
-```
-REACT_APP_API_URL=https://statusboard.brigade.cloud yarn start
 ```
 
 ## Other commands
