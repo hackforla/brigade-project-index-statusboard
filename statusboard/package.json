@@ -57,7 +57,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "./node_modules/eslint/bin/eslint.js statusboard/src/**/*.js *.js",
+    "lint": "./node_modules/eslint/bin/eslint.js src/",
     "prettier": "prettier --write .",
     "update-cache": "node -r esm updateCacheTask.js"
   },
