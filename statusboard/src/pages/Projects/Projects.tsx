@@ -12,7 +12,7 @@ import { ACTIVE_THRESHOLDS, getTopicsFromProjects } from '../../utils/utils';
 import Select from '../../components/Select/Select';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
-import LoadingIndicator from '../../components/LoadingIndicator/LoadingIndicator';
+import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
 import { useProjectFilters } from '../../utils/useProjectFilters';
 import { Project } from '../../utils/types';
 import getTableColumns from './utils';
