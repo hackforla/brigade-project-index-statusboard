@@ -8,9 +8,8 @@ import './Brigades.scss';
 
 function Brigades() {
   const { allBrigadeData, allProjects } = useContext(BrigadeDataContext);
-  const [filteredBrigadeData, setFilteredBrigadeData] = useState(
-    allBrigadeData
-  );
+  const [filteredBrigadeData, setFilteredBrigadeData] =
+    useState(allBrigadeData);
   const [filterOpts, setFilterOpts] = useState({});
   const { selectedBrigade } = filterOpts; // also has bounds
   const [projects, setProjects] = useState(allProjects);
@@ -30,18 +29,8 @@ function Brigades() {
         accessor: 'brigade.name',
       },
     ],
-    []
+    [],
   );
-
-  const tableAttributes = [
-    {
-      columns,
-      data: projects || [],
-      initialState: { pageIndex: 0, pageSize: 50 },
-    },
-    useSortBy,
-    usePagination,
-  ];
 
   useEffect(() => {
     const newlyFilteredBrigadeData = filterBrigades(allBrigadeData, filterOpts);
@@ -59,7 +48,7 @@ function Brigades() {
       brigadesShowingString = `${brigadesShowingString} ${selectedBrigade.name}`;
     } else {
       brigadesShowingString = `${brigadesShowingString} ${firstFiveBrigades.join(
-        ', '
+        ', ',
       )}`;
     }
     if (filteredBrigadeData.length > 5) {
@@ -68,6 +57,13 @@ function Brigades() {
       } other brigades`;
     }
   }
+
+  const options = {
+    columns,
+    data: projects || [],
+    initialState: { pageIndex: 0, pageSize: 50 },
+  };
+  const plugins = [useSortBy, usePagination];
 
   return (
     <>
@@ -107,11 +103,7 @@ function Brigades() {
           filterOpts={filterOpts}
           setFilterOpts={setFilterOpts}
         />
-        <ProjectsTable
-          projects={projects}
-          columns={columns}
-          tableAttributes={tableAttributes}
-        />
+        <ProjectsTable options={options} plugins={plugins} />
       </div>
     </>
   );
