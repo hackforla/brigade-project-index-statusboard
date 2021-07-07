@@ -27,8 +27,6 @@ export default function ProjectsTable({
     state: { pageSize },
   } = useTable<Project>(options, ...plugins);
 
-  // @ts-ignore
-  // @ts-ignore
   return (
     <div className="projects-table">
       <PerfectScrollbar>
