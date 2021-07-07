@@ -27,6 +27,8 @@ export default function ProjectsTable({
     state: { pageSize },
   } = useTable<Project>(options, ...plugins);
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <div className="projects-table">
       <PerfectScrollbar>
@@ -73,6 +75,7 @@ export default function ProjectsTable({
         </table>
         {rows && pageSize < rows.length && (
           <div className="load-projects-button">
+            {/* @ts-ignore */}
             <Button
               text="Load next 50 projects"
               onClick={() => setPageSize(pageSize + 50)}

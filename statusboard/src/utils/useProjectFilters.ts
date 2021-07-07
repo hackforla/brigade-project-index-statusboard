@@ -11,13 +11,13 @@ import {
   filterProjectsByTopics,
 } from './utils';
 
-type Filter = {
+export type Filter = {
   topics?: string[];
-  timeRange?: ActiveThresholdsKeys;
+  timeRange?: string;
   brigades?: string[];
 };
 
-type ProjectFilterReturn = Filter & {
+export type ProjectFilterReturn = Filter & {
   projectsFilteredByTime: Project[];
   projectsFilteredByTopics: Project[];
   projectsFilteredByBrigades: Project[];
@@ -28,8 +28,13 @@ type ProjectFilterReturn = Filter & {
 export const useProjectFilters = (): ProjectFilterReturn => {
   const { allProjects } = useContext(BrigadeDataContext);
   const { search } = useLocation();
-  // TODO: add any brigade or topic key value pair to this filtering too, and use that to persist text based filtering (for table)
-  const { topics: _topics, timeRange, brigades } = (parse(search, {
+  // TODO: add any brigade or topic key value pair to this filtering too,
+  // and use that to persist text based filtering (for table)
+  const {
+    topics: _topics,
+    timeRange,
+    brigades,
+  } = (parse(search, {
     arrayFormat: 'comma',
   }) || {}) as {
     topics: string[];
@@ -44,22 +49,23 @@ export const useProjectFilters = (): ProjectFilterReturn => {
 
   const projectsFilteredByTime = useMemo<Project[]>(
     () => filterProjectsByTime(allProjects || [], timeRange),
-    [timeRange, allProjects]
+    [timeRange, allProjects],
   );
 
   const projectsFilteredByTopics = useMemo<Project[]>(
     () => filterProjectsByTopics(allProjects || [], topics),
-    [topics, allProjects]
+    [topics, allProjects],
   );
 
   const projectsFilteredByBrigades = useMemo<Project[]>(
     () => filterProjectsByBrigades(allProjects || [], brigades),
-    [brigades, allProjects]
+    [brigades, allProjects],
+    // [allProjects],
   );
 
   const projectsFilteredByAllParams = useMemo<Project[]>(
     () => filterActiveProjects({ topics, timeRange, brigades }, allProjects),
-    [topics, timeRange, brigades, allProjects]
+    [topics, timeRange, brigades, allProjects],
   );
 
   const history = useHistory();
@@ -72,15 +78,16 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   };
 
   useEffect(() => {
-    // On the first render, if there are no other filters, set time range to a year
+    // On the first render, if there are no other filters,
+    // set time range to a year
     if (!search) {
       setFilters({ timeRange: 'year' }, false);
     }
-  }, []);
+  });
 
   return {
     topics,
-    timeRange: timeRange,
+    timeRange,
     brigades,
     setFilters,
     projectsFilteredByTime,
