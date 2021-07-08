@@ -1,4 +1,4 @@
-import { parse, stringify } from 'query-string';
+import { parse, ParsedQuery, stringify } from 'query-string';
 import { useContext, useEffect, useMemo } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import BrigadeDataContext from '../contexts/BrigadeDataContext';
@@ -23,20 +23,21 @@ export type ProjectFilterReturn = Filter & {
   projectsFilteredByBrigades: Project[];
   projectsFilteredByAllParams: Project[];
   setFilters: (filter: Filter, preserveFilters?: boolean) => void;
+  queryParameters: ParsedQuery;
 };
 
 export const useProjectFilters = (): ProjectFilterReturn => {
   const { allProjects } = useContext(BrigadeDataContext);
   const { search } = useLocation();
-  // TODO: add any brigade or topic key value pair to this filtering too,
-  // and use that to persist text based filtering (for table)
+  /* TODO: add any brigade or topic key value pair to this filtering too, and use that to persist text based filtering (for table) */
+  const queryParameters = parse(search, {
+    arrayFormat: 'comma',
+  });
   const {
     topics: _topics,
     timeRange,
     brigades,
-  } = (parse(search, {
-    arrayFormat: 'comma',
-  }) || {}) as {
+  } = (queryParameters || {}) as {
     topics: string[];
     timeRange: ActiveThresholdsKeys;
     brigades: string[];
@@ -90,6 +91,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     timeRange,
     brigades,
     setFilters,
+    queryParameters,
     projectsFilteredByTime,
     projectsFilteredByTopics,
     projectsFilteredByBrigades,

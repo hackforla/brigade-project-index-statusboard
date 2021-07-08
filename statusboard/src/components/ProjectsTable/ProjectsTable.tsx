@@ -73,6 +73,7 @@ export default function ProjectsTable({
         </table>
         {rows && pageSize < rows.length && (
           <div className="load-projects-button">
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}
             <Button
               text="Load next 50 projects"

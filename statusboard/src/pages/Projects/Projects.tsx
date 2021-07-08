@@ -5,6 +5,8 @@ import {
   Column,
   TableOptions,
   PluginHook,
+  FilterTypes,
+  Filters,
 } from 'react-table';
 import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
@@ -16,6 +18,7 @@ import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndic
 import { useProjectFilters } from '../../utils/useProjectFilters';
 import { Project } from '../../utils/types';
 import getTableColumns from './utils';
+import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
@@ -26,6 +29,7 @@ function Projects(): JSX.Element {
     setFilters,
     projectsFilteredByTime,
     projectsFilteredByAllParams: filteredProjects,
+    queryParameters,
   } = useProjectFilters();
 
   // Topics
@@ -34,16 +38,26 @@ function Projects(): JSX.Element {
     return getTopicsFromProjects(projectsFilteredByTime);
   }, [projectsFilteredByTime, allTopics]);
 
-  const filterTypes = useMemo(
-    () => ({
-      fuzzyTextFilter,
-    }),
+  const filterTypes: FilterTypes<Project> = useMemo(
+    () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
     [],
   );
 
   const columns: Column<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
     [topics, setFilters],
+  );
+  const initialFilterValues: Filters<Project> = useMemo(
+    () =>
+      columns
+        .filter((column) => column.id ?? column.accessor)
+        .map((column) => (column.id ?? column.accessor) as string)
+        .filter((name) => queryParameters[name])
+        .map((name) => ({
+          id: name,
+          value: queryParameters[name],
+        })),
+    [],
   );
 
   const options: TableOptions<Project> = useMemo(
@@ -55,6 +69,7 @@ function Projects(): JSX.Element {
       initialState: {
         pageIndex: 0,
         pageSize: 50,
+        filters: initialFilterValues,
       },
     }),
     [filteredProjects, columns, filterTypes],
