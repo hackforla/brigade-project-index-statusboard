@@ -15,8 +15,6 @@ export default function queryParamFilter(
   ): Array<Row<Project>> => {
     const queryParams = new URLSearchParams(window.location.search);
 
-    console.log(`Attempting to filter with ${filterValue as string}`);
-
     if (typeof filterValue === 'string') {
       queryParams.set(columnIds[0], filterValue);
       myFilter.autoRemove = () => false; // If we autoRemove we can't delete a query
