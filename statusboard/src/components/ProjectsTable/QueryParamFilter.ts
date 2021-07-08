@@ -2,8 +2,7 @@ import { FilterType, FilterValue, IdType, Row } from 'react-table';
 import { Project } from '../../utils/types';
 
 /**
- * Simple wrapper
- * @param filter filter that should update the URL query parameter when {@code filterValue} changes.
+ * A simple {@link FilterType} wrapper that updates the URL query parameters based on the column id and filter value.
  */
 export default function queryParamFilter(
   filter: FilterType<Project>,
