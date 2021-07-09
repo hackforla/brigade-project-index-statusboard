@@ -68,7 +68,7 @@ export default function getTableColumns(
     {
       Header: 'Brigade',
       accessor: (project: Project) => project.brigade?.name,
-      id: 'brigade',
+      id: 'organization',
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',
     },
