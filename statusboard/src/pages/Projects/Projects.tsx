@@ -62,12 +62,11 @@ function Projects() {
         <>
           <div>
             <Select
-              label={`Showing ${filteredProjects.length} projects with changes on Github in the last`}
+              label={`Showing ${filteredProjects.length} projects with changes on Github in the last `}
               id="active_time_range"
               onChange={(e) => setFilters({ timeRange: e.target.value })}
               selected={timeRange}
               options={Object.keys(ACTIVE_THRESHOLDS)}
-              inline
             />
           </div>
           <br />

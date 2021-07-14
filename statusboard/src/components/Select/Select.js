@@ -11,7 +11,7 @@ export default function Select({
   selected,
   emptyOptionText,
   className,
-  inline = false,
+  inline,
 }) {
   return (
     <div
@@ -25,7 +25,7 @@ export default function Select({
         htmlFor={id}
         className={cx('form-label', { 'form-label--inline': inline })}
       >
-        <div>{label}</div>
+        {label}
       </label>
       <select
         id={id}
@@ -48,6 +48,8 @@ Select.defaultProps = {
   selected: undefined,
   options: [],
   className: '',
+  emptyOptionText: undefined,
+  inline: false,
 };
 
 Select.propTypes = {

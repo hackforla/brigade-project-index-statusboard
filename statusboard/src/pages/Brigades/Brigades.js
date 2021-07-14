@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { usePagination, useSortBy } from 'react-table';
 import Map from '../../components/Map/Map';
-import { getProjectsFromBrigadeData, filterBrigades } from '../../utils/utils';
+import {
+  getProjectsFromBrigadeData,
+  filterBrigades,
+} from '../../utils/utils';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { ProjectsTable, Select } from '../../components';
 import './Brigades.scss';
@@ -76,13 +79,12 @@ function Brigades() {
       <h1>Projects by brigade or geographic area</h1>
       <p>{brigadesShowingString}</p>
       <div>
-        Zoom in on the map to filter by projects in a geographic area or&nbsp;
+        Zoom in on the map to filter by projects in a geographic area or
         <Select
-          label="select a brigade"
+          label=" select a brigade "
           id="select-brigade"
           emptyOptionText="All brigades"
-          className="display-inline-block"
-          inline
+          className="display-inline"
           options={(allBrigadeData || [])
             .filter((b) => !!b.latitude && !!b.longitude)
             .map((b) => b.name)}
@@ -107,11 +109,7 @@ function Brigades() {
           filterOpts={filterOpts}
           setFilterOpts={setFilterOpts}
         />
-        <ProjectsTable
-          projects={projects}
-          columns={columns}
-          tableAttributes={tableAttributes}
-        />
+        <ProjectsTable projects={projects} tableAttributes={tableAttributes} />
       </div>
     </>
   );
