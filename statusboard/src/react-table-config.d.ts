@@ -50,6 +50,10 @@ import {
   UseSortByState,
 } from 'react-table';
 
+/**
+ * This is the example configs from `DefinitelyTyped` adding support for all hooks.
+ * https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-table#example-type-file
+ */
 declare module 'react-table' {
   // take this file as-is, or comment out the sections that don't apply to your plugin configuration
 
