@@ -70,6 +70,7 @@ function Projects(): JSX.Element {
         pageSize: filteredProjects?.length || 50,
         filters: initialFilterValues,
       },
+      autoResetFilters: false,
       filterTypes,
     }),
     [filteredProjects, columns, filterTypes],
@@ -87,14 +88,13 @@ function Projects(): JSX.Element {
         <>
           <div>
             <Select
-              label={`Showing ${filteredProjects.length} projects with changes on Github in the last`}
+              label={`Showing ${filteredProjects.length} projects with changes on Github in the last `}
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                 setFilters({ timeRange: e.target.value })
               }
               selected={timeRange}
               options={Object.keys(ACTIVE_THRESHOLDS)}
-              inline
             />
           </div>
           <br />
