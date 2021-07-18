@@ -38,21 +38,21 @@ export default function ProjectsTable({
                   <ColumnHeader
                     column={column}
                     key={column.id}
-                    disableSort={!rows || rows.length === 0}
+                    disableSort={!rows.length}
                   />
                 ))}
               </tr>
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {!rows && (
+            {!rows.length && (
               <tr>
                 <td colSpan={3}>
                   <span>Loading...</span>
                 </td>
               </tr>
             )}
-            {rows && rows.length === 0 && (
+            {!rows.length && (
               <tr>
                 <td colSpan={3}>
                   <span>No projects</span>
@@ -71,7 +71,7 @@ export default function ProjectsTable({
             })}
           </tbody>
         </table>
-        {rows && pageSize < rows.length && (
+        {pageSize < rows.length && (
           <div className="load-projects-button">
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}

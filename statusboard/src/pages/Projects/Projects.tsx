@@ -63,14 +63,14 @@ function Projects(): JSX.Element {
   const options: TableOptions<Project> = useMemo(
     () => ({
       columns,
-      data: filteredProjects,
+      data: filteredProjects || [],
       autoResetFilters: false,
-      filterTypes,
       initialState: {
         pageIndex: 0,
-        pageSize: 50,
+        pageSize: filteredProjects?.length || 50,
         filters: initialFilterValues,
       },
+      filterTypes,
     }),
     [filteredProjects, columns, filterTypes],
   );

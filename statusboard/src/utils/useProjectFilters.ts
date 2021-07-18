@@ -61,7 +61,6 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   const projectsFilteredByBrigades = useMemo<Project[]>(
     () => filterProjectsByBrigades(allProjects || [], brigades),
     [brigades, allProjects],
-    // [allProjects],
   );
 
   const projectsFilteredByAllParams = useMemo<Project[]>(
