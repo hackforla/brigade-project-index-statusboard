@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { usePagination, useSortBy } from 'react-table';
 import Map from '../../components/Map/Map';
-import {
-  getProjectsFromBrigadeData,
-  filterBrigades,
-} from '../../utils/utils';
+import { getProjectsFromBrigadeData, filterBrigades } from '../../utils/utils';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { ProjectsTable, Select } from '../../components';
 import './Brigades.scss';
