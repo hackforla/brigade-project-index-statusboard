@@ -6,9 +6,11 @@ This repo contains two things:
 
 The statusboard is running in production at https://projects.brigade.network and the API is accessible at https://statusboard.brigade.cloud.
 
-## Running the statusboard locally
+## Running the Statusboard locally
 
-Once this is in place, you can install and run the app via yarn:
+The Statusboard is a Create-React-App, and supports their built-in commands, including `yarn test` and `yarn build`.
+
+You can install the app and run it with,
 
 ```
 cd statusboard
@@ -16,19 +18,21 @@ yarn install
 yarn start
 ```
 
-This is a Create-React-App,
-so other commands come out of the box including `yarn test` and `yarn build`.
-
-The frontend will by default look for a **local copy of the backend API**
-for the React app to load data from.
-
-You don't have to run the API locally --
-you can instead tell your local React app to use the production API
-using an environment variable like this:
+By default, the front-end will look for a **local copy of the backend API** for the React app to load data from, but you
+don't have to run the API locally. You can instead tell your local React app to use the online production API with an
+environment variable like this:
 
 ```
-REACT_APP_API_URL=https://statusboard.brigade.cloud yarn start
+REACT_APP_API_URL=https://statusboard.brigade.cloud
 ```
+
+or by using
+
+```
+yarn start-remote-api
+```
+
+instead of `yarn start`.
 
 ## Running the API locally
 
