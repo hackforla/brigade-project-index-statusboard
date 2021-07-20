@@ -1,11 +1,13 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import React from 'react';
+import { StaticRouter } from 'react-router-dom';
 
 import { render, screen } from '@testing-library/react';
 
 import Projects from './Projects/Projects';
 import { SAMPLE_BRIGADE } from '../utils/utils.test';
+import { BrigadeDataContextProvider } from '../contexts/BrigadeDataContext';
 
 const fakeServer = setupServer(
   rest.get('/api/data.json', (req, res, ctx) => {
@@ -20,8 +22,14 @@ afterEach(() => fakeServer.resetHandlers());
 
 describe('Page: <Projects>', () => {
   it('renders before and after projects have loaded', async () => {
-    render(<Projects />);
-    expect(await screen.findByText(/Loading/i)).toBeInTheDocument();
+    render(
+      <BrigadeDataContextProvider>
+        <StaticRouter location="/projects?timeRange=all%20time">
+          <Projects />
+        </StaticRouter>
+      </BrigadeDataContextProvider>,
+    );
+    expect(await screen.getByText(/Loading/i)).toBeInTheDocument();
     expect(await screen.findByText(/311-index/)).toBeInTheDocument();
   });
 });
