@@ -1,15 +1,26 @@
-import React, { useMemo, useContext } from 'react';
-import { usePagination, useFilters } from 'react-table';
-import { ProjectsTable, fuzzyTextFilter } from '../../components';
+import React, { useMemo, useContext, ChangeEvent } from 'react';
+import {
+  usePagination,
+  useFilters,
+  Column,
+  TableOptions,
+  PluginHook,
+  FilterTypes,
+  Filters,
+} from 'react-table';
+import { fuzzyTextFilter } from '../../components';
+import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
 import { ACTIVE_THRESHOLDS, getTopicsFromProjects } from '../../utils/utils';
 import Select from '../../components/Select/Select';
-import { getTableColumns } from './utils';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
 import { useProjectFilters } from '../../utils/useProjectFilters';
+import { Project } from '../../utils/types';
+import getTableColumns from './utils';
+import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
 
-function Projects() {
+function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
 
   const {
@@ -18,6 +29,7 @@ function Projects() {
     setFilters,
     projectsFilteredByTime,
     projectsFilteredByAllParams: filteredProjects,
+    queryParameters,
   } = useProjectFilters();
 
   // Topics
@@ -26,34 +38,47 @@ function Projects() {
     return getTopicsFromProjects(projectsFilteredByTime);
   }, [projectsFilteredByTime, allTopics]);
 
-  // eslint-disable-next-line import/prefer-default-export
-  const filterTypes = useMemo(
-    () => ({
-      fuzzyTextFilter,
-    }),
-    []
+  const filterTypes: FilterTypes<Project> = useMemo(
+    () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
+    [],
   );
 
-  const columns = useMemo(
+  const columns: Column<Project>[] = useMemo(
+    () => getTableColumns(topics, setFilters),
+    [topics, setFilters],
+  );
+  const initialFilterValues: Filters<Project> = useMemo(
     () =>
-      getTableColumns(topics, (newTopics) => setFilters({ topics: newTopics })),
-    [topics]
+      columns
+        .filter((column) => column.id ?? column.accessor)
+        .map((column) => (column.id ?? column.accessor) as string)
+        .filter((name) => queryParameters[name])
+        .map((name) => ({
+          id: name,
+          value: queryParameters[name],
+        })),
+    [],
   );
 
-  const tableAttributes = [
-    {
+  const options: TableOptions<Project> = useMemo(
+    () => ({
       columns,
       data: filteredProjects || [],
+      autoResetFilters: false,
       initialState: {
         pageIndex: 0,
         pageSize: filteredProjects?.length || 50,
+        filters: initialFilterValues,
       },
-      autoResetFilters: false,
       filterTypes,
-    },
-    useFilters,
-    usePagination,
-  ];
+    }),
+    [filteredProjects, columns, filterTypes],
+  );
+
+  const hooks: PluginHook<Project>[] = useMemo(
+    () => [useFilters, usePagination],
+    [],
+  );
 
   return (
     <>
@@ -64,7 +89,9 @@ function Projects() {
             <Select
               label={`Showing ${filteredProjects.length} projects with changes on Github in the last `}
               id="active_time_range"
-              onChange={(e) => setFilters({ timeRange: e.target.value })}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                setFilters({ timeRange: e.target.value })
+              }
               selected={timeRange}
               options={Object.keys(ACTIVE_THRESHOLDS)}
             />
@@ -84,10 +111,7 @@ function Projects() {
             />
           )}
           <br />
-          <ProjectsTable
-            projects={filteredProjects || []}
-            tableAttributes={tableAttributes}
-          />
+          <ProjectsTable options={options} plugins={hooks} />
         </>
       </LoadingIndicator>
     </>
