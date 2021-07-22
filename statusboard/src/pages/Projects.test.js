@@ -38,4 +38,15 @@ describe('Page: <Projects>', () => {
     expect(await screen.getByText(/Loading/i)).toBeInTheDocument();
     expect(await screen.findByText(/311-index/)).toBeInTheDocument();
   });
+
+  it('Find courtbot-python from priority-action-area link', async () => {
+    render(
+      <RouteWithContext location="/projects?timeRange=all%20time&topics=courtbot,court-reminder">
+        <Projects />
+      </RouteWithContext>
+    );
+    expect(
+      (await screen.findAllByText('courtbot-python'))[0]
+    ).toBeInTheDocument();
+  });
 });
