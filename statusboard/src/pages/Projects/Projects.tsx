@@ -56,16 +56,14 @@ function Projects(): JSX.Element {
         .filter(
           // Check if filtering has been disabled for the column
           (name) =>
-            !columns.find(
-              (searchElement) =>
-                (searchElement.id ?? searchElement.accessor) === name
-            )?.disableFilters
+            !columns.find((column) => (column.id ?? column.accessor) === name)
+              ?.disableFilters
         )
         .map((name) => ({
           id: name,
           value: queryParameters[name],
         })),
-    [],
+    []
   );
 
   const options: TableOptions<Project> = useMemo(
