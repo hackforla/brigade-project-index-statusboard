@@ -6,12 +6,12 @@ import { StaticRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 
 import Projects from './Projects/Projects';
-import { SAMPLE_BRIGADE } from '../utils/utils.test';
+import { SAMPLE_BRIGADES } from '../utils/utils.test';
 import { BrigadeDataContextProvider } from '../contexts/BrigadeDataContext';
 
 const fakeServer = setupServer(
   rest.get('/api/data.json', (req, res, ctx) => {
-    return res(ctx.delay(), ctx.json([SAMPLE_BRIGADE]));
+    return res(ctx.delay(), ctx.json(SAMPLE_BRIGADES));
   })
 );
 
