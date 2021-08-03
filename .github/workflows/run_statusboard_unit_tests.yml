@@ -3,6 +3,9 @@ on:
     push:
         paths:
             - 'statusboard/**'
+    pull_request:
+        paths:
+            - 'statusboard/**'
     workflow_dispatch:
 
 jobs:
