@@ -1,0 +1,20 @@
+name: Statusboard lint
+on:
+  push:
+    paths:
+      - 'statusboard/**'
+  pull_request:
+    paths:
+      - 'statusboard/**'
+  workflow_dispatch:
+
+jobs:
+  statusboard-lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: statusboard
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn --frozen-lockfile
+      - run: yarn run lint
