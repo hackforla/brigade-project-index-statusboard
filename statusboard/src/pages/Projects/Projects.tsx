@@ -53,11 +53,17 @@ function Projects(): JSX.Element {
         .filter((column) => column.id ?? column.accessor)
         .map((column) => (column.id ?? column.accessor) as string)
         .filter((name) => queryParameters[name])
+        .filter(
+          // Check if filtering has been disabled for the column
+          (name) =>
+            !columns.find((column) => (column.id ?? column.accessor) === name)
+              ?.disableFilters
+        )
         .map((name) => ({
           id: name,
           value: queryParameters[name],
         })),
-    [],
+    []
   );
 
   const options: TableOptions<Project> = useMemo(
