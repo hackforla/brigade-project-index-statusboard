@@ -3,7 +3,8 @@ import matchSorter from 'match-sorter';
 import { TextInput } from '..';
 
 export function fuzzyTextFilter(rows, id, filterValue) {
-  return matchSorter(rows, filterValue, {
+  const trimmedFilterValue = filterValue?.trim();
+  return matchSorter(rows, trimmedFilterValue, {
     keys: [
       (row) => {
         let rowText = row.values[id];

@@ -6,6 +6,8 @@ This repo contains two things:
 
 The statusboard is running in production at https://projects.brigade.network and the API is accessible at https://statusboard.brigade.cloud.
 
+The [Project Index Working Group](https://brigade.cloud/) has bi-weekly video meetings and can be found in the Code for America [#brigade-project-index Slack channel](https://cfa.slack.com/archives/CLMA6BAVB).
+
 ## Running the Statusboard locally
 
 The Statusboard is a Create-React-App, and supports their built-in commands, including `yarn test` and `yarn build`.
