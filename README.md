@@ -1,3 +1,5 @@
+<a href="https://github.com/codeforamerica/brigade-project-index-statusboard/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22" alt="Contributors"><img src="https://img.shields.io/github/issues/codeforamerica/brigade-project-index-statusboard/good%20first%20issue?label=good%20first%20issue" /></a>
+
 # Brigade Project Index Statusboard and API
 
 This repo contains two things:
