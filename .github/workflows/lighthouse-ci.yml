@@ -9,6 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
-      - run: npm install && npm install -g @lhci/cli@0.8.x
-      - run: npm run build
+      - run: yarn --frozen-lockfile && yarn global add @lhci/cli@0.8.x
+      - run: yarn run build
       - run: lhci autorun
