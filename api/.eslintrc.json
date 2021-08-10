@@ -1,12 +1,12 @@
 {
-  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
   "env": {
     "commonjs": true,
     "es6": true,
-    "jest": true,
     "node": true
   },
   "rules": {
+    "no-console": "off",
     "max-len": [
       "warn",
       {
