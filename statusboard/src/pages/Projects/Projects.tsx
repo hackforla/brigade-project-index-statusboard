@@ -63,7 +63,7 @@ function Projects(): JSX.Element {
           id: name,
           value: queryParameters[name],
         })),
-    []
+    [columns, queryParameters]
   );
 
   const options: TableOptions<Project> = useMemo(
@@ -78,7 +78,7 @@ function Projects(): JSX.Element {
       },
       filterTypes,
     }),
-    [filteredProjects, columns, filterTypes],
+    [filteredProjects, columns, filterTypes, initialFilterValues],
   );
 
   const hooks: PluginHook<Project>[] = useMemo(
