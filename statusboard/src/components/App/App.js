@@ -3,6 +3,7 @@ import AppRouter from '../AppRouter/AppRouter';
 import Header from '../Header/Header';
 import PageContents from '../PageContents/PageContents';
 import { BrigadeDataContextProvider } from '../../contexts/BrigadeDataContext';
+import Footer from '../Footer/Footer';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <AppRouter>
           <Header />
           <PageContents />
+          <Footer />
         </AppRouter>
       </BrigadeDataContextProvider>
     </div>
