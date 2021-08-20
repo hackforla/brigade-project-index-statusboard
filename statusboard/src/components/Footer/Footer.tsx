@@ -13,7 +13,7 @@ export default function Footer(): JSX.Element {
     <footer className={'App-footer'}>
       <p>
         Submit a <a href={submitBugReport}>bug report</a> or{' '}
-        <a href={submitFeatureRequest}>feature requests</a> to our GitHub{' '}
+        <a href={submitFeatureRequest}>feature request</a> to our GitHub{' '}
         <a href={githubRepository}>repository</a>
       </p>
     </footer>
