@@ -1,0 +1,23 @@
+name: Statusboard tests
+on:
+    push:
+        paths:
+            - 'statusboard/**'
+    pull_request:
+        paths:
+            - 'statusboard/**'
+    workflow_dispatch:
+
+jobs:
+    statusboard-test:
+        runs-on: ubuntu-latest
+        defaults:
+          run:
+            working-directory: statusboard
+        steps:
+          - uses: actions/checkout@v2
+          - uses: actions/setup-node@v2
+            with:
+                node-version: '14'
+          - run: yarn --frozen-lockfile
+          - run: yarn run test
