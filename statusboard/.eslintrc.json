@@ -4,6 +4,7 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:jest/recommended",
+    "plugin:jest/style",
     "plugin:jest-dom/recommended",
     "airbnb",
     "airbnb/hooks",
@@ -19,7 +20,6 @@
     "browser": true,
     "commonjs": true,
     "es6": true,
-    "jest": true,
     "node": true
   },
   "rules": {
