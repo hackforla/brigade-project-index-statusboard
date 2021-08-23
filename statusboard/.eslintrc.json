@@ -8,7 +8,7 @@
     "plugin:jest-dom/recommended",
     "airbnb",
     "airbnb/hooks",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "plugins": [
     "react",
