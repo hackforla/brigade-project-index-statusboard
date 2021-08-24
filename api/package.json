@@ -11,9 +11,9 @@
     "express": "^4.17.1",
     "express-sslify": "^1.2.0",
     "helmet": "^3.23.1",
-    "jszip": "^3.4.0",
+    "jszip": "^3.7.0",
     "lodash": "^4.17.21",
-    "redis": "^3.0.2",
+    "redis": "^3.1.1",
     "toml": "^3.0.0"
   },
   "devDependencies": {
@@ -34,8 +34,8 @@
     "lint": "./node_modules/eslint/bin/eslint.js *.js",
     "prettier": "prettier --write ."
   },
-  "enginesStrict": {
-    "node": ">=10"
+  "engines": {
+    "node": ">=10 <13"
   },
   "jest": {
     "transform": {
