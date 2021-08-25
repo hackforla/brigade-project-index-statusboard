@@ -71,6 +71,7 @@ function Projects(): JSX.Element {
       columns,
       data: filteredProjects || [],
       autoResetFilters: false,
+      loading: loading,
       initialState: {
         pageIndex: 0,
         pageSize: filteredProjects?.length || 50,

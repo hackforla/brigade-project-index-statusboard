@@ -25,6 +25,7 @@ export default function ProjectsTable({
     page,
     setPageSize,
     state: { pageSize },
+    loading,
   } = useTable<Project>(options, ...plugins);
 
   return (
@@ -45,7 +46,7 @@ export default function ProjectsTable({
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {!rows.length && (
+            {loading && (
               <tr>
                 <td colSpan={3}>
                   <span>Loading...</span>
