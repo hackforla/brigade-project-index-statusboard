@@ -102,18 +102,26 @@
         "jest": true
       },
       "extends": [
+        "react-app",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "airbnb",
+        "airbnb/hooks",
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
-        "prettier"
+        "plugin:jest/recommended",
+        "plugin:jest/style",
+        "plugin:jest-dom/recommended",
+        "plugin:prettier/recommended"
       ],
       "plugins": [
         "react",
         "react-hooks",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "jest",
+        "jest-dom"
       ],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
