@@ -73,7 +73,7 @@ function Projects(): JSX.Element {
       autoResetFilters: false,
       initialState: {
         pageIndex: 0,
-        pageSize: filteredProjects?.length || 50,
+        pageSize: 50,
         filters: initialFilterValues,
       },
       filterTypes,
