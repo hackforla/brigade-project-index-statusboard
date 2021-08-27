@@ -50,20 +50,23 @@
         "ignoreRegExpLiterals": true
       }
     ],
-    "react/prop-types": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/forbid-prop-types": "off",
-    "no-use-before-define": "off",
-    "jsx-a11y/label-has-associated-control": "off",
-    "no-shadow": "off",
-    "import/prefer-default-export": "off",
-    "arrow-body-style": "off",
-    "react/require-default-props": "off",
-    "import/no-cycle": "off",
-    "react/destructuring-assignment": "off",
-    "import/no-extraneous-dependencies": "off",
+    "no-use-before-define": "warn",
+    "no-shadow": "warn",
+    "arrow-body-style": "warn",
+    "react/require-default-props": "warn",
+    "react/destructuring-assignment": "warn",
+    "import/prefer-default-export": "warn",
+    "import/no-extraneous-dependencies": "warn",
+    "import/no-cycle": "warn",
+    "jest/no-export": "warn",
+    "jsx-a11y/label-has-associated-control": "warn",
+    "prettier/prettier": "warn",
     "react/no-unescaped-entities": "off",
-    "jest/no-export": "off"
+    "react/jsx-one-expression-per-line": "warn",
+    "react/jsx-curly-newline": "warn",
+    "react/prop-types": "warn",
+    "react/jsx-props-no-spreading": "warn",
+    "react/forbid-prop-types": "warn"
   },
   "settings": {
     "import/resolver": {
