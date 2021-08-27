@@ -147,32 +147,63 @@
             "ignoreRegExpLiterals": true
           }
         ],
-        "react/jsx-filename-extension": "off",
+        "no-return-assign": "warn",
         "no-use-before-define": "off",
-        "react/require-default-props": "off",
-        "import/prefer-default-export": "off",
+        "@typescript-eslint/no-use-before-define": ["error"],
         "no-underscore-dangle": "off",
-        "object-shorthand": "off",
-        "no-return-assign": "off",
+        "object-shorthand": "warn",
         "camelcase": "off",
         "@typescript-eslint/naming-convention": [
           "warn",
           {
             "selector": "default",
-            "format": ["camelCase", "PascalCase"],
+            "format": [
+              "camelCase",
+              "PascalCase"
+            ],
             "leadingUnderscore": "allow"
           }
         ],
-        "@typescript-eslint/ban-ts-comment": "off",
-        "@typescript-eslint/no-unnecessary-type-assertion": "off",
-        "@typescript-eslint/no-floating-promises": "off",
-        "@typescript-eslint/no-unsafe-assignment": "off",
-        "react/display-name": "off",
-        "@typescript-eslint/no-unsafe-member-access": "off",
-        "react/prop-types": "off",
-        "react/no-children-prop": "off"
+        "@typescript-eslint/ban-ts-comment": "warn",
+        "@typescript-eslint/no-unnecessary-type-assertion": "warn",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-floating-promises": "warn",
+        "@typescript-eslint/no-unsafe-assignment": "warn",
+        "@typescript-eslint/explicit-module-boundary-types": "warn",
+        "@typescript-eslint/no-non-null-assertion": "warn",
+        "@typescript-eslint/no-unsafe-member-access": "warn",
+        "react/display-name": "warn",
+        "react/prop-types": "warn",
+        "react/no-children-prop": "warn",
+        "react/jsx-props-no-spreading": "warn",
+        "react/forbid-prop-types": "warn",
+        "jsx-a11y/label-has-associated-control": "warn",
+        "no-shadow": "warn",
+        "import/no-cycle": "warn",
+        "import/no-extraneous-dependencies": "warn",
+        "import/extensions": "warn",
+        "import/prefer-default-export": "warn",
+        "jest/no-export": "warn",
+        "prettier/prettier": "warn",
+        "react/destructuring-assignment": "warn",
+        "react/jsx-key": "warn",
+        "react/jsx-curly-newline": "warn",
+        "react/jsx-filename-extension": "warn",
+        "react/require-default-props": "warn",
+        "react/no-unescaped-entities": "warn",
+        "react-hooks/exhaustive-deps": "warn"
       },
       "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [
+              ".js",
+              ".jsx",
+              ".ts",
+              ".tsx"
+            ]
+          }
+        },
         "react": {
           "version": "detect"
         }
