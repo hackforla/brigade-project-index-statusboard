@@ -71,7 +71,6 @@ function Projects(): JSX.Element {
       columns,
       data: filteredProjects || [],
       autoResetFilters: false,
-      loading: loading,
       initialState: {
         pageIndex: 0,
         pageSize: filteredProjects?.length || 50,
@@ -90,7 +89,7 @@ function Projects(): JSX.Element {
   return (
     <>
       <h1>CfA brigade projects</h1>
-      <LoadingIndicator loading={loading}>
+      <LoadingIndicator>
         <>
           <div>
             <Select
