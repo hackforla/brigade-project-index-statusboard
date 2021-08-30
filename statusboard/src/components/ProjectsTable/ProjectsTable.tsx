@@ -54,7 +54,7 @@ export default function ProjectsTable({
                 </td>
               </tr>
             )}
-            {!rows.length && (
+            {!rows.length &&!loading && (
               <tr>
                 <td colSpan={3}>
                   <span>No projects</span>
