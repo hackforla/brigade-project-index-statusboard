@@ -89,7 +89,7 @@ function Projects(): JSX.Element {
   return (
     <>
       <h1>CfA brigade projects</h1>
-      <LoadingIndicator>
+      <LoadingIndicator loading={loading}>
         <>
           <div>
             <Select
