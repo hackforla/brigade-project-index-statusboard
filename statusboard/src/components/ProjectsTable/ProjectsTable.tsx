@@ -1,5 +1,5 @@
 import { Row, useTable, TableOptions, PluginHook } from 'react-table';
-import React, {useContext} from 'react';
+import React, {useContext,useEffect} from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Button from '../Button/Button';
@@ -28,6 +28,17 @@ export default function ProjectsTable({
     state: { pageSize },
   } = useTable<Project>(options, ...plugins);
   const { loading } = useContext(BrigadeDataContext);
+  const updateCounter = options.updateCounter;
+
+  useEffect(()=>{if (rows.length){
+    updateCounter(rows.length)
+  }
+else if (!rows.length){
+  updateCounter(0)
+}
+console.log(rows)
+},[rows]) 
+
   return (
 
     <div className="projects-table">

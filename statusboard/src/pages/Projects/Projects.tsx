@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, ChangeEvent } from 'react';
+import React, { useMemo, useContext, ChangeEvent,useState } from 'react';
 import {
   usePagination,
   useFilters,
@@ -22,6 +22,7 @@ import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
+ const [counter, setCounter] = useState(0)
 
   const {
     topics,
@@ -31,6 +32,7 @@ function Projects(): JSX.Element {
     projectsFilteredByAllParams: filteredProjects,
     queryParameters,
   } = useProjectFilters();
+
 
   // Topics
   const availableTopics = useMemo(() => {
@@ -66,6 +68,10 @@ function Projects(): JSX.Element {
     []
   );
 
+  const updateCounter = (value: React.SetStateAction<number>) =>{
+    setCounter(value);
+  }
+
   const options: TableOptions<Project> = useMemo(
     () => ({
       columns,
@@ -77,6 +83,7 @@ function Projects(): JSX.Element {
         filters: initialFilterValues,
       },
       filterTypes,
+      updateCounter,
     }),
     [filteredProjects, columns, filterTypes],
   );
@@ -85,7 +92,7 @@ function Projects(): JSX.Element {
     () => [useFilters, usePagination],
     [],
   );
-
+  
   return (
     <>
       <h1>CfA brigade projects</h1>
@@ -93,7 +100,7 @@ function Projects(): JSX.Element {
         <>
           <div>
             <Select
-              label={`Showing ${filteredProjects.length} projects with changes on Github in the last `}
+              label={`Showing ${counter} projects with changes on Github in the last `}
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                 setFilters({ timeRange: e.target.value })
