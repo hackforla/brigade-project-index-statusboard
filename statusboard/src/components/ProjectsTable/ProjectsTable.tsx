@@ -1,11 +1,12 @@
 import { Row, useTable, TableOptions, PluginHook } from 'react-table';
-import React from 'react';
+import React, {useContext} from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Button from '../Button/Button';
 import ColumnHeader from './ColumnHeader';
 import './ProjectsTable.scss';
 import { Project } from '../../utils/types';
+import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 
 export type TableAttributes = {
   options: TableOptions<Project>;
@@ -26,8 +27,9 @@ export default function ProjectsTable({
     setPageSize,
     state: { pageSize },
   } = useTable<Project>(options, ...plugins);
-
+  const { loading } = useContext(BrigadeDataContext);
   return (
+
     <div className="projects-table">
       <PerfectScrollbar>
         <table {...getTableProps()}>
@@ -45,14 +47,14 @@ export default function ProjectsTable({
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {!rows.length && (
+            {loading && (
               <tr>
                 <td colSpan={3}>
                   <span>Loading...</span>
                 </td>
               </tr>
             )}
-            {!rows.length && (
+            {!rows.length &&!loading && (
               <tr>
                 <td colSpan={3}>
                   <span>No projects</span>
