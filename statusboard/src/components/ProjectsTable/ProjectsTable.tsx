@@ -33,9 +33,7 @@ export default function ProjectsTable({
   const { loading } = useContext(BrigadeDataContext);
 
   useEffect(() => {
-    if (setRowCounter) {
-      setRowCounter(rows.length);
-    }
+    setRowCounter?.(rows.length);
   }, [rows, setRowCounter]);
 
   return (
