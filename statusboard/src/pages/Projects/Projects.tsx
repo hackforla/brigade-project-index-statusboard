@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, ChangeEvent } from 'react';
+import React, { useMemo, useContext, ChangeEvent, useState } from 'react';
 import {
   usePagination,
   useFilters,
@@ -22,6 +22,7 @@ import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
+  const [rowCounter, setRowCounter] = useState(0);
 
   const {
     topics,
@@ -40,12 +41,12 @@ function Projects(): JSX.Element {
 
   const filterTypes: FilterTypes<Project> = useMemo(
     () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
-    [],
+    []
   );
 
   const columns: Column<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
-    [topics, setFilters],
+    [topics, setFilters]
   );
   const initialFilterValues: Filters<Project> = useMemo(
     () =>
@@ -66,6 +67,7 @@ function Projects(): JSX.Element {
     []
   );
 
+
   const options: TableOptions<Project> = useMemo(
     () => ({
       columns,
@@ -77,13 +79,14 @@ function Projects(): JSX.Element {
         filters: initialFilterValues,
       },
       filterTypes,
+      setRowCounter,
     }),
-    [filteredProjects, columns, filterTypes],
+    [filteredProjects, columns, filterTypes]
   );
 
   const hooks: PluginHook<Project>[] = useMemo(
     () => [useFilters, usePagination],
-    [],
+    []
   );
 
   return (
@@ -93,7 +96,7 @@ function Projects(): JSX.Element {
         <>
           <div>
             <Select
-              label={`Showing ${filteredProjects.length} projects with changes on Github in the last `}
+              label={`Showing ${rowCounter} projects with changes on Github in the last `}
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                 setFilters({ timeRange: e.target.value })
@@ -117,7 +120,11 @@ function Projects(): JSX.Element {
             />
           )}
           <br />
-          <ProjectsTable options={options} plugins={hooks} />
+          <ProjectsTable
+            options={options}
+            plugins={hooks}
+            setRowCounter={setRowCounter}
+          />
         </>
       </LoadingIndicator>
     </>
