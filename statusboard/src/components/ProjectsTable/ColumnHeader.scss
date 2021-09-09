@@ -11,6 +11,11 @@
     margin-left: 1rem;
   }
 
+  input {
+    width:100%;
+    box-sizing: content-box;
+  }
+
   .sort-button {
     height: 100%;
     width: 2rem;
