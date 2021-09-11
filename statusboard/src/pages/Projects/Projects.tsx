@@ -7,6 +7,7 @@ import {
   PluginHook,
   FilterTypes,
   Filters,
+  useSortBy,
 } from 'react-table';
 import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
@@ -67,7 +68,6 @@ function Projects(): JSX.Element {
     []
   );
 
-
   const options: TableOptions<Project> = useMemo(
     () => ({
       columns,
@@ -85,7 +85,7 @@ function Projects(): JSX.Element {
   );
 
   const hooks: PluginHook<Project>[] = useMemo(
-    () => [useFilters, usePagination],
+    () => [useFilters, useSortBy, usePagination],
     []
   );
 

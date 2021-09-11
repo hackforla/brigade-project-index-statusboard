@@ -1,4 +1,9 @@
-import { Row, useTable, TableOptions, PluginHook } from 'react-table';
+import {
+  Row,
+  useTable,
+  TableOptions,
+  PluginHook
+} from 'react-table';
 import React, { useContext, useEffect } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -7,7 +12,6 @@ import ColumnHeader from './ColumnHeader';
 import './ProjectsTable.scss';
 import { Project } from '../../utils/types';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
-
 
 export type TableAttributes = {
   options: TableOptions<Project>;
@@ -37,7 +41,6 @@ export default function ProjectsTable({
   }, [rows, setRowCounter]);
 
   return (
-
     <div className="projects-table">
       <PerfectScrollbar>
         <table {...getTableProps()}>

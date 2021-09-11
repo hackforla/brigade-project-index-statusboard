@@ -51,12 +51,14 @@ export default function getTableColumns(
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',
       Cell: projectGitHubCellLink,
+      defaultCanSort: true,
     },
     {
       Header: 'Description',
       accessor: 'description',
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',
+      defaultCanSort: true,
     },
     {
       Header: 'Topics',
@@ -64,6 +66,7 @@ export default function getTableColumns(
       accessor: (project: Project) => project.topics?.length,
       disableFilters: true,
       Cell: topicsCellButtons(filterTopics, setFilterTopics),
+      defaultCanSort: true,
     },
     {
       Header: 'Brigade',
@@ -71,6 +74,7 @@ export default function getTableColumns(
       id: 'organization',
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',
+      defaultCanSort: true,
     },
   ];
 }
