@@ -8,8 +8,6 @@ import {
   FilterTypes,
   Filters,
   useSortBy,
-  SortByFn,
-  Row,
 } from 'react-table';
 import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
@@ -46,21 +44,6 @@ function Projects(): JSX.Element {
     () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
     []
   );
-
-  // const customStringSort = (
-  //   rowA: Row,
-  //   rowB: Row,
-  //   id: string,
-  //   desc: boolean
-  //   ): number => {
-  //     if (rowA.original[id] > rowB.original[id]) return -1;
-  //     if (rowB.original[id] > rowA.original[id]) return 1;
-  //     return 0;
-  //  };
-
-  // const sortTypes: Record<string, SortByFn<Project> = {
-  //   customStringSort,
-  // };
 
   const columns: Column<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
