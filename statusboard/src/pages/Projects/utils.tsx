@@ -51,7 +51,7 @@ export default function getTableColumns(
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',
       Cell: projectGitHubCellLink,
-      sortType: 'customStringSort',
+      disableSortBy:true,
     },
     {
       Header: 'Description',
@@ -65,6 +65,7 @@ export default function getTableColumns(
       accessor: (project: Project) => project.topics?.length,
       disableFilters: true,
       Cell: topicsCellButtons(filterTopics, setFilterTopics),
+      disableSortBy:true,
     },
     {
       Header: 'Brigade',

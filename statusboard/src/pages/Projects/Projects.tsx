@@ -47,22 +47,20 @@ function Projects(): JSX.Element {
     []
   );
 
-  const customStringSort = (
-    rowA: Row,
-    rowB: Row,
-    id: string,
-    desc: boolean
-    // ): number => {
-    //   if (rowA.original[id] > rowB.original[id]) return -1;
-    //   if (rowB.original[id] > rowA.original[id]) return 1;
-    //   return 0;
-  ): void => {
-    console.log(rowA.original);
-  };
+  // const customStringSort = (
+  //   rowA: Row,
+  //   rowB: Row,
+  //   id: string,
+  //   desc: boolean
+  //   ): number => {
+  //     if (rowA.original[id] > rowB.original[id]) return -1;
+  //     if (rowB.original[id] > rowA.original[id]) return 1;
+  //     return 0;
+  //  };
 
-  const sortTypes: Record<string, SortByFn<Project>> = {
-    customStringSort,
-  };
+  // const sortTypes: Record<string, SortByFn<Project> = {
+  //   customStringSort,
+  // };
 
   const columns: Column<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
@@ -99,7 +97,7 @@ function Projects(): JSX.Element {
       },
       filterTypes,
       setRowCounter,
-      sortTypes,
+      // sortTypes,
     }),
     [filteredProjects, columns, filterTypes]
   );
