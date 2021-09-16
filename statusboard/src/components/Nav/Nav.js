@@ -4,6 +4,7 @@ import './Nav.scss';
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const toggleMenu = () => setIsOpen((oldIsOpen) => !oldIsOpen);
 
   return (
     <nav role="navigation" aria-label="Main">
@@ -22,7 +23,7 @@ function Nav() {
         <button
           className={`hamburger ${isOpen ? 'open' : 'closed'}`}
           type="button"
-          onClick={() => setIsOpen((oldIsOpen) => !oldIsOpen)}
+          onClick={toggleMenu}
         >
           <span className="sr-only">{`${isOpen ? 'Close' : 'Open'} menu`}</span>
           <div className="hamburger-bars">
@@ -33,13 +34,19 @@ function Nav() {
         </button>
         <ul>
           <li>
-            <NavLink to="/projects">Projects</NavLink>
+            <NavLink onClick={toggleMenu} to="/projects">
+              Projects
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/brigades">Projects by Brigade</NavLink>
+            <NavLink to="/brigades" onClick={toggleMenu}>
+              Projects by Brigade
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/about">About</NavLink>
+            <NavLink to="/about" onClick={toggleMenu}>
+              About
+            </NavLink>
           </li>
         </ul>
       </div>

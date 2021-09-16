@@ -1,16 +1,25 @@
-// TODO: DEAL WITH ALL OF THESE
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-nested-ternary */
-import React from 'react';
-import { useTable } from 'react-table';
+import { Row, useTable, TableOptions, PluginHook } from 'react-table';
+import React, { useContext, useEffect } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Button from '../Button/Button';
 import ColumnHeader from './ColumnHeader';
 import './ProjectsTable.scss';
+import { Project } from '../../utils/types';
+import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 
-export default function ProjectsTable({ projects, tableAttributes }) {
+
+export type TableAttributes = {
+  options: TableOptions<Project>;
+  plugins?: PluginHook<Project>[];
+  setRowCounter?: (value: React.SetStateAction<number>) => void;
+};
+
+export default function ProjectsTable({
+  options,
+  plugins = [],
+  setRowCounter,
+}: TableAttributes): JSX.Element {
   const {
     getTableProps,
     getTableBodyProps,
@@ -20,9 +29,15 @@ export default function ProjectsTable({ projects, tableAttributes }) {
     page,
     setPageSize,
     state: { pageSize },
-  } = useTable(...tableAttributes);
+  } = useTable<Project>(options, ...plugins);
+  const { loading } = useContext(BrigadeDataContext);
+
+  useEffect(() => {
+    setRowCounter?.(rows.length);
+  }, [rows, setRowCounter]);
 
   return (
+
     <div className="projects-table">
       <PerfectScrollbar>
         <table {...getTableProps()}>
@@ -33,43 +48,43 @@ export default function ProjectsTable({ projects, tableAttributes }) {
                   <ColumnHeader
                     column={column}
                     key={column.id}
-                    disableSort={!projects || projects.length === 0}
+                    disableSort={!rows.length}
                   />
                 ))}
               </tr>
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {!projects && (
+            {loading && (
               <tr>
-                <td colSpan="3">
+                <td colSpan={3}>
                   <span>Loading...</span>
                 </td>
               </tr>
             )}
-            {projects && projects.length === 0 && (
+            {!rows.length && !loading && (
               <tr>
-                <td colSpan="3">
+                <td colSpan={3}>
                   <span>No projects</span>
                 </td>
               </tr>
             )}
-            {page.map((row) => {
+            {page.map((row: Row<Project>) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                    );
-                  })}
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  ))}
                 </tr>
               );
             })}
           </tbody>
         </table>
-        {projects && pageSize < rows.length && (
+        {pageSize < rows.length && (
           <div className="load-projects-button">
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/* @ts-ignore */}
             <Button
               text="Load next 50 projects"
               onClick={() => setPageSize(pageSize + 50)}

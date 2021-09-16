@@ -104,9 +104,7 @@ export function filterProjectsByTime(
 ) {
   const timeRanges = timeRangeKey ? ACTIVE_THRESHOLDS[timeRangeKey] : undefined;
   if (!timeRanges) return projects;
-  return projects.filter((p) =>
-    p.last_pushed_within ? timeRanges.includes(p.last_pushed_within) : false
-  );
+  return projects.filter((p) => timeRanges.includes(p.last_pushed_within));
 }
 
 export function filterActiveProjects(

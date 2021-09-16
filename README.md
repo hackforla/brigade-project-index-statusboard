@@ -1,3 +1,5 @@
+<a href="https://github.com/codeforamerica/brigade-project-index-statusboard/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22" alt="Contributors"><img src="https://img.shields.io/github/issues/codeforamerica/brigade-project-index-statusboard/good%20first%20issue?label=good%20first%20issue" /></a>
+
 # Brigade Project Index Statusboard and API
 
 This repo contains two things:
@@ -6,9 +8,13 @@ This repo contains two things:
 
 The statusboard is running in production at https://projects.brigade.network and the API is accessible at https://statusboard.brigade.cloud.
 
-## Running the statusboard locally
+The [Project Index Working Group](https://brigade.cloud/) has bi-weekly video meetings and can be found in the Code for America [#brigade-project-index Slack channel](https://cfa.slack.com/archives/CLMA6BAVB).
 
-Once this is in place, you can install and run the app via yarn:
+## Running the Statusboard locally
+
+The Statusboard is a Create-React-App, and supports their built-in commands, including `yarn test` and `yarn build`.
+
+You can install the app and run it with,
 
 ```
 cd statusboard
@@ -16,28 +22,44 @@ yarn install
 yarn start
 ```
 
-This is a Create-React-App, so other commands come out of the box including `yarn test` and `yarn build`.
+By default, the front-end will look for a **local copy of the backend API** for the React app to load data from, but you
+don't have to run the API locally. You can instead tell your local React app to use the online production API with an
+environment variable like this:
+
+```
+REACT_APP_API_URL=https://statusboard.brigade.cloud
+```
+
+or by using
+
+```
+yarn start-remote-api
+```
+
+instead of `yarn start`.
 
 ## Running the API locally
 
-The frontend will by default look for a local copy of the backend API for the React app to load data from.
+If you choose to run the API locally (the default behaviour),
+you will need to use an older version of Node;
+install [NVM](https://github.com/nvm-sh/nvm) and run:
 
 ```
 cd api
+nvm install 12
+nvm use 12
 yarn install
 yarn start
 ```
 
-Currently, the server fetches a new copy of the project index from Github every time (very expensive). If redis is running locally on port 6379, the API will use this to cache the results. We recommend installing it via Docker:
+Currently, the server fetches a new copy
+of the project index from Github every time (very expensive).
+If redis is running locally on port 6379,
+the API will use this to cache the results.
+We recommend installing and running Redis via Docker:
 
 ```
 docker run --publish 6379:6379 redis:alpine
-```
-
-You don't have to run the API locally -- you can instead tell your local React app to use the production API using an environment variable like this:
-
-```
-REACT_APP_API_URL=https://statusboard.brigade.cloud yarn start
 ```
 
 ## Other commands

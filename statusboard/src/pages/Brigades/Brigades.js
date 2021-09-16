@@ -8,9 +8,8 @@ import './Brigades.scss';
 
 function Brigades() {
   const { allBrigadeData, allProjects } = useContext(BrigadeDataContext);
-  const [filteredBrigadeData, setFilteredBrigadeData] = useState(
-    allBrigadeData
-  );
+  const [filteredBrigadeData, setFilteredBrigadeData] =
+    useState(allBrigadeData);
   const [filterOpts, setFilterOpts] = useState({});
   const { selectedBrigade } = filterOpts; // also has bounds
   const [projects, setProjects] = useState(allProjects);
@@ -30,18 +29,8 @@ function Brigades() {
         accessor: 'brigade.name',
       },
     ],
-    []
+    [],
   );
-
-  const tableAttributes = [
-    {
-      columns,
-      data: projects || [],
-      initialState: { pageIndex: 0, pageSize: 50 },
-    },
-    useSortBy,
-    usePagination,
-  ];
 
   useEffect(() => {
     const newlyFilteredBrigadeData = filterBrigades(allBrigadeData, filterOpts);
@@ -59,7 +48,7 @@ function Brigades() {
       brigadesShowingString = `${brigadesShowingString} ${selectedBrigade.name}`;
     } else {
       brigadesShowingString = `${brigadesShowingString} ${firstFiveBrigades.join(
-        ', '
+        ', ',
       )}`;
     }
     if (filteredBrigadeData.length > 5) {
@@ -69,6 +58,13 @@ function Brigades() {
     }
   }
 
+  const options = {
+    columns,
+    data: projects || [],
+    initialState: { pageIndex: 0, pageSize: 50 },
+  };
+  const plugins = [useSortBy, usePagination];
+
   return (
     <>
       {/* List projects by brigades that are shown on accompanying map */}
@@ -76,13 +72,12 @@ function Brigades() {
       <h1>Projects by brigade or geographic area</h1>
       <p>{brigadesShowingString}</p>
       <div>
-        Zoom in on the map to filter by projects in a geographic area or&nbsp;
+        Zoom in on the map to filter by projects in a geographic area or
         <Select
-          label="select a brigade"
+          label=" select a brigade "
           id="select-brigade"
           emptyOptionText="All brigades"
-          className="display-inline-block"
-          inline
+          className="display-inline"
           options={(allBrigadeData || [])
             .filter((b) => !!b.latitude && !!b.longitude)
             .map((b) => b.name)}
@@ -107,11 +102,7 @@ function Brigades() {
           filterOpts={filterOpts}
           setFilterOpts={setFilterOpts}
         />
-        <ProjectsTable
-          projects={projects}
-          columns={columns}
-          tableAttributes={tableAttributes}
-        />
+        <ProjectsTable options={options} plugins={plugins} />
       </div>
     </>
   );
