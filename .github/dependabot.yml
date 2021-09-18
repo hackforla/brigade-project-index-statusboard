@@ -5,12 +5,12 @@ updates:
     schedule:
       interval: "weekly"
 
-  - package-ecosystem: "yarn"
+  - package-ecosystem: "npm"
     directory: "/api"
     schedule:
       interval: "weekly"
 
-  - package-ecosystem: "yarn"
+  - package-ecosystem: "npm"
     directory: "/statusboard"
     schedule:
       interval: "weekly"
