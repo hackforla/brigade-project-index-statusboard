@@ -1,5 +1,8 @@
 {
-  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "extends": [
+    "airbnb-base",
+    "plugin:prettier/recommended"
+  ],
   "env": {
     "commonjs": true,
     "es6": true,
@@ -8,6 +11,8 @@
   },
   "rules": {
     "no-console": "off",
+    "import/prefer-default-export": "warn",
+    "no-underscore-dangle": "off",
     "max-len": [
       "warn",
       {

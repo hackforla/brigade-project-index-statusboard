@@ -5,7 +5,7 @@ import * as enforce from 'express-sslify';
 import express from 'express';
 import helmet from 'helmet';
 
-import { createRoutes } from './src/routes';
+import createRoutes from './src/routes';
 
 const port = process.env.PORT || 8080;
 
@@ -45,7 +45,6 @@ if (process.env.REDIRECT_TO_DOMAIN != undefined) {
     }
   });
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
-} else {
 }
 
 app.use(express.static(`${__dirname}/dist`));
