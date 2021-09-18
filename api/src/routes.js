@@ -1,10 +1,9 @@
 import { Router } from 'express';
 import apicache from 'apicache';
 
-import { getProjectIndex } from './api';
-import { getTaxonomy } from './api';
+import { getProjectIndex, getTaxonomy } from './api';
 
-export function createRoutes(app) {
+export default function createRoutes(app) {
   const router = Router();
   // maybe a last_update call?
   router.get('/tags.json', app.cache('15 minutes'), (_, res) => {
@@ -42,6 +41,6 @@ export function createRoutes(app) {
     apicache.clear('/api/taxonomy.json');
     res.redirect('/api/taxonomy.json');
   });
-  
+
   return router;
 }
