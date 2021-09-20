@@ -26,7 +26,7 @@ function Brigades() {
       },
       {
         Header: 'Brigade',
-        accessor: 'brigade.name',
+		accessor: (project) => <a target="new" href={project.brigade.website}>{project.brigade.name}</a>,
       },
     ],
     [],
