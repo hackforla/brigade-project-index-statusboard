@@ -16,7 +16,7 @@ export type Filter = {
   topics?: string[];
   timeRange?: string;
   brigades?: string[];
-  nonCfA?: boolean;
+  nonCfA?: string;
 };
 
 export type ProjectFilterReturn = Filter & {
@@ -45,7 +45,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     topics: string[];
     timeRange: ActiveThresholdsKeys;
     brigades: string[];
-    nonCfA: boolean;
+    nonCfA: string;
   };
 
   let topics = _topics;
@@ -69,8 +69,8 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   );
 
   const projectsFilteredByAllParams = useMemo<Project[]>(
-    () => filterActiveProjects({ topics, timeRange, brigades }, allProjects),
-    [topics, timeRange, brigades, allProjects],
+    () => filterActiveProjects({ topics, timeRange, brigades, nonCfA}, allProjects),
+    [topics, timeRange, brigades, nonCfA, allProjects],
   );
 
   const projectsFilteredByCfA = useMemo<Project[]>(

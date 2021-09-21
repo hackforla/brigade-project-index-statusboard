@@ -95,7 +95,7 @@ function Projects(): JSX.Element {
       <h1>CfA brigade projects</h1>
       <LoadingIndicator loading={loading}>
         <>
-          <div style={{display: 'inline-block'}}>
+          <div style={{display: 'flex', gap:30}}>
             <Select
               label={`Showing ${rowCounter} projects with changes on Github in the last `}
               id="active_time_range"
@@ -109,11 +109,8 @@ function Projects(): JSX.Element {
               label="Display non-brigade projects?"
               id="non_brigade_projects"
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setFilters({ nonCfA: e.target.checked })
+                setFilters({ nonCfA: String(e.target.checked) })
               }
-              
-              // onClick={this.handleChange}
-              // defaultChecked={this.prop.complete}
               className="gio"
               inline="yes"
             />
