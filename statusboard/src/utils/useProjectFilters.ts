@@ -40,12 +40,12 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     topics: _topics,
     timeRange,
     brigades,
-	  nonCfA
+    nonCfA
   } = (queryParameters || {}) as {
     topics: string[];
     timeRange: ActiveThresholdsKeys;
     brigades: string[];
-	  nonCfA: boolean;
+    nonCfA: boolean;
   };
 
   let topics = _topics;
@@ -102,7 +102,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     setFilters,
     queryParameters,
     projectsFilteredByTime,
-	projectsFilteredByCfA,
+    projectsFilteredByCfA,
     projectsFilteredByTopics,
     projectsFilteredByBrigades,
     projectsFilteredByAllParams,
