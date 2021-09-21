@@ -68,6 +68,14 @@ export default function getTableColumns(
       disableSortBy:true,
     },
     {
+       Header: 'Last modified within...',
+       id: 'last_pushed_within',
+       accessor: (project: Project) => project.last_pushed_within,
+     disableFilters: true,
+     sortType: 'customStringSort',
+   },
+
+    {
       Header: 'Brigade',
       accessor: (project: Project) => project.brigade?.name,
       id: 'organization',
