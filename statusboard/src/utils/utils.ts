@@ -107,6 +107,27 @@ export function filterProjectsByTime(
   return projects.filter((p) => timeRanges.includes(p.last_pushed_within));
 }
 
+export function filterProjectsByCfA(
+  projects: Project[],
+  nonCfA?: boolean
+) {
+  console.log("filterbyCfA");
+  console.log(nonCfA);
+  console.log(typeof(nonCfA));
+
+  if (nonCfA) {
+    console.log("returning all projects");
+    console.log(projects.length);
+    return projects;
+  }
+  console.log("filter only cfa projects");
+  // return projects.filter(project => project.brigade?.type?.includes("brigade"))
+  return projects.filter((p: Project) =>
+    p?.brigade?.type ? p.brigade.type.includes("brigade") || p.brigade.type.includes("Code for America") : false
+  );
+
+}
+
 export function filterActiveProjects(
   options: {
     timeRange?: ActiveThresholdsKeys;

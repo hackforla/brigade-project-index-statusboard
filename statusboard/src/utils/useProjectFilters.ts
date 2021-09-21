@@ -9,12 +9,14 @@ import {
   filterProjectsByBrigades,
   filterProjectsByTime,
   filterProjectsByTopics,
+  filterProjectsByCfA,
 } from './utils';
 
 export type Filter = {
   topics?: string[];
   timeRange?: string;
   brigades?: string[];
+  nonCfA?: boolean;
 };
 
 export type ProjectFilterReturn = Filter & {
@@ -22,6 +24,7 @@ export type ProjectFilterReturn = Filter & {
   projectsFilteredByTopics: Project[];
   projectsFilteredByBrigades: Project[];
   projectsFilteredByAllParams: Project[];
+  projectsFilteredByCfA: Project[];
   setFilters: (filter: Filter, preserveFilters?: boolean) => void;
   queryParameters: ParsedQuery;
 };
@@ -37,10 +40,12 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     topics: _topics,
     timeRange,
     brigades,
+	  nonCfA
   } = (queryParameters || {}) as {
     topics: string[];
     timeRange: ActiveThresholdsKeys;
     brigades: string[];
+	  nonCfA: boolean;
   };
 
   let topics = _topics;
@@ -68,11 +73,16 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     [topics, timeRange, brigades, allProjects],
   );
 
+  const projectsFilteredByCfA = useMemo<Project[]>(
+    () => filterProjectsByCfA(allProjects || [], nonCfA),
+    [nonCfA, allProjects],
+  );
+  
   const history = useHistory();
   const setFilters = (newFilter: Filter, preserveFilters = true) => {
     let _newFilter = newFilter;
     if (preserveFilters) {
-      _newFilter = { topics, timeRange, brigades, ...newFilter };
+      _newFilter = { topics, timeRange, brigades, nonCfA, ...newFilter };
     }
     history.replace(`?${stringify(_newFilter, { arrayFormat: 'comma' })}`);
   };
@@ -92,6 +102,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     setFilters,
     queryParameters,
     projectsFilteredByTime,
+	projectsFilteredByCfA,
     projectsFilteredByTopics,
     projectsFilteredByBrigades,
     projectsFilteredByAllParams,

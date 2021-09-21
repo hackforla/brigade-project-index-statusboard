@@ -12,6 +12,7 @@ import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
 import { ACTIVE_THRESHOLDS, getTopicsFromProjects } from '../../utils/utils';
 import Select from '../../components/Select/Select';
+import Checkbox from '../../components/Checkbox/Checkbox';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
@@ -94,7 +95,7 @@ function Projects(): JSX.Element {
       <h1>CfA brigade projects</h1>
       <LoadingIndicator loading={loading}>
         <>
-          <div>
+          <div style={{display: 'inline-block'}}>
             <Select
               label={`Showing ${rowCounter} projects with changes on Github in the last `}
               id="active_time_range"
@@ -103,6 +104,18 @@ function Projects(): JSX.Element {
               }
               selected={timeRange}
               options={Object.keys(ACTIVE_THRESHOLDS)}
+            />
+            <Checkbox 
+              label="Display non-brigade projects?"
+              id="non_brigade_projects"
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setFilters({ nonCfA: e.target.checked })
+              }
+              
+              // onClick={this.handleChange}
+              // defaultChecked={this.prop.complete}
+              className="gio"
+              inline="yes"
             />
           </div>
           <br />
