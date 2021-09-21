@@ -2,7 +2,8 @@ import {
   Row,
   useTable,
   TableOptions,
-  PluginHook
+  PluginHook,
+  useSortBy
 } from 'react-table';
 import React, { useContext, useEffect } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -21,7 +22,7 @@ export type TableAttributes = {
 
 export default function ProjectsTable({
   options,
-  plugins = [],
+  plugins = [useSortBy],
   setRowCounter,
 }: TableAttributes): JSX.Element {
   const {

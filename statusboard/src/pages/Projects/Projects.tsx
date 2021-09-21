@@ -8,6 +8,9 @@ import {
   FilterTypes,
   Filters,
   useSortBy,
+  SortByFn,
+  Row,
+  IdType,
 } from 'react-table';
 import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
@@ -20,6 +23,7 @@ import { useProjectFilters } from '../../utils/useProjectFilters';
 import { Project } from '../../utils/types';
 import getTableColumns from './utils';
 import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
+
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
@@ -44,6 +48,23 @@ function Projects(): JSX.Element {
     () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
     []
   );
+
+  const customStringSort: SortByFn<Project> = (
+    rowA: Row<Project>,
+    rowB: Row<Project>,
+    id: IdType<Project>,
+    desc?: boolean
+): number => {
+  if (rowA.values[id] > rowB.values[id]) return -1;
+  if (rowB.values[id] > rowA.values[id]) return 1;
+  return 0;
+  
+
+};
+
+const sortTypes: Record<string, SortByFn<Project>> = {
+  customStringSort: customStringSort,
+};
 
   const columns: Column<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
@@ -79,6 +100,7 @@ function Projects(): JSX.Element {
         filters: initialFilterValues,
       },
       filterTypes,
+      sortTypes,
       setRowCounter,
       // sortTypes,
     }),
