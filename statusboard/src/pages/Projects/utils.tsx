@@ -70,7 +70,7 @@ export default function getTableColumns(
     },
     {
       Header: 'Brigade',
-      accessor: (project: Project) => project.brigade?.name,
+      accessor: (project: Project): string => project.brigade?.name ?? '',
       id: 'organization',
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',

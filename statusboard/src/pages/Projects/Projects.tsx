@@ -1,4 +1,10 @@
-import React, { useMemo, useContext, ChangeEvent, useState } from 'react';
+import React, {
+  useMemo,
+  useContext,
+  ChangeEvent,
+  useState,
+  useCallback,
+} from 'react';
 import {
   usePagination,
   useFilters,
@@ -24,7 +30,6 @@ import { Project } from '../../utils/types';
 import getTableColumns from './utils';
 import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
 
-
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
@@ -38,6 +43,34 @@ function Projects(): JSX.Element {
     queryParameters,
   } = useProjectFilters();
 
+  const customStringSort: SortByFn<Project> = useCallback(
+    (
+      rowA: Row<Project>,
+      rowB: Row<Project>,
+      id: IdType<Project>,
+      desc?: boolean
+    ): number => {
+      const modifier: number = desc ? 1 : -1;
+      const a = rowA.values[id];
+      const b = rowB.values[id];
+      if (typeof a === 'string' && typeof b === 'string') {
+        // console.log(rowA);
+        // console.log(rowB);
+        // console.log(rowA.cells)
+        const answer = a
+          .trim()
+          .localeCompare(b.trim(), 'en', { sensitivity: 'base' });
+        // console.log(`${a} ${b}`);
+        // console.log(`${String(modifier)} ${answer}`);
+        return modifier * (answer > 0 ? 1 : -1);
+      }
+      console.log("NOT A STRING")
+      if (typeof a === 'string') return 1;
+      return -1;
+    },
+    []
+  );
+
   // Topics
   const availableTopics = useMemo(() => {
     if (!projectsFilteredByTime) return allTopics;
@@ -49,22 +82,12 @@ function Projects(): JSX.Element {
     []
   );
 
-  const customStringSort: SortByFn<Project> = (
-    rowA: Row<Project>,
-    rowB: Row<Project>,
-    id: IdType<Project>,
-    desc?: boolean
-): number => {
-  if (rowA.values[id] > rowB.values[id]) return -1;
-  if (rowB.values[id] > rowA.values[id]) return 1;
-  return 0;
-  
-
-};
-
-const sortTypes: Record<string, SortByFn<Project>> = {
-  customStringSort: customStringSort,
-};
+  const sortTypes = useMemo(
+    () => ({
+      customStringSort,
+    }),
+    [customStringSort]
+  );
 
   const columns: Column<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
@@ -102,9 +125,8 @@ const sortTypes: Record<string, SortByFn<Project>> = {
       filterTypes,
       sortTypes,
       setRowCounter,
-      // sortTypes,
     }),
-    [filteredProjects, columns, filterTypes]
+    [filteredProjects, columns, sortTypes, filterTypes, initialFilterValues]
   );
 
   const hooks: PluginHook<Project>[] = useMemo(
