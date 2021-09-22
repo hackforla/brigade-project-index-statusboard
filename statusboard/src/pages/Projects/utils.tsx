@@ -72,7 +72,6 @@ export default function getTableColumns(
        id: 'last_pushed_within',
        accessor: (project: Project) => project.last_pushed_within,
      disableFilters: true,
-     sortType: 'customStringSort',
    },
 
     {
