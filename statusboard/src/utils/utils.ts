@@ -133,10 +133,6 @@ export function filterActiveProjects(
   projects?: Project[]
 ) {
   if (!projects) return [];
-
-  const p = projects.filter((p: Project) =>
-    p.brigade ? p.brigade.name === "Code for America":false);
-  console.log(p);
   // Set destructuring and allow defaults to be overwritten
   const { timeRange, topics, brigades, nonCfA } = options || {};
   let newProjects: ProjectWithTopicsMatched[] = filterProjectsByBrigades(
@@ -146,8 +142,6 @@ export function filterActiveProjects(
   newProjects = filterProjectsByTopics(newProjects, topics);
   newProjects = filterProjectsByTime(newProjects, timeRange);
   newProjects = filterProjectsByCfA(newProjects, nonCfA);
-  console.log("FilterActiveProjects");
-  console.log(newProjects.length);
   return newProjects;
 }
 
