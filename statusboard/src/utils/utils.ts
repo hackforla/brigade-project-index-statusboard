@@ -118,7 +118,7 @@ export function filterProjectsByCfA(
   }
   console.log("filter only cfa projects");
   return projects.filter((p: Project) =>
-    p?.brigade?.type ? p.brigade.type.includes("brigade") || p.brigade.type.includes("Code for America") : false
+    p?.brigade?.type ? p.brigade.type.includes("Brigade") || p.brigade.type.includes("Code for America") : false
   );
 
 }
@@ -133,6 +133,10 @@ export function filterActiveProjects(
   projects?: Project[]
 ) {
   if (!projects) return [];
+
+  const p = projects.filter((p: Project) =>
+    p.brigade ? p.brigade.name === "Code for America":false);
+  console.log(p);
   // Set destructuring and allow defaults to be overwritten
   const { timeRange, topics, brigades, nonCfA } = options || {};
   let newProjects: ProjectWithTopicsMatched[] = filterProjectsByBrigades(

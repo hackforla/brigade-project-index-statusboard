@@ -95,7 +95,7 @@ function Projects(): JSX.Element {
       <h1>CfA brigade projects</h1>
       <LoadingIndicator loading={loading}>
         <>
-          <div style={{display: 'flex', gap:30}}>
+          <div style={{display: 'flex', gap:30, alignItems:'center'}}>
             <Select
               label={`Showing ${rowCounter} projects with changes on Github in the last `}
               id="active_time_range"
@@ -111,8 +111,9 @@ function Projects(): JSX.Element {
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setFilters({ nonCfA: String(e.target.checked) })
               }
+              // I don't know why it's asking me these 2 parameters below
               className="gio"
-              inline="yes"
+              inline="inline"
             />
           </div>
           <br />
