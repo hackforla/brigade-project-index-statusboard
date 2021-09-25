@@ -12,8 +12,6 @@ export function createRoutes(app) {
   });
 
   router.get(['/', '/data.json'], app.cache('90 minutes'), (_, res) => {
-    //getProjectIndex(['Brigade', 'Code for America'])
-	// can't we make this a query parameter?
 	getProjectIndex()
       .then((result) => {
         res.json(result);
