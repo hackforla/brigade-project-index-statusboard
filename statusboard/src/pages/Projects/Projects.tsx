@@ -111,9 +111,6 @@ function Projects(): JSX.Element {
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setFilters({ nonCfA: String(e.target.checked) })
               }
-              // I don't know why it's asking me these 2 parameters below
-              className="gio"
-              inline="inline"
             />
           </div>
           <br />
