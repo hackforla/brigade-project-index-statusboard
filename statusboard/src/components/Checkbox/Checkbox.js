@@ -6,8 +6,8 @@ export default function Checkbox({
   label,
   id,
   onChange,
-  className,
-  inline,
+  className = '',
+  inline = true,
 }) {
   return (
     <div
