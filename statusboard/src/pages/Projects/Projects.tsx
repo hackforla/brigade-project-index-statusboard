@@ -95,7 +95,7 @@ function Projects(): JSX.Element {
       <h1>CfA brigade projects</h1>
       <LoadingIndicator loading={loading}>
         <>
-          <div style={{display: 'flex', gap:30, alignItems:'center'}}>
+          <div>
             <Select
               label={`Showing ${rowCounter} projects with changes on Github in the last `}
               id="active_time_range"
