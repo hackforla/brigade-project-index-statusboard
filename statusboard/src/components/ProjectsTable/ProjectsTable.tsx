@@ -38,12 +38,13 @@ export default function ProjectsTable({
     setRowCounter?.(rows.length);
   }, [rows, setRowCounter]);
 
+
   return (
 
     <div className="projects-table">
       <PerfectScrollbar>
         <Table {...getTableProps()}>
-          <thead>
+          <thead className="desktop">
             {headerGroups.map((headerGroup) => (
               <Tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
@@ -56,6 +57,7 @@ export default function ProjectsTable({
               </Tr>
             ))}
           </thead>
+    
           <Tbody {...getTableBodyProps()}>
             {loading && (
               <Tr>

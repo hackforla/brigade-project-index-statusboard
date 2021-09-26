@@ -7,7 +7,26 @@
   display: none;
 }
 
-@media screen and (max-width: 40em) {
+.mobile {
+  display:none;
+}
+
+.mobileheader {
+  display:none;
+}
+
+@media screen and (max-width: 775px) {
+  .desktop {
+    display:none;
+  }
+  .mobile {
+    display:block;
+  }
+
+  .mobileheader {
+    display:block;
+  }
+
   /*
     Force table elements to not behave like tables anymore
     Hide table headers (but not display: none;, for accessibility)

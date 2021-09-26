@@ -112,15 +112,26 @@ export function filterProjectsByCfA(
   nonCfA?: string
 ) {
   if (nonCfA === 'true') {
-    console.log("returning all projects");
+    
     console.log(projects.length);
     return projects;
   }
-  console.log("filter only cfa projects");
+  
   return projects.filter((p: Project) =>
     p?.brigade?.type ? p.brigade.type.includes("Brigade") || p.brigade.type.includes("Code for America") : false
   );
+}
 
+export function filterProjectsByText(
+  projects: Project[],
+  text?: string
+){
+if (!text){
+return projects;
+}
+return projects.filter((p:Project)=>
+p?.description?.includes(text) || p?.brigade?.type?.includes(text) || p?.name?.includes(text)
+)
 }
 
 export function filterActiveProjects(
@@ -129,12 +140,13 @@ export function filterActiveProjects(
     topics?: string[];
     brigades?: string[];
     nonCfA: string;
+    searchTerm?: string;
   },
   projects?: Project[]
 ) {
   if (!projects) return [];
   // Set destructuring and allow defaults to be overwritten
-  const { timeRange, topics, brigades, nonCfA } = options || {};
+  const { timeRange, topics, brigades, nonCfA, searchTerm } = options || {};
   let newProjects: ProjectWithTopicsMatched[] = filterProjectsByBrigades(
     projects,
     brigades
@@ -142,6 +154,7 @@ export function filterActiveProjects(
   newProjects = filterProjectsByTopics(newProjects, topics);
   newProjects = filterProjectsByTime(newProjects, timeRange);
   newProjects = filterProjectsByCfA(newProjects, nonCfA);
+  newProjects = filterProjectsByText(newProjects,searchTerm);
   return newProjects;
 }
 
