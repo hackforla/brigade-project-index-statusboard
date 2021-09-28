@@ -78,7 +78,7 @@ export default function ProjectsTable({
               return (
                 <Tr {...row.getRowProps()}>
                   {row.cells.map((cell) => (
-                    <Td {...cell.getCellProps()} style={{paddingLeft:'0.5rem !important'}}>{cell.render('Cell')}</Td>
+                    <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>
                   ))}
                 </Tr>
               );
