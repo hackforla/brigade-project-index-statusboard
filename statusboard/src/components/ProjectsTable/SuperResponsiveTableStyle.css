@@ -41,12 +41,12 @@
     display: block;
   }
 
-  .responsiveTable thead tr {
+  /* .responsiveTable thead tr {
     position: absolute;
     top: -9999px;
     left: -9999px;
     border-bottom: 2px solid #333;
-  }
+  } */
 
   .responsiveTable tbody tr {
     border: 1px solid #000;

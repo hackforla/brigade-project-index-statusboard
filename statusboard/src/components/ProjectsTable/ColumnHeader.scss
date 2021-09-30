@@ -47,3 +47,18 @@
     }
   }
 }
+
+@media screen and (max-width:800px) {
+  .column-header__contents {
+      display: flex;
+      padding-right: 2rem;
+      align-items: stretch;
+      width:95%;
+      justify-content: space-between;
+  
+    input {
+      width:95%;
+      box-sizing: content-box;
+    }
+  }
+}

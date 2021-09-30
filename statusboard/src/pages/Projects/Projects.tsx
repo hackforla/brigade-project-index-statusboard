@@ -131,15 +131,6 @@ function Projects(): JSX.Element {
             />
           )}
           <br />
-  
-          <div className="text-input form-control-container mobileheader">
-            <label htmlFor="search">Search projects</label>
-            <input type="text" className="form-control" value={searchTerm} 
-            name="searchTerm" onChange={(e: ChangeEvent<HTMLInputElement>) =>{
-              setFilters({ searchTerm: String(e.target.value) });
-              setSearchTerm(e.target.value);}
-              }/>
-            </div>
           
           <ProjectsTable
             options={options}
