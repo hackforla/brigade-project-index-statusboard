@@ -10,7 +10,6 @@ import {
   filterProjectsByTime,
   filterProjectsByTopics,
   filterProjectsByCfA,
-  filterProjectsByText,
 } from './utils';
 
 export type Filter = {
@@ -18,7 +17,6 @@ export type Filter = {
   timeRange?: string;
   brigades?: string[];
   nonCfA?: string;
-  searchTerm?: string;
 };
 
 export type ProjectFilterReturn = Filter & {
@@ -27,7 +25,6 @@ export type ProjectFilterReturn = Filter & {
   projectsFilteredByBrigades: Project[];
   projectsFilteredByAllParams: Project[];
   projectsFilteredByCfA: Project[];
-  projectsFilteredByText: Project[];
   setFilters: (filter: Filter, preserveFilters?: boolean) => void;
   queryParameters: ParsedQuery;
 };
@@ -45,13 +42,11 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     timeRange,
     brigades,
     nonCfA,
-    searchTerm,
   } = (queryParameters || {}) as {
     topics: string[];
     timeRange: ActiveThresholdsKeys;
     brigades: string[];
     nonCfA: string;
-    searchTerm: string;
   };
 
   let topics = _topics;
@@ -75,8 +70,8 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   );
 
   const projectsFilteredByAllParams = useMemo<Project[]>(
-    () => filterActiveProjects({ topics, timeRange, brigades, nonCfA, searchTerm}, allProjects),
-    [topics, timeRange, brigades, nonCfA, searchTerm, allProjects],
+    () => filterActiveProjects({ topics, timeRange, brigades, nonCfA}, allProjects),
+    [topics, timeRange, brigades, nonCfA, allProjects],
   );
 
   const projectsFilteredByCfA = useMemo<Project[]>(
@@ -84,10 +79,6 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     [nonCfA, allProjects],
   );
   
-  const projectsFilteredByText = useMemo<Project[]>(
-    () => filterProjectsByText(allProjects || [], searchTerm),
-    [searchTerm, allProjects],
-  );
 
   const history = useHistory();
   const setFilters = (newFilter: Filter, preserveFilters = true) => {
@@ -116,7 +107,6 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     projectsFilteredByCfA,
     projectsFilteredByTopics,
     projectsFilteredByBrigades,
-    projectsFilteredByText,
     projectsFilteredByAllParams,
   };
 };

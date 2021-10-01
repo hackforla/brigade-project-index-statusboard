@@ -53,7 +53,7 @@
       display: flex;
       padding-right: 2rem;
       align-items: stretch;
-      width:95%;
+      width:calc(100% - 2rem);
       justify-content: space-between;
   
     input {

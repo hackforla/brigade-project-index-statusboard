@@ -122,31 +122,18 @@ export function filterProjectsByCfA(
   );
 }
 
-export function filterProjectsByText(
-  projects: Project[],
-  text?: string
-){
-if (!text){
-return projects;
-}
-return projects.filter((p:Project)=>
-p?.description?.includes(text) || p?.brigade?.type?.includes(text) || p?.name?.includes(text)
-)
-}
-
 export function filterActiveProjects(
   options: {
     timeRange?: ActiveThresholdsKeys;
     topics?: string[];
     brigades?: string[];
     nonCfA: string;
-    searchTerm?: string;
   },
   projects?: Project[]
 ) {
   if (!projects) return [];
   // Set destructuring and allow defaults to be overwritten
-  const { timeRange, topics, brigades, nonCfA, searchTerm } = options || {};
+  const { timeRange, topics, brigades, nonCfA } = options || {};
   let newProjects: ProjectWithTopicsMatched[] = filterProjectsByBrigades(
     projects,
     brigades
@@ -154,7 +141,6 @@ export function filterActiveProjects(
   newProjects = filterProjectsByTopics(newProjects, topics);
   newProjects = filterProjectsByTime(newProjects, timeRange);
   newProjects = filterProjectsByCfA(newProjects, nonCfA);
-  newProjects = filterProjectsByText(newProjects,searchTerm);
   return newProjects;
 }
 

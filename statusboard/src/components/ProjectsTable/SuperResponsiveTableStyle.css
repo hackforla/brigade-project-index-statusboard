@@ -1,4 +1,9 @@
 /* inspired by: https://css-tricks.com/responsive-data-tables/ */
+/* In this implementation, we want our columns at the top, so we 
+remove the style that would otherwise force the regular thead to 
+move offscreen on mobile. See documentation for more details 
+https://react-super-responsive-table.netlify.app/*/
+
 .responsiveTable {
   width: 100%;
 }
@@ -8,23 +13,23 @@
 }
 
 .mobile {
-  display:none;
+  display: none;
 }
 
 .mobileheader {
-  display:none;
+  display: none;
 }
 
 @media screen and (max-width: 800px) {
   .desktop {
-    display:none;
+    display: none;
   }
   .mobile {
-    display:block;
+    display: block;
   }
 
   .mobileheader {
-    display:block;
+    display: block;
   }
 
   /*
@@ -41,16 +46,9 @@
     display: block;
   }
 
-  /* .responsiveTable thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-    border-bottom: 2px solid #333;
-  } */
-
   .responsiveTable tbody tr {
     border: 1px solid #000;
-    padding: .25em;
+    padding: 0.25em;
   }
 
   .responsiveTable td.pivoted {
@@ -64,9 +62,8 @@
   }
 
   .responsiveTable td.pivoted:nth-child(1) {
-    font-weight:bold;
+    font-weight: bold;
     font-size: large;
-
   }
 
   .responsiveTable td .tdBefore {

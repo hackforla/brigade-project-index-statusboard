@@ -60,7 +60,7 @@
 
 @media screen and (max-width:800px) {
   th:nth-of-type(2){
-    width:calc(100% - 0.5em);
+    width:calc(100% - 0.5em) !important;
   }
   .hide3 {
     th:nth-of-type(3){

@@ -25,14 +25,12 @@ import './Projects.scss'
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
-  const [searchTerm,setSearchTerm] = useState("");
 
   const {
     topics,
     timeRange,
     setFilters,
     projectsFilteredByTime,
-    projectsFilteredByText,
     projectsFilteredByAllParams: filteredProjects,
     queryParameters,
   } = useProjectFilters();
