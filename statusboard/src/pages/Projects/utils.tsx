@@ -12,6 +12,30 @@ function projectGitHubCellLink(cell: Cell<Project>): JSX.Element {
   return <a href={project.code_url}>{project.name}</a>;
 }
 
+function projectWebsiteCellLink(cell: Cell<Project>): JSX.Element {
+  const project = cell.row.original;
+  if(project.link_url) {
+    return <a target='new' href={project.link_url}>website</a>;
+  }
+  return <span/>;
+}
+
+function projectOpenIssuesCell(cell: Cell<Project>): JSX.Element {
+  const project = cell.row.original;
+  if(project.open_issues_within) {
+    const issues = project.open_issues_within;
+    // let issuestxt = "1 - 10";
+    // console.log(issues);
+    // if(issues === "100") {
+      // issuestxt = "10 - 100";
+      // console.log("100 issues");
+    // }
+	// return <span>{issuestxt}</span>;
+    return <span>{issues}</span>;
+  }
+  return <span/>;
+}
+
 function topicsCellButtons(
   topics: string[] = [],
   setFilters: (newFilter: Filter) => void,
@@ -57,6 +81,16 @@ export default function getTableColumns(
       accessor: 'description',
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',
+    },
+    {
+      Header: 'Website',
+      id: 'website',
+      Cell: projectWebsiteCellLink,
+    },
+    {
+      Header: 'Open Issues',
+      id: 'open-issues',
+      Cell: projectOpenIssuesCell,
     },
     {
       Header: 'Topics',

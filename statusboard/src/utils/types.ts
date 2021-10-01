@@ -28,6 +28,7 @@ export type Project = {
   topics?: string[];
   brigade?: Brigade;
   last_pushed_within?: string;
+  open_issues_within?: string;
 };
 
 export type Location = {
