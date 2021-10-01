@@ -53,17 +53,22 @@
       background-color: var(--cfa-yellow-light);
     }
   }
-@media screen and (max-width:800px) {
 
+  
+ }
+
+
+@media screen and (max-width:800px) {
   th:nth-of-type(2){
     width:calc(100% - 0.5em);
   }
-  th:nth-of-type(3){
-    display:none;
-  }
-
-
-
+  .hide3 {
+    th:nth-of-type(3){
+      display:none;
+    }
+    th:nth-of-type(2){
+      width:calc(100% - 0.5em);
+    }
 }
   // .pagination {
   //   margin: 0.25rem 0.5rem;

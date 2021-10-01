@@ -131,12 +131,13 @@ function Projects(): JSX.Element {
             />
           )}
           <br />
-          
+          <div className="hide3">
           <ProjectsTable
             options={options}
             plugins={hooks}
             setRowCounter={setRowCounter}
           />
+          </div>
         </>
       </LoadingIndicator>
     </>
