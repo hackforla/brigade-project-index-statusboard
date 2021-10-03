@@ -2,6 +2,7 @@
   display: flex;
   padding-right: 2rem;
   align-items: stretch;
+  justify-content: space-between;
 
   > *:first-child {
     align-self: center;
@@ -9,6 +10,7 @@
 
   > *:not(:first-child) {
     margin-left: 1rem;
+    
   }
 
   input {
@@ -57,7 +59,6 @@
       justify-content: space-between;
   
     input {
-      width:95%;
       box-sizing: content-box;
     }
   }
