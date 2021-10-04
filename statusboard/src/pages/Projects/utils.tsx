@@ -23,15 +23,15 @@ function projectWebsiteCellLink(cell: Cell<Project>): JSX.Element {
 function projectOpenIssuesCell(cell: Cell<Project>): JSX.Element {
   const project = cell.row.original;
   if(project.open_issues_within) {
-    const issues = project.open_issues_within;
-    // let issuestxt = "1 - 10";
-    // console.log(issues);
-    // if(issues === "100") {
-      // issuestxt = "10 - 100";
-      // console.log("100 issues");
-    // }
-	// return <span>{issuestxt}</span>;
-    return <span>{issues}</span>;
+    let issuestxt = "1 - 10";
+	const issues = project.open_issues_within;
+    if(issues === 100) {
+      issuestxt = "10 - 100";
+    }
+    if(issues === 1000) {
+      issuestxt = "100 - 1000";
+    }
+	return <span>{issuestxt}</span>;
   }
   return <span/>;
 }
