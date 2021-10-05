@@ -12,10 +12,10 @@ function projectGitHubCellLink(cell: Cell<Project>): JSX.Element {
   let html = <a href={project.code_url}>{project.name}</a>;
   if(project.link_url) {
     html = <div style={{ display: 'flex'}}>
-	  <a title='Repo' href={project.code_url}>{project.name}</a>
-	  <a title='Live site' style={{ marginLeft: '12px' }} target='new' href={project.link_url}>
-	  <img alt='Website' src='www-icon.png' width='18' height='18'/></a>
-	  </div>
+      <a title='Repo' href={project.code_url}>{project.name}</a>
+      <a title='Live site' style={{ marginLeft: '12px' }} target='new' href={project.link_url}>
+      <img alt='Website' src='www-icon.png' width='18' height='18'/></a>
+      </div>
   }
   return html;
 }
