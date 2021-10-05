@@ -9,15 +9,15 @@ function projectGitHubCellLink(cell: Cell<Project>): JSX.Element {
   const project = cell.row.original;
   // TODO: CHANGE THIS WHEN WE HAVE A PROJECT DETAIL PAGE TO GO TO
   // <NavLink to={`/projects/${slugify(project.slug)}`}>{project.name}</NavLink>
-  return <a href={project.code_url}>{project.name}</a>;
-}
-
-function projectWebsiteCellLink(cell: Cell<Project>): JSX.Element {
-  const project = cell.row.original;
+  let html = <a href={project.code_url}>{project.name}</a>;
   if(project.link_url) {
-    return <a target='new' href={project.link_url}>website</a>;
+    html = <div style={{ display: 'flex'}}>
+	  <a title='Repo' href={project.code_url}>{project.name}</a>
+	  <a title='Live site' style={{ marginLeft: '12px' }} target='new' href={project.link_url}>
+	  <img alt='Website' src='www-icon.png' width='18' height='18'/></a>
+	  </div>
   }
-  return <span/>;
+  return html;
 }
 
 function projectOpenIssuesCell(cell: Cell<Project>): JSX.Element {
@@ -81,11 +81,6 @@ export default function getTableColumns(
       accessor: 'description',
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',
-    },
-    {
-      Header: 'Website',
-      id: 'website',
-      Cell: projectWebsiteCellLink,
     },
     {
       Header: 'Open Issues',
