@@ -54,20 +54,17 @@
     }
   }
 
-  
- }
-
-
-@media screen and (max-width:800px) {
-  th{
-      width:calc(100% - 0.5em) !important;
+  .hideOpenIssuesText {
+    display:none;
   }
-  .hide3 {
-    th:nth-of-type(3){
-      display:none;
+
+  @media screen and (max-width:800px) {
+    .hideOpenIssuesText {
+      display:inline;
     }
-   
-}
+  }
+    
+ 
   // .pagination {
   //   margin: 0.25rem 0.5rem;
   //   border-top: 1px solid var(--cfa-grey);

@@ -1,7 +1,14 @@
 @media screen and (max-width:800px) {
-    .hideThirdColumn {
-      th:nth-of-type(3){
-        display:none;
-      }
+  th{
+      width:calc(100% - 0.5em) !important;
+  }
+  .hideThirdAndFourthColumns {
+    th:nth-of-type(3){
+      display:none;
+    }
+    th:nth-of-type(4){
+      display:none;
+    }
   }
 }
+  

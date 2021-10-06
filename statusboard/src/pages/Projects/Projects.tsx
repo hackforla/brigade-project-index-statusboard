@@ -129,7 +129,7 @@ function Projects(): JSX.Element {
             />
           )}
           <br />
-          <div className="hideThirdColumn">
+          <div className="hideThirdAndFourthColumns">
           <ProjectsTable
             options={options}
             plugins={hooks}
