@@ -112,15 +112,14 @@ export function filterProjectsByCfA(
   nonCfA?: string
 ) {
   if (nonCfA === 'true') {
-    console.log("returning all projects");
+    
     console.log(projects.length);
     return projects;
   }
-  console.log("filter only cfa projects");
+  
   return projects.filter((p: Project) =>
     p?.brigade?.type ? p.brigade.type.includes("Brigade") || p.brigade.type.includes("Code for America") : false
   );
-
 }
 
 export function filterActiveProjects(

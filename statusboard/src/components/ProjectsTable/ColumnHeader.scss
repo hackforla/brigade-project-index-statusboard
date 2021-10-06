@@ -2,6 +2,7 @@
   display: flex;
   padding-right: 2rem;
   align-items: stretch;
+  justify-content: space-between;
 
   > *:first-child {
     align-self: center;
@@ -9,6 +10,7 @@
 
   > *:not(:first-child) {
     margin-left: 1rem;
+    
   }
 
   input {
@@ -44,6 +46,20 @@
       &.desc {
         transform: translate(-50%, 90%) rotate(90deg);
       }
+    }
+  }
+}
+
+@media screen and (max-width:800px) {
+  .column-header__contents {
+      display: flex;
+      padding-right: 2rem;
+      align-items: stretch;
+      width:calc(100% - 2rem);
+      justify-content: space-between;
+  
+    input {
+      box-sizing: content-box;
     }
   }
 }

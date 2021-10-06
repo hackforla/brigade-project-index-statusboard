@@ -36,11 +36,12 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   const queryParameters = parse(search, {
     arrayFormat: 'comma',
   });
+  
   const {
     topics: _topics,
     timeRange,
     brigades,
-    nonCfA
+    nonCfA,
   } = (queryParameters || {}) as {
     topics: string[];
     timeRange: ActiveThresholdsKeys;
@@ -78,6 +79,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     [nonCfA, allProjects],
   );
   
+
   const history = useHistory();
   const setFilters = (newFilter: Filter, preserveFilters = true) => {
     let _newFilter = newFilter;
