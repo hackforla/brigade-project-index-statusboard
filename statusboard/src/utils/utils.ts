@@ -107,23 +107,41 @@ export function filterProjectsByTime(
   return projects.filter((p) => timeRanges.includes(p.last_pushed_within));
 }
 
+export function filterProjectsByCfA(
+  projects: Project[],
+  nonCfA?: string
+) {
+  if (nonCfA === 'true') {
+    console.log("returning all projects");
+    console.log(projects.length);
+    return projects;
+  }
+  console.log("filter only cfa projects");
+  return projects.filter((p: Project) =>
+    p?.brigade?.type ? p.brigade.type.includes("Brigade") || p.brigade.type.includes("Code for America") : false
+  );
+
+}
+
 export function filterActiveProjects(
   options: {
     timeRange?: ActiveThresholdsKeys;
     topics?: string[];
     brigades?: string[];
+    nonCfA: string;
   },
   projects?: Project[]
 ) {
   if (!projects) return [];
   // Set destructuring and allow defaults to be overwritten
-  const { timeRange, topics, brigades } = options || {};
+  const { timeRange, topics, brigades, nonCfA } = options || {};
   let newProjects: ProjectWithTopicsMatched[] = filterProjectsByBrigades(
     projects,
     brigades
   );
   newProjects = filterProjectsByTopics(newProjects, topics);
   newProjects = filterProjectsByTime(newProjects, timeRange);
+  newProjects = filterProjectsByCfA(newProjects, nonCfA);
   return newProjects;
 }
 

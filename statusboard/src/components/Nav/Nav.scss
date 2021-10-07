@@ -10,14 +10,21 @@ nav {
     display: none;
   }
 
+  .external_link {
+      color: #000000;
+      text-decoration: underline;
+  }
+  
   ul {
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-end;
     margin: unset;
 
     li {
       margin-left: 1.5rem;
+      margin-bottom: 0.5rem;
     }
 
     li a {

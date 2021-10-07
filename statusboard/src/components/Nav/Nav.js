@@ -5,7 +5,7 @@ import './Nav.scss';
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen((oldIsOpen) => !oldIsOpen);
-
+  
   return (
     <nav role="navigation" aria-label="Main">
       <ul className="navigation__desktop">
@@ -14,6 +14,12 @@ function Nav() {
         </li>
         <li>
           <NavLink to="/brigades">Projects by Brigade</NavLink>
+        </li>
+        <li>
+          <a href="https://codeforamerica.github.io/publiccode-pusher/" className="external_link"  target='new' title="External Tool">PublicCode Editor</a>
+        </li>
+        <li>
+          <a href="https://codeforamerica.github.io/civic-tech-taxonomy/editor-ui/" className="external_link" target='new' title="External Tool">Taxonomy</a>
         </li>
         <li>
           <NavLink to="/about">About</NavLink>
@@ -42,6 +48,12 @@ function Nav() {
             <NavLink to="/brigades" onClick={toggleMenu}>
               Projects by Brigade
             </NavLink>
+          </li>
+          <li>
+            <a href="https://codeforamerica.github.io/publiccode-pusher/" className='external_link'  target='new' title="External Tool">PublicCode Editor</a>
+          </li>
+          <li>
+            <a href="https://codeforamerica.github.io/civic-tech-taxonomy/editor-ui/" className='external_link'  target='new' title="External Tool">Taxonomy</a>
           </li>
           <li>
             <NavLink to="/about" onClick={toggleMenu}>
