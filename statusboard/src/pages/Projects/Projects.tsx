@@ -1,4 +1,10 @@
-import React, { useMemo, useContext, ChangeEvent, useState } from 'react';
+import React, {
+  useMemo,
+  useContext,
+  ChangeEvent,
+  useState,
+  useCallback,
+} from 'react';
 import {
   usePagination,
   useFilters,
@@ -23,7 +29,6 @@ import { useProjectFilters } from '../../utils/useProjectFilters';
 import { Project } from '../../utils/types';
 import getTableColumns from './utils';
 import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
-
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
@@ -106,9 +111,8 @@ const sortTypes: Record<string, SortByFn<Project>> = {
       filterTypes,
       sortTypes,
       setRowCounter,
-      // sortTypes,
     }),
-    [filteredProjects, columns, filterTypes]
+    [filteredProjects, columns, sortTypes, filterTypes, initialFilterValues]
   );
 
   const hooks: PluginHook<Project>[] = useMemo(

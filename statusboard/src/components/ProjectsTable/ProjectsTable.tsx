@@ -1,10 +1,4 @@
-import {
-  Row,
-  useTable,
-  TableOptions,
-  PluginHook,
-  useSortBy
-} from 'react-table';
+import { Row, useTable, TableOptions, PluginHook } from 'react-table';
 import React, { useContext, useEffect } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -22,7 +16,7 @@ export type TableAttributes = {
 
 export default function ProjectsTable({
   options,
-  plugins = [useSortBy],
+  plugins,
   setRowCounter,
 }: TableAttributes): JSX.Element {
   const {
@@ -47,7 +41,10 @@ export default function ProjectsTable({
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <tr
+                {...headerGroup.getHeaderGroupProps()}
+                key={headerGroup.getHeaderGroupProps().key}
+              >
                 {headerGroup.headers.map((column) => (
                   <ColumnHeader
                     column={column}
@@ -76,9 +73,11 @@ export default function ProjectsTable({
             {page.map((row: Row<Project>) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <tr {...row.getRowProps()} key={row.getRowProps().key}>
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    <td {...cell.getCellProps()} key={cell.getCellProps().key}>
+                      {cell.render('Cell')}
+                    </td>
                   ))}
                 </tr>
               );
