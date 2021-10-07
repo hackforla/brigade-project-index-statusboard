@@ -55,9 +55,13 @@ function Projects(): JSX.Element {
     id: IdType<Project>,
     desc?: boolean
 ): number => {
-  if (rowA.values[id] > rowB.values[id]) return -1;
-  if (rowB.values[id] > rowA.values[id]) return 1;
-  return 0;
+  const valueA:string = String(rowA.values[id]).toLowerCase();
+  const valueB:string = String(rowB.values[id]).toLowerCase();
+  if (desc) {
+    return valueA.localeCompare(valueB) > 0 ? 1 : -1;
+  }
+  return valueB.localeCompare(valueA) > 0 ? -1 : 1;
+
   
 
 };
