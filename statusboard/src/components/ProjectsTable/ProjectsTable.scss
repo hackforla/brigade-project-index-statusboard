@@ -54,6 +54,17 @@
     }
   }
 
+  .hideOpenIssuesText {
+    display:none;
+  }
+
+  @media screen and (max-width:800px) {
+    .hideOpenIssuesText {
+      display:inline;
+    }
+  }
+    
+ 
   // .pagination {
   //   margin: 0.25rem 0.5rem;
   //   border-top: 1px solid var(--cfa-grey);
