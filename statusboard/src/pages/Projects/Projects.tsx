@@ -30,6 +30,7 @@ import { useProjectFilters } from '../../utils/useProjectFilters';
 import { Project } from '../../utils/types';
 import getTableColumns from './utils';
 import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
+import './Projects.scss'
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
@@ -159,11 +160,13 @@ const sortTypes: Record<string, SortByFn<Project>> = {
             />
           )}
           <br />
+          <div className="hideThirdAndFourthColumns">
           <ProjectsTable
             options={options}
             plugins={hooks}
             setRowCounter={setRowCounter}
           />
+          </div>
         </>
       </LoadingIndicator>
     </>

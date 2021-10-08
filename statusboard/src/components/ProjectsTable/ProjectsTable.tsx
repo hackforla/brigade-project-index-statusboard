@@ -1,7 +1,9 @@
 import { Row, useTable, TableOptions, PluginHook } from 'react-table';
 import React, { useContext, useEffect } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import './SuperResponsiveTableStyle.css'
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import Button from '../Button/Button';
 import ColumnHeader from './ColumnHeader';
 import './ProjectsTable.scss';
@@ -35,13 +37,14 @@ export default function ProjectsTable({
     setRowCounter?.(rows.length);
   }, [rows, setRowCounter]);
 
+
   return (
     <div className="projects-table">
       <PerfectScrollbar>
-        <table {...getTableProps()}>
-          <thead>
+        <Table {...getTableProps()}>
+          <thead className="desktop">
             {headerGroups.map((headerGroup) => (
-              <tr
+              <Tr
                 {...headerGroup.getHeaderGroupProps()}
                 key={headerGroup.getHeaderGroupProps().key}
               >
@@ -52,38 +55,39 @@ export default function ProjectsTable({
                     disableSort={!rows.length}
                   />
                 ))}
-              </tr>
+              </Tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
+    
+          <Tbody {...getTableBodyProps()}>
             {loading && (
-              <tr>
-                <td colSpan={3}>
+              <Tr>
+                <Td colSpan={3}>
                   <span>Loading...</span>
-                </td>
-              </tr>
+                </Td>
+              </Tr>
             )}
             {!rows.length && !loading && (
-              <tr>
-                <td colSpan={3}>
+              <Tr>
+                <Td colSpan={3}>
                   <span>No projects</span>
-                </td>
-              </tr>
+                </Td>
+              </Tr>
             )}
             {page.map((row: Row<Project>) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} key={row.getRowProps().key}>
+                <Tr {...row.getRowProps()} key={row.getRowProps().key}>
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()} key={cell.getCellProps().key}>
                       {cell.render('Cell')}
                     </td>
                   ))}
-                </tr>
+                </Tr>
               );
             })}
-          </tbody>
-        </table>
+          </Tbody>
+        </Table>
         {pageSize < rows.length && (
           <div className="load-projects-button">
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}

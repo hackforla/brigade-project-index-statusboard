@@ -31,7 +31,7 @@ function projectOpenIssuesCell(cell: Cell<Project>): JSX.Element {
     if(issues === 1000) {
       issuestxt = "100 - 1000";
     }
-	return <span>{issuestxt}</span>;
+	return <span><span className="hideOpenIssuesText">Open issues: </span>{issuestxt}</span>;
   }
   return <span/>;
 }
