@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, ChangeEvent, useState } from 'react';
+import React, { useMemo, useContext, ChangeEvent, useState, useRef } from 'react';
 import {
   usePagination,
   useFilters,
@@ -12,6 +12,7 @@ import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
 import { ACTIVE_THRESHOLDS, getTopicsFromProjects } from '../../utils/utils';
 import Select from '../../components/Select/Select';
+import Button from '../../components/Button/Button';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
@@ -20,10 +21,13 @@ import { useProjectFilters } from '../../utils/useProjectFilters';
 import { Project } from '../../utils/types';
 import getTableColumns from './utils';
 import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
+import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
+
+  const {priorityAreasMap, issuesMap } = useContext(TaxonomyDataContext);
 
   const {
     topics,
@@ -90,6 +94,23 @@ function Projects(): JSX.Element {
     []
   );
 
+  // the options for the Issues dropdown, prepend an empty string
+  const issueOptions = [""].concat([...issuesMap.keys()])
+  const priorityAreasOptions = [""].concat([...priorityAreasMap.keys()])
+
+  const selectTimeRangeRef = useRef();
+  const selectIssueRef = useRef();
+  const selectPriorityAreaRef = useRef();
+
+  function clearSelection() {
+    console.log('ClearSelection');
+    const el : HTMLSelectElement = (document.getElementById('select-priority-areas') as HTMLSelectElement);
+    console.log("Element: ", el);
+
+    // https://stackoverflow.com/questions/50412843/how-to-programmatically-clear-reset-react-select
+    console.log("Ref Element: ", selectIssueRef.current);
+  }
+
   return (
     <>
       <h1>CfA brigade projects</h1>
@@ -97,6 +118,7 @@ function Projects(): JSX.Element {
         <>
           <div>
             <Select
+              ref={selectTimeRangeRef}
               label={`Showing ${rowCounter} projects with changes on Github in the last `}
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
@@ -112,6 +134,40 @@ function Projects(): JSX.Element {
                 setFilters({ nonCfA: String(e.target.checked) })
               }
             />
+            <div style={{display : "flex", gap: "30px", marginTop: "10px"}}>
+            <Select
+              ref = {selectIssueRef}
+              label=" Search by Issue "
+              id="select-issue"
+              options = {issueOptions}
+              emptyOptionText = ""
+              onChange={(event) => {
+                if (!event || !event.target) return;
+                const newVal = event.target.value;
+                if(typeof(newVal) === "string") {
+                  const tags = issuesMap.get(newVal)??[]
+                  setFilters({ topics: tags })
+                }
+                // reset the priority areas dropdown
+              }}
+            />
+            <Select
+              ref={selectPriorityAreaRef}
+              label=" Search by Priority Action Areas "
+              id="select-priority-areas"
+              options = {priorityAreasOptions}
+              emptyOptionText = ""
+              onChange={(event) => {
+                if (!event || !event.target) return;
+                const newVal = event.target.value;
+                if(typeof(newVal) === "string") {
+                  const tags = priorityAreasMap.get(newVal)??[]
+                  setFilters({ topics: tags })
+                }
+              }}
+              // reset the issues dropdown
+            />
+            </div>
           </div>
           <br />
           {availableTopics && (
@@ -127,6 +183,18 @@ function Projects(): JSX.Element {
               }
             />
           )}
+          <Button
+            className="ClearButton"
+            onClick={() => {
+              clearSelection();
+            } }
+            text="Clear" 
+            disabled={undefined} 
+            linkButton={undefined} 
+            children={undefined}            
+          />
+
+
           <br />
           <ProjectsTable
             options={options}
