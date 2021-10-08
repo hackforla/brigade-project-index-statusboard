@@ -87,7 +87,10 @@ export default function getTableColumns(
     {
       Header: 'Open Issues',
       id: 'open-issues',
+      accessor: (project: Project) => project.open_issues_within,
       Cell: projectOpenIssuesCell,
+      sortType: 'customStringSort',
+      disableFilters: true,
     },
     {
       Header: 'Topics',

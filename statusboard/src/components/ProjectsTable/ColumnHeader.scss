@@ -2,7 +2,7 @@
   display: flex;
   padding-right: 2rem;
   align-items: stretch;
-  justify-content: space-between;
+  
 
   > *:first-child {
     align-self: center;
@@ -19,10 +19,12 @@
   }
 
   .sort-button {
-    height: 100%;
     width: 1rem;
     padding: 0;
+    justify-self: end;
+    height:2rem;
   }
+
 
   .sort-arrows {
     position: relative;
@@ -50,13 +52,22 @@
   }
 }
 
+
+.hideThirdAndFourthColumns {
+  .sort-button {
+    margin:0.5em;
+    width: 1rem;
+    padding: 0;
+  }
+  
+}
+
 @media screen and (max-width:800px) {
   .column-header__contents {
       display: flex;
       padding-right: 2rem;
       align-items: stretch;
       width:calc(100% - 2rem);
-      justify-content: space-between;
   
     input {
       box-sizing: content-box;
