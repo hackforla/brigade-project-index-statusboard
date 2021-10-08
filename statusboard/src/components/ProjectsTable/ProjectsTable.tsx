@@ -18,7 +18,7 @@ export type TableAttributes = {
 
 export default function ProjectsTable({
   options,
-  plugins,
+  plugins = [],
   setRowCounter,
 }: TableAttributes): JSX.Element {
   const {
@@ -79,9 +79,9 @@ export default function ProjectsTable({
               return (
                 <Tr {...row.getRowProps()} key={row.getRowProps().key}>
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} key={cell.getCellProps().key}>
+                    <Td {...cell.getCellProps()} key={cell.getCellProps().key}>
                       {cell.render('Cell')}
-                    </td>
+                    </Td>
                   ))}
                 </Tr>
               );

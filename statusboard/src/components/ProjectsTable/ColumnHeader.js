@@ -45,7 +45,7 @@ export default function ColumnHeader({ column, disableSort }) {
                   />
                 </div>
               </>
-            </Button>
+            </Button> 
         )}
       </div>
     </th>
