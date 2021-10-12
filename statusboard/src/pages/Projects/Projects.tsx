@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, ChangeEvent, useState, useRef } from 'react';
+import React, { useMemo, useContext, ChangeEvent, useState, useRef, useCallback } from 'react';
 import {
   usePagination,
   useFilters,
@@ -98,17 +98,20 @@ function Projects(): JSX.Element {
   const issueOptions = [""].concat([...issuesMap.keys()])
   const priorityAreasOptions = [""].concat([...priorityAreasMap.keys()])
 
-  const selectTimeRangeRef = useRef();
-  const selectIssueRef = useRef();
-  const selectPriorityAreaRef = useRef();
+  const issueSelect = useRef<HTMLSelectElement>();
+  const priorityAreaSelect = useRef<HTMLSelectElement>();
 
-  function clearSelection() {
-    console.log('ClearSelection');
-    const el : HTMLSelectElement = (document.getElementById('select-priority-areas') as HTMLSelectElement);
-    console.log("Element: ", el);
+  const clearPriorityAreaSelect = useCallback(() => {
+    if(priorityAreaSelect.current) priorityAreaSelect.current.selectedIndex=0
+  },[]);
 
-    // https://stackoverflow.com/questions/50412843/how-to-programmatically-clear-reset-react-select
-    console.log("Ref Element: ", selectIssueRef.current);
+  const clearIssueSelect = useCallback(() => {
+    if(issueSelect.current) issueSelect.current.selectedIndex=0
+  },[]);
+
+  function clearTaxonomy() {
+    clearIssueSelect();
+    clearPriorityAreaSelect();
   }
 
   return (
@@ -118,7 +121,7 @@ function Projects(): JSX.Element {
         <>
           <div>
             <Select
-              ref={selectTimeRangeRef}
+              extraRef={null}
               label={`Showing ${rowCounter} projects with changes on Github in the last `}
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
@@ -136,7 +139,7 @@ function Projects(): JSX.Element {
             />
             <div style={{display : "flex", gap: "30px", marginTop: "10px"}}>
             <Select
-              ref = {selectIssueRef}
+              extraRef = {issueSelect}
               label=" Search by Issue "
               id="select-issue"
               options = {issueOptions}
@@ -148,11 +151,11 @@ function Projects(): JSX.Element {
                   const tags = issuesMap.get(newVal)??[]
                   setFilters({ topics: tags })
                 }
-                // reset the priority areas dropdown
+                clearPriorityAreaSelect();
               }}
             />
             <Select
-              ref={selectPriorityAreaRef}
+              extraRef={priorityAreaSelect}
               label=" Search by Priority Action Areas "
               id="select-priority-areas"
               options = {priorityAreasOptions}
@@ -164,14 +167,15 @@ function Projects(): JSX.Element {
                   const tags = priorityAreasMap.get(newVal)??[]
                   setFilters({ topics: tags })
                 }
+                clearIssueSelect();
               }}
-              // reset the issues dropdown
             />
             </div>
           </div>
           <br />
           {availableTopics && (
             <MultiSelect
+              clearTaxonomy={clearTaxonomy}
               selectedItems={topics}
               setSelectedItems={(newTopics: string[]) =>
                 setFilters({ topics: newTopics })
@@ -183,18 +187,6 @@ function Projects(): JSX.Element {
               }
             />
           )}
-          <Button
-            className="ClearButton"
-            onClick={() => {
-              clearSelection();
-            } }
-            text="Clear" 
-            disabled={undefined} 
-            linkButton={undefined} 
-            children={undefined}            
-          />
-
-
           <br />
           <ProjectsTable
             options={options}

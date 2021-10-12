@@ -12,7 +12,7 @@ export default function Select({
   emptyOptionText,
   className,
   inline,
-  ref,
+  extraRef,
 }) {
   return (
     <div
@@ -30,10 +30,10 @@ export default function Select({
       </label>
       <select
         id={id}
+        ref={extraRef}
         onChange={onChange}
         className={cx('form-control', { 'form-control--inline': inline })}
         value={selected}
-        ref={ref}
       >
         {emptyOptionText && (
           <option value={emptyOptionText}>{emptyOptionText}</option>
