@@ -12,7 +12,6 @@ import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
 import { ACTIVE_THRESHOLDS, getTopicsFromProjects } from '../../utils/utils';
 import Select from '../../components/Select/Select';
-import Button from '../../components/Button/Button';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
