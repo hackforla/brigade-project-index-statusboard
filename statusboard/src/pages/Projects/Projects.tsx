@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, ChangeEvent, useState } from 'react';
+import React, { useMemo, useContext, ChangeEvent, useState, useRef, useCallback } from 'react';
 import {
   usePagination,
   useFilters,
@@ -20,11 +20,14 @@ import { useProjectFilters } from '../../utils/useProjectFilters';
 import { Project } from '../../utils/types';
 import getTableColumns from './utils';
 import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
+import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss'
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
+
+  const {priorityAreasMap, issuesMap } = useContext(TaxonomyDataContext);
 
   const {
     topics,
@@ -91,6 +94,26 @@ function Projects(): JSX.Element {
     []
   );
 
+  // the options for the Issues dropdown, prepend an empty string
+  const issueOptions = [""].concat([...issuesMap.keys()])
+  const priorityAreasOptions = [""].concat([...priorityAreasMap.keys()])
+
+  const issueSelect = useRef<HTMLSelectElement>();
+  const priorityAreaSelect = useRef<HTMLSelectElement>();
+
+  const clearPriorityAreaSelect = useCallback(() => {
+    if(priorityAreaSelect.current) priorityAreaSelect.current.selectedIndex=0
+  },[]);
+
+  const clearIssueSelect = useCallback(() => {
+    if(issueSelect.current) issueSelect.current.selectedIndex=0
+  },[]);
+
+  function clearTaxonomy() {
+    clearIssueSelect();
+    clearPriorityAreaSelect();
+  }
+
   return (
     <>
       <h1>CfA brigade projects</h1>
@@ -98,6 +121,7 @@ function Projects(): JSX.Element {
         <>
           <div>
             <Select
+              extraRef={null}
               label={`Showing ${rowCounter} projects with changes on Github in the last `}
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
@@ -113,10 +137,45 @@ function Projects(): JSX.Element {
                 setFilters({ nonCfA: String(e.target.checked) })
               }
             />
+            <div style={{display : "flex", gap: "30px", marginTop: "10px"}}>
+            <Select
+              extraRef = {issueSelect}
+              label=" Search by Issue "
+              id="select-issue"
+              options = {issueOptions}
+              emptyOptionText = ""
+              onChange={(event) => {
+                if (!event || !event.target) return;
+                const newVal = event.target.value;
+                if(typeof(newVal) === "string") {
+                  const tags = issuesMap.get(newVal)??[]
+                  setFilters({ topics: tags })
+                }
+                clearPriorityAreaSelect();
+              }}
+            />
+            <Select
+              extraRef={priorityAreaSelect}
+              label=" Search by Priority Action Areas "
+              id="select-priority-areas"
+              options = {priorityAreasOptions}
+              emptyOptionText = ""
+              onChange={(event) => {
+                if (!event || !event.target) return;
+                const newVal = event.target.value;
+                if(typeof(newVal) === "string") {
+                  const tags = priorityAreasMap.get(newVal)??[]
+                  setFilters({ topics: tags })
+                }
+                clearIssueSelect();
+              }}
+            />
+            </div>
           </div>
           <br />
           {availableTopics && (
             <MultiSelect
+              clearTaxonomy={clearTaxonomy}
               selectedItems={topics}
               setSelectedItems={(newTopics: string[]) =>
                 setFilters({ topics: newTopics })

@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import '../commonFormControlStyles.scss';
+import './Checkbox.scss';
 
 export default function Checkbox({
   label,
@@ -16,6 +17,7 @@ export default function Checkbox({
         { 'form-control-container--inline': inline },
         className
       )}
+      style={{display: "flex"}}
     >
       <label
         htmlFor={id}
