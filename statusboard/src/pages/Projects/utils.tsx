@@ -24,7 +24,7 @@ function projectOpenIssuesCell(cell: Cell<Project>): JSX.Element {
   const project = cell.row.original;
   if(project.open_issues_within) {
     let issuestxt = "1 - 10";
-	const issues = project.open_issues_within;
+	  const issues = project.open_issues_within;
     if(issues === 100) {
       issuestxt = "10 - 100";
     }

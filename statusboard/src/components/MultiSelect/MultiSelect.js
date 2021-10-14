@@ -12,6 +12,7 @@ export const MultiSelect = ({
   onSelectionItemsChange,
   selectedItems = [],
   setSelectedItems,
+  clearTaxonomy,
   ...rest
 }) => (
   <>
@@ -57,6 +58,7 @@ export const MultiSelect = ({
                 onClick={() => {
                   setSelectedItems([]);
                   clearSelection();
+                  clearTaxonomy();
                 }}
                 text="Clear"
               />
@@ -152,4 +154,5 @@ MultiSelect.propTypes = {
   items: PropTypes.array,
   labelText: PropTypes.string,
   onSelectionItemsChange: PropTypes.func,
+  clearTaxonomy: PropTypes.func,
 };
