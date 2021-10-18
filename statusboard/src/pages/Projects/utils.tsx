@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Cell, Column } from 'react-table';
+import { Cell, Column, Row, SortByFn } from 'react-table';
 import { Button, TextFilter } from '../../components';
 import { Project } from '../../utils/types';
 import { Filter } from '../../utils/useProjectFilters';
@@ -38,7 +38,7 @@ function projectOpenIssuesCell(cell: Cell<Project>): JSX.Element {
 
 function topicsCellButtons(
   topics: string[] = [],
-  setFilters: (newFilter: Filter) => void,
+  setFilters: (newFilter: Filter) => void
 ) {
   // eslint-disable-next-line react/display-name
   return ({ row }: Cell<Project>): JSX.Element => {
@@ -66,7 +66,7 @@ function topicsCellButtons(
 
 export default function getTableColumns(
   filterTopics: string[] = [],
-  setFilterTopics: (newFilter: Filter) => void,
+  setFilterTopics: (newFilter: Filter) => void
 ): Column<Project>[] {
   return [
     {
@@ -75,17 +75,22 @@ export default function getTableColumns(
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',
       Cell: projectGitHubCellLink,
+      disableSortBy: true,
     },
     {
       Header: 'Description',
       accessor: 'description',
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',
+      disableSortBy:true,
     },
     {
       Header: 'Open Issues',
       id: 'open-issues',
+      accessor: (project: Project) => project.open_issues_within,
       Cell: projectOpenIssuesCell,
+      sortType: 'customStringSort',
+      disableFilters: true,
     },
     {
       Header: 'Topics',
@@ -93,13 +98,15 @@ export default function getTableColumns(
       accessor: (project: Project) => project.topics?.length,
       disableFilters: true,
       Cell: topicsCellButtons(filterTopics, setFilterTopics),
+      disableSortBy: true,
     },
     {
       Header: 'Brigade',
-      accessor: (project: Project) => project.brigade?.name,
+      accessor: (project: Project): string => project.brigade?.name ?? '',
       id: 'organization',
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',
+      sortType: 'customStringSort',
     },
   ];
 }

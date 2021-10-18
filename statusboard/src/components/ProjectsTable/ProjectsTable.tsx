@@ -10,7 +10,6 @@ import './ProjectsTable.scss';
 import { Project } from '../../utils/types';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 
-
 export type TableAttributes = {
   options: TableOptions<Project>;
   plugins?: PluginHook<Project>[];
@@ -40,13 +39,15 @@ export default function ProjectsTable({
 
 
   return (
-
     <div className="projects-table">
       <PerfectScrollbar>
         <Table {...getTableProps()}>
           <thead className="desktop">
             {headerGroups.map((headerGroup) => (
-              <Tr {...headerGroup.getHeaderGroupProps()}>
+              <Tr
+                {...headerGroup.getHeaderGroupProps()}
+                key={headerGroup.getHeaderGroupProps().key}
+              >
                 {headerGroup.headers.map((column) => (
                   <ColumnHeader
                     column={column}
@@ -76,9 +77,11 @@ export default function ProjectsTable({
             {page.map((row: Row<Project>) => {
               prepareRow(row);
               return (
-                <Tr {...row.getRowProps()}>
+                <Tr {...row.getRowProps()} key={row.getRowProps().key}>
                   {row.cells.map((cell) => (
-                    <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>
+                    <Td {...cell.getCellProps()} key={cell.getCellProps().key}>
+                      {cell.render('Cell')}
+                    </Td>
                   ))}
                 </Tr>
               );

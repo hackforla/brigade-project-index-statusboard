@@ -1,4 +1,11 @@
-import React, { useMemo, useContext, ChangeEvent, useState, useRef, useCallback } from 'react';
+import React, {
+  useMemo,
+  useContext,
+  ChangeEvent,
+  useState,
+  useRef,
+  useCallback,
+} from 'react';
 import {
   usePagination,
   useFilters,
@@ -7,6 +14,10 @@ import {
   PluginHook,
   FilterTypes,
   Filters,
+  useSortBy,
+  SortByFn,
+  Row,
+  IdType,
 } from 'react-table';
 import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
@@ -49,6 +60,29 @@ function Projects(): JSX.Element {
     []
   );
 
+  const customStringSort: SortByFn<Project> = (
+    rowA: Row<Project>,
+    rowB: Row<Project>,
+    id: IdType<Project>,
+    desc?: boolean
+): number => {
+  const rowAValue:string = rowA.values[id]??"";
+  const rowBValue:string = rowB.values[id]??"";
+  
+  const valueA:string = String(rowAValue).toLowerCase();
+  const valueB:string = String(rowBValue).toLowerCase();
+  
+  if (desc) {
+    return valueA.localeCompare(valueB) > 0 ? 1 : -1;
+  }
+  return valueB.localeCompare(valueA) > 0 ? -1 : 1;
+
+};
+
+const sortTypes: Record<string, SortByFn<Project>> = {
+  customStringSort: customStringSort,
+};
+
   const columns: Column<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
     [topics, setFilters]
@@ -72,7 +106,6 @@ function Projects(): JSX.Element {
     []
   );
 
-
   const options: TableOptions<Project> = useMemo(
     () => ({
       columns,
@@ -84,13 +117,14 @@ function Projects(): JSX.Element {
         filters: initialFilterValues,
       },
       filterTypes,
+      sortTypes,
       setRowCounter,
     }),
-    [filteredProjects, columns, filterTypes]
+    [filteredProjects, columns, sortTypes, filterTypes, initialFilterValues]
   );
 
   const hooks: PluginHook<Project>[] = useMemo(
-    () => [useFilters, usePagination],
+    () => [useFilters, useSortBy, usePagination],
     []
   );
 
