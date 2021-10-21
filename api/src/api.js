@@ -131,7 +131,7 @@ export async function getTaxonomy() {
   try {
     // Getting the Github repository
     const octokit = new Octokit({
-      auth: process.env.GITHUB_TOKEN,
+      // auth: process.env.GITHUB_TOKEN,
     });
     // return promise the resolves once we have unzipped and merged
     // all the data
