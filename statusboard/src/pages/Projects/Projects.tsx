@@ -92,7 +92,7 @@ function periodToNumber(period:string) {
   if(period === "over_a_year") {
     return 3;
   }
-  return 0;
+  return 99;
 }
 
 const lastPushSort: SortByFn<Project> = (
@@ -152,7 +152,7 @@ const sortTypes: Record<string, SortByFn<Project>> = {
             id: 'last-pushed-within', 
           },
           {
-            id: 'project-name', 
+            id: 'name',           
           }
         ],
       },

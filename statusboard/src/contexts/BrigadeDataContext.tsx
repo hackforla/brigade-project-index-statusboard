@@ -42,12 +42,6 @@ const BrigadeDataContextProvider = ({
         const _brigadeData = brigades.data;
         setBrigadeData(_brigadeData);
         const _projects = getProjectsFromBrigadeData(_brigadeData);
-        // if(_projects) {
-        //   for (let i = 0; i < _projects.length; i++) {
-        //     _projects[i].last_pushed_within_number =  
-        //       periodToNumber(_projects[i].last_pushed_within!);
-        //   }
-        // }
         setProjects(_projects || []);
         setTopics(getTopicsFromProjects(_projects));
       }
