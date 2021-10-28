@@ -72,11 +72,9 @@ export default function getTableColumns(
     {
       Header: 'Project',
       accessor: 'name',
-      id: 'project-name',
       Filter: TextFilter,
       filter: 'fuzzyTextFilter',
       Cell: projectGitHubCellLink,
-      disableSortBy: true,
     },
     {
       Header: 'Description',
@@ -92,8 +90,6 @@ export default function getTableColumns(
       Cell: projectOpenIssuesCell,
       sortType: 'customStringSort',
       disableFilters: true,
-      width: 30,
-      maxWidth: 30,
     },
     {
       Header: 'Last Push',
@@ -101,8 +97,6 @@ export default function getTableColumns(
       disableFilters: true,
       accessor: 'last_pushed_within',
       sortType: 'lastPushSort',
-      width: 30,
-      maxWidth: 30,
     },    
     {
       Header: 'Topics',
