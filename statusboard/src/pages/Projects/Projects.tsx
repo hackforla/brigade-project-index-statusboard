@@ -32,13 +32,13 @@ import { Project } from '../../utils/types';
 import getTableColumns from './utils';
 import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
 import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
-import './Projects.scss'
+import './Projects.scss';
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
 
-  const {priorityAreasMap, issuesMap } = useContext(TaxonomyDataContext);
+  const { priorityAreasMap, issuesMap } = useContext(TaxonomyDataContext);
 
   const {
     topics,
@@ -65,23 +65,53 @@ function Projects(): JSX.Element {
     rowB: Row<Project>,
     id: IdType<Project>,
     desc?: boolean
-): number => {
-  const rowAValue:string = rowA.values[id]??"";
-  const rowBValue:string = rowB.values[id]??"";
-  
-  const valueA:string = String(rowAValue).toLowerCase();
-  const valueB:string = String(rowBValue).toLowerCase();
-  
-  if (desc) {
-    return valueA.localeCompare(valueB) > 0 ? 1 : -1;
+  ): number => {
+    const rowAValue: string = rowA.values[id] ?? '';
+    const rowBValue: string = rowB.values[id] ?? '';
+
+    const valueA: string = String(rowAValue).toLowerCase();
+    const valueB: string = String(rowBValue).toLowerCase();
+    if (desc) {
+      return valueA.localeCompare(valueB) > 0 ? 1 : -1;
+    }
+    return valueB.localeCompare(valueA) > 0 ? -1 : 1;
+  };
+
+  function periodToNumber(period: string) {
+    if (period === 'week') {
+      return 0;
+    }
+    if (period === 'month') {
+      return 1;
+    }
+    if (period === 'year') {
+      return 2;
+    }
+    if (period === 'over_a_year') {
+      return 3;
+    }
+    return 99;
   }
-  return valueB.localeCompare(valueA) > 0 ? -1 : 1;
 
-};
+  const lastPushSort: SortByFn<Project> = (
+    rowA: Row<Project>,
+    rowB: Row<Project>,
+    id: IdType<Project>,
+    desc?: boolean
+  ): number => {
+    // need to convert week, month to 1, 2, ..
+    const d1: number = periodToNumber(rowA.values[id]);
+    const d2: number = periodToNumber(rowB.values[id]);
+    if (desc) {
+      return d1 - d2 > 0 ? 1 : -1;
+    }
+    return d2 - d1 > 0 ? -1 : 1;
+  };
 
-const sortTypes: Record<string, SortByFn<Project>> = {
-  customStringSort: customStringSort,
-};
+  const sortTypes: Record<string, SortByFn<Project>> = {
+    customStringSort,
+    lastPushSort,
+  };
 
   const columns: Column<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
@@ -115,6 +145,14 @@ const sortTypes: Record<string, SortByFn<Project>> = {
         pageIndex: 0,
         pageSize: 50,
         filters: initialFilterValues,
+        sortBy: [
+          {
+            id: 'last_pushed_within',
+          },
+          {
+            id: 'name',
+          },
+        ],
       },
       filterTypes,
       sortTypes,
@@ -129,19 +167,20 @@ const sortTypes: Record<string, SortByFn<Project>> = {
   );
 
   // the options for the Issues dropdown, prepend an empty string
-  const issueOptions = [""].concat([...issuesMap.keys()])
-  const priorityAreasOptions = [""].concat([...priorityAreasMap.keys()])
+  const issueOptions = [''].concat([...issuesMap.keys()]);
+  const priorityAreasOptions = [''].concat([...priorityAreasMap.keys()]);
 
   const issueSelect = useRef<HTMLSelectElement>();
   const priorityAreaSelect = useRef<HTMLSelectElement>();
 
   const clearPriorityAreaSelect = useCallback(() => {
-    if(priorityAreaSelect.current) priorityAreaSelect.current.selectedIndex=0
-  },[]);
+    if (priorityAreaSelect.current)
+      priorityAreaSelect.current.selectedIndex = 0;
+  }, []);
 
   const clearIssueSelect = useCallback(() => {
-    if(issueSelect.current) issueSelect.current.selectedIndex=0
-  },[]);
+    if (issueSelect.current) issueSelect.current.selectedIndex = 0;
+  }, []);
 
   function clearTaxonomy() {
     clearIssueSelect();
@@ -164,46 +203,46 @@ const sortTypes: Record<string, SortByFn<Project>> = {
               selected={timeRange}
               options={Object.keys(ACTIVE_THRESHOLDS)}
             />
-            <Checkbox 
+            <Checkbox
               label="Display non-brigade projects?"
               id="non_brigade_projects"
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setFilters({ nonCfA: String(e.target.checked) })
               }
             />
-            <div style={{display : "flex", gap: "30px", marginTop: "10px"}}>
-            <Select
-              extraRef = {issueSelect}
-              label=" Search by Issue "
-              id="select-issue"
-              options = {issueOptions}
-              emptyOptionText = ""
-              onChange={(event) => {
-                if (!event || !event.target) return;
-                const newVal = event.target.value;
-                if(typeof(newVal) === "string") {
-                  const tags = issuesMap.get(newVal)??[]
-                  setFilters({ topics: tags })
-                }
-                clearPriorityAreaSelect();
-              }}
-            />
-            <Select
-              extraRef={priorityAreaSelect}
-              label=" Search by Priority Action Areas "
-              id="select-priority-areas"
-              options = {priorityAreasOptions}
-              emptyOptionText = ""
-              onChange={(event) => {
-                if (!event || !event.target) return;
-                const newVal = event.target.value;
-                if(typeof(newVal) === "string") {
-                  const tags = priorityAreasMap.get(newVal)??[]
-                  setFilters({ topics: tags })
-                }
-                clearIssueSelect();
-              }}
-            />
+            <div style={{ display: 'flex', gap: '30px', marginTop: '10px' }}>
+              <Select
+                extraRef={issueSelect}
+                label=" Search by Issue "
+                id="select-issue"
+                options={issueOptions}
+                emptyOptionText=""
+                onChange={(event) => {
+                  if (!event || !event.target) return;
+                  const newVal = event.target.value;
+                  if (typeof newVal === 'string') {
+                    const tags = issuesMap.get(newVal) ?? [];
+                    setFilters({ topics: tags });
+                  }
+                  clearPriorityAreaSelect();
+                }}
+              />
+              <Select
+                extraRef={priorityAreaSelect}
+                label=" Search by Priority Action Areas "
+                id="select-priority-areas"
+                options={priorityAreasOptions}
+                emptyOptionText=""
+                onChange={(event) => {
+                  if (!event || !event.target) return;
+                  const newVal = event.target.value;
+                  if (typeof newVal === 'string') {
+                    const tags = priorityAreasMap.get(newVal) ?? [];
+                    setFilters({ topics: tags });
+                  }
+                  clearIssueSelect();
+                }}
+              />
             </div>
           </div>
           <br />
@@ -223,11 +262,11 @@ const sortTypes: Record<string, SortByFn<Project>> = {
           )}
           <br />
           <div className="hideThirdAndFourthColumns">
-          <ProjectsTable
-            options={options}
-            plugins={hooks}
-            setRowCounter={setRowCounter}
-          />
+            <ProjectsTable
+              options={options}
+              plugins={hooks}
+              setRowCounter={setRowCounter}
+            />
           </div>
         </>
       </LoadingIndicator>
