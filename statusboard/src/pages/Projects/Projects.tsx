@@ -38,7 +38,7 @@ function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
 
-  const { priorityAreasMap, issuesMap, isError } = useContext(TaxonomyDataContext);
+  const { priorityAreasMap, issuesMap, isTaxonomyError } = useContext(TaxonomyDataContext);
 
   const {
     topics,
@@ -210,7 +210,7 @@ function Projects(): JSX.Element {
                 setFilters({ nonCfA: String(e.target.checked) })
               }
             />
-            {!isError &&
+            {!isTaxonomyError &&
             <div style={{ display: 'flex', gap: '30px', marginTop: '10px' }}>
               <Select
                 extraRef={issueSelect}

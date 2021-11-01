@@ -13,13 +13,13 @@ type TaxonomyList = TaxonomyItem[];
 type TaxonomyDataContextType = {
   issuesMap: Map<string, string[]>;
   priorityAreasMap: Map<string, string[]>;
-  isError: boolean;
+  isTaxonomyError: boolean;
 };
 
 const TaxonomyDataContext = createContext<TaxonomyDataContextType>({
   issuesMap: new Map<string, string[]>(),
   priorityAreasMap: new Map<string, string[]>(),
-  isError: false
+  isTaxonomyError: false
 });
 
 const { Provider, Consumer } = TaxonomyDataContext;
@@ -31,7 +31,7 @@ const TaxonomyDataContextProvider = ({
 }) => {
   const [issuesMap, setIssuesMap] = useState<Map<string, string[]>>(new Map());
   const [priorityAreasMap, setPriorityAreasMap] = useState<Map<string, string[]>>(new Map());
-  const [isError, setIsError] = useState(false);
+  const [isTaxonomyError, setIsTaxonomyError] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -46,7 +46,7 @@ const TaxonomyDataContextProvider = ({
       setIssuesMap(issuesMapLocal);
       }
       catch(error){
-       setIsError(true);
+       setIsTaxonomyError(true);
       };
      
      try {
@@ -60,7 +60,7 @@ const TaxonomyDataContextProvider = ({
       setPriorityAreasMap(priorityAreasMapLocal);
      }
      catch(error){
-       setIsError(true);
+       setIsTaxonomyError(true);
      }
     }
     getData();
@@ -74,7 +74,7 @@ const TaxonomyDataContextProvider = ({
       value={{
         issuesMap: issuesMap,
         priorityAreasMap: priorityAreasMap,
-        isError: isError
+        isTaxonomyError: isTaxonomyError
       }}
     >
       {childNodes}
