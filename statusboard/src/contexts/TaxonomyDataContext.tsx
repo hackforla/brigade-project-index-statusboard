@@ -13,11 +13,13 @@ type TaxonomyList = TaxonomyItem[];
 type TaxonomyDataContextType = {
   issuesMap: Map<string, string[]>;
   priorityAreasMap: Map<string, string[]>;
+  isTaxonomyError: boolean;
 };
 
 const TaxonomyDataContext = createContext<TaxonomyDataContextType>({
   issuesMap: new Map<string, string[]>(),
-  priorityAreasMap: new Map<string, string[]>()
+  priorityAreasMap: new Map<string, string[]>(),
+  isTaxonomyError: false
 });
 
 const { Provider, Consumer } = TaxonomyDataContext;
@@ -29,26 +31,37 @@ const TaxonomyDataContextProvider = ({
 }) => {
   const [issuesMap, setIssuesMap] = useState<Map<string, string[]>>(new Map());
   const [priorityAreasMap, setPriorityAreasMap] = useState<Map<string, string[]>>(new Map());
+  const [isTaxonomyError, setIsTaxonomyError] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
-      const issues_resp = await axios.get(`https://api.taxonomy.sandbox.k8s.brigade.cloud/taxonomy?category=Issues`);
-      const _issues_data = issues_resp.data
-      const issues = _issues_data;
 
-      // only take the children of the first object, this is the detailed list of taxonomy items
-      const taxonomyIssues:TaxonomyList = issues[0].children;
-      const issuesMapLocal = new Map<string, string[]>(taxonomyIssues.map(key => [key.text, key.children]));
-      setIssuesMap(issuesMapLocal);
+      try {
+        const issues_resp = await axios.get(`https://api.taxonomy.sandbox.k8s.brigade.cloud/taxonomy?category=Issues`)
+        const issues = issues_resp.data;
+        // only take the children of the first object, this is the detailed list of taxonomy items
 
-      const paa_resp = await axios.get(`https://api.taxonomy.sandbox.k8s.brigade.cloud/taxonomy?category=Priority-Action-Areas`);
-      const _paa_data = paa_resp.data
-      const priorityAreas = _paa_data;
+        const taxonomyIssues: TaxonomyList = issues[0].children;
+        const issuesMapLocal = new Map<string, string[]>(taxonomyIssues.map(key => [key.text, key.children]));
+        setIssuesMap(issuesMapLocal);
+      }
+      catch (error) {
+        setIsTaxonomyError(true);
+      };
 
-      // only take the children of the first object, this is the detailed list of taxonomy items
-      const taxonomyPriorityAreas:TaxonomyList = priorityAreas[0].children;
-      const priorityAreasMapLocal = new Map<string, string[]>(taxonomyPriorityAreas.map(key => [key.text, key.children]));
-      setPriorityAreasMap(priorityAreasMapLocal);
+      try {
+        const paa_resp = await axios.get(`https://api.taxonomy.sandbox.k8s.brigade.cloud/taxonomy?category=Priority-Action-Areas`);
+        const _paa_data = paa_resp.data
+        const priorityAreas = _paa_data;
+
+        // only take the children of the first object, this is the detailed list of taxonomy items
+        const taxonomyPriorityAreas: TaxonomyList = priorityAreas[0].children;
+        const priorityAreasMapLocal = new Map<string, string[]>(taxonomyPriorityAreas.map(key => [key.text, key.children]));
+        setPriorityAreasMap(priorityAreasMapLocal);
+      }
+      catch (error) {
+        setIsTaxonomyError(true);
+      }
     }
     getData();
     // Disabling bc data length isn't going to change outside of this hook
@@ -60,7 +73,8 @@ const TaxonomyDataContextProvider = ({
     <Provider
       value={{
         issuesMap: issuesMap,
-        priorityAreasMap: priorityAreasMap
+        priorityAreasMap: priorityAreasMap,
+        isTaxonomyError: isTaxonomyError
       }}
     >
       {childNodes}
