@@ -17,7 +17,7 @@
     "toml": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.2",
+    "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.10.2",
     "babel-jest": "^27.3.1",
     "eslint": "^7.2.0",
@@ -25,7 +25,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.4.1",
-    "prettier": "^2.0.5"
+    "prettier": "^2.4.1"
   },
   "scripts": {
     "start": "node -r esm server.js",
