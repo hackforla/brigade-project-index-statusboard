@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@octokit/rest": "^17.9.2",
-    "apicache": "^1.5.3",
+    "apicache": "^1.6.3",
     "axios": "^0.21.2",
     "cors": "^2.8.5",
     "esm": "^3.2.25",
