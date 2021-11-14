@@ -182,10 +182,10 @@ function Projects(): JSX.Element {
     if (issueSelect.current) issueSelect.current.selectedIndex = 0;
   }, []);
 
-  function clearTaxonomy() {
+  const clearTaxonomy = useCallback(() => {
     clearIssueSelect();
     clearPriorityAreaSelect();
-  }
+  }, [clearIssueSelect, clearPriorityAreaSelect]);
 
   return (
     <>
