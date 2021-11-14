@@ -42,7 +42,8 @@ const TaxonomyDataContextProvider = ({
         // only take the children of the first object, this is the detailed list of taxonomy items
 
         const taxonomyIssues: TaxonomyList = issues[0].children;
-        const issuesMapLocal = new Map<string, string[]>(taxonomyIssues.map(key => [key.text, key.children]));
+        const issuesMapLocal = new Map<string, string[]>
+          (taxonomyIssues.filter(key => key.children).map(key => [key.text, key.children]));
         setIssuesMap(issuesMapLocal);
       }
       catch (error) {
@@ -56,7 +57,8 @@ const TaxonomyDataContextProvider = ({
 
         // only take the children of the first object, this is the detailed list of taxonomy items
         const taxonomyPriorityAreas: TaxonomyList = priorityAreas[0].children;
-        const priorityAreasMapLocal = new Map<string, string[]>(taxonomyPriorityAreas.map(key => [key.text, key.children]));
+        const priorityAreasMapLocal = new Map<string, string[]>
+          (taxonomyPriorityAreas.filter(key => key.children).map(key => [key.text, key.children]));
         setPriorityAreasMap(priorityAreasMapLocal);
       }
       catch (error) {
