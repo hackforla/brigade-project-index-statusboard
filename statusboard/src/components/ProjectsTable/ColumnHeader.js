@@ -17,9 +17,9 @@ export default function ColumnHeader({ column, disableSort }) {
     <th {...headerProps} className="column-header">
       <div className="column-header__contents">
         <div>{column.render('Header')}</div>
-        {column.canFilter && column.render('Filter')}
+        {column.canFilter && <div>{column.render('Filter')}</div>}
         {column.canSort && (
-          
+          <div>
             <Button
               type="button"
               className="sort-button"
@@ -45,7 +45,8 @@ export default function ColumnHeader({ column, disableSort }) {
                   />
                 </div>
               </>
-            </Button> 
+            </Button>
+          </div>
         )}
       </div>
     </th>
