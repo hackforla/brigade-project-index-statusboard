@@ -12,7 +12,7 @@
     "@types/react-table": "^7.0.25",
     "axios": "^0.21.2",
     "classnames": "^2.2.6",
-    "d3-geo": "^1.12.1",
+    "d3-geo": "^3.0.1",
     "downshift": "^6.0.6",
     "leaflet": "^1.6.0",
     "lodash": "^4.17.15",
