@@ -14,8 +14,10 @@ import './Map.scss';
 export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
   const defaultZoom = 2;
   const defaultCenter = [44.967243, -104.771556];
+
   const [zoom, setZoom] = useState(defaultZoom);
   const [center, setCenter] = useState(defaultCenter);
+
   const { name: selectedBrigadeName } = filterOpts.selectedBrigade || {};
 
   useEffect(() => {
@@ -25,14 +27,32 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
       const { latitude, longitude } = filterOpts.selectedBrigade || {};
       setCenter([latitude, longitude]);
     } else {
-      setZoom(defaultZoom);
-      setCenter(defaultCenter);
+      let userCenter = [];
+      const foundLocation = (position) => {
+        userCenter = [position.coords.latitude, position.coords.longitude];
+        setZoom(2);
+        setCenter(userCenter);
+      };
+      const noLocation = () => {
+        setZoom(defaultZoom);
+        setCenter(defaultCenter);
+      };
+
+      const options = { timeOut: 20000, maximumAge: 60 * 60 * 24 };
+
+      navigator.geolocation.getCurrentPosition(
+        foundLocation,
+        noLocation,
+        options
+      );
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBrigadeName]);
 
   return (
     <div className="map leaflet-container">
+      {}
       <LeafletMap
         // TODO: WHY IS FOCUS STYLING NOT WORKING ON ZOOM BUTTONS??
         zoom={zoom}
