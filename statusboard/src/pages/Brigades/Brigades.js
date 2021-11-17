@@ -5,7 +5,6 @@ import {
   getProjectsFromBrigadeData,
   filterBrigades,
   customStringSort,
-  lastPushSort,
 } from '../../utils/utils';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { ProjectsTable, Select } from '../../components';
@@ -58,7 +57,6 @@ function Brigades() {
 
   const sortTypes = {
     customStringSort,
-    lastPushSort,
   };
 
   useEffect(() => {

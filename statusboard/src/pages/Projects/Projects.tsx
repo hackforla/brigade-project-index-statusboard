@@ -18,7 +18,7 @@ import {
 } from 'react-table';
 import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
-import { ACTIVE_THRESHOLDS, getTopicsFromProjects, customStringSort } from '../../utils/utils';
+import { ACTIVE_THRESHOLDS, getTopicsFromProjects, customStringSort, lastPushSort } from '../../utils/utils';
 import Select from '../../components/Select/Select';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
@@ -60,6 +60,7 @@ function Projects(): JSX.Element {
 
   const sortTypes = {
     customStringSort,
+    lastPushSort
   };
 
 
