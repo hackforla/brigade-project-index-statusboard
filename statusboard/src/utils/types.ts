@@ -1,4 +1,8 @@
 // If we also use typescript on the back end, we can move this into a "common" folder (still within the front end bc CRA is opinionated) and use it there too
+import { SortByFn,
+  Row,
+  IdType, } from "react-table";
+import { customStringSort,lastPushSort } from "./utils";
 
 export type Brigade = {
   name: string;
@@ -41,3 +45,6 @@ export type Location = {
     longitude?: string | number;
   };
 };
+
+
+

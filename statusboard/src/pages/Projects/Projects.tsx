@@ -15,13 +15,10 @@ import {
   FilterTypes,
   Filters,
   useSortBy,
-  SortByFn,
-  Row,
-  IdType,
 } from 'react-table';
 import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
-import { ACTIVE_THRESHOLDS, getTopicsFromProjects } from '../../utils/utils';
+import { ACTIVE_THRESHOLDS, getTopicsFromProjects, customStringSort } from '../../utils/utils';
 import Select from '../../components/Select/Select';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
@@ -33,6 +30,7 @@ import getTableColumns from './utils';
 import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
 import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss';
+
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
@@ -60,58 +58,11 @@ function Projects(): JSX.Element {
     []
   );
 
-  const customStringSort: SortByFn<Project> = (
-    rowA: Row<Project>,
-    rowB: Row<Project>,
-    id: IdType<Project>,
-    desc?: boolean
-  ): number => {
-    const rowAValue: string = rowA.values[id] ?? '';
-    const rowBValue: string = rowB.values[id] ?? '';
-
-    const valueA: string = String(rowAValue).toLowerCase();
-    const valueB: string = String(rowBValue).toLowerCase();
-    if (desc) {
-      return valueA.localeCompare(valueB) > 0 ? 1 : -1;
-    }
-    return valueB.localeCompare(valueA) > 0 ? -1 : 1;
-  };
-
-  function periodToNumber(period: string) {
-    if (period === 'week') {
-      return 0;
-    }
-    if (period === 'month') {
-      return 1;
-    }
-    if (period === 'year') {
-      return 2;
-    }
-    if (period === 'over_a_year') {
-      return 3;
-    }
-    return 99;
-  }
-
-  const lastPushSort: SortByFn<Project> = (
-    rowA: Row<Project>,
-    rowB: Row<Project>,
-    id: IdType<Project>,
-    desc?: boolean
-  ): number => {
-    // need to convert week, month to 1, 2, ..
-    const d1: number = periodToNumber(rowA.values[id]);
-    const d2: number = periodToNumber(rowB.values[id]);
-    if (desc) {
-      return d1 - d2 > 0 ? 1 : -1;
-    }
-    return d2 - d1 > 0 ? -1 : 1;
-  };
-
-  const sortTypes: Record<string, SortByFn<Project>> = {
+  const sortTypes = {
     customStringSort,
-    lastPushSort,
   };
+
+
 
   const columns: Column<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
