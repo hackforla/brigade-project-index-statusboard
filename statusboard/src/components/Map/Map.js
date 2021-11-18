@@ -27,7 +27,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
       const { latitude, longitude } = filterOpts.selectedBrigade || {};
       setCenter([latitude, longitude]);
     } else {
-      const userCenter = [];
+      let userCenter = [];
       const foundLocation = (position) => {
         userCenter = [position.coords.latitude, position.coords.longitude];
         setZoom(2);
