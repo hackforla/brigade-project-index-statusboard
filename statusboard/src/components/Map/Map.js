@@ -27,7 +27,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
       const { latitude, longitude } = filterOpts.selectedBrigade || {};
       setCenter([latitude, longitude]);
     } else {
-      let userCenter = [];
+      const userCenter = [];
       const foundLocation = (position) => {
         userCenter = [position.coords.latitude, position.coords.longitude];
         setZoom(2);
@@ -38,7 +38,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
         setCenter(defaultCenter);
       };
 
-      const options = { timeOut: 20000, maximumAge: 60 * 60 * 24 };
+      const options = { timeOut: 20000, maximumAge: 60 * 60 * 24 * 1000 };
 
       navigator.geolocation.getCurrentPosition(
         foundLocation,
@@ -52,7 +52,6 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
 
   return (
     <div className="map leaflet-container">
-      {}
       <LeafletMap
         // TODO: WHY IS FOCUS STYLING NOT WORKING ON ZOOM BUTTONS??
         zoom={zoom}
