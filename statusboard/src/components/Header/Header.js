@@ -9,15 +9,15 @@ function Header() {
   // https://dequeuniversity.com/assets/html/jquery-summit/html5/slides/headings.html
   return (
     <header className="App-header">
-      <NavLink to="/" className="home-link">
+      <NavLink to="https://brigade.codeforamerica.org/" className="home-link">
         <img
           src={logo}
           className="App-logo"
           alt="Code for America brigade"
           role="presentation"
         />
-        <span className="App-title">Project Index</span>
       </NavLink>
+      <span className="App-title">Project Index</span>
       <Nav />
     </header>
   );

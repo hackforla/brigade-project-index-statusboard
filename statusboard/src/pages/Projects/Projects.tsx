@@ -189,13 +189,20 @@ function Projects(): JSX.Element {
 
   return (
     <>
-      <h1>CfA brigade projects</h1>
+        Here you can search for <a href="https://brigade.codeforamerica.org/">Code For America Brigades</a> and other organizatios projects.
+        <br/>
+        You can search by <a href="https://codeforamerica.github.io/civic-tech-taxonomy/editor-ui/">Taxonomy</a> ("Topic" or "Priority Area") or by "Tags".
+        <br/>
+        You can also include non "Code For America" projects as well as select a timeframe of
+        when a project was last updated.
+        <br/>
       <LoadingIndicator loading={loading}>
         <>
           <div>
+          <br/>
             <Select
               extraRef={null}
-              label={`Showing ${rowCounter} projects with changes on Github in the last `}
+              label={`Showing ${rowCounter} projects with changes on Github in the last  `}
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                 setFilters({ timeRange: e.target.value })
@@ -204,17 +211,28 @@ function Projects(): JSX.Element {
               options={Object.keys(ACTIVE_THRESHOLDS)}
             />
             <Checkbox
-              label="Display non-brigade projects?"
+              label="Display non Code For America projects?"
               id="non_brigade_projects"
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setFilters({ nonCfA: String(e.target.checked) })
               }
             />
             {!isTaxonomyError &&
-            <div style={{ display: 'flex', gap: '30px', marginTop: '10px' }}>
+            <fieldset style={{ 
+              display: 'inline', 
+              marginTop: '10px', 
+              border: '2px', 
+              borderStyle: 'solid', 
+              borderColor: 'cfa-blue',
+              borderRadius: '10px',
+              padding: '10px'
+              }}
+              >
+              <legend>Taxonomy</legend>
+              <div style={{display: 'flex', gap: '30px'}}>
               <Select
                 extraRef={issueSelect}
-                label=" Search by Issue "
+                label=" Search by Topic "
                 id="select-issue"
                 options={issueOptions}
                 emptyOptionText=""
@@ -230,7 +248,7 @@ function Projects(): JSX.Element {
               />
               <Select
                 extraRef={priorityAreaSelect}
-                label=" Search by Priority Action Areas "
+                label=" Search by Priority Action Area "
                 id="select-priority-areas"
                 options={priorityAreasOptions}
                 emptyOptionText=""
@@ -244,9 +262,9 @@ function Projects(): JSX.Element {
                   clearIssueSelect();
                 }}
               />
-            </div>}
+              </div>
+            </fieldset>}
           </div>
-          <br />
           {availableTopics  && (
             <MultiSelect
               clearTaxonomy={clearTaxonomy}
@@ -255,7 +273,7 @@ function Projects(): JSX.Element {
                 setFilters({ topics: newTopics })
               }
               items={availableTopics}
-              labelText="Topics"
+              labelText="Tags"
               onSelectionItemsChange={(newTopics: string[] | undefined) =>
                 setFilters({ topics: newTopics })
               }
