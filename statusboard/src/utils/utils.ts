@@ -115,8 +115,7 @@ export function filterProjectsByCfA(
   nonCfA?: string
 ) {
   if (nonCfA === 'true') {
-    
-    console.log(projects.length);
+
     return projects;
   }
   
