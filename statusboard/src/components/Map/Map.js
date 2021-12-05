@@ -13,20 +13,28 @@ import './Map.scss';
 
 export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
   const defaultZoom = 2;
+  const storedCenter = [
+    parseFloat(localStorage.getItem('lat'), 10),
+    parseFloat(localStorage.getItem('lng'), 10),
+  ];
+
   const defaultCenter = [44.967243, -104.771556];
 
-  const [zoom, setZoom] = useState(defaultZoom);
-  const [center, setCenter] = useState(defaultCenter);
+  const [zoom, setZoom] = useState(localStorage.getItem('zoom') || defaultZoom);
+  const [center, setCenter] = useState(
+    storedCenter[0] != null ? storedCenter : defaultCenter
+  );
 
   const { name: selectedBrigadeName } = filterOpts.selectedBrigade || {};
 
   useEffect(() => {
     if (filterOpts.selectedBrigade) {
-      // Set that brigade as the center
+      // Set that brigade as the center, prioritize that over stored location
       setZoom(8);
       const { latitude, longitude } = filterOpts.selectedBrigade || {};
       setCenter([latitude, longitude]);
-    } else {
+    } else if (storedCenter[0] == null) {
+      // if there is no selected brigade NOR a location stored in localstorage, get user's location, or not
       let userCenter = [];
       const foundLocation = (position) => {
         userCenter = [position.coords.latitude, position.coords.longitude];
@@ -56,15 +64,23 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
         // TODO: WHY IS FOCUS STYLING NOT WORKING ON ZOOM BUTTONS??
         zoom={zoom}
         center={center}
+        // FYI moveend fires CONSTANTLY, like,
+        // upon first loading map
+        // multiple times when panning
+        // basically whenever it feels like it
+        // TODO: add timeout so it fires slightly less often
         onMoveend={(e) => {
           const { _zoom: newZoom, _lastCenter } = e.target || {};
           const { lat: newLat, lng: newLon } = _lastCenter || {};
           setFilterOpts({ ...filterOpts, bounds: e.target.getBounds() });
           if (newZoom) {
             setZoom(newZoom);
+            localStorage.setItem('zoom', newZoom);
           }
           if (_lastCenter) {
             setCenter([newLat, newLon]);
+            localStorage.setItem('lat', newLat);
+            localStorage.setItem('lng', newLon);
           }
         }}
       >
@@ -124,6 +140,9 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
         onClick={() => {
           setZoom(defaultZoom);
           setCenter(defaultCenter);
+          localStorage.setItem('zoom', defaultZoom);
+          localStorage.setItem('lat', defaultCenter[0]);
+          localStorage.setItem('lng', defaultCenter[1]);
           setFilterOpts({});
         }}
         text="Reset"

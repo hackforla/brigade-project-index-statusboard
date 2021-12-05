@@ -87,7 +87,10 @@ function Brigades() {
     if (filteredBrigadeData.length > 5) {
       brigadesShowingString = `${brigadesShowingString} and ${
         filteredBrigadeData.length - 5
-      } other brigades, updated within the past`;
+      } other brigades`;
+    }
+    if (!projects.length) {
+      brigadesShowingString = `${brigadesShowingString}. Try zooming out or looking for older projects.`;
     }
   }
 
@@ -116,6 +119,7 @@ function Brigades() {
         {brigadesShowingString}
         <Select
           extraRef={null}
+          label="Showing projects updated within the past "
           id="active_time_range"
           onChange={(e) => setTimeRange(e.target.value)}
           selected={timeRange}
