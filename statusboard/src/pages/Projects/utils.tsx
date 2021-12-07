@@ -121,7 +121,7 @@ export default function getTableColumns(
       disableSortBy: true,
     },
     {
-      Header: 'Brigade',
+      Header: 'Organization',
       accessor: (project: Project): string => project.brigade?.name ?? '',
       id: 'organization',
       Filter: TextFilter,

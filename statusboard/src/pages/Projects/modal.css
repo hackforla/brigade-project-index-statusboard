@@ -1,0 +1,76 @@
+.taxonomy_modal {
+    position: fixed;
+    top: 25%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+  
+    border: 1px solid #ccc;
+    background: #fff;
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+  }
+
+.header {
+    display: flex;
+    font-weight: bold;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    align-items: center;
+}
+
+.taxonomy_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: "rgba(0, 0, 0, 0)"
+}
+
+.help:hover {
+    cursor: help;
+}
+
+.question_mark {
+    opacity: 0.5;
+    font-size: 1rem;
+    border-radius:100%;
+}
+
+.question_mark:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+.close {
+    position: absolute;
+    right: 25px;
+    top: 10px;
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+    border: 0;
+    background-color: white;
+}
+
+.close:hover {
+    opacity: 1;
+}
+  
+.close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+}
+  
+.close:before {
+    transform: rotate(45deg);
+}
+  
+.close:after {
+    transform: rotate(-45deg);
+}
