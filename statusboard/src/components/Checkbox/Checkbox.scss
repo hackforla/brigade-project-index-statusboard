@@ -1,3 +1,4 @@
+
 input[type=checkbox] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -9,19 +10,14 @@ input[type=checkbox] {
   padding: 6px;
 }
 
-input[type="checkbox"]:checked {
-  background-color: #005980;
-} 
 
 input[type=checkbox]:checked:after {
-  width: 2mm;
-  height: 4mm;
-  border: solid white;
-  border-width: 0 2mm 2mm 0;
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-  content: "";
-  display: inline-block;
+  content: "✓";
+  font-weight: bolder;
+  font-size: 1.5rem;
+  color: var(--cfa-blue);
+  position: relative;
+  top: -9px;
+  left: -2px;
 }
+
