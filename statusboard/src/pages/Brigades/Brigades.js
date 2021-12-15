@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { usePagination, useSortBy } from 'react-table';
 import Map from '../../components/Map/Map';
-import { getProjectsFromBrigadeData, filterBrigades } from '../../utils/utils';
+import {
+  getProjectsFromBrigadeData,
+  filterBrigades,
+  customStringSort,
+} from '../../utils/utils';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { ProjectsTable, Select } from '../../components';
 import './Brigades.scss';
@@ -14,23 +18,46 @@ function Brigades() {
   const { selectedBrigade } = filterOpts; // also has bounds
   const [projects, setProjects] = useState(allProjects);
 
+  const ProjectCell = (cell) => {
+    const project = cell.row.original;
+    return <a href={project.code_url}>{project.name}</a>;
+  };
+
+  const BrigadeCell = (cell) => {
+    const project = cell.row.original;
+    return (
+      <a target="new" href={project.brigade.website}>
+        {project.brigade.name}
+      </a>
+    );
+  };
+
   const columns = React.useMemo(
     () => [
       {
         Header: 'Project name',
-        accessor: (project) => <a href={project.code_url}>{project.name}</a>,
+        accessor: 'name',
+        sortType: 'customStringSort',
+        Cell: ProjectCell,
       },
       {
         Header: 'Description',
         accessor: 'description',
+        sortType: 'customStringSort',
       },
       {
         Header: 'Brigade',
-		accessor: (project) => <a target="new" href={project.brigade.website}>{project.brigade.name}</a>,
+        accessor: 'brigade',
+        sortType: 'customStringSort',
+        Cell: BrigadeCell,
       },
     ],
-    [],
+    []
   );
+
+  const sortTypes = {
+    customStringSort,
+  };
 
   useEffect(() => {
     const newlyFilteredBrigadeData = filterBrigades(allBrigadeData, filterOpts);
@@ -48,7 +75,7 @@ function Brigades() {
       brigadesShowingString = `${brigadesShowingString} ${selectedBrigade.name}`;
     } else {
       brigadesShowingString = `${brigadesShowingString} ${firstFiveBrigades.join(
-        ', ',
+        ', '
       )}`;
     }
     if (filteredBrigadeData.length > 5) {
@@ -61,7 +88,16 @@ function Brigades() {
   const options = {
     columns,
     data: projects || [],
-    initialState: { pageIndex: 0, pageSize: 50 },
+    initialState: {
+      pageIndex: 0,
+      pageSize: 50,
+      sortBy: [
+        {
+          id: 'name',
+        },
+      ],
+    },
+    sortTypes,
   };
   const plugins = [useSortBy, usePagination];
 

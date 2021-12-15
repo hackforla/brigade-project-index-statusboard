@@ -19,7 +19,7 @@ function Nav() {
           <a href="https://codeforamerica.github.io/publiccode-pusher/" className="external_link"  target='new' title="External Tool">PublicCode Editor</a>
         </li>
         <li>
-          <a href="https://codeforamerica.github.io/civic-tech-taxonomy/editor-ui/" className="external_link" target='new' title="External Tool">Taxonomy</a>
+          <a href="https://codeforamerica.github.io/civic-tech-taxonomy/editor-ui?from_project_index=true" className="external_link" title="External Tool">Taxonomy</a>
         </li>
         <li>
           <NavLink to="/about">About</NavLink>

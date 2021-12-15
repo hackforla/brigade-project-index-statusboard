@@ -6,6 +6,7 @@ nav {
   font-family: var(--font-family-header);
   font-weight: bold;
   font-size: 1.5rem;
+  margin-left: auto;
 
   .navigation__mobile {
     display: none;
@@ -22,6 +23,7 @@ nav {
     flex-wrap: wrap;
     align-items: flex-end;
     margin: unset;
+    padding-inline-start: 0;
 
     li {
       margin-left: 1.5rem;
