@@ -150,16 +150,6 @@ function Projects(): JSX.Element {
     setIsOpen(false);
   }
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  function toggleModal() {
-    setIsOpen(!isOpen);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
   return (
     <>
         This is the list of <a href="https://brigade.codeforamerica.org/">Code For America Brigades</a> and other organizations' civic tech projects.
