@@ -33,7 +33,6 @@ import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss';
 import './modal.css';
 
-
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
@@ -140,6 +139,16 @@ function Projects(): JSX.Element {
     clearIssueSelect();
     clearPriorityAreaSelect();
   }, [clearIssueSelect, clearPriorityAreaSelect]);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  function toggleModal() {
+    setIsOpen(!isOpen);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   const [isOpen, setIsOpen] = useState(false);
 

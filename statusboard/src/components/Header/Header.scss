@@ -40,6 +40,14 @@
       font-family: var(--font-family-header);
     }
   }
+  
+  .App-title {
+    white-space: nowrap;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--cfa-white);
+    font-family: var(--font-family-header);
+  }
 
   .home-link:focus,
   .home-link:hover {
