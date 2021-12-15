@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import logo from './cfa-brigade-logo.svg';
 import Nav from '../Nav/Nav';
 import './Header.scss';
@@ -11,14 +10,14 @@ function Header() {
   return (
     <header className="App-header">
       <div className="home-link-and-title">
-        <NavLink to="https://brigade.codeforamerica.org/" className="home-link">
+        <a href="https://brigade.codeforamerica.org/" className="home-link">
           <img
             src={logo}
             className="App-logo"
-            alt="Code for America brigade"
+            alt="Code for America Brigades home page"
             role="presentation"
           />
-        </NavLink>
+        </a>
         <span className="App-title">Project Index</span>
       </div>
       <Nav />
