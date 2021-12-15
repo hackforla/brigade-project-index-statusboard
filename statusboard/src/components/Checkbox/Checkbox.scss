@@ -21,3 +21,8 @@ input[type=checkbox]:checked:after {
   left: -2px;
 }
 
+input[type=checkbox]:hover,
+input[type=checkbox]:focus {
+  background-color: var(--cfa-blue-lightest);
+  cursor: pointer;
+}
