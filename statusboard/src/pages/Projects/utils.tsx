@@ -113,7 +113,7 @@ export default function getTableColumns(
       sortType: 'lastPushSort',
     },
     {
-      Header: 'Topics',
+      Header: 'Tags',
       id: 'topics',
       accessor: (project: Project) => project.topics?.length,
       disableFilters: true,
@@ -121,7 +121,7 @@ export default function getTableColumns(
       disableSortBy: true,
     },
     {
-      Header: 'Brigade',
+      Header: 'Organization',
       accessor: (project: Project): string => project.brigade?.name ?? '',
       id: 'organization',
       Filter: TextFilter,

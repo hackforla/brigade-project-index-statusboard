@@ -10,16 +10,16 @@ function Nav() {
     <nav role="navigation" aria-label="Main">
       <ul className="navigation__desktop">
         <li>
-          <NavLink to="/projects">Projects</NavLink>
+          <NavLink to="/projects">Projects List</NavLink>
         </li>
         <li>
-          <NavLink to="/brigades">Projects by Brigade</NavLink>
+          <NavLink to="/brigades">Projects Map</NavLink>
         </li>
         <li>
           <a href="https://codeforamerica.github.io/publiccode-pusher/" className="external_link"  target='new' title="External Tool">PublicCode Editor</a>
         </li>
         <li>
-          <a href="https://codeforamerica.github.io/civic-tech-taxonomy/editor-ui/" className="external_link" target='new' title="External Tool">Taxonomy</a>
+          <a href="https://codeforamerica.github.io/civic-tech-taxonomy/editor-ui?from_project_index=true" className="external_link" title="External Tool">Taxonomy</a>
         </li>
         <li>
           <NavLink to="/about">About</NavLink>
@@ -41,12 +41,12 @@ function Nav() {
         <ul>
           <li>
             <NavLink onClick={toggleMenu} to="/projects">
-              Projects
+              Projects List
             </NavLink>
           </li>
           <li>
             <NavLink to="/brigades" onClick={toggleMenu}>
-              Projects by Brigade
+              Projects Map
             </NavLink>
           </li>
           <li>

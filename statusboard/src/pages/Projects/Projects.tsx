@@ -16,6 +16,7 @@ import {
   Filters,
   useSortBy,
 } from 'react-table';
+import Modal from 'react-modal'
 import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
 import { ACTIVE_THRESHOLDS, getTopicsFromProjects, customStringSort, lastPushSort } from '../../utils/utils';
@@ -30,6 +31,7 @@ import getTableColumns from './utils';
 import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
 import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss';
+import './modal.css';
 
 
 function Projects(): JSX.Element {
@@ -139,15 +141,53 @@ function Projects(): JSX.Element {
     clearPriorityAreaSelect();
   }, [clearIssueSelect, clearPriorityAreaSelect]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  function toggleModal() {
+    setIsOpen(!isOpen);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <>
-      <h1>CfA brigade projects</h1>
+        This is the list of <a href="https://brigade.codeforamerica.org/">Code For America Brigades</a> and other organizations' civic tech projects.
+        <br/>
+        You can search projects by <span className="help">"Topic", "Priority Area" or by "Tags"</span> &nbsp;  
+        <button type='button' className='question_mark' onClick={toggleModal}>&#63;</button>
+        <Modal 
+          isOpen={isOpen}
+          contentLabel="Taxonomy"
+          className="taxonomy_modal"
+          overlayClassName="taxonomy_overlay"
+          onRequestClose={() => closeModal()}          
+          shouldCloseOnOverlayClick
+          shouldCloseOnEsc
+        >
+          <div className='header'>
+            <div>Taxonomy</div>
+            <button type='button' className='close' onClick={toggleModal}>.</button>
+          </div>
+          <div style={{fontSize: '16px'}}>
+            The list of Topics and Priority Action Areas comes from the Taxonomy project.
+            <br/>
+            The list of Tags comes from the Index Crawler.
+            <br/>
+            You can find out more about Taxonomy by clicking on the Taxonomy menu item.
+          </div>
+        </Modal>
+        <br/>
+        You can also exclude projects outside "Code For America Brigades" as well as select a timeframe on when a project was last updated.
+        <br/>
       <LoadingIndicator loading={loading}>
         <>
           <div>
+          <br/>
             <Select
               extraRef={null}
-              label={`Showing ${rowCounter} projects with changes on Github in the last `}
+              label={`Showing ${rowCounter} projects with changes on Github in the last  `}
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                 setFilters({ timeRange: e.target.value })
@@ -156,17 +196,17 @@ function Projects(): JSX.Element {
               options={Object.keys(ACTIVE_THRESHOLDS)}
             />
             <Checkbox
-              label="Display non-brigade projects?"
-              id="non_brigade_projects"
+              label="Show only Code For America projects?"
+              id="only_cfa_projects"
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setFilters({ nonCfA: String(e.target.checked) })
+                setFilters({ onlyCfA: String(e.target.checked) })
               }
             />
             {!isTaxonomyError &&
-            <div style={{ display: 'flex', gap: '30px', marginTop: '10px' }}>
+              <div style={{display: 'flex', gap: '30px'}}>
               <Select
                 extraRef={issueSelect}
-                label=" Search by Issue "
+                label="Topic "
                 id="select-issue"
                 options={issueOptions}
                 emptyOptionText=""
@@ -182,7 +222,7 @@ function Projects(): JSX.Element {
               />
               <Select
                 extraRef={priorityAreaSelect}
-                label=" Search by Priority Action Areas "
+                label=" CfA Priority Action Area "
                 id="select-priority-areas"
                 options={priorityAreasOptions}
                 emptyOptionText=""
@@ -196,9 +236,9 @@ function Projects(): JSX.Element {
                   clearIssueSelect();
                 }}
               />
-            </div>}
+              </div>
+            }
           </div>
-          <br />
           {availableTopics  && (
             <MultiSelect
               clearTaxonomy={clearTaxonomy}
@@ -207,7 +247,7 @@ function Projects(): JSX.Element {
                 setFilters({ topics: newTopics })
               }
               items={availableTopics}
-              labelText="Topics"
+              labelText="Tags"
               onSelectionItemsChange={(newTopics: string[] | undefined) =>
                 setFilters({ topics: newTopics })
               }

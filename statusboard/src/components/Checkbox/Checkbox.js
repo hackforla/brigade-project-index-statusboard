@@ -8,7 +8,7 @@ export default function Checkbox({
   id,
   onChange,
   className = '',
-  inline = true,
+  inline = true
 }) {
   return (
     <div
@@ -17,7 +17,7 @@ export default function Checkbox({
         { 'form-control-container--inline': inline },
         className
       )}
-      style={{display: "flex"}}
+      style={{ display: 'flex' }}
     >
       <label
         htmlFor={id}

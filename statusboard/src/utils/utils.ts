@@ -112,17 +112,15 @@ export function filterProjectsByTime(
 
 export function filterProjectsByCfA(
   projects: Project[],
-  nonCfA?: string
+  onlyCfA?: string
 ) {
-  if (nonCfA === 'true') {
-    
-    console.log(projects.length);
-    return projects;
+  if (onlyCfA === 'true') {
+    return projects.filter((p: Project) =>
+      p?.brigade?.type ? p.brigade.type.includes("Brigade") || p.brigade.type.includes("Code for America") : false
+    );
   }
   
-  return projects.filter((p: Project) =>
-    p?.brigade?.type ? p.brigade.type.includes("Brigade") || p.brigade.type.includes("Code for America") : false
-  );
+  return projects;
 }
 
 export function filterActiveProjects(
@@ -130,20 +128,20 @@ export function filterActiveProjects(
     timeRange?: ActiveThresholdsKeys;
     topics?: string[];
     brigades?: string[];
-    nonCfA: string;
+    onlyCfA: string;
   },
   projects?: Project[]
 ) {
   if (!projects) return [];
   // Set destructuring and allow defaults to be overwritten
-  const { timeRange, topics, brigades, nonCfA } = options || {};
+  const { timeRange, topics, brigades, onlyCfA } = options || {};
   let newProjects: ProjectWithTopicsMatched[] = filterProjectsByBrigades(
     projects,
     brigades
   );
   newProjects = filterProjectsByTopics(newProjects, topics);
   newProjects = filterProjectsByTime(newProjects, timeRange);
-  newProjects = filterProjectsByCfA(newProjects, nonCfA);
+  newProjects = filterProjectsByCfA(newProjects, onlyCfA);
   return newProjects;
 }
 
