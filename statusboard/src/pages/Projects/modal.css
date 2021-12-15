@@ -1,9 +1,8 @@
 .taxonomy_modal {
     position: fixed;
-    top: 25%;
-    left: 70%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
-  
     border: 1px solid #ccc;
     background: #fff;
     overflow: auto;
@@ -12,21 +11,20 @@
     padding: 20px;
   }
 
-.header {
-    display: flex;
-    font-weight: bold;
-    justify-content: space-between;
-    padding-bottom: 1rem;
-    align-items: center;
-}
-
 .taxonomy_overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: "rgba(0, 0, 0, 0)"
+}
+
+.header {
+    display: flex;
+    font-weight: bold;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    align-items: center;
 }
 
 .help:hover {
