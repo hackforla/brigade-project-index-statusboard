@@ -9,7 +9,7 @@
     "@types/react": "^17.0.37",
     "@types/react-dom": "^16.9.9",
     "@types/react-modal": "^3.13.1",
-    "@types/react-router-dom": "^5.1.6",
+    "@types/react-router-dom": "^5.3.2",
     "@types/react-table": "^7.0.25",
     "axios": "^0.21.2",
     "classnames": "^2.2.6",
