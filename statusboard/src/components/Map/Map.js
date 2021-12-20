@@ -20,10 +20,23 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
 
   const defaultCenter = [44.967243, -104.771556];
 
-  const [zoom, setZoom] = useState(localStorage.getItem('zoom') || defaultZoom);
-  const [center, setCenter] = useState(
+  const [zoom, _setZoom] = useState(
+    localStorage.getItem('zoom') || defaultZoom
+  );
+  const [center, _setCenter] = useState(
     !Number.isNaN(storedCenter[0]) ? storedCenter : defaultCenter
   );
+
+  const setZoom = (newZoom) => {
+    _setZoom(newZoom);
+    localStorage.setItem('zoom', newZoom);
+  };
+
+  const setCenter = ([newLat, newLon]) => {
+    _setCenter([newLat, newLon]);
+    localStorage.setItem('lat', newLat);
+    localStorage.setItem('lng', newLon);
+  };
 
   const { name: selectedBrigadeName } = filterOpts.selectedBrigade || {};
 
@@ -33,7 +46,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
       setZoom(8);
       const { latitude, longitude } = filterOpts.selectedBrigade || {};
       setCenter([latitude, longitude]);
-    } else if (!Number.isNaNstoredCenter[0]) {
+    } else if (Number.isNaN(storedCenter[0])) {
       // if there is no selected brigade NOR a location stored in localstorage, get user's location, or not
       let userCenter = [];
       const foundLocation = (position) => {
@@ -71,16 +84,13 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
         // TODO: add timeout so it fires slightly less often
         onMoveend={(e) => {
           const { _zoom: newZoom, _lastCenter } = e.target || {};
-          const { lat: newLat, lng: newLon } = _lastCenter || {};
+          const { lat: newLat, lng: newLon } = e.target.getCenter() || {};
           setFilterOpts({ ...filterOpts, bounds: e.target.getBounds() });
           if (newZoom) {
             setZoom(newZoom);
-            localStorage.setItem('zoom', newZoom);
           }
           if (_lastCenter) {
             setCenter([newLat, newLon]);
-            localStorage.setItem('lat', newLat);
-            localStorage.setItem('lng', newLon);
           }
         }}
       >
@@ -140,9 +150,6 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
         onClick={() => {
           setZoom(defaultZoom);
           setCenter(defaultCenter);
-          localStorage.setItem('zoom', defaultZoom);
-          localStorage.setItem('lat', defaultCenter[0]);
-          localStorage.setItem('lng', defaultCenter[1]);
           setFilterOpts({});
         }}
         text="Reset"
