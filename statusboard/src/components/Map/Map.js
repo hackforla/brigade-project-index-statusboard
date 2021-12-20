@@ -14,15 +14,15 @@ import './Map.scss';
 export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
   const defaultZoom = 2;
   const storedCenter = [
-    parseFloat(localStorage.getItem('lat'), 10),
-    parseFloat(localStorage.getItem('lng'), 10),
+    parseFloat(localStorage.getItem('lat')),
+    parseFloat(localStorage.getItem('lng')),
   ];
 
   const defaultCenter = [44.967243, -104.771556];
 
   const [zoom, setZoom] = useState(localStorage.getItem('zoom') || defaultZoom);
   const [center, setCenter] = useState(
-    storedCenter[0] != null ? storedCenter : defaultCenter
+    !Number.isNaN(storedCenter[0]) ? storedCenter : defaultCenter
   );
 
   const { name: selectedBrigadeName } = filterOpts.selectedBrigade || {};
@@ -33,7 +33,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
       setZoom(8);
       const { latitude, longitude } = filterOpts.selectedBrigade || {};
       setCenter([latitude, longitude]);
-    } else if (storedCenter[0] == null) {
+    } else if (!Number.isNaNstoredCenter[0]) {
       // if there is no selected brigade NOR a location stored in localstorage, get user's location, or not
       let userCenter = [];
       const foundLocation = (position) => {
