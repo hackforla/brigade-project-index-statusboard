@@ -33,19 +33,18 @@ app.use(cors());
 
 app.use('/api', createRoutes(app));
 
-if (process.env.REDIRECT_TO_DOMAIN != undefined) {
+if (process.env.REDIRECT_TO_DOMAIN) {
   // If we are in heroku environment, force SSL / domain redirect
   // given appropriate env
   app.all(/.*/, function (req, res, next) {
     const host = req.header('host');
-    if (host != process.env.REDIRECT_TO_DOMAIN) {
+    if (host !== process.env.REDIRECT_TO_DOMAIN) {
       res.redirect(301, `https://${process.env.REDIRECT_TO_DOMAIN}`);
     } else {
       next();
     }
   });
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
-} else {
 }
 
 app.use(express.static(`${__dirname}/dist`));

@@ -152,7 +152,6 @@ export async function getTaxonomy() {
     await indexZip.loadAsync(downloadedRepos.data);
 
     // Iterate through all the .toml files
-    const orgs = [];
     const issues = [];
     const promises = [];
     indexZip.folder('').forEach((path) => {
