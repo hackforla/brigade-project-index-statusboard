@@ -24,7 +24,7 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
     localStorage.getItem('zoom') || defaultZoom
   );
   const [center, _setCenter] = useState(
-    !Number.isNaN(storedCenter[0]) ? storedCenter : defaultCenter
+    Number.isNaN(storedCenter[0]) ? defaultCenter : storedCenter
   );
 
   const setZoom = (newZoom) => {
@@ -83,15 +83,14 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
         // basically whenever it feels like it
         // TODO: add timeout so it fires slightly less often
         onMoveend={(e) => {
-          const { _zoom: newZoom, _lastCenter } = e.target || {};
+          const { _zoom: newZoom } = e.target || {};
           const { lat: newLat, lng: newLon } = e.target.getCenter() || {};
           setFilterOpts({ ...filterOpts, bounds: e.target.getBounds() });
           if (newZoom) {
             setZoom(newZoom);
           }
-          if (_lastCenter) {
-            setCenter([newLat, newLon]);
-          }
+
+          setCenter([newLat, newLon]);
         }}
       >
         {/* TODO: ADD STATE OVERLAY? https://leafletjs.com/reference-1.6.0.html#svgoverlay */}
