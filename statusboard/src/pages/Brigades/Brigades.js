@@ -5,6 +5,8 @@ import {
   getProjectsFromBrigadeData,
   filterBrigades,
   customStringSort,
+  filterProjectsByTime,
+  ACTIVE_THRESHOLDS,
 } from '../../utils/utils';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { ProjectsTable, Select } from '../../components';
@@ -15,6 +17,7 @@ function Brigades() {
   const [filteredBrigadeData, setFilteredBrigadeData] =
     useState(allBrigadeData);
   const [filterOpts, setFilterOpts] = useState({});
+  const [timeRange, setTimeRange] = useState('year');
   const { selectedBrigade } = filterOpts; // also has bounds
   const [projects, setProjects] = useState(allProjects);
 
@@ -62,8 +65,11 @@ function Brigades() {
   useEffect(() => {
     const newlyFilteredBrigadeData = filterBrigades(allBrigadeData, filterOpts);
     setFilteredBrigadeData(newlyFilteredBrigadeData);
-    setProjects(getProjectsFromBrigadeData(newlyFilteredBrigadeData));
-  }, [allBrigadeData, filterOpts]);
+    const projectsFromBrigadeData = getProjectsFromBrigadeData(
+      newlyFilteredBrigadeData
+    );
+    setProjects(filterProjectsByTime(projectsFromBrigadeData, timeRange));
+  }, [allBrigadeData, filterOpts, timeRange]);
 
   let brigadesShowingString = 'No brigades selected or showing on map.';
   if (filteredBrigadeData && filteredBrigadeData.length > 0) {
@@ -82,6 +88,9 @@ function Brigades() {
       brigadesShowingString = `${brigadesShowingString} and ${
         filteredBrigadeData.length - 5
       } other brigades`;
+    }
+    if (!projects.length) {
+      brigadesShowingString = `${brigadesShowingString}. Try zooming out or looking for older projects.`;
     }
   }
 
@@ -106,7 +115,17 @@ function Brigades() {
       {/* List projects by brigades that are shown on accompanying map */}
       {/* When map zooms or moves, re-filter geographically */}
       <h1>Projects by brigade or geographic area</h1>
-      <p>{brigadesShowingString}</p>
+      <p>
+        {brigadesShowingString}
+        <Select
+          extraRef={null}
+          label="Showing projects updated within the past "
+          id="active_time_range"
+          onChange={(e) => setTimeRange(e.target.value)}
+          selected={timeRange}
+          options={Object.keys(ACTIVE_THRESHOLDS)}
+        />
+      </p>
       <div>
         Zoom in on the map to filter by projects in a geographic area or
         <Select

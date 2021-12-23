@@ -13,20 +13,41 @@ import './Map.scss';
 
 export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
   const defaultZoom = 2;
+  const storedCenter = [
+    parseFloat(localStorage.getItem('lat')),
+    parseFloat(localStorage.getItem('lng')),
+  ];
+
   const defaultCenter = [44.967243, -104.771556];
 
-  const [zoom, setZoom] = useState(defaultZoom);
-  const [center, setCenter] = useState(defaultCenter);
+  const [zoom, _setZoom] = useState(
+    localStorage.getItem('zoom') || defaultZoom
+  );
+  const [center, _setCenter] = useState(
+    Number.isNaN(storedCenter[0]) ? defaultCenter : storedCenter
+  );
+
+  const setZoom = (newZoom) => {
+    _setZoom(newZoom);
+    localStorage.setItem('zoom', newZoom);
+  };
+
+  const setCenter = ([newLat, newLon]) => {
+    _setCenter([newLat, newLon]);
+    localStorage.setItem('lat', newLat);
+    localStorage.setItem('lng', newLon);
+  };
 
   const { name: selectedBrigadeName } = filterOpts.selectedBrigade || {};
 
   useEffect(() => {
     if (filterOpts.selectedBrigade) {
-      // Set that brigade as the center
+      // Set that brigade as the center, prioritize that over stored location
       setZoom(8);
       const { latitude, longitude } = filterOpts.selectedBrigade || {};
       setCenter([latitude, longitude]);
-    } else {
+    } else if (Number.isNaN(storedCenter[0])) {
+      // if there is no selected brigade NOR a location stored in localstorage, get user's location, or not
       let userCenter = [];
       const foundLocation = (position) => {
         userCenter = [position.coords.latitude, position.coords.longitude];
@@ -56,16 +77,20 @@ export default function Map({ brigadeData, filterOpts, setFilterOpts }) {
         // TODO: WHY IS FOCUS STYLING NOT WORKING ON ZOOM BUTTONS??
         zoom={zoom}
         center={center}
+        // FYI moveend fires CONSTANTLY, like,
+        // upon first loading map
+        // multiple times when panning
+        // basically whenever it feels like it
+        // TODO: add timeout so it fires slightly less often
         onMoveend={(e) => {
-          const { _zoom: newZoom, _lastCenter } = e.target || {};
-          const { lat: newLat, lng: newLon } = _lastCenter || {};
+          const { _zoom: newZoom } = e.target || {};
+          const { lat: newLat, lng: newLon } = e.target.getCenter() || {};
           setFilterOpts({ ...filterOpts, bounds: e.target.getBounds() });
           if (newZoom) {
             setZoom(newZoom);
           }
-          if (_lastCenter) {
-            setCenter([newLat, newLon]);
-          }
+
+          setCenter([newLat, newLon]);
         }}
       >
         {/* TODO: ADD STATE OVERLAY? https://leafletjs.com/reference-1.6.0.html#svgoverlay */}
