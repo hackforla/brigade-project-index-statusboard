@@ -20,12 +20,13 @@
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
     "babel-jest": "^27.3.1",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb-base": "14.2.1",
+    "eslint": "^8.5.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-prettier": "^3.4.1",
-    "prettier": "^2.4.1"
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.4.5",
+    "prettier": "^2.5.1"
   },
   "scripts": {
     "start": "node -r esm server.js",

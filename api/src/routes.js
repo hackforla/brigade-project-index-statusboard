@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import apicache from 'apicache';
 
-import { getProjectIndex } from './api';
-import { getTaxonomy } from './api';
+import { getProjectIndex, getTaxonomy } from './api';
 
 export function createRoutes(app) {
   const router = Router();
@@ -12,7 +11,7 @@ export function createRoutes(app) {
   });
 
   router.get(['/', '/data.json'], app.cache('90 minutes'), (_, res) => {
-	getProjectIndex()
+    getProjectIndex()
       .then((result) => {
         res.json(result);
       })
@@ -42,6 +41,6 @@ export function createRoutes(app) {
     apicache.clear('/api/taxonomy.json');
     res.redirect('/api/taxonomy.json');
   });
-  
+
   return router;
 }
