@@ -1,20 +1,25 @@
 import { Row, useTable, TableOptions, PluginHook } from 'react-table';
-import React from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
+import React, { useContext, useEffect } from 'react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import './SuperResponsiveTableStyle.css'
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import Button from '../Button/Button';
 import ColumnHeader from './ColumnHeader';
 import './ProjectsTable.scss';
 import { Project } from '../../utils/types';
+import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 
 export type TableAttributes = {
   options: TableOptions<Project>;
   plugins?: PluginHook<Project>[];
+  setRowCounter?: (value: React.SetStateAction<number>) => void;
 };
 
 export default function ProjectsTable({
   options,
   plugins = [],
+  setRowCounter,
 }: TableAttributes): JSX.Element {
   const {
     getTableProps,
@@ -26,14 +31,23 @@ export default function ProjectsTable({
     setPageSize,
     state: { pageSize },
   } = useTable<Project>(options, ...plugins);
+  const { loading } = useContext(BrigadeDataContext);
+
+  useEffect(() => {
+    setRowCounter?.(rows.length);
+  }, [rows, setRowCounter]);
+
 
   return (
     <div className="projects-table">
       <PerfectScrollbar>
-        <table {...getTableProps()}>
-          <thead>
+        <Table {...getTableProps()}>
+          <thead className="desktop">
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <Tr
+                {...headerGroup.getHeaderGroupProps()}
+                key={headerGroup.getHeaderGroupProps().key}
+              >
                 {headerGroup.headers.map((column) => (
                   <ColumnHeader
                     column={column}
@@ -41,36 +55,39 @@ export default function ProjectsTable({
                     disableSort={!rows.length}
                   />
                 ))}
-              </tr>
+              </Tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {!rows.length && (
-              <tr>
-                <td colSpan={3}>
+    
+          <Tbody {...getTableBodyProps()}>
+            {loading && (
+              <Tr>
+                <Td colSpan={3}>
                   <span>Loading...</span>
-                </td>
-              </tr>
+                </Td>
+              </Tr>
             )}
-            {!rows.length && (
-              <tr>
-                <td colSpan={3}>
+            {!rows.length && !loading && (
+              <Tr>
+                <Td colSpan={3}>
                   <span>No projects</span>
-                </td>
-              </tr>
+                </Td>
+              </Tr>
             )}
             {page.map((row: Row<Project>) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <Tr {...row.getRowProps()} key={row.getRowProps().key}>
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    <Td {...cell.getCellProps()} key={cell.getCellProps().key}>
+                      {cell.render('Cell')}
+                    </Td>
                   ))}
-                </tr>
+                </Tr>
               );
             })}
-          </tbody>
-        </table>
+          </Tbody>
+        </Table>
         {pageSize < rows.length && (
           <div className="load-projects-button">
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}

@@ -12,7 +12,7 @@ export function createRoutes(app) {
   });
 
   router.get(['/', '/data.json'], app.cache('90 minutes'), (_, res) => {
-    getProjectIndex(['Brigade', 'Code for America'])
+	getProjectIndex()
       .then((result) => {
         res.json(result);
       })

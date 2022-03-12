@@ -1,4 +1,7 @@
 import { Bounds, latLng } from 'leaflet';
+
+import { SortByFn, Row, IdType } from 'react-table';
+
 import { Brigade, Project } from './types';
 
 export type ActiveThresholdsKeys = 'all time' | 'year' | 'month' | 'week';
@@ -107,23 +110,38 @@ export function filterProjectsByTime(
   return projects.filter((p) => timeRanges.includes(p.last_pushed_within));
 }
 
+export function filterProjectsByCfA(
+  projects: Project[],
+  onlyCfA?: string
+) {
+  if (onlyCfA === 'true') {
+    return projects.filter((p: Project) =>
+      p?.brigade?.type ? p.brigade.type.includes("Brigade") || p.brigade.type.includes("Code for America") : false
+    );
+  }
+  
+  return projects;
+}
+
 export function filterActiveProjects(
   options: {
     timeRange?: ActiveThresholdsKeys;
     topics?: string[];
     brigades?: string[];
+    onlyCfA: string;
   },
   projects?: Project[]
 ) {
   if (!projects) return [];
   // Set destructuring and allow defaults to be overwritten
-  const { timeRange, topics, brigades } = options || {};
+  const { timeRange, topics, brigades, onlyCfA } = options || {};
   let newProjects: ProjectWithTopicsMatched[] = filterProjectsByBrigades(
     projects,
     brigades
   );
   newProjects = filterProjectsByTopics(newProjects, topics);
   newProjects = filterProjectsByTime(newProjects, timeRange);
+  newProjects = filterProjectsByCfA(newProjects, onlyCfA);
   return newProjects;
 }
 
@@ -147,3 +165,51 @@ export function getTopicsFromProjects(projects?: Project[]) {
     .sort((a, b) => b[1] - a[1])
     .map((topicAndCount) => topicAndCount[0]);
 }
+
+function periodToNumber(period: string) {
+  if (period === 'week') {
+    return 0;
+  }
+  if (period === 'month') {
+    return 1;
+  }
+  if (period === 'year') {
+    return 2;
+  }
+  if (period === 'over_a_year') {
+    return 3;
+  }
+  return 99;
+}
+
+export const customStringSort: SortByFn<Project> = (
+  rowA: Row<Project>,
+  rowB: Row<Project>,
+  id: IdType<Project>,
+  desc?: boolean
+): number => {
+  const rowAValue: string = rowA.values[id] ?? '';
+  const rowBValue: string = rowB.values[id] ?? '';
+
+  const valueA: string = String(rowAValue).toLowerCase();
+  const valueB: string = String(rowBValue).toLowerCase();
+  if (desc) {
+    return valueA.localeCompare(valueB) > 0 ? 1 : -1;
+  }
+  return valueB.localeCompare(valueA) > 0 ? -1 : 1;
+};
+
+export const lastPushSort: SortByFn<Project> = (
+  rowA: Row<Project>,
+  rowB: Row<Project>,
+  id: IdType<Project>,
+  desc?: boolean
+): number => {
+  // need to convert week, month to 1, 2, ..
+  const d1: number = periodToNumber(rowA.values[id]);
+  const d2: number = periodToNumber(rowB.values[id]);
+  if (desc) {
+    return d1 - d2 > 0 ? 1 : -1;
+  }
+  return d2 - d1 > 0 ? -1 : 1;
+};

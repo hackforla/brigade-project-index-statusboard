@@ -9,12 +9,14 @@ import {
   filterProjectsByBrigades,
   filterProjectsByTime,
   filterProjectsByTopics,
+  filterProjectsByCfA,
 } from './utils';
 
 export type Filter = {
   topics?: string[];
   timeRange?: string;
   brigades?: string[];
+  onlyCfA?: string;
 };
 
 export type ProjectFilterReturn = Filter & {
@@ -22,6 +24,7 @@ export type ProjectFilterReturn = Filter & {
   projectsFilteredByTopics: Project[];
   projectsFilteredByBrigades: Project[];
   projectsFilteredByAllParams: Project[];
+  projectsFilteredByCfA: Project[];
   setFilters: (filter: Filter, preserveFilters?: boolean) => void;
   queryParameters: ParsedQuery;
 };
@@ -33,14 +36,17 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   const queryParameters = parse(search, {
     arrayFormat: 'comma',
   });
+  
   const {
     topics: _topics,
     timeRange,
     brigades,
+    onlyCfA,
   } = (queryParameters || {}) as {
     topics: string[];
     timeRange: ActiveThresholdsKeys;
     brigades: string[];
+    onlyCfA: string;
   };
 
   let topics = _topics;
@@ -64,15 +70,21 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   );
 
   const projectsFilteredByAllParams = useMemo<Project[]>(
-    () => filterActiveProjects({ topics, timeRange, brigades }, allProjects),
-    [topics, timeRange, brigades, allProjects],
+    () => filterActiveProjects({ topics, timeRange, brigades, onlyCfA}, allProjects),
+    [topics, timeRange, brigades, onlyCfA, allProjects],
   );
+
+  const projectsFilteredByCfA = useMemo<Project[]>(
+    () => filterProjectsByCfA(allProjects || [], onlyCfA),
+    [onlyCfA, allProjects],
+  );
+  
 
   const history = useHistory();
   const setFilters = (newFilter: Filter, preserveFilters = true) => {
     let _newFilter = newFilter;
     if (preserveFilters) {
-      _newFilter = { topics, timeRange, brigades, ...newFilter };
+      _newFilter = { topics, timeRange, brigades, onlyCfA, ...newFilter };
     }
     history.replace(`?${stringify(_newFilter, { arrayFormat: 'comma' })}`);
   };
@@ -92,6 +104,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     setFilters,
     queryParameters,
     projectsFilteredByTime,
+    projectsFilteredByCfA,
     projectsFilteredByTopics,
     projectsFilteredByBrigades,
     projectsFilteredByAllParams,

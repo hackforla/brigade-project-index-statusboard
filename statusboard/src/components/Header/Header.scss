@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   font-size: 2rem;
   background-color: var(--cfa-purple-dark);
 
@@ -12,46 +11,62 @@
     text-decoration: none;
   }
 
-  .home-link {
-    padding: 0.5rem 1rem;
-    border: 4px solid transparent;
+  .home-link-and-title {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: left;
     align-items: flex-start;
+    padding: 0.5rem 1rem;
+    border: 4px solid transparent;
 
-    .App-logo {
-      width: 10rem;
-      display: inline-block;
-      pointer-events: none;
-      margin-right: 1.3rem;
+    .home-link {
+      display: flex;
+      flex-wrap: wrap;
+
+      .App-logo {
+        width: 10rem;
+        display: inline-block;
+        pointer-events: none;
+        margin-right: 1.3rem;
+      }
     }
 
     .App-title {
       white-space: nowrap;
       font-size: 2rem;
       font-weight: bold;
-      display: inline-block;
       color: var(--cfa-white);
       font-family: var(--font-family-header);
     }
   }
+  
+  .App-title {
+    white-space: nowrap;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--cfa-white);
+    font-family: var(--font-family-header);
+  }
 
   .home-link:focus,
   .home-link:hover {
-    border: 4px solid var(--cfa-blue);
+    background-color: var(--cfa-blue-dark);
   }
 
   @media only screen and (max-width: 800px) {
-    .home-link {
+    .home-link-and-title {
       padding: 0.5rem;
-      justify-content: start;
 
-      .App-logo {
-        width: 7rem;
-        text-align: left;
+      .home-link {
+        justify-content: start;
+
+        .App-logo {
+          width: 7rem;
+          text-align: left;
+        }
       }
+
       .App-title {
         font-size: 1.75rem;
       }

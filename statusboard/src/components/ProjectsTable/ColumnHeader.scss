@@ -2,6 +2,7 @@
   display: flex;
   padding-right: 2rem;
   align-items: stretch;
+  
 
   > *:first-child {
     align-self: center;
@@ -9,13 +10,20 @@
 
   > *:not(:first-child) {
     margin-left: 1rem;
+    
+  }
+
+  input {
+    width:100%;
+    box-sizing: content-box;
   }
 
   .sort-button {
-    height: 100%;
-    width: 2rem;
+    width: 1rem;
     padding: 0;
+    height:2rem;
   }
+
 
   .sort-arrows {
     position: relative;
@@ -39,6 +47,29 @@
       &.desc {
         transform: translate(-50%, 90%) rotate(90deg);
       }
+    }
+  }
+}
+
+
+.hideFifthColumn {
+  .sort-button {
+    margin:0.5em;
+    width: 1rem;
+    padding: 0;
+  }
+  
+}
+
+@media screen and (max-width:800px) {
+  .column-header__contents {
+      display: flex;
+      padding-right: 2rem;
+      align-items: stretch;
+      width:calc(100% - 2rem);
+  
+    input {
+      box-sizing: content-box;
     }
   }
 }

@@ -3,30 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@octokit/rest": "^17.9.2",
-    "apicache": "^1.5.3",
-    "axios": "^0.19.2",
+    "@octokit/rest": "^18.12.0",
+    "apicache": "^1.6.3",
+    "axios": "^0.24.0",
     "cors": "^2.8.5",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-sslify": "^1.2.0",
-    "helmet": "^3.23.1",
-    "jszip": "^3.4.0",
-    "lodash": "^4.17.15",
-    "redis": "^3.0.2",
+    "helmet": "^4.6.0",
+    "jszip": "^3.7.1",
+    "lodash": "^4.17.21",
+    "redis": "^3.1.2",
     "toml": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.2",
-    "@babel/preset-env": "^7.10.2",
-    "babel-jest": "^26.0.1",
-    "eslint": "^7.2.0",
-    "eslint-config-airbnb": "^18.1.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-prettier": "^3.1.4",
-    "jest": "^26.0.1",
-    "prettier": "^2.0.5"
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "babel-jest": "^27.3.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^3.4.1",
+    "prettier": "^2.4.1"
   },
   "scripts": {
     "start": "node -r esm server.js",
@@ -35,8 +34,8 @@
     "lint": "./node_modules/eslint/bin/eslint.js *.js",
     "prettier": "prettier --write ."
   },
-  "enginesStrict": {
-    "node": ">=10"
+  "engines": {
+    "node": ">=10 <13"
   },
   "jest": {
     "transform": {

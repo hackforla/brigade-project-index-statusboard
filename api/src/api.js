@@ -9,15 +9,13 @@ function slugify(n) {
 }
 
 export async function getProjectIndex(orgType) {
-  // prettier-ignore
-  // eslint-disable-next-line no-console
   console.log('Getting project index');
 
   let downloadedRepos;
   try {
     // We will make calls out to Github for the latest index information
     const octokit = new Octokit({
-      auth: process.env.GITHUB_TOKEN,
+      // auth: process.env.GITHUB_TOKEN,
     });
     // return promise the resolves once we have unzipped and merged
     // all the projects / organizations
@@ -75,7 +73,6 @@ export async function getProjectIndex(orgType) {
     });
 
     await Promise.all(promises);
-    // eslint-disable-next-line no-console
     console.log(
       `Loaded ${orgs.length} orgs and ${projects.length} projects.. joining them`
     );
@@ -105,9 +102,8 @@ export async function getProjectIndex(orgType) {
 }
 
 const DISCOURSE_URL = 'https://discourse.codeforamerica.org/tags.json';
+
 export function getDiscourseTagList() {
-  // prettier-ignore
-  // eslint-disable-next-line no-console
   console.log('Getting tag list');
   return new Promise((resolve, reject) => {
     axios
@@ -128,7 +124,6 @@ export function getDiscourseTagList() {
 // found via https://meta.discourse.org/t/how-do-i-get-subcategory-by-id-using-discourse-api/137790
 // and digging in the json
 
-
 export async function getTaxonomy() {
   console.log('Getting taxonomy');
 
@@ -136,7 +131,7 @@ export async function getTaxonomy() {
   try {
     // Getting the Github repository
     const octokit = new Octokit({
-      auth: process.env.GITHUB_TOKEN,
+      // auth: process.env.GITHUB_TOKEN,
     });
     // return promise the resolves once we have unzipped and merged
     // all the data
@@ -163,16 +158,16 @@ export async function getTaxonomy() {
     indexZip.folder('').forEach((path) => {
       const _file = indexZip.file(path);
       if (!_file) return;
-	  console.log(_file);
+      console.log(_file);
       // Parse them into issues and then other sets of data
       const parts = path.split('/');
       const itemType = parts[1];
       // for now limiting to "issues" set of data
-	  if (itemType === 'issues') {
+      if (itemType === 'issues') {
         promises.push(
           _file.async('string').then((data) => {
             const topic = toml.parse(data);
-			console.log(topic);
+            console.log(topic);
             issues.push(topic);
           })
         );
@@ -180,10 +175,8 @@ export async function getTaxonomy() {
     });
 
     await Promise.all(promises);
-    // eslint-disable-next-line no-console
     console.log(`Loaded ${issues.length} issues.`);
     return issues;
-	
   } catch (err) {
     console.error(err);
     throw new Error('Could not parse data after fetch');

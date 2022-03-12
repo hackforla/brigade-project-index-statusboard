@@ -1,0 +1,28 @@
+
+input[type=checkbox] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* create custom checkbox appearance */
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  padding: 6px;
+}
+
+
+input[type=checkbox]:checked:after {
+  content: "✓";
+  font-weight: bolder;
+  font-size: 1.5rem;
+  color: var(--cfa-blue);
+  position: relative;
+  top: -9px;
+  left: -2px;
+}
+
+input[type=checkbox]:hover,
+input[type=checkbox]:focus {
+  background-color: var(--cfa-blue-lightest);
+  cursor: pointer;
+}

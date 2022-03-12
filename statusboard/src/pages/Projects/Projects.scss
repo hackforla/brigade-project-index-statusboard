@@ -1,0 +1,11 @@
+@media screen and (max-width:800px) {
+  th{
+      width:calc(100% - 0.5em) !important;
+  }
+  .hideFifthColumn {
+    th:nth-of-type(5){
+      display:none;
+    }
+  }
+}
+  

@@ -12,6 +12,7 @@ export type Brigade = {
   latitude?: string | number;
   longitude?: string | number;
   tags?: string[];
+  type?: string[];
   social_profiles?: {
     twitter?: string;
     facebook?: string;
@@ -27,6 +28,7 @@ export type Project = {
   topics?: string[];
   brigade?: Brigade;
   last_pushed_within?: string;
+  open_issues_within?: number;
 };
 
 export type Location = {

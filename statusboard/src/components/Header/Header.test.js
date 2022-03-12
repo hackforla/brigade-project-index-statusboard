@@ -19,7 +19,7 @@ test('renders the logo', () => {
       <Header />
     </BrowserRouter>
   );
-  const img = getByAltText(/Code for America brigade/);
+  const img = getByAltText(/Code for America Brigades home page/);
   expect(img).toBeInTheDocument();
 });
 
