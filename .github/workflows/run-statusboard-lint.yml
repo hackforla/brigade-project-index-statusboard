@@ -1,6 +1,8 @@
 name: Statusboard lint
 on:
   push:
+    branches:
+      - main
     paths:
       - 'statusboard/**'
   pull_request:
