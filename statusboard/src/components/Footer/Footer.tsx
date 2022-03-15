@@ -10,7 +10,7 @@ const githubRepository =
 
 export default function Footer(): JSX.Element {
   return (
-    <footer className={'App-footer'}>
+    <footer className="App-footer">
       <p>
         Submit a <a href={submitBugReport}>bug report</a> or{' '}
         <a href={submitFeatureRequest}>feature request</a> to our GitHub{' '}
