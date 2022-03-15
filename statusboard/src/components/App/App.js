@@ -5,10 +5,11 @@ import PageContents from '../PageContents/PageContents';
 import { BrigadeDataContextProvider } from '../../contexts/BrigadeDataContext';
 import Footer from '../Footer/Footer';
 import { TaxonomyDataContextProvider } from '../../contexts/TaxonomyDataContext';
+import './App.scss';
 
 function App() {
   return (
-    <div className="App">
+    <div id="App">
       <TaxonomyDataContextProvider>
       <BrigadeDataContextProvider>
         <AppRouter>
