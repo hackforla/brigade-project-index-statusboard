@@ -12,6 +12,10 @@ The [Project Index Working Group](https://brigade.cloud/) has bi-weekly video me
 
 ## Running the Statusboard locally
 
+| A | B | C | D |
+|--------|-------|------|------|
+| John | Mary | Joe | Lou |
+
 The Statusboard is a Create-React-App, and supports their built-in commands, including `yarn test` and `yarn build`.
 
 You can install the app and run it with,
