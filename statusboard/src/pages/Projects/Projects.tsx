@@ -150,43 +150,22 @@ function Projects(): JSX.Element {
     setIsOpen(false);
   }
 
+  const css =       `label {
+    display: inline-block;
+    width: 400px;
+    text-align: right;
+  }
+  `
+
   return (
     <>
-        This is the list of <a href="https://brigade.codeforamerica.org/">Code For America Brigades</a> and other organizations' civic tech projects.
-        <br/>
-        You can search projects by <span className="help">"Topic", "Priority Area" or by "Tags"</span> &nbsp;  
-        <button type='button' className='question_mark' onClick={toggleModal}>&#63;</button>
-        <Modal 
-          isOpen={isOpen}
-          contentLabel="Taxonomy"
-          className="taxonomy_modal"
-          overlayClassName="taxonomy_overlay"
-          onRequestClose={() => closeModal()}          
-          shouldCloseOnOverlayClick
-          shouldCloseOnEsc
-        >
-          <div className='header'>
-            <div>Taxonomy</div>
-            <button type='button' className='close' onClick={toggleModal}>.</button>
-          </div>
-          <div style={{fontSize: '16px'}}>
-            The list of Topics and Priority Action Areas comes from the Taxonomy project.
-            <br/>
-            The list of Tags comes from the Index Crawler.
-            <br/>
-            You can find out more about Taxonomy by clicking on the Taxonomy menu item.
-          </div>
-        </Modal>
-        <br/>
-        You can also exclude projects outside "Code For America Brigades" as well as select a timeframe on when a project was last updated.
-        <br/>
+        <style>{css}</style>
       <LoadingIndicator loading={loading}>
         <>
           <div>
-          <br/>
             <Select
               extraRef={null}
-              label={`Showing ${rowCounter} projects with changes on Github in the last  `}
+              label={`Projects with changes on Github in the last  `}
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                 setFilters({ timeRange: e.target.value })
@@ -195,17 +174,18 @@ function Projects(): JSX.Element {
               options={Object.keys(ACTIVE_THRESHOLDS)}
             />
             <Checkbox
-              label="Show only Code For America projects?"
+              label="Only Code For America projects?"
               id="only_cfa_projects"
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setFilters({ onlyCfA: String(e.target.checked) })
               }
             />
+            <h4>Tags</h4>
             {!isTaxonomyError &&
-              <div style={{display: 'flex', gap: '30px'}}>
+            <div>
               <Select
                 extraRef={issueSelect}
-                label="Topic "
+                label="By Topic"
                 id="select-issue"
                 options={issueOptions}
                 emptyOptionText=""
@@ -221,7 +201,7 @@ function Projects(): JSX.Element {
               />
               <Select
                 extraRef={priorityAreaSelect}
-                label=" CfA Priority Action Area "
+                label="By CfA Priority Action Area "
                 id="select-priority-areas"
                 options={priorityAreasOptions}
                 emptyOptionText=""
