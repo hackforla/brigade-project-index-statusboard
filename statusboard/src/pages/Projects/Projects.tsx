@@ -165,7 +165,7 @@ function Projects(): JSX.Element {
           <div>
             <Select
               extraRef={null}
-              label={`Projects with changes on Github in the last  `}
+              label={`Changed on githubin the last  `}
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                 setFilters({ timeRange: e.target.value })
@@ -219,6 +219,8 @@ function Projects(): JSX.Element {
             }
           </div>
           {availableTopics  && (
+            <>Tags
+        
             <MultiSelect
               clearTaxonomy={clearTaxonomy}
               selectedItems={topics}
@@ -231,7 +233,7 @@ function Projects(): JSX.Element {
                 setFilters({ topics: newTopics })
               }
             />
-          )}
+          </>)}
           <br />
           <div className="hideFifthColumn">
             <ProjectsTable
