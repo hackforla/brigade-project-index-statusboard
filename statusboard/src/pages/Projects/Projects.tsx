@@ -168,13 +168,12 @@ function Projects(): JSX.Element {
   }
 
   const displayHideClass = (display: boolean): string => {
-    return display ? "display-inline": "hidden";
+    return display ? "display-inline": "";
  }
 
 
   return (
     <>
-        <style>{css}</style>
       <LoadingIndicator loading={loading}>
         <>
         <button type="button" className={`accordion ${displayActiveClass(displayOverviewClass)}`} onClick={toggle}>Overview</button>
@@ -183,10 +182,10 @@ function Projects(): JSX.Element {
             Here is some text.
           </div>
 
-          <div>
-            <Select
+          <div id="leftSide">
+            <Select 
               extraRef={null}
-              label={`Changed on githubin the last  `}
+              label={`Changedx2x on githubin the last  `}
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                 setFilters({ timeRange: e.target.value })
@@ -201,6 +200,8 @@ function Projects(): JSX.Element {
                 setFilters({ onlyCfA: String(e.target.checked) })
               }
             />
+            </div>
+            <div id="rightSide">
             <h4>Tags</h4>
             {!isTaxonomyError &&
             <div>
