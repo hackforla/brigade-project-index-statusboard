@@ -35,7 +35,7 @@ export const MultiSelect = ({
         inputValue,
       }) => (
         <div className="multi-select">
-          <div className="text-input form-control-container">
+          <div className="form-control-container">
             <label {...getLabelProps()}>{labelText}</label>
             <input
               {...getInputProps()}
