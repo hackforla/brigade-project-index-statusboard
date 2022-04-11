@@ -40,7 +40,7 @@ export const MultiSelect = ({
             <input
               {...getInputProps()}
               type="text"
-              className="form-control form-control--left"
+              className="form-control"
             />
             <Button
               {...getToggleButtonProps({

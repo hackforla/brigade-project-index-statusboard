@@ -35,7 +35,8 @@ import './modal.css';
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
-  const [rowCounter, setRowCounter] = useState(0);
+  const [ rowCounter, setRowCounter] = useState(0);
+  const [ displayOverviewClass, setDisplayOverview] = useState(true)
 
   const { priorityAreasMap, issuesMap, isTaxonomyError } = useContext(TaxonomyDataContext);
 
@@ -152,16 +153,36 @@ function Projects(): JSX.Element {
 
   const css =       `label {
     display: inline-block;
-    width: 400px;
+    width: 250px;
+    margin-right: 13px;
     text-align: right;
   }
   `
+
+  const toggle = () => {
+    setDisplayOverview(!displayOverviewClass)
+  }
+
+  const displayActiveClass = (display: boolean): string => {
+     return display ? "active": "";
+  }
+
+  const displayHideClass = (display: boolean): string => {
+    return display ? "display-inline": "hidden";
+ }
+
 
   return (
     <>
         <style>{css}</style>
       <LoadingIndicator loading={loading}>
         <>
+        <button type="button" className={`accordion ${displayActiveClass(displayOverviewClass)}`} onClick={toggle}>Overview</button>
+
+          <div className={`${displayHideClass(displayOverviewClass)}`}>
+            Here is some text.
+          </div>
+
           <div>
             <Select
               extraRef={null}
@@ -215,12 +236,27 @@ function Projects(): JSX.Element {
                   clearIssueSelect();
                 }}
               />
+              <Select
+                extraRef={priorityAreaSelect}
+                label="Add specific tags"
+                id="tag temp"
+                options={priorityAreasOptions}
+                emptyOptionText=""
+                onChange={(event) => {
+                  if (!event || !event.target) return;
+                  const newVal = event.target.value;
+                  if (typeof newVal === 'string') {
+                    const tags = priorityAreasMap.get(newVal) ?? [];
+                    setFilters({ topics: tags });
+                  }
+                  clearIssueSelect();
+                }}
+              />
               </div>
             }
           </div>
           {availableTopics  && (
-            <>Tags
-        
+            <>
             <MultiSelect
               clearTaxonomy={clearTaxonomy}
               selectedItems={topics}
