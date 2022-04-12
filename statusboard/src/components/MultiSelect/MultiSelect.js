@@ -1,9 +1,28 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable import/prefer-default-export */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import Button from '../Button/Button';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
 import './MultiSelect.scss';
+
+function changeHandler(
+  selectedItems,
+  setSelectedItems,
+  onSelectionItemsChange
+) {
+  return (selectedItem, downshift) => {
+    if (!selectedItem) return;
+    const i = selectedItems.findIndex((item) => item.id === selectedItem.id);
+    if (i === -1) setSelectedItems([...selectedItems, selectedItem]);
+    onSelectionItemsChange([...selectedItems, selectedItem]);
+    downshift.clearSelection();
+  };
+}
 
 // From https://www.axelerant.com/resources/team-blog/using-downshift-create-multi-select-widget-react
 export const MultiSelect = ({
@@ -37,11 +56,7 @@ export const MultiSelect = ({
         <div className="multi-select">
           <div className="form-control-container">
             <label {...getLabelProps()}>{labelText}</label>
-            <input
-              {...getInputProps()}
-              type="text"
-              className="form-control"
-            />
+            <input {...getInputProps()} type="text" className="form-control" />
             <Button
               {...getToggleButtonProps({
                 className: 'button-primary form-control--right',
@@ -74,79 +89,25 @@ export const MultiSelect = ({
                       (selectedItem) => selectedItem === item
                     ) && item.toLowerCase().includes(inputValue.toLowerCase())
                 )
-                .map((item) => {
-                  return (
-                    <li
-                      {...getItemProps({
-                        item,
-                        key: item,
-                      })}
-                    >
-                      {' '}
-                      {item}{' '}
-                    </li>
-                  );
-                })}
+                .map((item) => (
+                  <li
+                    {...getItemProps({
+                      item,
+                      key: item,
+                    })}
+                  >
+                    {' '}
+                    {item}{' '}
+                  </li>
+                ))}
             </ul>
           ) : null}
-
-          <div>
-            {selectedItems.map((value, i) => {
-              return (
-                <span key={value}>
-                  <Button
-                    className="form-control--dark-background tag"
-                    onClick={() =>
-                      removeSelectedItemByIndex(
-                        i,
-                        selectedItems,
-                        setSelectedItems,
-                        onSelectionItemsChange
-                      )
-                    }
-                  >
-                    <>
-                      <span className="sr-only">Remove</span>
-                      <span className="tag__name">{value}</span>
-                      <span className="tag__close">x</span>
-                    </>
-                  </Button>{' '}
-                </span>
-              );
-            })}
-          </div>
+          
         </div>
       )}
     </Downshift>
   </>
 );
-
-/* Helper functions */
-function changeHandler(
-  selectedItems,
-  setSelectedItems,
-  onSelectionItemsChange
-) {
-  return (selectedItem, downshift) => {
-    if (!selectedItem) return;
-    const i = selectedItems.findIndex((item) => item.id === selectedItem.id);
-    if (i === -1) setSelectedItems([...selectedItems, selectedItem]);
-    onSelectionItemsChange([...selectedItems, selectedItem]);
-    downshift.clearSelection();
-  };
-}
-
-function removeSelectedItemByIndex(
-  i,
-  selectedItems,
-  setSelectedItems,
-  onSelectionItemsChange
-) {
-  const temp = [...selectedItems];
-  temp.splice(i, 1);
-  setSelectedItems(temp);
-  onSelectionItemsChange(temp);
-}
 
 MultiSelect.defaultProps = {};
 

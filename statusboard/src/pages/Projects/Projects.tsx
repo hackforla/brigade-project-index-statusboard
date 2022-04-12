@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/extensions */
 import React, {
@@ -39,6 +40,7 @@ import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
 import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss';
 import './modal.css';
+import { Tags } from '../../components/MultiSelect/Tags';
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
@@ -181,7 +183,8 @@ function Projects(): JSX.Element {
               label="Changed on githubin the last"
               id="active_time_range"
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                setFilters({ timeRange: e.target.value })}
+                setFilters({ timeRange: e.target.value })
+              }
               selected={timeRange}
               options={Object.keys(ACTIVE_THRESHOLDS)}
             />
@@ -189,7 +192,8 @@ function Projects(): JSX.Element {
               label="Only Code For America projects?"
               id="only_cfa_projects"
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setFilters({ onlyCfA: String(e.target.checked) })}
+                setFilters({ onlyCfA: String(e.target.checked) })
+              }
             />
           </div>
           <div id="tagFilter">
@@ -236,9 +240,19 @@ function Projects(): JSX.Element {
                   clearTaxonomy={clearTaxonomy}
                   selectedItems={topics}
                   setSelectedItems={(newTopics: string[]) =>
-                    setFilters({ topics: newTopics })}
+                    setFilters({ topics: newTopics })
+                  }
                   items={availableTopics}
                   labelText="Add Specific Tags"
+                  onSelectionItemsChange={(newTopics: string[] | undefined) =>
+                    setFilters({ topics: newTopics })
+                  }
+                />
+                <Tags
+                  selectedItems={topics}
+                  setSelectedItems={(newTopics: string[]) =>
+                    setFilters({ topics: newTopics })
+                  }
                   onSelectionItemsChange={(newTopics: string[] | undefined) =>
                     setFilters({ topics: newTopics })
                   }
