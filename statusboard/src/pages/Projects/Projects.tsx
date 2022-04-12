@@ -20,7 +20,7 @@ import {
   useSortBy,
 } from 'react-table';
 import { fuzzyTextFilter } from '../../components';
-import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
+import ProjectsTable from '../../components/Projects/ProjectsTable/ProjectsTable';
 import {
   ACTIVE_THRESHOLDS,
   getTopicsFromProjects,
@@ -30,13 +30,13 @@ import {
 import Select from '../../components/Select/Select';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
-import { ProjectsOverview } from './ProjectsOverview';
+import { ProjectsOverview } from '../../components/Projects/ProjectsOverview';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
 import { useProjectFilters } from '../../utils/useProjectFilters';
 import { Project } from '../../utils/types';
 import getTableColumns from './utils';
-import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
+import queryParamFilter from '../../components/Projects/ProjectsTable/QueryParamFilter';
 import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss';
 import './modal.css';
