@@ -149,7 +149,7 @@ function Projects(): JSX.Element {
     clearPriorityAreaSelect();
   }, [clearIssueSelect, clearPriorityAreaSelect]);
 
-  const toggle = () => {
+  const toggleDisplayOverview = () => {
     setDisplayOverview(!displayOverviewClass);
   };
 
@@ -173,7 +173,7 @@ function Projects(): JSX.Element {
           <button
             type="button"
             className={`accordion ${displayActiveClass(displayOverviewClass)}`}
-            onClick={toggle}
+            onClick={toggleDisplayOverview}
           >
             Overview {displayCollapseExpand(displayOverviewClass)}
           </button>

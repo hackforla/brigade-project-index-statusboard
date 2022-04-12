@@ -15,14 +15,11 @@ export const ProjectsOverview = () => (
     <p>
       Search our curated list of Civic Tech Open Source applications for the
       ideal volunteer opportunity. Filter projects based on your area of
-      interest, skill level, and last significant update. Areas of interest are
-      are based on tags that are categorized using a world wide standardized
-      taxonomy.
+      interest and date last updated.
     </p>
     <p>
-      The curated list was originally only Code for America Brigade projects,
-      but now includes projects outside Code for America. See here for
-      details on this project, how to contribute, and other similar projects.
+      The list now includes projects outside Code for America. See here for details
+      on this project, the tag taxonomy, adding your project, how to contribute, and more.
     </p>
   </>
 );
