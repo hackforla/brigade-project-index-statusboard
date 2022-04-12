@@ -96,8 +96,8 @@ export const MultiSelect = ({
                       key: item,
                     })}
                   >
-                    {' '}
-                    {item}{' '}
+                    {'  '}
+                    {item}
                   </li>
                 ))}
             </ul>

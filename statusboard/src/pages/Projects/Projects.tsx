@@ -161,6 +161,11 @@ function Projects(): JSX.Element {
     return display ? '' : 'hidden';
   };
 
+  const displayCollapseExpand = (display: boolean): string => {
+    return display ? collapse : expand;
+  };
+  const collapse = '▲';
+  const expand = '▼';
   return (
     <>
       <LoadingIndicator loading={loading}>
@@ -170,96 +175,97 @@ function Projects(): JSX.Element {
             className={`accordion ${displayActiveClass(displayOverviewClass)}`}
             onClick={toggle}
           >
-            Overview
+            Overview {displayCollapseExpand(displayOverviewClass)}
           </button>
-
           <div className={`${displayHideClass(displayOverviewClass)}`}>
             <ProjectsOverview />
           </div>
-
-          <div id="nontagFilter">
-            <Select
-              extraRef={null}
-              label="Changed on githubin the last"
-              id="active_time_range"
-              onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                setFilters({ timeRange: e.target.value })
-              }
-              selected={timeRange}
-              options={Object.keys(ACTIVE_THRESHOLDS)}
-            />
-            <Checkbox
-              label="Only Code For America projects?"
-              id="only_cfa_projects"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setFilters({ onlyCfA: String(e.target.checked) })
-              }
-            />
-          </div>
-          <div id="tagFilter">
-            <h4>Tags</h4>
-            {!isTaxonomyError && (
-              <div>
-                <Select
-                  extraRef={issueSelect}
-                  label="By Topic"
-                  id="select-issue"
-                  options={issueOptions}
-                  emptyOptionText=""
-                  onChange={(event) => {
-                    if (!event || !event.target) return;
-                    const newVal = event.target.value;
-                    if (typeof newVal === 'string') {
-                      const tags = issuesMap.get(newVal) ?? [];
-                      setFilters({ topics: tags });
+          <div className="flex">
+            <div id="nontagFilter">
+              <p>Huh</p>
+              <Select
+                extraRef={null}
+                label="Changed on githubin the last"
+                id="active_time_range"
+                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                  setFilters({ timeRange: e.target.value })
+                }
+                selected={timeRange}
+                options={Object.keys(ACTIVE_THRESHOLDS)}
+              />
+              <Checkbox
+                label="Only Code For America projects?"
+                id="only_cfa_projects"
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setFilters({ onlyCfA: String(e.target.checked) })
+                }
+              />
+            </div>
+            <div id="tagFilter">
+              <p>Tags</p>
+              {!isTaxonomyError && (
+                <div>
+                  <Select
+                    extraRef={issueSelect}
+                    label="By Topic"
+                    id="select-issue"
+                    options={issueOptions}
+                    emptyOptionText=""
+                    onChange={(event) => {
+                      if (!event || !event.target) return;
+                      const newVal = event.target.value;
+                      if (typeof newVal === 'string') {
+                        const tags = issuesMap.get(newVal) ?? [];
+                        setFilters({ topics: tags });
+                      }
+                      clearPriorityAreaSelect();
+                    }}
+                  />
+                  <Select
+                    extraRef={priorityAreaSelect}
+                    label="By CfA Priority Action Area "
+                    id="select-priority-areas"
+                    options={priorityAreasOptions}
+                    emptyOptionText=""
+                    onChange={(event) => {
+                      if (!event || !event.target) return;
+                      const newVal = event.target.value;
+                      if (typeof newVal === 'string') {
+                        const tags = priorityAreasMap.get(newVal) ?? [];
+                        setFilters({ topics: tags });
+                      }
+                      clearIssueSelect();
+                    }}
+                  />
+                </div>
+              )}
+              {availableTopics && (
+                <>
+                  <MultiSelect
+                    clearTaxonomy={clearTaxonomy}
+                    selectedItems={topics}
+                    setSelectedItems={(newTopics: string[]) =>
+                      setFilters({ topics: newTopics })
                     }
-                    clearPriorityAreaSelect();
-                  }}
-                />
-                <Select
-                  extraRef={priorityAreaSelect}
-                  label="By CfA Priority Action Area "
-                  id="select-priority-areas"
-                  options={priorityAreasOptions}
-                  emptyOptionText=""
-                  onChange={(event) => {
-                    if (!event || !event.target) return;
-                    const newVal = event.target.value;
-                    if (typeof newVal === 'string') {
-                      const tags = priorityAreasMap.get(newVal) ?? [];
-                      setFilters({ topics: tags });
+                    items={availableTopics}
+                    labelText="Add Specific Tags &#128316;"
+                    onSelectionItemsChange={(newTopics: string[] | undefined) =>
+                      setFilters({ topics: newTopics })
                     }
-                    clearIssueSelect();
-                  }}
-                />
-              </div>
-            )}
-            {availableTopics && (
-              <>
-                <MultiSelect
-                  clearTaxonomy={clearTaxonomy}
-                  selectedItems={topics}
-                  setSelectedItems={(newTopics: string[]) =>
-                    setFilters({ topics: newTopics })
-                  }
-                  items={availableTopics}
-                  labelText="Add Specific Tags"
-                  onSelectionItemsChange={(newTopics: string[] | undefined) =>
-                    setFilters({ topics: newTopics })
-                  }
-                />
-                <Tags
-                  selectedItems={topics}
-                  setSelectedItems={(newTopics: string[]) =>
-                    setFilters({ topics: newTopics })
-                  }
-                  onSelectionItemsChange={(newTopics: string[] | undefined) =>
-                    setFilters({ topics: newTopics })
-                  }
-                />
-              </>
-            )}
+                  />
+                </>
+              )}
+            </div>
           </div>
+          <Tags
+            selectedItems={topics}
+            setSelectedItems={(newTopics: string[]) =>
+              setFilters({ topics: newTopics })
+            }
+            onSelectionItemsChange={(newTopics: string[] | undefined) =>
+              setFilters({ topics: newTopics })
+            }
+          />
           <br />
           <div className="hideFifthColumn">
             <ProjectsTable
