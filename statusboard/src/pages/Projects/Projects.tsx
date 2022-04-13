@@ -45,7 +45,8 @@ import { Tags } from '../../components/MultiSelect/Tags';
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
-  const [displayOverviewClass, setDisplayOverview] = useState(true);
+  const [displayOverview, setDisplayOverview] = useState(true);
+  const [displayFilter, setDisplayFilter] = useState(true);
 
   const { priorityAreasMap, issuesMap, isTaxonomyError } =
     useContext(TaxonomyDataContext);
@@ -150,7 +151,11 @@ function Projects(): JSX.Element {
   }, [clearIssueSelect, clearPriorityAreaSelect]);
 
   const toggleDisplayOverview = () => {
-    setDisplayOverview(!displayOverviewClass);
+    setDisplayOverview(!displayOverview);
+  };
+
+  const toggleDisplayFilter = () => {
+    setDisplayFilter(!displayFilter);
   };
 
   const displayActiveClass = (display: boolean): string => {
@@ -172,17 +177,37 @@ function Projects(): JSX.Element {
         <>
           <button
             type="button"
-            className={`accordion ${displayActiveClass(displayOverviewClass)}`}
+            className={`accordionButton ${displayActiveClass(displayOverview)}`}
             onClick={toggleDisplayOverview}
           >
-            Overview {displayCollapseExpand(displayOverviewClass)}
+            <div className="accordionInnerDiv">
+              <div>Overview </div>
+              <div className="accordionCollapseExpand">
+                {displayCollapseExpand(displayOverview)}
+              </div>
+            </div>
           </button>
-          <div className={`${displayHideClass(displayOverviewClass)}`}>
+          <div className={`${displayHideClass(displayOverview)}`}>
             <ProjectsOverview />
           </div>
-          <div className="flex">
+          <button
+            type="button"
+            className={`accordionButton ${displayActiveClass(displayFilter)}`}
+            onClick={toggleDisplayFilter}
+          >
+            <div className="accordionInnerDiv">
+            <div>Filter</div>
+            <div
+              className="accordionCollapseExpand"
+              style={{ textAlign: 'right' }}
+            >
+              {displayCollapseExpand(displayFilter)}
+            </div>
+            </div>
+          </button>
+          <div className={`${displayFilter ? 'flex' : 'hidden'}`}>
             <div id="nontagFilter">
-              <p>Huh</p>
+              <p>General</p>
               <Select
                 extraRef={null}
                 label="Changed on githubin the last"

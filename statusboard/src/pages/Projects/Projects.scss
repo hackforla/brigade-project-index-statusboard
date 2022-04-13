@@ -8,11 +8,16 @@
     }
   }
 }
-
-.accordion {
+.accordionInnerDiv { color: blue; display: flex; justify-content: space-between;}
+.accordionCollapseExpand {
+  color: blue; 
+}
+.accordionButton {
   background-color: #eee;
-  color: #444;
+  color: blue;
   cursor: pointer;
+  display: block;
+  width: 150px;
   padding: 6px;
   text-align: left;
   border: none;
@@ -20,7 +25,7 @@
   transition: 0.4s;
 }
 
-.active, .accordion:hover {
+.active, .accordionButton:hover {
   background-color: #ccc;
 }
 
