@@ -47,6 +47,10 @@ a {
   display: flex;
 }
 
-.border-bottom {
-  border-bottom: 4px solid blue;
+.separator {
+  border-bottom: 3px solid blue;
+  height: 0px;
+  padding: 0px;
+  margin: 0px;
+
 }

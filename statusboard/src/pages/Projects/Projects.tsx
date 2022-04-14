@@ -21,6 +21,7 @@ import {
 } from 'react-table';
 import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/Projects/ProjectsTable/ProjectsTable';
+import Divider from '../../components/Divider/Divider';
 import {
   ACTIVE_THRESHOLDS,
   getTopicsFromProjects,
@@ -173,7 +174,7 @@ function Projects(): JSX.Element {
   const expand = '▼';
   return (
     <>
-      <LoadingIndicator loading={loading}>
+      <LoadingIndicator loading={false}>
         <>
           <button
             type="button"
@@ -190,24 +191,27 @@ function Projects(): JSX.Element {
           <div className={`${displayHideClass(displayOverview)}`}>
             <ProjectsOverview />
           </div>
+          <Divider />
           <button
             type="button"
             className={`accordionButton ${displayActiveClass(displayFilter)}`}
             onClick={toggleDisplayFilter}
           >
             <div className="accordionInnerDiv">
-            <div>Filter</div>
-            <div
-              className="accordionCollapseExpand"
-              style={{ textAlign: 'right' }}
-            >
-              {displayCollapseExpand(displayFilter)}
-            </div>
+              <div>Filter</div>
+              <div
+                className="accordionCollapseExpand"
+                style={{ textAlign: 'right' }}
+              >
+                {displayCollapseExpand(displayFilter)}
+              </div>
             </div>
           </button>
-          <div className={`${displayFilter ? 'flex' : 'hidden'}`}>
+          <div className={`filterSection ${displayFilter ? 'flex' : 'hidden'}`}>
             <div id="nontagFilter">
-              <p>General</p>
+              <div>
+                <b>General</b>
+              </div>
               <Select
                 extraRef={null}
                 label="Changed on githubin the last"
@@ -227,7 +231,9 @@ function Projects(): JSX.Element {
               />
             </div>
             <div id="tagFilter">
-              <p>Tags</p>
+              <div>
+                <b>Tags</b>
+              </div>
               {!isTaxonomyError && (
                 <div>
                   <Select
@@ -282,6 +288,7 @@ function Projects(): JSX.Element {
               )}
             </div>
           </div>
+          <Divider />
           <Tags
             selectedItems={topics}
             setSelectedItems={(newTopics: string[]) =>
@@ -291,7 +298,6 @@ function Projects(): JSX.Element {
               setFilters({ topics: newTopics })
             }
           />
-          <br />
           <div className="hideFifthColumn">
             <ProjectsTable
               options={options}

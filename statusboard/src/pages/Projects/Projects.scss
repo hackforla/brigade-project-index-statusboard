@@ -29,17 +29,27 @@
   background-color: #ccc;
 }
 
+.filterSection { margin-bottom: 8px }
 #nontagFilter label
 { display: inline-block;
-width: 250px;
-margin-right: 13px;
-text-align: right;
+    width: 280px;
+    vertical-align: middle;
+    position: relative;
+    text-align: relative;
+}
+.divBottomSeparator {
+  border-bottom: blue 3px solid;
+}
+.checkboxLabelAdjustment {
+  /* align-center does not work for checkboxes same as text */
+  margin-top: 5px;
 }
 
 #tagFilter label 
 { display: inline-block;
 width: 250px;
-margin-right: 50px;
+vertical-align: middle;
+position: relative;
 text-align: left;
 }
   
