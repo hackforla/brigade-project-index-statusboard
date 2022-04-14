@@ -9,6 +9,7 @@ import Downshift from 'downshift';
 import Button from '../Button/Button';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
 import './MultiSelect.scss';
+import { UnselectedTags } from './UnselectedTags';
 
 function changeHandler(
   selectedItems,
@@ -79,14 +80,21 @@ export const MultiSelect = ({
               />
             ) : null}
           </div>
+          <UnselectedTags
+            items={items}
+            selectedItems={selectedItems}
+            getItemProps={getItemProps}
+            isOpen={isOpen}
+            inputValue={inputValue}
+          />
 
-          {isOpen ? (
+          {/* {isOpen ? (
             <ul>
               {items
                 .filter(
                   (item) =>
                     !selectedItems.find(
-                      (selectedItem) => selectedItem === item
+                      (selectedItem2) => selectedItem2 === item
                     ) && item.toLowerCase().includes(inputValue.toLowerCase())
                 )
                 .map((item) => (
@@ -101,8 +109,7 @@ export const MultiSelect = ({
                   </li>
                 ))}
             </ul>
-          ) : null}
-          
+          ) : null} */}
         </div>
       )}
     </Downshift>
@@ -116,4 +123,7 @@ MultiSelect.propTypes = {
   labelText: PropTypes.string,
   onSelectionItemsChange: PropTypes.func,
   clearTaxonomy: PropTypes.func,
+  isOpen: Boolean,
+  selectedItem: {},
+  inputValue: String,
 };
