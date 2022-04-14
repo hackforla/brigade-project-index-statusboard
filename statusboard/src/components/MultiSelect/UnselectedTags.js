@@ -7,6 +7,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './MultiSelect.scss';
 
+// TODO: get rid of below comments
+// let count = 0;
+
+// function debugIt(...args) {
+//   if (count < 20) {
+//     console.log(...args);
+//   }
+//   count += 1;
+// }
+
 // From https://www.axelerant.com/resources/team-blog/using-downshift-create-multi-select-widget-react
 export const UnselectedTags = ({
   items,
@@ -50,4 +60,7 @@ UnselectedTags.defaultProps = {};
 UnselectedTags.propTypes = {
   items: PropTypes.array,
   selectedItems: PropTypes.array,
+  getItemProps: {},
+  // isOpen: Boolean,
+  // inputValue: String,
 };

@@ -48,6 +48,9 @@ function Projects(): JSX.Element {
   const [rowCounter, setRowCounter] = useState(0);
   const [displayOverview, setDisplayOverview] = useState(true);
   const [displayFilter, setDisplayFilter] = useState(true);
+  const [selectedItem, setSelectedItem] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   const { priorityAreasMap, issuesMap, isTaxonomyError } =
     useContext(TaxonomyDataContext);
@@ -278,12 +281,23 @@ function Projects(): JSX.Element {
                     setSelectedItems={(newTopics: string[]) =>
                       setFilters({ topics: newTopics })
                     }
+                    setSelectedItem={setSelectedItem}
+                    // setInputValue={setInputValue}
+                    inputValue={inputValue}
+                    // setIsOpen={setIsOpen}
+                    isOpen={isOpen}
                     items={availableTopics}
                     labelText="Add Specific Tags &#128316;"
                     onSelectionItemsChange={(newTopics: string[] | undefined) =>
                       setFilters({ topics: newTopics })
                     }
                   />
+                  {console.log(
+                    'debug2 selected item',
+                    selectedItem,
+                    // isOpen,
+                    // inputValue
+                  )}
                 </>
               )}
             </div>

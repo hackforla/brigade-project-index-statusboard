@@ -11,13 +11,25 @@ import { ReactComponent as Arrow } from '../../assets/arrow.svg';
 import './MultiSelect.scss';
 import { UnselectedTags } from './UnselectedTags';
 
+function debugIt(...args) {
+  console.log(...args);
+}
+
 function changeHandler(
   selectedItems,
   setSelectedItems,
+  setSelectedItem,
+  // setIsOpen,
+  // isOpen,
+  // setInputValue,
+  // inputValue,
   onSelectionItemsChange
 ) {
   return (selectedItem, downshift) => {
     if (!selectedItem) return;
+    setSelectedItem(selectedItem);
+    // setIsOpen(isOpen);
+    // setInputValue(inputValue);
     const i = selectedItems.findIndex((item) => item.id === selectedItem.id);
     if (i === -1) setSelectedItems([...selectedItems, selectedItem]);
     onSelectionItemsChange([...selectedItems, selectedItem]);
@@ -32,6 +44,11 @@ export const MultiSelect = ({
   onSelectionItemsChange,
   selectedItems = [],
   setSelectedItems,
+  setSelectedItem,
+  // setIsOpen,
+  isOpen,
+  // setInputValue,
+  inputValue,
   clearTaxonomy,
   ...rest
 }) => (
@@ -41,20 +58,27 @@ export const MultiSelect = ({
       onChange={changeHandler(
         selectedItems,
         setSelectedItems,
+        setSelectedItem,
+        // setIsOpen,
+        // isOpen,
+        // setInputValue,
+        // inputValue,
         onSelectionItemsChange
       )}
     >
       {({
+        // parameters required by Downshift
         getLabelProps,
         getInputProps,
         getItemProps,
         getToggleButtonProps,
         clearSelection,
-        isOpen,
         selectedItem,
+        isOpen,
         inputValue,
       }) => (
         <div className="multi-select">
+          {debugIt('debug4 isOpen', selectedItem)}
           <div className="form-control-container">
             <label {...getLabelProps()}>{labelText}</label>
             <input {...getInputProps()} type="text" className="form-control" />
@@ -87,29 +111,6 @@ export const MultiSelect = ({
             isOpen={isOpen}
             inputValue={inputValue}
           />
-
-          {/* {isOpen ? (
-            <ul>
-              {items
-                .filter(
-                  (item) =>
-                    !selectedItems.find(
-                      (selectedItem2) => selectedItem2 === item
-                    ) && item.toLowerCase().includes(inputValue.toLowerCase())
-                )
-                .map((item) => (
-                  <li
-                    {...getItemProps({
-                      item,
-                      key: item,
-                    })}
-                  >
-                    {'  '}
-                    {item}
-                  </li>
-                ))}
-            </ul>
-          ) : null} */}
         </div>
       )}
     </Downshift>
