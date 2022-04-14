@@ -282,7 +282,7 @@ function Projects(): JSX.Element {
                       setFilters({ topics: newTopics })
                     }
                     setSelectedItem={setSelectedItem}
-                    // setInputValue={setInputValue}
+                    setInputValue={setInputValue}
                     inputValue={inputValue}
                     // setIsOpen={setIsOpen}
                     isOpen={isOpen}
@@ -295,6 +295,7 @@ function Projects(): JSX.Element {
                   {console.log(
                     'debug2 selected item',
                     selectedItem,
+                    inputValue
                     // isOpen,
                     // inputValue
                   )}

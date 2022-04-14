@@ -21,11 +21,13 @@ function changeHandler(
   setSelectedItem,
   // setIsOpen,
   // isOpen,
-  // setInputValue,
-  // inputValue,
+  setInputValue,
+  inputValue,
   onSelectionItemsChange
 ) {
   return (selectedItem, downshift) => {
+    console.log("debug input value", inputValue);
+    setInputValue(inputValue);
     if (!selectedItem) return;
     setSelectedItem(selectedItem);
     // setIsOpen(isOpen);
@@ -47,7 +49,7 @@ export const MultiSelect = ({
   setSelectedItem,
   // setIsOpen,
   isOpen,
-  // setInputValue,
+  setInputValue,
   inputValue,
   clearTaxonomy,
   ...rest
@@ -61,8 +63,8 @@ export const MultiSelect = ({
         setSelectedItem,
         // setIsOpen,
         // isOpen,
-        // setInputValue,
-        // inputValue,
+        setInputValue,
+        inputValue,
         onSelectionItemsChange
       )}
     >
