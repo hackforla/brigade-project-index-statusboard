@@ -17,13 +17,15 @@ import { UnselectedTags } from './UnselectedTags';
 // }
 
 function changeHandler({
-  selectedItems,
   setSelectedItem,
   setInputValue,
   inputValue,
   setIsOpen,
   isOpen,
+  selectedItems,
   setSelectedItems,
+  setGetItemProps,
+  getItemProps,
 }) {
   return (selectedItem, downshift) => {
     console.log('debug input value', inputValue);
@@ -34,6 +36,7 @@ function changeHandler({
     // setInputValue(inputValue);
     // const i = selectedItems.findIndex((item) => item.id === selectedItem.id);
     setSelectedItems([...selectedItems, selectedItem]);
+    setGetItemProps(getItemProps);
     downshift.clearSelection();
   };
 }
@@ -45,6 +48,7 @@ export const MultiSelect = ({
   setSelectedItems,
   selectedItems = [],
   setSelectedItem,
+  setGetItemProps,
   setIsOpen,
   isOpen,
   setInputValue,
@@ -63,6 +67,7 @@ export const MultiSelect = ({
         setInputValue,
         inputValue,
         setSelectedItems,
+        setGetItemProps,
       })}
     >
       {({
@@ -120,6 +125,7 @@ MultiSelect.propTypes = {
   availableTags: PropTypes.array,
   labelText: PropTypes.string,
   setSelectedItems: PropTypes.func,
+  setGetItemProps: PropTypes.func,
   clearTaxonomy: PropTypes.func,
   isOpen: Boolean,
   selectedItem: {},

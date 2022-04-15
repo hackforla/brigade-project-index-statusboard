@@ -50,6 +50,7 @@ function Projects(): JSX.Element {
   const [displayOverview, setDisplayOverview] = useState(true);
   const [displayFilter, setDisplayFilter] = useState(true);
   const [selectedItem, setSelectedItem] = useState();
+  const [getItemProps, setGetItemProps] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
@@ -280,6 +281,7 @@ function Projects(): JSX.Element {
                     clearTaxonomy={clearTaxonomy}
                     selectedItems={topics}
                     setSelectedItem={setSelectedItem}
+                    setGetItemProps={setGetItemProps}
                     setInputValue={setInputValue}
                     inputValue={inputValue}
                     setIsOpen={setIsOpen}
