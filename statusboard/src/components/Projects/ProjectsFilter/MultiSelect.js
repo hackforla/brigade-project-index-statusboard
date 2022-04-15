@@ -6,8 +6,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
-import Button from '../Button/Button';
-import { ReactComponent as Arrow } from '../../assets/arrow.svg';
+import Button from '../../Button/Button';
+import { ReactComponent as Arrow } from '../../../assets/arrow.svg';
 import './MultiSelect.scss';
 import { UnselectedTags } from './UnselectedTags';
 
@@ -23,7 +23,7 @@ function changeHandler(
   onSelectionItemsChange
 ) {
   return (selectedItem, downshift) => {
-    console.log("debug input value", inputValue);
+    console.log('debug input value', inputValue);
     setInputValue(inputValue);
     if (!selectedItem) return;
     setSelectedItem(selectedItem);

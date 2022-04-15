@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/prefer-default-export */
 import React from 'react';
-import Button from '../Button/Button';
+import Button from '../../Button/Button';
 
 function removeSelectedItemByIndex(i, selectedItems, onSelectionItemsChange) {
   const temp = [...selectedItems];
@@ -16,7 +16,8 @@ export const Tags = ({ onSelectionItemsChange, selectedItems = [] }) => (
         <Button
           className="form-control--dark-background tag"
           onClick={() =>
-            removeSelectedItemByIndex(i, selectedItems, onSelectionItemsChange)}
+            removeSelectedItemByIndex(i, selectedItems, onSelectionItemsChange)
+          }
         >
           <>
             <span className="sr-only">Remove</span>

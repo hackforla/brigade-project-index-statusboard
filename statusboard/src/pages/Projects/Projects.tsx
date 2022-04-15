@@ -30,7 +30,7 @@ import {
 } from '../../utils/utils';
 import Select from '../../components/Select/Select';
 import Checkbox from '../../components/Checkbox/Checkbox';
-import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
+import { MultiSelect } from '../../components/Projects/ProjectsFilter/MultiSelect';
 import { ProjectsOverview } from '../../components/Projects/ProjectsOverview';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
@@ -41,7 +41,7 @@ import queryParamFilter from '../../components/Projects/ProjectsTable/QueryParam
 import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss';
 import './modal.css';
-import { Tags } from '../../components/MultiSelect/Tags';
+import { Tags } from '../../components/Projects/ProjectsFilter/SelectedTags';
 
 function Projects(): JSX.Element {
   const { allTopics, loading } = useContext(BrigadeDataContext);
