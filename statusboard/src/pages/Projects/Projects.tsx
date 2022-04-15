@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/extensions */
@@ -283,7 +284,7 @@ function Projects(): JSX.Element {
                     inputValue={inputValue}
                     // setIsOpen={setIsOpen}
                     isOpen={isOpen}
-                    items={availableTags}
+                    availableTags={availableTags}
                     labelText="Add Specific Tags &#128316;"
                     setSelectedItems={(newTags: string[] | undefined) =>
                       setFilters({ topics: newTags })

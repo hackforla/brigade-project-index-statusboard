@@ -38,7 +38,7 @@ function changeHandler(
 
 // From https://www.axelerant.com/resources/team-blog/using-downshift-create-multi-select-widget-react
 export const MultiSelect = ({
-  items,
+  availableTags,
   labelText,
   setSelectedItems,
   selectedItems = [],
@@ -99,7 +99,7 @@ export const MultiSelect = ({
             ) : null}
           </div>
           <UnselectedTags
-            items={items}
+            availableTags={availableTags}
             selectedItems={selectedItems}
             getItemProps={getItemProps}
             isOpen={isOpen}
@@ -114,7 +114,7 @@ export const MultiSelect = ({
 MultiSelect.defaultProps = {};
 
 MultiSelect.propTypes = {
-  items: PropTypes.array,
+  availableTags: PropTypes.array,
   labelText: PropTypes.string,
   setSelectedItems: PropTypes.func,
   clearTaxonomy: PropTypes.func,
