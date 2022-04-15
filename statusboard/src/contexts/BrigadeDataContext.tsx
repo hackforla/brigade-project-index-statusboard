@@ -4,21 +4,21 @@ import axios from 'axios';
 import {
   getBaseApiUrl,
   getProjectsFromBrigadeData,
-  getTopicsFromProjects,
+  getTagsFromProjects,
 } from '../utils/utils';
 import { Brigade, Project } from '../utils/types';
 
 type BrigadeDataContextType = {
   allBrigadeData: Brigade[];
   allProjects: Project[];
-  allTopics: string[];
+  allTags: string[];
   loading: boolean;
 };
 
 const BrigadeDataContext = createContext<BrigadeDataContextType>({
   allBrigadeData: [],
   allProjects: [],
-  allTopics: [],
+  allTags: [],
   loading: false,
 });
 
@@ -31,7 +31,7 @@ const BrigadeDataContextProvider = ({
 }) => {
   const [brigadeData, setBrigadeData] = useState<Brigade[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
-  const [topics, setTopics] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const BrigadeDataContextProvider = ({
         setBrigadeData(_brigadeData);
         const _projects = getProjectsFromBrigadeData(_brigadeData);
         setProjects(_projects || []);
-        setTopics(getTopicsFromProjects(_projects));
+        setTags(getTagsFromProjects(_projects));
       }
       setLoading(false);
     };
@@ -57,7 +57,7 @@ const BrigadeDataContextProvider = ({
       value={{
         allBrigadeData: brigadeData,
         allProjects: projects,
-        allTopics: topics,
+        allTags: tags,
         loading,
       }}
     >

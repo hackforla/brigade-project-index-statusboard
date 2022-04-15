@@ -24,7 +24,7 @@ import ProjectsTable from '../../components/Projects/ProjectsTable/ProjectsTable
 import Divider from '../../components/Divider/Divider';
 import {
   ACTIVE_THRESHOLDS,
-  getTopicsFromProjects,
+  getTagsFromProjects,
   customStringSort,
   lastPushSort,
 } from '../../utils/utils';
@@ -44,7 +44,7 @@ import './modal.css';
 import { Tags } from '../../components/Projects/ProjectsFilter/SelectedTags';
 
 function Projects(): JSX.Element {
-  const { allTopics, loading } = useContext(BrigadeDataContext);
+  const { allTags, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
   const [displayOverview, setDisplayOverview] = useState(true);
   const [displayFilter, setDisplayFilter] = useState(true);
@@ -64,11 +64,11 @@ function Projects(): JSX.Element {
     queryParameters,
   } = useProjectFilters();
 
-  // Topics
-  const availableTopics = useMemo(() => {
-    if (!projectsFilteredByTime) return allTopics;
-    return getTopicsFromProjects(projectsFilteredByTime);
-  }, [projectsFilteredByTime, allTopics]);
+  // Tags
+  const availableTags = useMemo(() => {
+    if (!projectsFilteredByTime) return allTags;
+    return getTagsFromProjects(projectsFilteredByTime);
+  }, [projectsFilteredByTime, allTags]);
 
   const filterTypes: FilterTypes<Project> = useMemo(
     () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
@@ -273,7 +273,7 @@ function Projects(): JSX.Element {
                   />
                 </div>
               )}
-              {availableTopics && (
+              {availableTags && (
                 <>
                   <MultiSelect
                     clearTaxonomy={clearTaxonomy}
@@ -283,10 +283,10 @@ function Projects(): JSX.Element {
                     inputValue={inputValue}
                     // setIsOpen={setIsOpen}
                     isOpen={isOpen}
-                    items={availableTopics}
+                    items={availableTags}
                     labelText="Add Specific Tags &#128316;"
-                    setSelectedItems={(newTopics: string[] | undefined) =>
-                      setFilters({ topics: newTopics })
+                    setSelectedItems={(newTags: string[] | undefined) =>
+                      setFilters({ topics: newTags })
                     }
                   />
                 </>
@@ -296,8 +296,8 @@ function Projects(): JSX.Element {
           <Divider />
           <Tags
             selectedItems={topics}
-            setSelectedItems={(newTopics: string[] | undefined) =>
-              setFilters({ topics: newTopics })
+            setSelectedItems={(newTags: string[] | undefined) =>
+              setFilters({ topics: newTags })
             }
           />
           <div className="hideFifthColumn">
