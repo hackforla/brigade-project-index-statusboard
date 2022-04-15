@@ -285,7 +285,7 @@ function Projects(): JSX.Element {
                     isOpen={isOpen}
                     items={availableTopics}
                     labelText="Add Specific Tags &#128316;"
-                    onSelectionItemsChange={(newTopics: string[] | undefined) =>
+                    setSelectedItems={(newTopics: string[] | undefined) =>
                       setFilters({ topics: newTopics })
                     }
                   />
@@ -303,7 +303,7 @@ function Projects(): JSX.Element {
           <Divider />
           <Tags
             selectedItems={topics}
-            onSelectionItemsChange={(newTopics: string[] | undefined) =>
+            setSelectedItems={(newTopics: string[] | undefined) =>
               setFilters({ topics: newTopics })
             }
           />

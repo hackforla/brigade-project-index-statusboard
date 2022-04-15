@@ -3,20 +3,20 @@
 import React from 'react';
 import Button from '../../Button/Button';
 
-function removeSelectedItemByIndex(i, selectedItems, onSelectionItemsChange) {
+function removeSelectedItemByIndex(i, selectedItems, setSelectedItems) {
   const temp = [...selectedItems];
   temp.splice(i, 1);
-  onSelectionItemsChange(temp);
+  setSelectedItems(temp);
 }
 
-export const Tags = ({ onSelectionItemsChange, selectedItems = [] }) => (
+export const Tags = ({ setSelectedItems, selectedItems = [] }) => (
   <div>
     {selectedItems.map((value, i) => (
       <span key={value}>
         <Button
           className="form-control--dark-background tag"
           onClick={() =>
-            removeSelectedItemByIndex(i, selectedItems, onSelectionItemsChange)
+            removeSelectedItemByIndex(i, selectedItems, setSelectedItems)
           }
         >
           <>

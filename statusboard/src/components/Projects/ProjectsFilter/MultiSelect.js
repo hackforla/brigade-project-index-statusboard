@@ -20,7 +20,7 @@ function changeHandler(
   setSelectedItem,
   setInputValue,
   inputValue,
-  onSelectionItemsChange
+  setSelectedItems
 ) {
   return (selectedItem, downshift) => {
     console.log('debug input value', inputValue);
@@ -30,7 +30,7 @@ function changeHandler(
     // setIsOpen(isOpen);
     // setInputValue(inputValue);
     // const i = selectedItems.findIndex((item) => item.id === selectedItem.id);
-    onSelectionItemsChange([...selectedItems, selectedItem]);
+    setSelectedItems([...selectedItems, selectedItem]);
     downshift.clearSelection();
   };
 }
@@ -39,7 +39,7 @@ function changeHandler(
 export const MultiSelect = ({
   items,
   labelText,
-  onSelectionItemsChange,
+  setSelectedItems,
   selectedItems = [],
   setSelectedItem,
   isOpen,
@@ -58,7 +58,7 @@ export const MultiSelect = ({
         // isOpen,
         setInputValue,
         inputValue,
-        onSelectionItemsChange
+        setSelectedItems
       )}
     >
       {({
@@ -116,7 +116,7 @@ MultiSelect.defaultProps = {};
 MultiSelect.propTypes = {
   items: PropTypes.array,
   labelText: PropTypes.string,
-  onSelectionItemsChange: PropTypes.func,
+  setSelectedItems: PropTypes.func,
   clearTaxonomy: PropTypes.func,
   isOpen: Boolean,
   selectedItem: {},
