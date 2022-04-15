@@ -11,9 +11,10 @@ import { ReactComponent as Arrow } from '../../../assets/arrow.svg';
 import './MultiSelect.scss';
 import { UnselectedTags } from './UnselectedTags';
 
-function debugIt(...args) {
-  console.log(...args);
-}
+// TODO: remove
+// function debugIt(...args) {
+//   console.log(...args);
+// }
 
 function changeHandler(
   selectedItems,
@@ -73,7 +74,6 @@ export const MultiSelect = ({
         inputValue,
       }) => (
         <div className="multi-select">
-          {debugIt('debug4 isOpen', selectedItem)}
           <div className="form-control-container">
             <label {...getLabelProps()}>{labelText}</label>
             <input {...getInputProps()} type="text" className="form-control" />

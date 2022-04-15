@@ -289,13 +289,6 @@ function Projects(): JSX.Element {
                       setFilters({ topics: newTopics })
                     }
                   />
-                  {console.log(
-                    'debug2 selected item',
-                    selectedItem,
-                    inputValue
-                    // isOpen,
-                    // inputValue
-                  )}
                 </>
               )}
             </div>
