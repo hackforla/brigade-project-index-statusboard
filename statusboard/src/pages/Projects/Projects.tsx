@@ -282,7 +282,7 @@ function Projects(): JSX.Element {
                     setSelectedItem={setSelectedItem}
                     setInputValue={setInputValue}
                     inputValue={inputValue}
-                    // setIsOpen={setIsOpen}
+                    setIsOpen={setIsOpen}
                     isOpen={isOpen}
                     availableTags={availableTags}
                     labelText="Add Specific Tags &#128316;"

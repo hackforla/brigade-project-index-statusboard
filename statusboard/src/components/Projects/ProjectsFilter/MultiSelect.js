@@ -16,19 +16,21 @@ import { UnselectedTags } from './UnselectedTags';
 //   console.log(...args);
 // }
 
-function changeHandler(
+function changeHandler({
   selectedItems,
   setSelectedItem,
   setInputValue,
   inputValue,
-  setSelectedItems
-) {
+  setIsOpen,
+  isOpen,
+  setSelectedItems,
+}) {
   return (selectedItem, downshift) => {
     console.log('debug input value', inputValue);
     setInputValue(inputValue);
+    setIsOpen(isOpen);
     if (!selectedItem) return;
     setSelectedItem(selectedItem);
-    // setIsOpen(isOpen);
     // setInputValue(inputValue);
     // const i = selectedItems.findIndex((item) => item.id === selectedItem.id);
     setSelectedItems([...selectedItems, selectedItem]);
@@ -43,6 +45,7 @@ export const MultiSelect = ({
   setSelectedItems,
   selectedItems = [],
   setSelectedItem,
+  setIsOpen,
   isOpen,
   setInputValue,
   inputValue,
@@ -52,15 +55,15 @@ export const MultiSelect = ({
   <>
     <Downshift
       {...rest}
-      onChange={changeHandler(
+      onChange={changeHandler({
         selectedItems,
         setSelectedItem,
-        // setIsOpen,
-        // isOpen,
+        setIsOpen,
+        isOpen,
         setInputValue,
         inputValue,
-        setSelectedItems
-      )}
+        setSelectedItems,
+      })}
     >
       {({
         // parameters required by Downshift
