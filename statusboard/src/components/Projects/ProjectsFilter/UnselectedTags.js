@@ -19,7 +19,7 @@ import './MultiSelect.scss';
 
 // From https://www.axelerant.com/resources/team-blog/using-downshift-create-multi-select-widget-react
 export const UnselectedTags = ({
-  items,
+  availableTags,
   selectedItems = [],
   getItemProps,
   isOpen,
@@ -30,7 +30,7 @@ export const UnselectedTags = ({
       <div className="multi-select">
         {isOpen ? (
           <ul>
-            {items
+            {availableTags
               .filter(
                 (item) =>
                   !selectedItems.find(
@@ -58,7 +58,7 @@ export const UnselectedTags = ({
 UnselectedTags.defaultProps = {};
 
 UnselectedTags.propTypes = {
-  items: PropTypes.array,
+  availableTags: PropTypes.array,
   selectedItems: PropTypes.array,
   getItemProps: {},
   // isOpen: Boolean,
