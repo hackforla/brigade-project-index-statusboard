@@ -278,9 +278,6 @@ function Projects(): JSX.Element {
                   <MultiSelect
                     clearTaxonomy={clearTaxonomy}
                     selectedItems={topics}
-                    setSelectedItems={(newTopics: string[]) =>
-                      setFilters({ topics: newTopics })
-                    }
                     setSelectedItem={setSelectedItem}
                     setInputValue={setInputValue}
                     inputValue={inputValue}
@@ -306,9 +303,6 @@ function Projects(): JSX.Element {
           <Divider />
           <Tags
             selectedItems={topics}
-            setSelectedItems={(newTopics: string[]) =>
-              setFilters({ topics: newTopics })
-            }
             onSelectionItemsChange={(newTopics: string[] | undefined) =>
               setFilters({ topics: newTopics })
             }

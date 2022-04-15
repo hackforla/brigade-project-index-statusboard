@@ -17,10 +17,7 @@ function debugIt(...args) {
 
 function changeHandler(
   selectedItems,
-  setSelectedItems,
   setSelectedItem,
-  // setIsOpen,
-  // isOpen,
   setInputValue,
   inputValue,
   onSelectionItemsChange
@@ -32,8 +29,7 @@ function changeHandler(
     setSelectedItem(selectedItem);
     // setIsOpen(isOpen);
     // setInputValue(inputValue);
-    const i = selectedItems.findIndex((item) => item.id === selectedItem.id);
-    if (i === -1) setSelectedItems([...selectedItems, selectedItem]);
+    // const i = selectedItems.findIndex((item) => item.id === selectedItem.id);
     onSelectionItemsChange([...selectedItems, selectedItem]);
     downshift.clearSelection();
   };
@@ -45,9 +41,7 @@ export const MultiSelect = ({
   labelText,
   onSelectionItemsChange,
   selectedItems = [],
-  setSelectedItems,
   setSelectedItem,
-  // setIsOpen,
   isOpen,
   setInputValue,
   inputValue,
@@ -59,7 +53,6 @@ export const MultiSelect = ({
       {...rest}
       onChange={changeHandler(
         selectedItems,
-        setSelectedItems,
         setSelectedItem,
         // setIsOpen,
         // isOpen,
@@ -98,7 +91,6 @@ export const MultiSelect = ({
               <Button
                 className="button-primary clear-button"
                 onClick={() => {
-                  setSelectedItems([]);
                   clearSelection();
                   clearTaxonomy();
                 }}
