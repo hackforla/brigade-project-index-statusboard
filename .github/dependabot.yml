@@ -9,8 +9,10 @@ updates:
     directory: "/api"
     schedule:
       interval: "weekly"
+    versioning-strategy: lockfile-only
 
   - package-ecosystem: "npm"
     directory: "/statusboard"
     schedule:
       interval: "weekly"
+    versioning-strategy: lockfile-only
