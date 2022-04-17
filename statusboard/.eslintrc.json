@@ -83,7 +83,7 @@
       "version": "detect"
     }
   },
-  "parser": "babel-eslint",
+  "parser": "@babel/babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
