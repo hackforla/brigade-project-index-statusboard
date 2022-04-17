@@ -187,7 +187,7 @@ function Projects(): JSX.Element {
             onClick={toggleDisplayOverview}
           >
             <div className="accordionInnerDiv">
-              <div>Overview </div>
+              <div>Overview</div>
               <div className="accordionCollapseExpand">
                 {displayCollapseExpand(displayOverview)}
               </div>

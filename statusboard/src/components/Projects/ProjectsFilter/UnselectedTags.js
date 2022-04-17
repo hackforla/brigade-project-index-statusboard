@@ -27,7 +27,7 @@ export const UnselectedTags = ({
 }) => (
   <>
     <div>
-      <div className="multi-select">
+      <div className="unselected-tags">
         {isOpen ? (
           <ul>
             {availableTags
