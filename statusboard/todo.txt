@@ -6,4 +6,5 @@
 - make accordion button into an element
 - add dash to style names
 - investigate cx and --inline in Projects
+- get rid of warning about ts not allowing jsx
 

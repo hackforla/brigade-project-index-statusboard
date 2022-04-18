@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/prefer-default-export */
 import React from 'react';
-import Button from '../../Button/Button';
+import Button from '../Button/Button';
 
 function removeSelectedItemByIndex(i, selectedItems, setSelectedItems) {
   const temp = [...selectedItems];
