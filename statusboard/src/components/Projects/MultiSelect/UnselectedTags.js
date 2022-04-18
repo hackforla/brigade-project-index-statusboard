@@ -61,6 +61,6 @@ UnselectedTags.propTypes = {
   availableTags: PropTypes.array,
   selectedItems: PropTypes.array,
   getItemProps: {},
-  isOpen: Boolean,
-  inputValue: String,
+  isOpen: PropTypes.bool,
+  inputValue: PropTypes.string,
 };

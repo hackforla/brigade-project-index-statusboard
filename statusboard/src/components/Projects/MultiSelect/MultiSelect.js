@@ -24,8 +24,6 @@ function changeHandler({
   isOpen,
   selectedItems,
   setSelectedItems,
-  setGetItemProps,
-  getItemProps,
 }) {
   return (selectedItem, downshift) => {
     console.log('debug input value', inputValue);
@@ -36,7 +34,6 @@ function changeHandler({
     // setInputValue(inputValue);
     // const i = selectedItems.findIndex((item) => item.id === selectedItem.id);
     setSelectedItems([...selectedItems, selectedItem]);
-    setGetItemProps(getItemProps);
     downshift.clearSelection();
   };
 }
@@ -49,7 +46,6 @@ export const MultiSelect = ({
   setSelectedItems,
   selectedItems = [],
   setSelectedItem,
-  setGetItemProps,
   setIsOpen,
   isOpen,
   setInputValue,
@@ -68,17 +64,14 @@ export const MultiSelect = ({
         setInputValue,
         inputValue,
         setSelectedItems,
-        setGetItemProps,
       })}
     >
       {({
-        // parameters required by Downshift
+        // parameters provided by Downshift
         getLabelProps,
         getInputProps,
         getItemProps,
         getToggleButtonProps,
-        clearSelection,
-        selectedItem,
         isOpen,
         inputValue,
       }) => (
@@ -101,16 +94,6 @@ export const MultiSelect = ({
                 <span className="sr-only">{isOpen ? 'close' : 'open'}</span>
               </>
             </Button>
-            {selectedItem || selectedItems.length > 0 ? (
-              <Button
-                className="button-primary clear-button"
-                onClick={() => {
-                  clearSelection();
-                  clearTaxonomy();
-                }}
-                text="Clear"
-              />
-            ) : null}
           </div>
           <UnselectedTags
             availableTags={availableTags}
@@ -131,9 +114,9 @@ MultiSelect.propTypes = {
   availableTags: PropTypes.array,
   labelText: PropTypes.string,
   setSelectedItems: PropTypes.func,
-  setGetItemProps: PropTypes.func,
+  getItemProps: PropTypes.func,
   clearTaxonomy: PropTypes.func,
-  isOpen: Boolean,
+  isOpen: PropTypes.bool,
   selectedItem: {},
-  inputValue: String,
+  inputValue: PropTypes.string,
 };
