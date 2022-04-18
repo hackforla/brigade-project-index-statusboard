@@ -1,6 +1,27 @@
 .unselected-tags {
   margin-left: -300px;
 }
+  .selected-tag-name {
+    margin-right: 1rem;
+  }
+  
+  .selected-tag-close {
+    font-weight: bold;
+    opacity: 0.75;
+  }
+
+  .selected-tag {
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.5rem;
+
+  
+    &:hover,
+    &:focus {
+      .selected-tag-close {
+        opacity: 1;
+      }
+    }
+  }
 .multi-select {
   .dropdown-arrow {
     height: 0.75em;
@@ -39,23 +60,4 @@
     margin-left: 1rem;
   }
 
-  .tag {
-    margin-top: 0.5rem;
-    padding: 0.3rem 0.5rem;
-
-    &__name {
-      margin-right: 1rem;
-    }
-    &__close {
-      font-weight: bold;
-      opacity: 0.75;
-    }
-
-    &:hover,
-    &:focus {
-      .tag__close {
-        opacity: 1;
-      }
-    }
-  }
 }

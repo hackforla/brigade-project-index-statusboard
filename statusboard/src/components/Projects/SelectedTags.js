@@ -21,21 +21,21 @@ export const Tags = ({ setSelectedItems, selectedItems = [] }) => (
             // clearTaxonomy();
           }}
           text="Clear All"
-        />
+        />{' '}
         {selectedItems.map((value, i) => (
           <span key={value}>
             <Button
-              className="form-control--dark-background tag"
+              className="form-control--dark-background selected-tag"
               onClick={() =>
                 removeSelectedItemByIndex(i, selectedItems, setSelectedItems)
               }
             >
               <>
                 <span className="sr-only">Remove</span>
-                <span className="tag__name">{value}</span>
-                <span className="tag__close">x</span>
+                <span className="selected-tag-name">{value}</span>
+                <span className="selected-tag-close">x</span>
               </>
-            </Button>
+            </Button>{' '}
           </span>
         ))}
       </>

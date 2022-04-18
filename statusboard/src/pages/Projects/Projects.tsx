@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/extensions */
+/* @typescript-eslint/no-unsafe-return */
 import React, {
   useMemo,
   useContext,
