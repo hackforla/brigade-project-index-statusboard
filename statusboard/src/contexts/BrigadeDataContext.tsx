@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
