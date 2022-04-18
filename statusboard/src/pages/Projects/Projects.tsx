@@ -186,14 +186,16 @@ function Projects(): JSX.Element {
             className={`accordionButton ${displayActiveClass(displayOverview)}`}
             onClick={toggleDisplayOverview}
           >
-            <div className="accordionInnerDiv">
+            <div className="accordionButtonInnerDiv">
               <div>Overview</div>
               <div className="accordionCollapseExpand">
                 {displayCollapseExpand(displayOverview)}
               </div>
             </div>
           </button>
-          <div className={`${displayHideClass(displayOverview)}`}>
+          <div
+            className={`overviewSection ${displayHideClass(displayOverview)}`}
+          >
             <ProjectsOverview />
           </div>
           <Divider />
@@ -202,7 +204,7 @@ function Projects(): JSX.Element {
             className={`accordionButton ${displayActiveClass(displayFilter)}`}
             onClick={toggleDisplayFilter}
           >
-            <div className="accordionInnerDiv">
+            <div className="accordionButtonInnerDiv">
               <div>Filter</div>
               <div
                 className="accordionCollapseExpand"
@@ -219,7 +221,7 @@ function Projects(): JSX.Element {
               </div>
               <Select
                 extraRef={null}
-                label="Changed on githubin the last"
+                label="Changed on github in the last"
                 id="active_time_range"
                 onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                   setFilters({ timeRange: e.target.value })

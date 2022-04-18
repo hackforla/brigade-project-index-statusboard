@@ -1,0 +1,6 @@
+- make input fields same size in tags
+- change icon to be same as other buttons
+- make accordion button into an element
+- move to side
+- add project and keyword as demo
+- customize columns

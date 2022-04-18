@@ -9,12 +9,12 @@ import React from 'react';
 // eslint-disable import/prefer-default-export
 
 export const ProjectsOverview = () => (
-  <div>  
-    <h3>
+  <div>
+    <div className="attention">
       Looking to volunteer for an open source Civic Tech Github (and non Github)
       application?
-    </h3>
-    <p>
+    </div>
+    <div>
       Search our curated list of Civic Tech Open Source applications for the
       ideal volunteer opportunity. Filter projects based on your area of
       interest and date last updated. Check out the{' '}
@@ -35,6 +35,6 @@ export const ProjectsOverview = () => (
         Code for America
       </a>
       .
-    </p>
+    </div>
   </div>
 );

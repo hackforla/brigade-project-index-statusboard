@@ -8,7 +8,7 @@
     }
   }
 }
-.accordionInnerDiv { color: blue; display: flex; justify-content: space-between;}
+.accordionButtonInnerDiv { color: blue; display: flex; justify-content: space-between;}
 .accordionCollapseExpand {
   color: blue; 
 }
@@ -28,11 +28,14 @@
 .active, .accordionButton:hover {
   background-color: #ccc;
 }
-
+.overviewSection {
+  margin-bottom: 8px
+}
 .filterSection { margin-bottom: 8px }
+.tagFilterSectionInput { width: 50px }
 #nontagFilter label
 { display: inline-block;
-    width: 280px;
+    width: 350px;
     vertical-align: middle;
     position: relative;
     text-align: relative;
