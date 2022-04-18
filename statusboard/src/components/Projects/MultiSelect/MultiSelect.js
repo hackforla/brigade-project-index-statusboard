@@ -6,7 +6,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
-import Button from '../../Button/Button';
 import './MultiSelect.scss';
 import { UnselectedTags } from './UnselectedTags';
 
@@ -76,17 +75,18 @@ export const MultiSelect = ({
             <label {...getLabelProps()}>{labelText}</label>
             <input
               {...getInputProps()}
+              {...getToggleButtonProps()}
               type="text"
               width="40px"
               className={`form-control ${inputClassName}`}
             />
-            <Button
+            <span
               {...getToggleButtonProps({
                 className: 'accordionCollapseExpandButton',
               })}
             >
               {displayCollapseExpand(isOpen)}
-            </Button>
+            </span>
           </div>
           <UnselectedTags
             availableTags={availableTags}
