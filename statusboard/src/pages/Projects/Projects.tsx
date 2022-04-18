@@ -43,7 +43,7 @@ import queryParamFilter from '../../components/Projects/ProjectsTable/QueryParam
 import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss';
 import './modal.css';
-import { Tags } from '../../components/Projects/SelectedTags';
+import { SelectedTags } from '../../components/Projects/SelectedTags';
 
 function Projects(): JSX.Element {
   const { allTags, loading } = useContext(BrigadeDataContext);
@@ -283,7 +283,7 @@ function Projects(): JSX.Element {
                 <>
                   <MultiSelect
                     clearTaxonomy={clearTaxonomy}
-                    inputClassName="tagFilterSectionMultiSelect"
+                    inputClassName="tag-filter-section-multi-select"
                     selectedItems={topics}
                     setSelectedItem={setSelectedItem}
                     setInputValue={setInputValue}
@@ -301,11 +301,12 @@ function Projects(): JSX.Element {
             </div>
           </div>
           <Divider />
-          <Tags
+          <SelectedTags
             selectedItems={topics}
             setSelectedItems={(newTags: string[] | undefined) =>
               setFilters({ topics: newTags })
             }
+            clearTaxonomy={clearTaxonomy}
           />
           <div className="hideFifthColumn">
             <ProjectsTable

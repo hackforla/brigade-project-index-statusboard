@@ -7,14 +7,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import Button from '../../Button/Button';
-import { ReactComponent as Arrow } from '../../../assets/arrow.svg';
 import './MultiSelect.scss';
 import { UnselectedTags } from './UnselectedTags';
 
-// TODO: remove
-// function debugIt(...args) {
-//   console.log(...args);
-// }
+const displayCollapseExpand = (display) => (display ? collapse : expand);
+const collapse = '▲';
+const expand = '▼';
 
 function changeHandler({
   setSelectedItem,
@@ -26,7 +24,6 @@ function changeHandler({
   setSelectedItems,
 }) {
   return (selectedItem, downshift) => {
-    console.log('debug input value', inputValue);
     setInputValue(inputValue);
     setIsOpen(isOpen);
     if (!selectedItem) return;
@@ -50,7 +47,6 @@ export const MultiSelect = ({
   isOpen,
   setInputValue,
   inputValue,
-  clearTaxonomy,
   ...rest
 }) => (
   <>
@@ -86,13 +82,10 @@ export const MultiSelect = ({
             />
             <Button
               {...getToggleButtonProps({
-                className: 'button-primary form-control--right',
+                className: 'accordionCollapseExpandButton',
               })}
             >
-              <>
-                <Arrow className="dropdown-arrow" />
-                <span className="sr-only">{isOpen ? 'close' : 'open'}</span>
-              </>
+              {displayCollapseExpand(isOpen)}
             </Button>
           </div>
           <UnselectedTags
@@ -115,7 +108,6 @@ MultiSelect.propTypes = {
   labelText: PropTypes.string,
   setSelectedItems: PropTypes.func,
   getItemProps: PropTypes.func,
-  clearTaxonomy: PropTypes.func,
   isOpen: PropTypes.bool,
   selectedItem: {},
   inputValue: PropTypes.string,

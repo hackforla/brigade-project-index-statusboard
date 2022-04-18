@@ -7,10 +7,13 @@ function removeSelectedItemByIndex(i, selectedItems, setSelectedItems) {
   const temp = [...selectedItems];
   temp.splice(i, 1);
   setSelectedItems(temp);
-  console.log('debug', selectedItems);
 }
 
-export const Tags = ({ setSelectedItems, selectedItems = [] }) => (
+export const SelectedTags = ({
+  setSelectedItems,
+  selectedItems = [],
+  clearTaxonomy,
+}) => (
   <div>
     {selectedItems.length > 0 ? (
       <>
@@ -18,7 +21,7 @@ export const Tags = ({ setSelectedItems, selectedItems = [] }) => (
           className="button-primary clear-button"
           onClick={() => {
             setSelectedItems([]);
-            // clearTaxonomy();
+            clearTaxonomy();
           }}
           text="Clear All"
         />{' '}

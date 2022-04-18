@@ -12,6 +12,13 @@
 .accordionCollapseExpand {
   color: blue; 
 }
+.accordionCollapseExpandButton {
+  border-width: 0;
+  padding-left: 6px;
+  background-color: white;
+  font-size: small;
+  color: blue;
+}
 .accordionButton {
   background-color: #eee;
   color: blue;
@@ -37,7 +44,7 @@
 // width below excludes padding left, padding right for MultiSelect.  
 // Total width is width + padding + border (2px).  
 // Border width should n
-.tagFilterSectionMultiSelect { width: 164px; padding-left: 16px; padding-right: 16px; border-width: 2px }
+.tag-filter-section-multi-select { width: 145px; padding-left: 16px; padding-right: 16px; border-width: 2px }
 #nontagFilter label
 { display: inline-block;
     width: 280px;
