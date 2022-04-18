@@ -44,6 +44,7 @@ function changeHandler({
 // From https://www.axelerant.com/resources/team-blog/using-downshift-create-multi-select-widget-react
 export const MultiSelect = ({
   availableTags,
+  inputClassName = '',
   labelText,
   setSelectedItems,
   selectedItems = [],
@@ -84,7 +85,12 @@ export const MultiSelect = ({
         <div className="multi-select">
           <div className="form-control-container">
             <label {...getLabelProps()}>{labelText}</label>
-            <input {...getInputProps()} type="text" className="form-control" />
+            <input
+              {...getInputProps()}
+              type="text"
+              width="40px"
+              className={`form-control ${inputClassName}`}
+            />
             <Button
               {...getToggleButtonProps({
                 className: 'button-primary form-control--right',

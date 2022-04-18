@@ -247,6 +247,7 @@ function Projects(): JSX.Element {
                     extraRef={issueSelect}
                     label="By Topic"
                     id="select-issue"
+                    inputClassName="tagFilterSectionSelect"
                     options={issueOptions}
                     emptyOptionText=""
                     onChange={(event) => {
@@ -260,6 +261,7 @@ function Projects(): JSX.Element {
                     }}
                   />
                   <Select
+                    inputClassName="tagFilterSectionSelect"
                     extraRef={priorityAreaSelect}
                     label="By CfA Priority Action Area "
                     id="select-priority-areas"
@@ -281,6 +283,7 @@ function Projects(): JSX.Element {
                 <>
                   <MultiSelect
                     clearTaxonomy={clearTaxonomy}
+                    inputClassName="tagFilterSectionMultiSelect"
                     selectedItems={topics}
                     setSelectedItem={setSelectedItem}
                     setGetItemProps={setGetItemProps}
@@ -289,7 +292,7 @@ function Projects(): JSX.Element {
                     setIsOpen={setIsOpen}
                     isOpen={isOpen}
                     availableTags={availableTags}
-                    labelText="Add Specific Tags &#128316;"
+                    labelText="Add Specific Tags"
                     setSelectedItems={(newTags: string[] | undefined) =>
                       setFilters({ topics: newTags })
                     }
