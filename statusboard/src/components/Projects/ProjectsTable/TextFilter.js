@@ -1,6 +1,6 @@
 import React from 'react';
 import matchSorter from 'match-sorter';
-import { TextInput } from '..';
+import { TextInput } from '../..';
 
 export function fuzzyTextFilter(rows, id, filterValue) {
   const trimmedFilterValue = filterValue?.trim();

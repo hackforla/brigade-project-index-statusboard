@@ -80,8 +80,8 @@ function topicsCellButtons(
 }
 
 export default function getTableColumns(
-  filterTopics: string[] = [],
-  setFilterTopics: (newFilter: Filter) => void
+  filterTags: string[] = [],
+  setFilterTags: (newFilter: Filter) => void
 ): Column<Project>[] {
   return [
     {
@@ -117,7 +117,7 @@ export default function getTableColumns(
       id: 'topics',
       accessor: (project: Project) => project.topics?.length,
       disableFilters: true,
-      Cell: topicsCellButtons(filterTopics, setFilterTopics),
+      Cell: topicsCellButtons(filterTags, setFilterTags),
       disableSortBy: true,
     },
     {

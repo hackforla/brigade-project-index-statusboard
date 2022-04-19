@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable import/extensions */
+/* @typescript-eslint/no-unsafe-return */
 import React, {
   useMemo,
   useContext,
@@ -16,28 +21,41 @@ import {
   Filters,
   useSortBy,
 } from 'react-table';
-import Modal from 'react-modal'
 import { fuzzyTextFilter } from '../../components';
-import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
-import { ACTIVE_THRESHOLDS, getTopicsFromProjects, customStringSort, lastPushSort } from '../../utils/utils';
+import ProjectsTable from '../../components/Projects/ProjectsTable/ProjectsTable';
+import Divider from '../../components/Divider/Divider';
+import {
+  ACTIVE_THRESHOLDS,
+  getTagsFromProjects,
+  customStringSort,
+  lastPushSort,
+} from '../../utils/utils';
 import Select from '../../components/Select/Select';
 import Checkbox from '../../components/Checkbox/Checkbox';
-import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
+import { MultiSelect } from '../../components/Projects/MultiSelect/MultiSelect';
+import { ProjectsOverview } from '../../components/Projects/ProjectsOverview';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
 import { useProjectFilters } from '../../utils/useProjectFilters';
 import { Project } from '../../utils/types';
 import getTableColumns from './utils';
-import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
+import queryParamFilter from '../../components/Projects/ProjectsTable/QueryParamFilter';
 import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss';
 import './modal.css';
+import { SelectedTags } from '../../components/Projects/SelectedTags';
 
 function Projects(): JSX.Element {
-  const { allTopics, loading } = useContext(BrigadeDataContext);
+  const { allTags, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
+  const [displayOverview, setDisplayOverview] = useState(true);
+  const [displayFilter, setDisplayFilter] = useState(true);
+  const [selectedItem, setSelectedItem] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
-  const { priorityAreasMap, issuesMap, isTaxonomyError } = useContext(TaxonomyDataContext);
+  const { priorityAreasMap, issuesMap, isTaxonomyError } =
+    useContext(TaxonomyDataContext);
 
   const {
     topics,
@@ -48,11 +66,11 @@ function Projects(): JSX.Element {
     queryParameters,
   } = useProjectFilters();
 
-  // Topics
-  const availableTopics = useMemo(() => {
-    if (!projectsFilteredByTime) return allTopics;
-    return getTopicsFromProjects(projectsFilteredByTime);
-  }, [projectsFilteredByTime, allTopics]);
+  // Tags
+  const availableTags = useMemo(() => {
+    if (!projectsFilteredByTime) return allTags;
+    return getTagsFromProjects(projectsFilteredByTime);
+  }, [projectsFilteredByTime, allTags]);
 
   const filterTypes: FilterTypes<Project> = useMemo(
     () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
@@ -61,10 +79,8 @@ function Projects(): JSX.Element {
 
   const sortTypes = {
     customStringSort,
-    lastPushSort
+    lastPushSort,
   };
-
-
 
   const columns: Column<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
@@ -140,119 +156,158 @@ function Projects(): JSX.Element {
     clearPriorityAreaSelect();
   }, [clearIssueSelect, clearPriorityAreaSelect]);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const toggleDisplayOverview = () => {
+    setDisplayOverview(!displayOverview);
+  };
 
-  function toggleModal() {
-    setIsOpen(!isOpen);
-  }
+  const toggleDisplayFilter = () => {
+    setDisplayFilter(!displayFilter);
+  };
 
-  function closeModal() {
-    setIsOpen(false);
-  }
+  const displayActiveClass = (display: boolean): string => {
+    return display ? 'active' : '';
+  };
 
+  const displayHideClass = (display: boolean): string => {
+    return display ? '' : 'hidden';
+  };
+
+  const displayCollapseExpand = (display: boolean): string => {
+    return display ? collapse : expand;
+  };
+  const collapse = '▲';
+  const expand = '▼';
   return (
     <>
-        This is the list of <a href="https://brigade.codeforamerica.org/">Code For America Brigades</a> and other organizations' civic tech projects.
-        <br/>
-        You can search projects by <span className="help">"Topic", "Priority Area" or by "Tags"</span> &nbsp;  
-        <button type='button' className='question_mark' onClick={toggleModal}>&#63;</button>
-        <Modal 
-          isOpen={isOpen}
-          contentLabel="Taxonomy"
-          className="taxonomy_modal"
-          overlayClassName="taxonomy_overlay"
-          onRequestClose={() => closeModal()}          
-          shouldCloseOnOverlayClick
-          shouldCloseOnEsc
-        >
-          <div className='header'>
-            <div>Taxonomy</div>
-            <button type='button' className='close' onClick={toggleModal}>.</button>
-          </div>
-          <div style={{fontSize: '16px'}}>
-            The list of Topics and Priority Action Areas comes from the Taxonomy project.
-            <br/>
-            The list of Tags comes from the Index Crawler.
-            <br/>
-            You can find out more about Taxonomy by clicking on the Taxonomy menu item.
-          </div>
-        </Modal>
-        <br/>
-        You can also exclude projects outside "Code For America Brigades" as well as select a timeframe on when a project was last updated.
-        <br/>
-      <LoadingIndicator loading={loading}>
+      <LoadingIndicator loading={false}>
         <>
-          <div>
-          <br/>
-            <Select
-              extraRef={null}
-              label={`Showing ${rowCounter} projects with changes on Github in the last  `}
-              id="active_time_range"
-              onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                setFilters({ timeRange: e.target.value })
-              }
-              selected={timeRange}
-              options={Object.keys(ACTIVE_THRESHOLDS)}
-            />
-            <Checkbox
-              label="Show only Code For America projects?"
-              id="only_cfa_projects"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setFilters({ onlyCfA: String(e.target.checked) })
-              }
-            />
-            {!isTaxonomyError &&
-              <div style={{display: 'flex', gap: '30px'}}>
-              <Select
-                extraRef={issueSelect}
-                label="Topic "
-                id="select-issue"
-                options={issueOptions}
-                emptyOptionText=""
-                onChange={(event) => {
-                  if (!event || !event.target) return;
-                  const newVal = event.target.value;
-                  if (typeof newVal === 'string') {
-                    const tags = issuesMap.get(newVal) ?? [];
-                    setFilters({ topics: tags });
-                  }
-                  clearPriorityAreaSelect();
-                }}
-              />
-              <Select
-                extraRef={priorityAreaSelect}
-                label=" CfA Priority Action Area "
-                id="select-priority-areas"
-                options={priorityAreasOptions}
-                emptyOptionText=""
-                onChange={(event) => {
-                  if (!event || !event.target) return;
-                  const newVal = event.target.value;
-                  if (typeof newVal === 'string') {
-                    const tags = priorityAreasMap.get(newVal) ?? [];
-                    setFilters({ topics: tags });
-                  }
-                  clearIssueSelect();
-                }}
-              />
+          <button
+            type="button"
+            className={`accordionButton ${displayActiveClass(displayOverview)}`}
+            onClick={toggleDisplayOverview}
+          >
+            <div className="accordionButtonInnerDiv">
+              <div>Overview</div>
+              <div className="accordionCollapseExpand">
+                {displayCollapseExpand(displayOverview)}
               </div>
-            }
+            </div>
+          </button>
+          <div
+            className={`overviewSection ${displayHideClass(displayOverview)}`}
+          >
+            <ProjectsOverview />
           </div>
-          {availableTopics  && (
-            <MultiSelect
-              clearTaxonomy={clearTaxonomy}
-              selectedItems={topics}
-              setSelectedItems={(newTopics: string[]) =>
-                setFilters({ topics: newTopics })
-              }
-              items={availableTopics}
-              labelText="Tags"
-              onSelectionItemsChange={(newTopics: string[] | undefined) =>
-                setFilters({ topics: newTopics })
-              }
-            />
-          )}
-          <br />
+          <Divider />
+          <button
+            type="button"
+            className={`accordionButton ${displayActiveClass(displayFilter)}`}
+            onClick={toggleDisplayFilter}
+          >
+            <div className="accordionButtonInnerDiv">
+              <div>Filter</div>
+              <div
+                className="accordionCollapseExpand"
+                style={{ textAlign: 'right' }}
+              >
+                {displayCollapseExpand(displayFilter)}
+              </div>
+            </div>
+          </button>
+          <div className={`filterSection ${displayFilter ? 'flex' : 'hidden'}`}>
+            <div id="nontagFilter">
+              <div>
+                <b>General</b>
+              </div>
+              <Select
+                extraRef={null}
+                label="Changed on github in the last"
+                id="active_time_range"
+                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                  setFilters({ timeRange: e.target.value })
+                }
+                selected={timeRange}
+                options={Object.keys(ACTIVE_THRESHOLDS)}
+              />
+              <Checkbox
+                label="Only Code For America projects?"
+                id="only_cfa_projects"
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setFilters({ onlyCfA: String(e.target.checked) })
+                }
+              />
+            </div>
+            <div id="tagFilter">
+              <div>
+                <b>Tags</b>
+              </div>
+              {!isTaxonomyError && (
+                <div>
+                  <Select
+                    extraRef={issueSelect}
+                    label="By Topic"
+                    id="select-issue"
+                    inputClassName="tagFilterSectionSelect"
+                    options={issueOptions}
+                    emptyOptionText=""
+                    onChange={(event) => {
+                      if (!event || !event.target) return;
+                      const newVal = event.target.value;
+                      if (typeof newVal === 'string') {
+                        const tags = issuesMap.get(newVal) ?? [];
+                        setFilters({ topics: tags });
+                      }
+                      clearPriorityAreaSelect();
+                    }}
+                  />
+                  <Select
+                    inputClassName="tagFilterSectionSelect"
+                    extraRef={priorityAreaSelect}
+                    label="By CfA Priority Action Area "
+                    id="select-priority-areas"
+                    options={priorityAreasOptions}
+                    emptyOptionText=""
+                    onChange={(event) => {
+                      if (!event || !event.target) return;
+                      const newVal = event.target.value;
+                      if (typeof newVal === 'string') {
+                        const tags = priorityAreasMap.get(newVal) ?? [];
+                        setFilters({ topics: tags });
+                      }
+                      clearIssueSelect();
+                    }}
+                  />
+                </div>
+              )}
+              {availableTags && (
+                <>
+                  <MultiSelect
+                    clearTaxonomy={clearTaxonomy}
+                    inputClassName="tag-filter-section-multi-select"
+                    selectedItems={topics}
+                    setSelectedItem={setSelectedItem}
+                    setInputValue={setInputValue}
+                    inputValue={inputValue}
+                    setIsOpen={setIsOpen}
+                    isOpen={isOpen}
+                    availableTags={availableTags}
+                    labelText="Add Specific Tags"
+                    setSelectedItems={(newTags: string[] | undefined) =>
+                      setFilters({ topics: newTags })
+                    }
+                  />
+                </>
+              )}
+            </div>
+          </div>
+          <Divider />
+          <SelectedTags
+            selectedItems={topics}
+            setSelectedItems={(newTags: string[] | undefined) =>
+              setFilters({ topics: newTags })
+            }
+            clearTaxonomy={clearTaxonomy}
+          />
           <div className="hideFifthColumn">
             <ProjectsTable
               options={options}
