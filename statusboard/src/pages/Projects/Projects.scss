@@ -37,7 +37,7 @@
 .overviewSection {
   margin-bottom: 8px
 }
-.filterSection { margin-bottom: 8px }
+.filterSection { display: box; }
 // width below included margins, border, and padding
 .tagFilterSectionSelect { width: 200px }
 // width below excludes padding left, padding right for MultiSelect.  

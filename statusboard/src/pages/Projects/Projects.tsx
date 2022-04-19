@@ -180,41 +180,10 @@ function Projects(): JSX.Element {
   return (
     <>
       <LoadingIndicator loading={false}>
-        <>
-          <button
-            type="button"
-            className={`accordionButton ${displayActiveClass(displayOverview)}`}
-            onClick={toggleDisplayOverview}
-          >
-            <div className="accordionButtonInnerDiv">
-              <div>Overview</div>
-              <div className="accordionCollapseExpand">
-                {displayCollapseExpand(displayOverview)}
-              </div>
-            </div>
-          </button>
+        <div className="flex">
           <div
-            className={`overviewSection ${displayHideClass(displayOverview)}`}
+            className={`filterSection ${displayFilter ? 'block' : 'hidden'}`}
           >
-            <ProjectsOverview />
-          </div>
-          <Divider />
-          <button
-            type="button"
-            className={`accordionButton ${displayActiveClass(displayFilter)}`}
-            onClick={toggleDisplayFilter}
-          >
-            <div className="accordionButtonInnerDiv">
-              <div>Filter</div>
-              <div
-                className="accordionCollapseExpand"
-                style={{ textAlign: 'right' }}
-              >
-                {displayCollapseExpand(displayFilter)}
-              </div>
-            </div>
-          </button>
-          <div className={`filterSection ${displayFilter ? 'flex' : 'hidden'}`}>
             <div id="nontagFilter">
               <div>
                 <b>General</b>
@@ -300,22 +269,43 @@ function Projects(): JSX.Element {
               )}
             </div>
           </div>
-          <Divider />
-          <SelectedTags
-            selectedItems={topics}
-            setSelectedItems={(newTags: string[] | undefined) =>
-              setFilters({ topics: newTags })
-            }
-            clearTaxonomy={clearTaxonomy}
-          />
-          <div className="hideFifthColumn">
-            <ProjectsTable
-              options={options}
-              plugins={hooks}
-              setRowCounter={setRowCounter}
+          <div id="right-panel" className="block right-panel">
+            <button
+              type="button"
+              className={`accordionButton ${displayActiveClass(
+                displayOverview
+              )}`}
+              onClick={toggleDisplayOverview}
+            >
+              <div className="accordionButtonInnerDiv">
+                <div>Overview</div>
+                <div className="accordionCollapseExpand">
+                  {displayCollapseExpand(displayOverview)}
+                </div>
+              </div>
+            </button>{' '}
+            <div
+              className={`overviewSection ${displayHideClass(displayOverview)}`}
+            >
+              <ProjectsOverview />
+            </div>
+            <Divider />
+            <SelectedTags
+              selectedItems={topics}
+              setSelectedItems={(newTags: string[] | undefined) =>
+                setFilters({ topics: newTags })
+              }
+              clearTaxonomy={clearTaxonomy}
             />
+            <div className="hideFifthColumn">
+              <ProjectsTable
+                options={options}
+                plugins={hooks}
+                setRowCounter={setRowCounter}
+              />
+            </div>
           </div>
-        </>
+        </div>
       </LoadingIndicator>
     </>
   );
