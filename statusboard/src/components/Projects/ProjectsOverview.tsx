@@ -9,7 +9,7 @@ import React from 'react';
 // eslint-disable import/prefer-default-export
 
 export const ProjectsOverview = () => (
-  <div>
+  <div style={{ height: '200px', overflowY: 'scroll' }}>
     <div className="attention">
       Looking to volunteer for an open source Civic Tech Github (and non Github)
       application?

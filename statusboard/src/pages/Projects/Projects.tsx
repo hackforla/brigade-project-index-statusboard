@@ -11,6 +11,7 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
+import div from 'react-split-pane';
 import {
   usePagination,
   useFilters,
@@ -297,7 +298,10 @@ function Projects(): JSX.Element {
               }
               clearTaxonomy={clearTaxonomy}
             />
-            <div className="hideFifthColumn">
+            <div
+              className="hideFifthColumn"
+              style={{ height: getBrowserHeight(), overflowY: 'scroll' }}
+            >
               <ProjectsTable
                 options={options}
                 plugins={hooks}
@@ -312,3 +316,8 @@ function Projects(): JSX.Element {
 }
 
 export default Projects;
+function getBrowserHeight(): string {
+  const height = window.innerHeight - 185;
+  console.log(`debug ${height}px`);
+  return `${height}px`;
+}
