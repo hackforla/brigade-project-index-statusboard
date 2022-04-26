@@ -1,4 +1,7 @@
 {
+  "rules":  {
+    "react/jsx-filename-extension": [2, { "extensions": [".js'", ".jsx", ".ts", ".tsx"] }]
+  },
   "compilerOptions": {
     "target": "es5",
     "downlevelIteration": true,

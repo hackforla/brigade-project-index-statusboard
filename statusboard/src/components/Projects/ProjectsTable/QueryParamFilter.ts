@@ -1,5 +1,5 @@
 import { FilterType, FilterValue, IdType, Row } from 'react-table';
-import { Project } from '../../utils/types';
+import { Project } from '../../../utils/types';
 
 function returnFalse(): boolean {
   return false;
@@ -9,7 +9,7 @@ function returnFalse(): boolean {
  * A simple {@link FilterType} wrapper that updates the URL query parameters based on the column id and filter value.
  */
 export default function queryParamFilter(
-  filter: FilterType<Project>,
+  filter: FilterType<Project>
 ): FilterType<Project> {
   const myFilter: FilterType<Project> = (
     rows: Array<Row<Project>>,

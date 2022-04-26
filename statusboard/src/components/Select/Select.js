@@ -1,4 +1,4 @@
-import {React} from 'react';
+import { React } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import '../commonFormControlStyles.scss';
@@ -13,6 +13,7 @@ export default function Select({
   className,
   inline,
   extraRef,
+  inputClassName = '',
 }) {
   return (
     <div
@@ -32,15 +33,18 @@ export default function Select({
         id={id}
         ref={extraRef}
         onChange={onChange}
-        className={cx('form-control', { 'form-control--inline': inline })}
+        className={`${cx('form-control', {
+          'form-control--inline': inline,
+        })}
+          ${inputClassName}`}
         value={selected}
       >
         {emptyOptionText && (
           <option value={emptyOptionText}>{emptyOptionText}</option>
         )}
-        {options.map((option) => {
-          return <option key={option}>{option}</option>;
-        })}
+        {options.map((option) => (
+          <option key={option}>{option}</option>
+        ))}
       </select>
     </div>
   );

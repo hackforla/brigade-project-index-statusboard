@@ -4,11 +4,11 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import './SuperResponsiveTableStyle.css'
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import Button from '../Button/Button';
+import Button from '../../Button/Button';
 import ColumnHeader from './ColumnHeader';
 import './ProjectsTable.scss';
-import { Project } from '../../utils/types';
-import BrigadeDataContext from '../../contexts/BrigadeDataContext';
+import { Project } from '../../../utils/types';
+import BrigadeDataContext from '../../../contexts/BrigadeDataContext';
 
 export type TableAttributes = {
   options: TableOptions<Project>;

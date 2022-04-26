@@ -1,0 +1,10 @@
+- make input fields same size in tags
+- move to side
+- add project and keyword as demo
+- customize columns
+- change icon to be same as other buttons
+- make accordion button into an element
+- add dash to style names
+- investigate cx and --inline in Projects
+- get rid of warning about ts not allowing jsx
+
