@@ -12,6 +12,7 @@ import React, {
   useState,
   useRef,
   useCallback,
+  useEffect,
 } from 'react';
 import $ from 'jquery';
 import {
@@ -46,8 +47,21 @@ import queryParamFilter from '../../components/Projects/ProjectsTable/QueryParam
 import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss';
 import './modal.css';
+
 import { SelectedTags } from '../../components/Projects/SelectedTags';
 
+function getDistanceToBottom(jqueryElem: string): number {
+  const top = $(jqueryElem).offset()?.top || 0;
+  const height = window.innerHeight - top;
+  return height;
+}
+
+function setHeightToBottom(jqueryElement: string): void {
+  const height = getDistanceToBottom(jqueryElement) - 25;
+  console.log('height', height);
+  $(jqueryElement).height(height);
+  console.log('new height', $(jqueryElement).height());
+}
 function Projects(): JSX.Element {
   const { allTags, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
@@ -59,6 +73,15 @@ function Projects(): JSX.Element {
 
   const { priorityAreasMap, issuesMap, isTaxonomyError } =
     useContext(TaxonomyDataContext);
+
+  useEffect(() => {
+    window.addEventListener('resize', (event) => {
+      const height = getDistanceToBottom('#projects-table') - 25;
+      setHeightToBottom('#projects-table');
+
+      $('#projects-table').height(height);
+    });
+  });
 
   const {
     topics,
@@ -159,10 +182,6 @@ function Projects(): JSX.Element {
     clearPriorityAreaSelect();
   }, [clearIssueSelect, clearPriorityAreaSelect]);
 
-  const toggleDisplayOverview = () => {
-    setDisplayOverview(!displayOverview);
-  };
-
   const displayActiveClass = (display: boolean): string => {
     return display ? 'active' : '';
   };
@@ -174,6 +193,11 @@ function Projects(): JSX.Element {
   const displayCollapseExpand = (display: boolean): string => {
     return display ? collapse : expand;
   };
+
+  const toggleDisplayOverview = () => {
+    setDisplayOverview(!displayOverview);
+  };
+
   const collapse = '▲';
   const expand = '▼';
   return (
@@ -318,8 +342,3 @@ function Projects(): JSX.Element {
 }
 
 export default Projects;
-function getDistanceToBottom(jqueryElem: string): number {
-  const top = $(jqueryElem).offset()?.top || 0;
-  const height = window.innerHeight - top;
-  return height;
-}
