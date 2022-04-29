@@ -57,10 +57,24 @@ function getDistanceToBottom(jqueryElem: string): number {
 }
 
 function setHeightToBottom(jqueryElement: string): void {
-  const height = getDistanceToBottom(jqueryElement) - 25;
-  $(jqueryElement).height(height);
-  $(jqueryElement).css({ overflowY: 'scroll' });
+  const width = window.innerWidth;
+  console.log('debug width', window.innerWidth);
+  if (width < 800) {
+    $('#filter-and-right-panel').css({ display: 'block' });
+        $(jqueryElement).removeAttr('height');
+    // $(jqueryElement).removeAttr('overflow-y');
+        // $(jqueryElement).height(3000);
+        $(jqueryElement).css({ overflowY: 'visible'} )
+        console.log('set height', $(jqueryElement).height());
+
+  } else {
+    $('#filter-and-right-panel').css({ display: 'flex' });
+    const height = getDistanceToBottom(jqueryElement) - 25;
+    $(jqueryElement).height(height);
+    $(jqueryElement).css({ overflowY: 'scroll' });
+  }
 }
+
 function Projects(): JSX.Element {
   const { allTags, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
@@ -197,7 +211,7 @@ function Projects(): JSX.Element {
   const expand = '▼';
   return (
     <>
-      <LoadingIndicator loading={false}>
+      <LoadingIndicator loading={loading}>
         <div>
           <button
             type="button"
@@ -217,7 +231,7 @@ function Projects(): JSX.Element {
             <ProjectsOverview />
           </div>
           <Divider />
-          <div className="flex">
+          <div className="flex" id="filter-and-right-panel">
             <div id="filter-section" className="filter-section block">
               <div id="nontagFilter">
                 <div>
