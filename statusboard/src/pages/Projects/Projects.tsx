@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/extensions */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* @typescript-eslint/no-unsafe-return */
 import React, {
   useMemo,
@@ -11,7 +13,7 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
-import div from 'react-split-pane';
+import $ from 'jquery';
 import {
   usePagination,
   useFilters,
@@ -161,10 +163,6 @@ function Projects(): JSX.Element {
     setDisplayOverview(!displayOverview);
   };
 
-  const toggleDisplayFilter = () => {
-    setDisplayFilter(!displayFilter);
-  };
-
   const displayActiveClass = (display: boolean): string => {
     return display ? 'active' : '';
   };
@@ -181,132 +179,136 @@ function Projects(): JSX.Element {
   return (
     <>
       <LoadingIndicator loading={false}>
-        <div className="flex">
-          <div
-            className={`filterSection ${displayFilter ? 'block' : 'hidden'}`}
+        <div>
+          <button
+            type="button"
+            className={`accordionButton ${displayActiveClass(displayOverview)}`}
+            onClick={toggleDisplayOverview}
           >
-            <div id="nontagFilter">
-              <div>
-                <b>General</b>
+            <div className="accordionButtonInnerDiv">
+              <div>Overview</div>
+              <div className="accordionCollapseExpand">
+                {displayCollapseExpand(displayOverview)}
               </div>
-              <Select
-                extraRef={null}
-                label="Changed on github in the last"
-                id="active_time_range"
-                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                  setFilters({ timeRange: e.target.value })
-                }
-                selected={timeRange}
-                options={Object.keys(ACTIVE_THRESHOLDS)}
-              />
-              <Checkbox
-                label="Only Code For America projects?"
-                id="only_cfa_projects"
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setFilters({ onlyCfA: String(e.target.checked) })
-                }
-              />
             </div>
-            <div id="tagFilter">
-              <div>
-                <b>Tags</b>
-              </div>
-              {!isTaxonomyError && (
-                <div>
-                  <Select
-                    extraRef={issueSelect}
-                    label="By Topic"
-                    id="select-issue"
-                    inputClassName="tagFilterSectionSelect"
-                    options={issueOptions}
-                    emptyOptionText=""
-                    onChange={(event) => {
-                      if (!event || !event.target) return;
-                      const newVal = event.target.value;
-                      if (typeof newVal === 'string') {
-                        const tags = issuesMap.get(newVal) ?? [];
-                        setFilters({ topics: tags });
-                      }
-                      clearPriorityAreaSelect();
-                    }}
-                  />
-                  <Select
-                    inputClassName="tagFilterSectionSelect"
-                    extraRef={priorityAreaSelect}
-                    label="By CfA Priority Action Area "
-                    id="select-priority-areas"
-                    options={priorityAreasOptions}
-                    emptyOptionText=""
-                    onChange={(event) => {
-                      if (!event || !event.target) return;
-                      const newVal = event.target.value;
-                      if (typeof newVal === 'string') {
-                        const tags = priorityAreasMap.get(newVal) ?? [];
-                        setFilters({ topics: tags });
-                      }
-                      clearIssueSelect();
-                    }}
-                  />
-                </div>
-              )}
-              {availableTags && (
-                <>
-                  <MultiSelect
-                    clearTaxonomy={clearTaxonomy}
-                    inputClassName="tag-filter-section-multi-select"
-                    selectedItems={topics}
-                    setSelectedItem={setSelectedItem}
-                    setInputValue={setInputValue}
-                    inputValue={inputValue}
-                    setIsOpen={setIsOpen}
-                    isOpen={isOpen}
-                    availableTags={availableTags}
-                    labelText="Add Specific Tags"
-                    setSelectedItems={(newTags: string[] | undefined) =>
-                      setFilters({ topics: newTags })
-                    }
-                  />
-                </>
-              )}
-            </div>
+          </button>{' '}
+          <div
+            className={`overviewSection ${displayHideClass(displayOverview)}`}
+          >
+            <ProjectsOverview />
           </div>
-          <div id="right-panel" className="block right-panel">
-            <button
-              type="button"
-              className={`accordionButton ${displayActiveClass(
-                displayOverview
-              )}`}
-              onClick={toggleDisplayOverview}
+          <Divider />
+          <div className="flex">
+            <div
+              className={`filterSection ${displayFilter ? 'block' : 'hidden'}`}
             >
-              <div className="accordionButtonInnerDiv">
-                <div>Overview</div>
-                <div className="accordionCollapseExpand">
-                  {displayCollapseExpand(displayOverview)}
+              <div id="nontagFilter">
+                <div>
+                  <b>General</b>
                 </div>
+                <Select
+                  extraRef={null}
+                  label="Changed on github in the last"
+                  id="active_time_range"
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                    setFilters({ timeRange: e.target.value })
+                  }
+                  selected={timeRange}
+                  options={Object.keys(ACTIVE_THRESHOLDS)}
+                />
+                <Checkbox
+                  label="Only Code For America projects?"
+                  id="only_cfa_projects"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setFilters({ onlyCfA: String(e.target.checked) })
+                  }
+                />
               </div>
-            </button>{' '}
-            <div
-              className={`overviewSection ${displayHideClass(displayOverview)}`}
-            >
-              <ProjectsOverview />
+              <div id="tagFilter">
+                <div>
+                  <b>Tags</b>
+                </div>
+                {!isTaxonomyError && (
+                  <div>
+                    <Select
+                      extraRef={issueSelect}
+                      label="By Topic"
+                      id="select-issue"
+                      inputClassName="tagFilterSectionSelect"
+                      options={issueOptions}
+                      emptyOptionText=""
+                      onChange={(event) => {
+                        if (!event || !event.target) return;
+                        const newVal = event.target.value;
+                        if (typeof newVal === 'string') {
+                          const tags = issuesMap.get(newVal) ?? [];
+                          setFilters({ topics: tags });
+                        }
+                        clearPriorityAreaSelect();
+                      }}
+                    />
+                    <Select
+                      inputClassName="tagFilterSectionSelect"
+                      extraRef={priorityAreaSelect}
+                      label="By CfA Priority Action Area "
+                      id="select-priority-areas"
+                      options={priorityAreasOptions}
+                      emptyOptionText=""
+                      onChange={(event) => {
+                        if (!event || !event.target) return;
+                        const newVal = event.target.value;
+                        if (typeof newVal === 'string') {
+                          const tags = priorityAreasMap.get(newVal) ?? [];
+                          setFilters({ topics: tags });
+                        }
+                        clearIssueSelect();
+                      }}
+                    />
+                  </div>
+                )}
+                {availableTags && (
+                  <>
+                    <MultiSelect
+                      clearTaxonomy={clearTaxonomy}
+                      inputClassName="tag-filter-section-multi-select"
+                      selectedItems={topics}
+                      setSelectedItem={setSelectedItem}
+                      setInputValue={setInputValue}
+                      inputValue={inputValue}
+                      setIsOpen={setIsOpen}
+                      isOpen={isOpen}
+                      availableTags={availableTags}
+                      labelText="Add Specific Tags"
+                      setSelectedItems={(newTags: string[] | undefined) =>
+                        setFilters({ topics: newTags })
+                      }
+                    />
+                  </>
+                )}
+              </div>
             </div>
-            <Divider />
-            <SelectedTags
-              selectedItems={topics}
-              setSelectedItems={(newTags: string[] | undefined) =>
-                setFilters({ topics: newTags })
-              }
-              clearTaxonomy={clearTaxonomy}
-            />
-            <div
-              className="hideFifthColumn"
-              style={{ height: getBrowserHeight(), overflowY: 'scroll' }}
-            >
-              <ProjectsTable
-                options={options}
-                plugins={hooks}
-                setRowCounter={setRowCounter}
+            <div id="right-panel" className="block right-panel">
+              <SelectedTags
+                selectedItems={topics}
+                setSelectedItems={(newTags: string[] | undefined) =>
+                  setFilters({ topics: newTags })
+                }
+                clearTaxonomy={clearTaxonomy}
               />
+              <div
+                id="projects-table"
+                className="hideFifthColumn"
+                style={{
+                  height: `${getDistanceToBottom('#projects-table') - 25}px`,
+                  overflowY: 'scroll',
+                }}
+              >
+                <ProjectsTable
+                  options={options}
+                  plugins={hooks}
+                  setRowCounter={setRowCounter}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -316,8 +318,8 @@ function Projects(): JSX.Element {
 }
 
 export default Projects;
-function getBrowserHeight(): string {
-  const height = window.innerHeight - 185;
-  console.log(`debug ${height}px`);
-  return `${height}px`;
+function getDistanceToBottom(jqueryElem: string): number {
+  const top = $(jqueryElem).offset()?.top || 0;
+  const height = window.innerHeight - top;
+  return height;
 }

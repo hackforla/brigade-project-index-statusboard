@@ -104,7 +104,7 @@ export function filterProjectsByTags(projects: Project[], topics?: string[]) {
 export function filterProjectsByTime(
   projects: Project[],
   timeRangeKey?: ActiveThresholdsKeys
-) {
+): Project[] {
   const timeRanges = timeRangeKey ? ACTIVE_THRESHOLDS[timeRangeKey] : undefined;
   if (!timeRanges) return projects;
   return projects.filter((p) => timeRanges.includes(p.last_pushed_within));
@@ -119,7 +119,7 @@ export function filterProjectsByCfA(
       p?.brigade?.type ? p.brigade.type.includes("Brigade") || p.brigade.type.includes("Code for America") : false
     );
   }
-  
+
   return projects;
 }
 
@@ -149,7 +149,7 @@ export function slugify(s: string) {
   return s.toLowerCase().replace(/[^\w]+/g, '');
 }
 
-export function getTagsFromProjects(projects?: Project[]) {
+export function getTagsFromProjects(projects?: Project[]): string[] {
   if (!projects) return [];
   // Sorted by frequency
   const allTags: string[] = projects.reduce<string[]>(

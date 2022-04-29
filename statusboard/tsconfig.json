@@ -1,6 +1,16 @@
 {
-  "rules":  {
-    "react/jsx-filename-extension": [2, { "extensions": [".js'", ".jsx", ".ts", ".tsx"] }]
+  "rules": {
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [
+          ".js'",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    ]
   },
   "compilerOptions": {
     "target": "es5",
@@ -22,7 +32,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
   },
   "include": [
     "src"

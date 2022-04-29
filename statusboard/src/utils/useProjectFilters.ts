@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { parse, ParsedQuery, stringify } from 'query-string';
 import { useContext, useEffect, useMemo } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -36,7 +37,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   const queryParameters = parse(search, {
     arrayFormat: 'comma',
   });
-  
+
   const {
     topics: _topics,
     timeRange,
@@ -56,12 +57,12 @@ export const useProjectFilters = (): ProjectFilterReturn => {
 
   const projectsFilteredByTime = useMemo<Project[]>(
     () => filterProjectsByTime(allProjects || [], timeRange),
-    [timeRange, allProjects],
+    [timeRange, allProjects]
   );
 
   const projectsFilteredByTags = useMemo<Project[]>(
     () => filterProjectsByTags(allProjects || [], topics),
-    [topics, allProjects],
+    [topics, allProjects]
   );
 
   const projectsFilteredByBrigades = useMemo<Project[]>(
@@ -70,7 +71,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   );
 
   const projectsFilteredByAllParams = useMemo<Project[]>(
-    () => filterActiveProjects({ topics, timeRange, brigades, onlyCfA}, allProjects),
+    () => filterActiveProjects({ topics, timeRange, brigades, onlyCfA }, allProjects),
     [topics, timeRange, brigades, onlyCfA, allProjects],
   );
 
@@ -78,7 +79,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     () => filterProjectsByCfA(allProjects || [], onlyCfA),
     [onlyCfA, allProjects],
   );
-  
+
 
   const history = useHistory();
   const setFilters = (newFilter: Filter, preserveFilters = true) => {
