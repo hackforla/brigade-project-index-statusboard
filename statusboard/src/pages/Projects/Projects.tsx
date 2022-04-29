@@ -58,15 +58,13 @@ function getDistanceToBottom(jqueryElem: string): number {
 
 function setHeightToBottom(jqueryElement: string): void {
   const height = getDistanceToBottom(jqueryElement) - 25;
-  console.log('height', height);
   $(jqueryElement).height(height);
-  console.log('new height', $(jqueryElement).height());
+  $(jqueryElement).css({ overflowY: 'scroll' });
 }
 function Projects(): JSX.Element {
   const { allTags, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
   const [displayOverview, setDisplayOverview] = useState(true);
-  const [displayFilter, setDisplayFilter] = useState(true);
   const [selectedItem, setSelectedItem] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -76,10 +74,7 @@ function Projects(): JSX.Element {
 
   useEffect(() => {
     window.addEventListener('resize', (event) => {
-      const height = getDistanceToBottom('#projects-table') - 25;
       setHeightToBottom('#projects-table');
-
-      $('#projects-table').height(height);
     });
   });
 
@@ -223,9 +218,7 @@ function Projects(): JSX.Element {
           </div>
           <Divider />
           <div className="flex">
-            <div
-              className={`filterSection ${displayFilter ? 'block' : 'hidden'}`}
-            >
+            <div id="filter-section" className="filter-section block">
               <div id="nontagFilter">
                 <div>
                   <b>General</b>
