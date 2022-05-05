@@ -3,7 +3,7 @@ name: deploy-heroku
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
