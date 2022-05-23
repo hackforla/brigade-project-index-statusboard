@@ -11,6 +11,7 @@ import {
   filterProjectsByTime,
   filterProjectsByTags,
   filterProjectsByCfA,
+  filterProjectsByProjectName,
 } from './utils';
 
 export type Filter = {
@@ -18,6 +19,7 @@ export type Filter = {
   timeRange?: string;
   brigades?: string[];
   onlyCfA?: string;
+  projectName?: string;
 };
 
 export type ProjectFilterReturn = Filter & {
@@ -26,6 +28,7 @@ export type ProjectFilterReturn = Filter & {
   projectsFilteredByBrigades: Project[];
   projectsFilteredByAllParams: Project[];
   projectsFilteredByCfA: Project[];
+  projectsFilteredByProjectName: Project[];
   setFilters: (filter: Filter, preserveFilters?: boolean) => void;
   queryParameters: ParsedQuery;
 };
@@ -43,11 +46,13 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     timeRange,
     brigades,
     onlyCfA,
+    projectName,
   } = (queryParameters || {}) as {
     topics: string[];
     timeRange: ActiveThresholdsKeys;
     brigades: string[];
     onlyCfA: string;
+    projectName: string;
   };
 
   let topics = _topics;
@@ -67,25 +72,40 @@ export const useProjectFilters = (): ProjectFilterReturn => {
 
   const projectsFilteredByBrigades = useMemo<Project[]>(
     () => filterProjectsByBrigades(allProjects || [], brigades),
-    [brigades, allProjects],
+    [brigades, allProjects]
   );
 
   const projectsFilteredByAllParams = useMemo<Project[]>(
-    () => filterActiveProjects({ topics, timeRange, brigades, onlyCfA }, allProjects),
-    [topics, timeRange, brigades, onlyCfA, allProjects],
+    () =>
+      filterActiveProjects(
+        { topics, timeRange, brigades, onlyCfA, projectName },
+        allProjects
+      ),
+    [topics, timeRange, brigades, onlyCfA, projectName, allProjects]
   );
 
   const projectsFilteredByCfA = useMemo<Project[]>(
     () => filterProjectsByCfA(allProjects || [], onlyCfA),
-    [onlyCfA, allProjects],
+    [onlyCfA, allProjects]
   );
 
+  const projectsFilteredByProjectName = useMemo<Project[]>(
+    () => filterProjectsByProjectName(allProjects || [], projectName),
+    [projectName, allProjects]
+  );
 
   const history = useHistory();
   const setFilters = (newFilter: Filter, preserveFilters = true) => {
     let _newFilter = newFilter;
     if (preserveFilters) {
-      _newFilter = { topics, timeRange, brigades, onlyCfA, ...newFilter };
+      _newFilter = {
+        topics,
+        timeRange,
+        brigades,
+        onlyCfA,
+        projectName,
+        ...newFilter,
+      };
     }
     history.replace(`?${stringify(_newFilter, { arrayFormat: 'comma' })}`);
   };
@@ -106,6 +126,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     queryParameters,
     projectsFilteredByTime,
     projectsFilteredByCfA,
+    projectsFilteredByProjectName,
     projectsFilteredByTags,
     projectsFilteredByBrigades,
     projectsFilteredByAllParams,

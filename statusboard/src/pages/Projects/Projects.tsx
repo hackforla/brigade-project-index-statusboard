@@ -49,6 +49,7 @@ import './Projects.scss';
 import './modal.css';
 
 import { SelectedTags } from '../../components/Projects/SelectedTags';
+import TextInput from '../../components/TextInput/TextInput';
 
 function getDistanceToBottom(jqueryElem: string): number {
   const top = $(jqueryElem).offset()?.top || 0;
@@ -58,15 +59,12 @@ function getDistanceToBottom(jqueryElem: string): number {
 
 function setHeightToBottom(jqueryElement: string): void {
   const width = window.innerWidth;
-  console.log('debug width', window.innerWidth);
   if (width < 800) {
     $('#filter-and-right-panel').css({ display: 'block' });
-        $(jqueryElement).removeAttr('height');
+    $(jqueryElement).removeAttr('height');
     // $(jqueryElement).removeAttr('overflow-y');
-        // $(jqueryElement).height(3000);
-        $(jqueryElement).css({ overflowY: 'visible'} )
-        console.log('set height', $(jqueryElement).height());
-
+    // $(jqueryElement).height(3000);
+    $(jqueryElement).css({ overflowY: 'visible' });
   } else {
     $('#filter-and-right-panel').css({ display: 'flex' });
     const height = getDistanceToBottom(jqueryElement) - 25;
@@ -237,6 +235,13 @@ function Projects(): JSX.Element {
                 <div>
                   <b>General</b>
                 </div>
+                <TextInput
+                  label="Project Name"
+                  id="ProjectName"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setFilters({ projectName: e.target.value })
+                  }
+                />
                 <Select
                   extraRef={null}
                   label="Changed on github in the last"

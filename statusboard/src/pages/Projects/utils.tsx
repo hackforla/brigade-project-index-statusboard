@@ -95,8 +95,6 @@ export default function getTableColumns(
       Header: 'Description',
       accessor: 'description',
       Filter: TextFilter,
-      filter: 'fuzzyTextFilter',
-      disableSortBy: true,
     },
     {
       Header: 'Open Issues',

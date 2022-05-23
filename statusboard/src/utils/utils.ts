@@ -61,9 +61,7 @@ export function filterBrigades(
   let dataToFilter = brigadeData;
   const { selectedBrigade, bounds } = filterOpts || {};
   if (selectedBrigade) {
-    dataToFilter = dataToFilter.filter(
-      (b) => b.name === selectedBrigade!.name!
-    );
+    dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade.name);
   } else if (bounds) {
     dataToFilter = dataToFilter.filter((b) => {
       if (!b.latitude || !b.longitude) return false;
@@ -96,8 +94,7 @@ export function filterProjectsByTags(projects: Project[], topics?: string[]) {
     }))
     .sort((a, b) => b.numberTagsMatched - a.numberTagsMatched)
     .filter(
-      (project: ProjectWithTagsMatched) =>
-        (project.numberTagsMatched || -1) > 0
+      (project: ProjectWithTagsMatched) => (project.numberTagsMatched || -1) > 0
     );
 }
 
@@ -110,31 +107,42 @@ export function filterProjectsByTime(
   return projects.filter((p) => timeRanges.includes(p.last_pushed_within));
 }
 
-export function filterProjectsByCfA(
-  projects: Project[],
-  onlyCfA?: string
-) {
+export function filterProjectsByCfA(projects: Project[], onlyCfA?: string) {
   if (onlyCfA === 'true') {
     return projects.filter((p: Project) =>
-      p?.brigade?.type ? p.brigade.type.includes("Brigade") || p.brigade.type.includes("Code for America") : false
+      p?.brigade?.type
+        ? p.brigade.type.includes('Brigade') ||
+        p.brigade.type.includes('Code for America')
+        : false
     );
   }
 
   return projects;
 }
 
+export function filterProjectsByProjectName(
+  projects: Project[],
+  projectName?: string
+): Project[] {
+  if (projectName) {
+    return projects.filter((p: Project) => p?.name.includes(projectName));
+  }
+
+  return projects;
+}
 export function filterActiveProjects(
   options: {
     timeRange?: ActiveThresholdsKeys;
     topics?: string[];
     brigades?: string[];
     onlyCfA: string;
+    projectName: string;
   },
   projects?: Project[]
-) {
+): Project[] {
   if (!projects) return [];
   // Set destructuring and allow defaults to be overwritten
-  const { timeRange, topics, brigades, onlyCfA } = options || {};
+  const { timeRange, topics, brigades, onlyCfA, projectName } = options || {};
   let newProjects: ProjectWithTagsMatched[] = filterProjectsByBrigades(
     projects,
     brigades
@@ -142,6 +150,7 @@ export function filterActiveProjects(
   newProjects = filterProjectsByTags(newProjects, topics);
   newProjects = filterProjectsByTime(newProjects, timeRange);
   newProjects = filterProjectsByCfA(newProjects, onlyCfA);
+  newProjects = filterProjectsByProjectName(newProjects, projectName);
   return newProjects;
 }
 

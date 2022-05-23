@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../commonFormControlStyles.scss';
-import './TextInput.scss';
 
 export default function TextInput({ label, id, onChange, defaultValue }) {
   return (
