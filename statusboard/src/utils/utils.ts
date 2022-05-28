@@ -1,7 +1,7 @@
 import { Bounds, latLng } from 'leaflet';
 
 import { SortByFn, Row, IdType } from 'react-table';
-
+import matchSorter from 'match-sorter';
 import { Brigade, Project } from './types';
 
 export type ActiveThresholdsKeys = 'all time' | 'year' | 'month' | 'week';
