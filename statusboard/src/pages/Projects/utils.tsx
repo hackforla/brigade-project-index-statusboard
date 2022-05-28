@@ -87,14 +87,13 @@ export default function getTableColumns(
     {
       Header: 'Project',
       accessor: 'name',
-      Filter: TextFilter,
-      filter: 'fuzzyTextFilter',
+      disableFilters: true,
       Cell: projectGitHubCellLink,
     },
     {
       Header: 'Description',
       accessor: 'description',
-      Filter: TextFilter,
+      disableFilters: true,
     },
     {
       Header: 'Open Issues',
@@ -122,9 +121,8 @@ export default function getTableColumns(
       Header: 'Organization',
       accessor: (project: Project): string => project.brigade?.name ?? '',
       id: 'organization',
-      Filter: TextFilter,
-      filter: 'fuzzyTextFilter',
       sortType: 'customStringSort',
+      disableFilters: true,
     },
   ];
 }
