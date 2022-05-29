@@ -1,7 +1,7 @@
 import { Bounds, latLng } from 'leaflet';
 
 import { SortByFn, Row, IdType } from 'react-table';
-import matchSorter from 'match-sorter';
+import { fuzzyTextFilter } from '../components/'
 import { Brigade, Project } from './types';
 
 export type ActiveThresholdsKeys = 'all time' | 'year' | 'month' | 'week';
@@ -82,6 +82,14 @@ export function filterProjectsByBrigades(
   );
 }
 
+export function filterProjectsByProjectName(projects: [], projectName: string) 
+{
+  if (!projectName) { 
+    return projects;
+  }
+  return fuzzyTextFilter ("projectName", projects);
+}
+
 type ProjectWithTagsMatched = Project & {
   numberTagsMatched?: number;
 };
@@ -120,7 +128,7 @@ export function filterProjectsByCfA(projects: Project[], onlyCfA?: string) {
   return projects;
 }
 
-export function filterProjectsByProjectName(
+export function fuzz(
   projects: Project[],
   projectName?: string
 ): Project[] {
