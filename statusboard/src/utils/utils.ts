@@ -82,12 +82,12 @@ export function filterProjectsByBrigades(
   );
 }
 
-export function filterProjectsByProjectName(projects: Project [], projectName: string) {
-  if (!projectName) {
+export function filterProjectsByProjectName(projects: Project [], name: string) {
+  if (!name) {
     return projects;
   }
-  return projects;
-  // return fuzzyTextFilter('projectName', projects);
+
+  return fuzzyTextFilter(projects, name, "name") as Project[];
 }
 
 type ProjectWithTagsMatched = Project & {
