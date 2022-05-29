@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { Cell, Column, Row, SortByFn } from 'react-table';
-import { Button, TextFilter } from '../../components';
+import { Button } from '../../components';
 import { Project } from '../../utils/types';
 import { Filter } from '../../utils/useProjectFilters';
 

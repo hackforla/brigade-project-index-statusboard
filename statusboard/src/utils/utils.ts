@@ -1,7 +1,7 @@
 import { Bounds, latLng } from 'leaflet';
 
 import { SortByFn, Row, IdType } from 'react-table';
-import { fuzzyTextFilter } from '../components/'
+import { fuzzyTextFilter } from '../components';
 import { Brigade, Project } from './types';
 
 export type ActiveThresholdsKeys = 'all time' | 'year' | 'month' | 'week';
@@ -82,12 +82,12 @@ export function filterProjectsByBrigades(
   );
 }
 
-export function filterProjectsByProjectName(projects: [], projectName: string) 
-{
-  if (!projectName) { 
+export function filterProjectsByProjectName(projects: Project [], projectName: string) {
+  if (!projectName) {
     return projects;
   }
-  return fuzzyTextFilter ("projectName", projects);
+  return projects;
+  // return fuzzyTextFilter('projectName', projects);
 }
 
 type ProjectWithTagsMatched = Project & {
@@ -120,7 +120,7 @@ export function filterProjectsByCfA(projects: Project[], onlyCfA?: string) {
     return projects.filter((p: Project) =>
       p?.brigade?.type
         ? p.brigade.type.includes('Brigade') ||
-        p.brigade.type.includes('Code for America')
+          p.brigade.type.includes('Code for America')
         : false
     );
   }
@@ -128,10 +128,7 @@ export function filterProjectsByCfA(projects: Project[], onlyCfA?: string) {
   return projects;
 }
 
-export function fuzz(
-  projects: Project[],
-  projectName?: string
-): Project[] {
+export function fuzz(projects: Project[], projectName?: string): Project[] {
   if (projectName) {
     return projects.filter((p: Project) => p?.name.includes(projectName));
   }
