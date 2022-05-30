@@ -25,6 +25,7 @@ import {
   Filters,
   useSortBy,
 } from 'react-table';
+import Select from 'react-select';
 import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/Projects/ProjectsTable/ProjectsTable';
 import Divider from '../../components/Divider/Divider';
@@ -34,7 +35,7 @@ import {
   customStringSort,
   lastPushSort,
 } from '../../utils/utils';
-import Select from '../../components/Select/Select';
+import SelectWidget from '../../components/SelectWidget/SelectWidget';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import { MultiSelect } from '../../components/Projects/MultiSelect/MultiSelect';
 import { ProjectsOverview } from '../../components/Projects/ProjectsOverview';
@@ -104,7 +105,11 @@ function Projects(): JSX.Element {
     if (!projectsFilteredByTime) return allTags;
     return getTagsFromProjects(projectsFilteredByTime);
   }, [projectsFilteredByTime, allTags]);
-
+  const { allProjects } = useContext(BrigadeDataContext);
+  const allOrganizations = [
+    ...new Set(allProjects.map((project) => project.brigade)),
+  ];
+  const selectOrganizations = allOrganizations.map(org => ({ value: org, label: org }))
   const filterTypes: FilterTypes<Project> = useMemo(
     () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
     []
@@ -235,6 +240,7 @@ function Projects(): JSX.Element {
                 <div>
                   <b>General</b>
                 </div>
+                <Select options={[{ value: 'a', label: 'b' }, { value: "c", label: "d" }]} />
                 <TextInput
                   label="Project Name"
                   id="ProjectName"
@@ -242,7 +248,7 @@ function Projects(): JSX.Element {
                     setFilters({ projectName: e.target.value })
                   }
                 />
-                <Select
+                <SelectWidget
                   extraRef={null}
                   label="Changed on github in the last"
                   id="active_time_range"
@@ -266,7 +272,7 @@ function Projects(): JSX.Element {
                 </div>
                 {!isTaxonomyError && (
                   <div>
-                    <Select
+                    <SelectWidget
                       extraRef={issueSelect}
                       label="By Topic"
                       id="select-issue"
@@ -283,7 +289,7 @@ function Projects(): JSX.Element {
                         clearPriorityAreaSelect();
                       }}
                     />
-                    <Select
+                    <SelectWidget
                       inputClassName="tagFilterSectionSelect"
                       extraRef={priorityAreaSelect}
                       label="By CfA Priority Action Area "

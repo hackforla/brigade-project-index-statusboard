@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import '../commonFormControlStyles.scss';
 
-export default function Select({
+export default function SelectWidget({
   label,
   id,
   options,
@@ -50,7 +50,7 @@ export default function Select({
   );
 }
 
-Select.defaultProps = {
+SelectWidget.defaultProps = {
   selected: undefined,
   options: [],
   className: '',
@@ -58,7 +58,7 @@ Select.defaultProps = {
   inline: false,
 };
 
-Select.propTypes = {
+SelectWidget.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(
