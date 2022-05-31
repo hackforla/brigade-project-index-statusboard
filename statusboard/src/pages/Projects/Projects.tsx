@@ -107,9 +107,13 @@ function Projects(): JSX.Element {
   }, [projectsFilteredByTime, allTags]);
   const { allProjects } = useContext(BrigadeDataContext);
   const allOrganizations = [
-    ...new Set(allProjects.map((project) => project.brigade)),
+    ...new Set(allProjects.map((project) => project.brigade?.name)),
   ];
-  const selectOrganizations = allOrganizations.map(org => ({ value: org, label: org }))
+  const selectOrganizations = allOrganizations.map((org) => ({
+    value: org,
+    label: org,
+  }));
+
   const filterTypes: FilterTypes<Project> = useMemo(
     () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
     []
@@ -144,27 +148,29 @@ function Projects(): JSX.Element {
   );
 
   const options: TableOptions<Project> = useMemo(
-    () => ({
-      columns,
-      data: filteredProjects || [],
-      autoResetFilters: false,
-      initialState: {
-        pageIndex: 0,
-        pageSize: 50,
-        filters: initialFilterValues,
-        sortBy: [
-          {
-            id: 'last_pushed_within',
-          },
-          {
-            id: 'name',
-          },
-        ],
-      },
-      filterTypes,
-      sortTypes,
-      setRowCounter,
-    }),
+    () => {
+      console.log("Table options"); return {
+        columns,
+        data: filteredProjects || [],
+        autoResetFilters: false,
+        initialState: {
+          pageIndex: 0,
+          pageSize: 50,
+          filters: initialFilterValues,
+          sortBy: [
+            {
+              id: 'last_pushed_within',
+            },
+            {
+              id: 'name',
+            },
+          ],
+        },
+        filterTypes,
+        sortTypes,
+        setRowCounter,
+      }
+    },
     [filteredProjects, columns, sortTypes, filterTypes, initialFilterValues]
   );
 
@@ -240,12 +246,15 @@ function Projects(): JSX.Element {
                 <div>
                   <b>General</b>
                 </div>
-                <Select options={[{ value: 'a', label: 'b' }, { value: "c", label: "d" }]} />
+                <Select
+                  id="Organization"
+                  options={selectOrganizations}
+                  onChange={(e) => { console.log('changed', e, e?.value); setFilters({ organization: e?.value }) }} />
                 <TextInput
                   label="Project Name"
-                  id="ProjectName"
+                  id="project"
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setFilters({ projectName: e.target.value })
+                    setFilters({ project: e.target.value })
                   }
                 />
                 <SelectWidget

@@ -82,12 +82,29 @@ export function filterProjectsByBrigades(
   );
 }
 
-export function filterProjectsByProjectName(projects: Project [], name: string) {
+export function filterProjectsByOrganization(
+  projects: Project[],
+  organization: string
+) {
+  console.log('Filtering by', organization);
+  if (!organization) {
+    console.log('No org');
+    return projects;
+  }
+
+  const retVal = projects.filter(
+    (project) => project.brigade?.name === organization
+  );
+  console.log('returning', retVal, 'origin', projects);
+  return retVal;
+}
+
+export function filterProjectsByProjectName(projects: Project[], name: string) {
   if (!name) {
     return projects;
   }
 
-  return fuzzyTextFilter(projects, name, "name") as Project[];
+  return fuzzyTextFilter(projects, name, 'name') as Project[];
 }
 
 type ProjectWithTagsMatched = Project & {
@@ -128,9 +145,9 @@ export function filterProjectsByCfA(projects: Project[], onlyCfA?: string) {
   return projects;
 }
 
-export function fuzz(projects: Project[], projectName?: string): Project[] {
-  if (projectName) {
-    return projects.filter((p: Project) => p?.name.includes(projectName));
+export function fuzz(projects: Project[], project?: string): Project[] {
+  if (project) {
+    return projects.filter((p: Project) => p?.name.includes(project));
   }
 
   return projects;
@@ -141,13 +158,16 @@ export function filterActiveProjects(
     topics?: string[];
     brigades?: string[];
     onlyCfA: string;
-    projectName: string;
+    project: string;
+    organization: string;
   },
   projects?: Project[]
 ): Project[] {
+  console.log('filter active projects');
   if (!projects) return [];
   // Set destructuring and allow defaults to be overwritten
-  const { timeRange, topics, brigades, onlyCfA, projectName } = options || {};
+  const { timeRange, topics, brigades, onlyCfA, project, organization } =
+    options || {};
   let newProjects: ProjectWithTagsMatched[] = filterProjectsByBrigades(
     projects,
     brigades
@@ -155,7 +175,8 @@ export function filterActiveProjects(
   newProjects = filterProjectsByTags(newProjects, topics);
   newProjects = filterProjectsByTime(newProjects, timeRange);
   newProjects = filterProjectsByCfA(newProjects, onlyCfA);
-  newProjects = filterProjectsByProjectName(newProjects, projectName);
+  newProjects = filterProjectsByProjectName(newProjects, project);
+  newProjects = filterProjectsByOrganization(newProjects, organization);
   return newProjects;
 }
 
