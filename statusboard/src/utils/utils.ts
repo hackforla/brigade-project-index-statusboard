@@ -84,7 +84,7 @@ export function filterProjectsByBrigades(
 
 export function filterProjectsByOrganization(
   projects: Project[],
-  organization: string
+  organization?: string
 ) {
   console.log('Filtering by', organization);
   if (!organization) {
@@ -99,7 +99,10 @@ export function filterProjectsByOrganization(
   return retVal;
 }
 
-export function filterProjectsByProjectName(projects: Project[], name: string) {
+export function filterProjectsByProjectName(
+  projects: Project[],
+  name?: string
+) {
   if (!name) {
     return projects;
   }
@@ -152,14 +155,14 @@ export function fuzz(projects: Project[], project?: string): Project[] {
 
   return projects;
 }
-export function filterActiveProjects(
+export function filterProjectsByAllParams(
   options: {
     timeRange?: ActiveThresholdsKeys;
     topics?: string[];
     brigades?: string[];
-    onlyCfA: string;
-    project: string;
-    organization: string;
+    onlyCfA?: string;
+    project?: string;
+    organization?: string; // xxxx
   },
   projects?: Project[]
 ): Project[] {

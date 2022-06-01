@@ -34,6 +34,7 @@ import {
   getTagsFromProjects,
   customStringSort,
   lastPushSort,
+  ActiveThresholdsKeys,
 } from '../../utils/utils';
 import SelectWidget from '../../components/SelectWidget/SelectWidget';
 import Checkbox from '../../components/Checkbox/Checkbox';
@@ -261,9 +262,10 @@ function Projects(): JSX.Element {
                   extraRef={null}
                   label="Changed on github in the last"
                   id="active_time_range"
-                  onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                    setFilters({ timeRange: e.target.value })
-                  }
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                    const value = e.target.value as ActiveThresholdsKeys;
+                    setFilters({ timeRange: value });
+                  }}
                   selected={timeRange}
                   options={Object.keys(ACTIVE_THRESHOLDS)}
                 />

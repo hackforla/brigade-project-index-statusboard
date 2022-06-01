@@ -6,7 +6,7 @@ import BrigadeDataContext from '../contexts/BrigadeDataContext';
 import { Project } from './types';
 import {
   ActiveThresholdsKeys,
-  filterActiveProjects,
+  filterProjectsByAllParams,
   filterProjectsByBrigades,
   filterProjectsByTime,
   filterProjectsByTags,
@@ -17,11 +17,11 @@ import {
 
 export type Filter = {
   topics?: string[];
-  timeRange?: string;
+  timeRange?: ActiveThresholdsKeys;
   brigades?: string[];
   onlyCfA?: string;
   project?: string;
-  organization?: string;
+  organization?: string; // xxxx - ok - Filter
 };
 
 export type ProjectFilterReturn = Filter & {
@@ -45,20 +45,13 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   });
 
   const {
-    topics: _topics,
+    topics: _topics, // ??
     timeRange,
     brigades,
     onlyCfA,
     project,
-    organization,
-  } = (queryParameters || {}) as {
-    topics: string[];
-    timeRange: ActiveThresholdsKeys;
-    brigades: string[];
-    onlyCfA: string;
-    project: string;
-    organization: string;
-  };
+    organization, // xxxx - ok - useProjectFilters
+  } = (queryParameters || {}) as Filter;
 
   let topics = _topics;
   if (_topics?.length) {
@@ -81,9 +74,8 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   );
 
   const projectsFilteredByAllParams = useMemo<Project[]>(() => {
-    console.log('all params');
-    return filterActiveProjects(
-      { topics, timeRange, brigades, onlyCfA, project, organization },
+    return filterProjectsByAllParams(
+      { topics, timeRange, brigades, onlyCfA, project, organization }, // xxxx - ok - allParams
       allProjects
     );
   }, [
@@ -92,7 +84,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     brigades,
     onlyCfA,
     project,
-    organization,
+    organization, // xxxx - ok - allParams
     allProjects,
   ]);
 
@@ -122,7 +114,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
         brigades,
         onlyCfA,
         project,
-        organization,
+        organization, // xxxx -  ok - setFilters
         ...newFilter,
       };
     }
