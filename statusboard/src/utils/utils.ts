@@ -3,6 +3,7 @@ import { Bounds, latLng } from 'leaflet';
 import { SortByFn, Row, IdType } from 'react-table';
 import { fuzzyTextFilter } from '../components';
 import { Brigade, Project } from './types';
+import { Filter } from './useProjectFilters';
 
 export type ActiveThresholdsKeys = 'all time' | 'year' | 'month' | 'week';
 // key: user-facing string that represents the threshold
@@ -82,21 +83,25 @@ export function filterProjectsByBrigades(
   );
 }
 
+export function filterProjectsByDescription(
+  projects: Project[],
+  description?: string
+): Project[] {
+  if (!description) {
+    return projects;
+  }
+  return fuzzyTextFilter(projects, description, 'description') as Project[];
+}
+
 export function filterProjectsByOrganization(
   projects: Project[],
   organization?: string
 ) {
-  console.log('Filtering by', organization);
   if (!organization) {
-    console.log('No org');
     return projects;
   }
 
-  const retVal = projects.filter(
-    (project) => project.brigade?.name === organization
-  );
-  console.log('returning', retVal, 'origin', projects);
-  return retVal;
+  return projects.filter((project) => project.brigade?.name === organization);
 }
 
 export function filterProjectsByProjectName(
@@ -113,7 +118,11 @@ export function filterProjectsByProjectName(
 type ProjectWithTagsMatched = Project & {
   numberTagsMatched?: number;
 };
-export function filterProjectsByTags(projects: Project[], topics?: string[]) {
+
+export function filterProjectsByTags(
+  projects: Project[],
+  topics?: string[]
+): Project[] {
   if (!topics?.length) return projects;
   return projects
     .map((p) => ({
@@ -148,29 +157,23 @@ export function filterProjectsByCfA(projects: Project[], onlyCfA?: string) {
   return projects;
 }
 
-export function fuzz(projects: Project[], project?: string): Project[] {
-  if (project) {
-    return projects.filter((p: Project) => p?.name.includes(project));
-  }
-
-  return projects;
-}
+// generic filter execute query
 export function filterProjectsByAllParams(
-  options: {
-    timeRange?: ActiveThresholdsKeys;
-    topics?: string[];
-    brigades?: string[];
-    onlyCfA?: string;
-    project?: string;
-    organization?: string; // xxxx
-  },
+  options: Filter,
   projects?: Project[]
 ): Project[] {
   console.log('filter active projects');
   if (!projects) return [];
   // Set destructuring and allow defaults to be overwritten
-  const { timeRange, topics, brigades, onlyCfA, project, organization } =
-    options || {};
+  const {
+    timeRange,
+    topics,
+    brigades,
+    onlyCfA,
+    project,
+    organization,
+    description,
+  } = options || {};
   let newProjects: ProjectWithTagsMatched[] = filterProjectsByBrigades(
     projects,
     brigades
@@ -180,6 +183,7 @@ export function filterProjectsByAllParams(
   newProjects = filterProjectsByCfA(newProjects, onlyCfA);
   newProjects = filterProjectsByProjectName(newProjects, project);
   newProjects = filterProjectsByOrganization(newProjects, organization);
+  newProjects = filterProjectsByDescription(newProjects, description);
   return newProjects;
 }
 

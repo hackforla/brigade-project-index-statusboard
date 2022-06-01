@@ -250,12 +250,20 @@ function Projects(): JSX.Element {
                 <Select
                   id="Organization"
                   options={selectOrganizations}
-                  onChange={(e) => { console.log('changed', e, e?.value); setFilters({ organization: e?.value }) }} />
+                  onChange={(e) => setFilters({ organization: e?.value })}
+                />
                 <TextInput
                   label="Project Name"
                   id="project"
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setFilters({ project: e.target.value })
+                  }
+                />
+                <TextInput
+                  label="Description"
+                  id="description"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setFilters({ description: e.target.value })
                   }
                 />
                 <SelectWidget

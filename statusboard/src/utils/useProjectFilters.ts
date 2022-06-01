@@ -13,15 +13,18 @@ import {
   filterProjectsByCfA,
   filterProjectsByProjectName,
   filterProjectsByOrganization,
+  filterProjectsByDescription,
 } from './utils';
 
+// generic filter type definition
 export type Filter = {
   topics?: string[];
   timeRange?: ActiveThresholdsKeys;
   brigades?: string[];
   onlyCfA?: string;
   project?: string;
-  organization?: string; // xxxx - ok - Filter
+  organization?: string;
+  description?: string;
 };
 
 export type ProjectFilterReturn = Filter & {
@@ -32,6 +35,7 @@ export type ProjectFilterReturn = Filter & {
   projectsFilteredByCfA: Project[];
   projectsFilteredByProjectName: Project[];
   projectsFilteredByOrganization: Project[];
+  projectsFilteredByDescription: Project[];
   setFilters: (filter: Filter, preserveFilters?: boolean) => void;
   queryParameters: ParsedQuery;
 };
@@ -44,13 +48,15 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     arrayFormat: 'comma',
   });
 
+  // generic filter param population
   const {
     topics: _topics, // ??
     timeRange,
     brigades,
     onlyCfA,
     project,
-    organization, // xxxx - ok - useProjectFilters
+    organization,
+    description,
   } = (queryParameters || {}) as Filter;
 
   let topics = _topics;
@@ -73,9 +79,18 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     [brigades, allProjects]
   );
 
+  // generic filter useMemo
   const projectsFilteredByAllParams = useMemo<Project[]>(() => {
     return filterProjectsByAllParams(
-      { topics, timeRange, brigades, onlyCfA, project, organization }, // xxxx - ok - allParams
+      {
+        topics,
+        timeRange,
+        brigades,
+        onlyCfA,
+        project,
+        organization,
+        description,
+      },
       allProjects
     );
   }, [
@@ -84,7 +99,8 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     brigades,
     onlyCfA,
     project,
-    organization, // xxxx - ok - allParams
+    organization,
+    description,
     allProjects,
   ]);
 
@@ -103,10 +119,16 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     [project, allProjects]
   );
 
+  const projectsFilteredByDescription = useMemo<Project[]>(
+    () => filterProjectsByDescription(allProjects || [], project),
+    [project, allProjects]
+  );
+
   const history = useHistory();
+
+  // generic filter setFilters for passing filter
   const setFilters = (newFilter: Filter, preserveFilters = true) => {
     let _newFilter = newFilter;
-    console.log('setFilters', newFilter, preserveFilters);
     if (preserveFilters) {
       _newFilter = {
         topics,
@@ -114,7 +136,8 @@ export const useProjectFilters = (): ProjectFilterReturn => {
         brigades,
         onlyCfA,
         project,
-        organization, // xxxx -  ok - setFilters
+        organization,
+        description,
         ...newFilter,
       };
     }
@@ -142,5 +165,6 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     projectsFilteredByBrigades,
     projectsFilteredByAllParams,
     projectsFilteredByOrganization,
+    projectsFilteredByDescription,
   };
 };
