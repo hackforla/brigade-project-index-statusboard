@@ -162,7 +162,6 @@ export function filterProjectsByAllParams(
   options: Filter,
   projects?: Project[]
 ): Project[] {
-  console.log('filter active projects');
   if (!projects) return [];
   // Set destructuring and allow defaults to be overwritten
   const {

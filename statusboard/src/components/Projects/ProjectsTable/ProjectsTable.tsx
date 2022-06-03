@@ -2,7 +2,7 @@
 import { Row, useTable, TableOptions, PluginHook } from 'react-table';
 import React, { useContext, useEffect } from 'react';
 // import 'react-perfect-scrollbar/dist/css/styles.css';
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
 import './SuperResponsiveTableStyle.css';
 // import PerfectScrollbar from 'react-perfect-scrollbar';
 import Button from '../../Button/Button';

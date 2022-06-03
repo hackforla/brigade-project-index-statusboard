@@ -25,7 +25,6 @@ import {
   Filters,
   useSortBy,
 } from 'react-table';
-import Select from 'react-select';
 import { fuzzyTextFilter } from '../../components';
 import ProjectsTable from '../../components/Projects/ProjectsTable/ProjectsTable';
 import Divider from '../../components/Divider/Divider';
@@ -52,6 +51,7 @@ import './modal.css';
 
 import { SelectedTags } from '../../components/Projects/SelectedTags';
 import TextInput from '../../components/TextInput/TextInput';
+import ComboWidget from '../../components/SelectWidget/ComboWidget';
 
 function getDistanceToBottom(jqueryElem: string): number {
   const top = $(jqueryElem).offset()?.top || 0;
@@ -110,10 +110,7 @@ function Projects(): JSX.Element {
   const allOrganizations = [
     ...new Set(allProjects.map((project) => project.brigade?.name)),
   ];
-  const selectOrganizations = allOrganizations.map((org) => ({
-    value: org,
-    label: org,
-  }));
+  const selectOrganizations = allOrganizations.map((org) => org);
 
   const filterTypes: FilterTypes<Project> = useMemo(
     () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
@@ -148,32 +145,29 @@ function Projects(): JSX.Element {
     []
   );
 
-  const options: TableOptions<Project> = useMemo(
-    () => {
-      console.log("Table options"); return {
-        columns,
-        data: filteredProjects || [],
-        autoResetFilters: false,
-        initialState: {
-          pageIndex: 0,
-          pageSize: 50,
-          filters: initialFilterValues,
-          sortBy: [
-            {
-              id: 'last_pushed_within',
-            },
-            {
-              id: 'name',
-            },
-          ],
-        },
-        filterTypes,
-        sortTypes,
-        setRowCounter,
-      }
-    },
-    [filteredProjects, columns, sortTypes, filterTypes, initialFilterValues]
-  );
+  const options: TableOptions<Project> = useMemo(() => {
+    return {
+      columns,
+      data: filteredProjects || [],
+      autoResetFilters: false,
+      initialState: {
+        pageIndex: 0,
+        pageSize: 50,
+        filters: initialFilterValues,
+        sortBy: [
+          {
+            id: 'last_pushed_within',
+          },
+          {
+            id: 'name',
+          },
+        ],
+      },
+      filterTypes,
+      sortTypes,
+      setRowCounter,
+    };
+  }, [filteredProjects, columns, sortTypes, filterTypes, initialFilterValues]);
 
   const hooks: PluginHook<Project>[] = useMemo(
     () => [useFilters, useSortBy, usePagination],
@@ -247,7 +241,8 @@ function Projects(): JSX.Element {
                 <div>
                   <b>General</b>
                 </div>
-                <Select
+                <ComboWidget
+                  label="Organization"
                   id="Organization"
                   options={selectOrganizations}
                   onChange={(e) => setFilters({ organization: e?.value })}
@@ -255,6 +250,7 @@ function Projects(): JSX.Element {
                 <TextInput
                   label="Project Name"
                   id="project"
+                  className="query-field"
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setFilters({ project: e.target.value })
                   }
@@ -262,6 +258,7 @@ function Projects(): JSX.Element {
                 <TextInput
                   label="Description"
                   id="description"
+                  className="query-field"
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setFilters({ description: e.target.value })
                   }

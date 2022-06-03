@@ -109,6 +109,6 @@ MultiSelect.propTypes = {
   setSelectedItems: PropTypes.func,
   getItemProps: PropTypes.func,
   isOpen: PropTypes.bool,
-  selectedItem: {},
+  selectedItem: PropTypes.any,
   inputValue: PropTypes.string,
 };

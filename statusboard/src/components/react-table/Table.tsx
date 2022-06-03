@@ -109,10 +109,6 @@ function Table({ columns, data }: { columns: any; data: any }) {
                     ref={droppableProvided.innerRef}
                   >
                     {headerGroup.headers.map((column, index) => {
-                      // eslint-disable-next-line no-console
-                      console.log(columns.accessor ? 'column' : 'column group');
-                      // eslint-disable-next-line no-console
-                      console.log(column);
                       return (
                         <Draggable
                           key={column.id}

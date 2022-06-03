@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../commonFormControlStyles.scss';
 
-export default function TextInput({ label, id, onChange, defaultValue }) {
+export default function TextInput({
+  label,
+  id,
+  onChange,
+  defaultValue,
+  className = '',
+}) {
   return (
     <div className="text-input form-control-container">
       <label htmlFor={id}>{label}</label>
@@ -10,7 +16,7 @@ export default function TextInput({ label, id, onChange, defaultValue }) {
         type="text"
         id={id}
         onChange={onChange}
-        className="form-control"
+        className={`${className} form-control`}
         defaultValue={defaultValue}
       />
     </div>

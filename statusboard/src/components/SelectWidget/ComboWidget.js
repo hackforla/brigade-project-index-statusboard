@@ -3,6 +3,7 @@ import { React } from 'react';
 import PropTypes from 'prop-types';
 // import cx from 'classnames';
 import '../commonFormControlStyles.scss';
+import '../Projects/ProjectsTable/ProjectsQuery.scss';
 
 export default function ComboWidget({
   label,
@@ -10,7 +11,6 @@ export default function ComboWidget({
   options,
   onChange,
   // selected,
-  emptyOptionText = 'None',
   // className,
   // inline,
   // extraRef,
@@ -32,21 +32,14 @@ export default function ComboWidget({
       >
         {label}
       </label>
-
       <input
         type="text"
-        name="example"
-        list="exampleList"
-        className="form-control"
-      :/>
-      {/* <datalist id="exampleList">
-        <option value="Red dog" />
-        <option value="Dog red" />
-        <option value="Cat" />
-      </datalist> */}
-      {/* <input type="text" name="elephant" list={id} /> */}
+        name="Organization"
+        list="orgList"
+        className="query-field form-control"
+      />
       <datalist
-        id="exampleList"
+        id="orgList"
         // ref={extraRef}
         onChange={onChange}
         className="form-control"
@@ -56,9 +49,7 @@ export default function ComboWidget({
         //   ${inputClassName}`}
         // value={selected}
       >
-        {emptyOptionText && (
-          <option value={emptyOptionText}>{emptyOptionText}</option>
-        )}
+        {/* <option value=" ">None</option> */}
         {options.map((option) => (
           <option key={option} value={option}>
             {option}
@@ -73,7 +64,6 @@ ComboWidget.defaultProps = {
   // selected: undefined,
   options: [],
   // className: '',
-  emptyOptionText: undefined,
   // inline: false,
 };
 
@@ -86,7 +76,7 @@ ComboWidget.propTypes = {
   // }],
   onChange: PropTypes.func.isRequired,
   // selected: PropTypes.string,
-  emptyOptionText: PropTypes.string,
+  // emptyOptionText: PropTypes.string,
   // className: PropTypes.string,
   // inline: PropTypes.bool,
 };
