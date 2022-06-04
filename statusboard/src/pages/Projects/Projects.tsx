@@ -243,7 +243,7 @@ function Projects(): JSX.Element {
             <div id="tagFilter">
               <SelectWidget
                 extraRef={null}
-                label=" "
+                label="Code changed since"
                 id="active_time_range"
                 onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                   const value = e.target.value as ActiveThresholdsKeys;
