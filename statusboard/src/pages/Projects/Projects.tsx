@@ -253,72 +253,41 @@ function Projects(): JSX.Element {
                 // inputClassName="query-select-widget-width"
                 options={Object.keys(ACTIVE_THRESHOLDS)}
               />
-              <Checkbox
-                label="Only Code For America?"
-                id="only_cfa_projects"
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setFilters({ onlyCfA: String(e.target.checked) })}
-              />
-              <ComboWidget
-                label="Organization"
-                id="Organization"
-                options={selectOrganizations}
-                onChange={(e: InputElement) =>
-                  setFilters({ organization: e.target.value })}
-                inputClassName="query-input-width"
-              />
-              <TextInput
-                label="Project Name"
-                id="project"
-                inputClassName="query-input-width"
-                onChange={(e) => setFilters({ project: e.target.value })}
-              />
-              <TextInput
-                label="Description"
-                id="description"
-                inputClassName="query-input-width"
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setFilters({ description: e.target.value })}
-              />
-            </div>
-            {availableTags && (
-              <>
-                <div id="tagFilter">
-                  {!isTaxonomyError && (
-                    <div>
-                      <SelectWidget
-                        extraRef={issueSelect}
-                        label="Filter By Topic Tags"
-                        id="select-issue"
-                        inputClassName="query-select-widget-width tagFilterSectionSelect"
-                        options={issueOptions}
-                        emptyOptionText=""
-                        onChange={(event) => {
-                          if (!event || !event.target) return;
-                          const newVal = event.target.value;
-                          if (typeof newVal === 'string') {
-                            const tags = issuesMap.get(newVal) ?? [];
-                            setFilters({ topics: tags });
-                          }
-                          clearPriorityAreaSelect();
-                        }}
-                      />
-                      <MultiSelect
-                        clearTaxonomy={clearTaxonomy}
-                        inputClassName="tag-filter-section-multi-select"
-                        selectedItems={topics}
-                        setSelectedItem={setSelectedItem}
-                        setInputValue={setInputValue}
-                        inputValue={inputValue}
-                        setIsOpen={setIsOpen}
-                        isOpen={isOpen}
-                        availableTags={availableTags}
-                        labelText="Filter by Tags"
-                        setSelectedItems={(newTags: string[] | undefined) =>
-                          setFilters({ topics: newTags })}
-                      />
+              {!isTaxonomyError && (
+                <div>
+                  <SelectWidget
+                    extraRef={issueSelect}
+                    label="Filter By Topic Tags"
+                    id="select-issue"
+                    inputClassName="query-select-widget-width tagFilterSectionSelect"
+                    options={issueOptions}
+                    emptyOptionText=""
+                    onChange={(event) => {
+                      if (!event || !event.target) return;
+                      const newVal = event.target.value;
+                      if (typeof newVal === 'string') {
+                        const tags = issuesMap.get(newVal) ?? [];
+                        setFilters({ topics: tags });
+                      }
+                      clearPriorityAreaSelect();
+                    }}
+                  />
+                  <MultiSelect
+                    clearTaxonomy={clearTaxonomy}
+                    inputClassName="tag-filter-section-multi-select"
+                    selectedItems={topics}
+                    setSelectedItem={setSelectedItem}
+                    setInputValue={setInputValue}
+                    inputValue={inputValue}
+                    setIsOpen={setIsOpen}
+                    isOpen={isOpen}
+                    availableTags={availableTags}
+                    labelText="Filter by Tags"
+                    setSelectedItems={(newTags: string[] | undefined) =>
+                      setFilters({ topics: newTags })}
+                  />
 
-                      {/* <SelectWidget
+                  {/* <SelectWidget
                       inputClassName="query-input-width tagFilterSectionSelect"
                       extraRef={priorityAreaSelect}
                       label="By CfA Priority Action Area "
@@ -335,8 +304,39 @@ function Projects(): JSX.Element {
                         clearIssueSelect();
                       }}
                     /> */}
-                    </div>
-                  )}
+                </div>
+              )}
+            </div>
+            {availableTags && (
+              <>
+                <div id="tagFilter">
+                  <Checkbox
+                    label="Only Code For America?"
+                    id="only_cfa_projects"
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setFilters({ onlyCfA: String(e.target.checked) })}
+                  />
+                  <ComboWidget
+                    label="Organization"
+                    id="Organization"
+                    options={selectOrganizations}
+                    onChange={(e: InputElement) =>
+                      setFilters({ organization: e.target.value })}
+                    inputClassName="query-input-width"
+                  />
+                  <TextInput
+                    label="Project Name"
+                    id="project"
+                    inputClassName="query-input-width"
+                    onChange={(e) => setFilters({ project: e.target.value })}
+                  />
+                  <TextInput
+                    label="Description"
+                    id="description"
+                    inputClassName="query-input-width"
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setFilters({ description: e.target.value })}
+                  />
                 </div>
               </>
             )}
