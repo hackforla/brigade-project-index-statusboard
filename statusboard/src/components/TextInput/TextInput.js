@@ -7,7 +7,7 @@ export default function TextInput({
   id,
   onChange,
   defaultValue,
-  className = '',
+  inputClassName,
 }) {
   return (
     <div className="text-input form-control-container">
@@ -16,7 +16,7 @@ export default function TextInput({
         type="text"
         id={id}
         onChange={onChange}
-        className={`${className} form-control`}
+        className={`${inputClassName} form-control`}
         defaultValue={defaultValue}
       />
     </div>
@@ -25,11 +25,13 @@ export default function TextInput({
 
 TextInput.defaultProps = {
   defaultValue: undefined,
+  inputClassName: '',
 };
 
 TextInput.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  inputClassName: PropTypes.string,
   defaultValue: PropTypes.string,
 };

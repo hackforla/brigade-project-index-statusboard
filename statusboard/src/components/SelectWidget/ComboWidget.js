@@ -10,11 +10,7 @@ export default function ComboWidget({
   id,
   options,
   onChange,
-  // selected,
-  // className,
-  // inline,
-  // extraRef,
-  // inputClassName = '',
+  inputClassName,
 }) {
   return (
     <div
@@ -36,7 +32,7 @@ export default function ComboWidget({
         type="text"
         name="Organization"
         list="orgList"
-        className="query-field form-control"
+        className={`${inputClassName} form-control`}
       />
       <datalist
         id="orgList"
@@ -63,7 +59,7 @@ export default function ComboWidget({
 ComboWidget.defaultProps = {
   // selected: undefined,
   options: [],
-  // className: '',
+  inputClassName: '',
   // inline: false,
 };
 
@@ -71,12 +67,6 @@ ComboWidget.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string),
-  //     { value: String || undefined },
-  //     { label: String || undefined },
-  // }],
   onChange: PropTypes.func.isRequired,
-  // selected: PropTypes.string,
-  // emptyOptionText: PropTypes.string,
-  // className: PropTypes.string,
-  // inline: PropTypes.bool,
+  inputClassName: PropTypes.string,
 };

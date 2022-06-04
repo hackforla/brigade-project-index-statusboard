@@ -13,7 +13,7 @@ export default function SelectWidget({
   className,
   inline,
   extraRef,
-  inputClassName = '',
+  inputClassName,
 }) {
   return (
     <div
@@ -33,10 +33,10 @@ export default function SelectWidget({
         id={id}
         ref={extraRef}
         onChange={onChange}
-        className={`${cx('form-control', {
+        className={`${inputClassName} ${cx('form-control', {
           'form-control--inline': inline,
         })}
-          ${inputClassName}`}
+          `}
         value={selected}
       >
         {emptyOptionText && (
@@ -54,6 +54,7 @@ SelectWidget.defaultProps = {
   selected: undefined,
   options: [],
   className: '',
+  inputClassName: '',
   emptyOptionText: undefined,
   inline: false,
 };
@@ -69,4 +70,5 @@ SelectWidget.propTypes = {
   emptyOptionText: PropTypes.string,
   className: PropTypes.string,
   inline: PropTypes.bool,
+  inputClassName: PropTypes.string,
 };

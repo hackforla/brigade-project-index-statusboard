@@ -61,7 +61,7 @@ function getDistanceToBottom(jqueryElem: string): number {
 
 function setHeightToBottom(jqueryElement: string): void {
   const width = window.innerWidth;
-  if (width < 800) {
+  if (width < 1300) {
     $('#filter-and-right-panel').css({ display: 'block' });
     $(jqueryElement).removeAttr('height');
     // $(jqueryElement).removeAttr('overflow-y');
@@ -241,37 +241,16 @@ function Projects(): JSX.Element {
                 <div>
                   <b>General</b>
                 </div>
-                <ComboWidget
-                  label="Organization"
-                  id="Organization"
-                  options={selectOrganizations}
-                  onChange={(e) => setFilters({ organization: e?.value })}
-                />
-                <TextInput
-                  label="Project Name"
-                  id="project"
-                  className="query-field"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setFilters({ project: e.target.value })
-                  }
-                />
-                <TextInput
-                  label="Description"
-                  id="description"
-                  className="query-field"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setFilters({ description: e.target.value })
-                  }
-                />
                 <SelectWidget
                   extraRef={null}
-                  label="Changed on github in the last"
+                  label="Code changes in the last"
                   id="active_time_range"
                   onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                     const value = e.target.value as ActiveThresholdsKeys;
                     setFilters({ timeRange: value });
                   }}
                   selected={timeRange}
+                  // inputClassName="query-select-widget-width"
                   options={Object.keys(ACTIVE_THRESHOLDS)}
                 />
                 <Checkbox
@@ -281,6 +260,31 @@ function Projects(): JSX.Element {
                     setFilters({ onlyCfA: String(e.target.checked) })
                   }
                 />
+                <ComboWidget
+                  label="Organization"
+                  id="Organization"
+                  options={selectOrganizations}
+                  onChange={(e) => setFilters({ organization: e?.value })}
+                  inputClassName="query-input-width"
+                />
+                <TextInput
+                  label="Project Name"
+                  id="project"
+                  inputClassName="query-input-width"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setFilters({ project: e.target.value })
+                  }
+                />
+                <TextInput
+                  label="Description"
+                  id="description"
+                  inputClassName="query-input-width"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setFilters({ description: e.target.value })
+                  }
+                />
+
+
               </div>
               <div id="tagFilter">
                 <div>
@@ -292,7 +296,7 @@ function Projects(): JSX.Element {
                       extraRef={issueSelect}
                       label="By Topic"
                       id="select-issue"
-                      inputClassName="tagFilterSectionSelect"
+                      inputClassName="query-select-widget-width tagFilterSectionSelect"
                       options={issueOptions}
                       emptyOptionText=""
                       onChange={(event) => {
@@ -305,8 +309,8 @@ function Projects(): JSX.Element {
                         clearPriorityAreaSelect();
                       }}
                     />
-                    <SelectWidget
-                      inputClassName="tagFilterSectionSelect"
+                    {/* <SelectWidget
+                      inputClassName="query-input-width tagFilterSectionSelect"
                       extraRef={priorityAreaSelect}
                       label="By CfA Priority Action Area "
                       id="select-priority-areas"
@@ -321,7 +325,7 @@ function Projects(): JSX.Element {
                         }
                         clearIssueSelect();
                       }}
-                    />
+                    /> */}
                   </div>
                 )}
                 {availableTags && (
