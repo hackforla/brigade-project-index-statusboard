@@ -1,10 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable react/jsx-curly-newline */
-/* eslint-disable react/jsx-filename-extension */
-/* eslint-disable import/extensions */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* @typescript-eslint/no-unsafe-return */
 import React, {
   useMemo,
   useContext,
@@ -61,7 +54,7 @@ function getDistanceToBottom(jqueryElem: string): number {
 
 function setHeightToBottom(jqueryElement: string): void {
   const width = window.innerWidth;
-  if (width < 1300) {
+  if (width < 800) {
     $('#filter-and-right-panel').css({ display: 'block' });
     $(jqueryElement).removeAttr('height');
     // $(jqueryElement).removeAttr('overflow-y');
@@ -213,6 +206,8 @@ function Projects(): JSX.Element {
 
   const collapse = '▲';
   const expand = '▼';
+  type InputElement = ChangeEvent<HTMLInputElement>;
+
   return (
     <>
       <LoadingIndicator loading={loading}>
@@ -243,7 +238,7 @@ function Projects(): JSX.Element {
                 </div>
                 <SelectWidget
                   extraRef={null}
-                  label="Code changes in the last"
+                  label=" "
                   id="active_time_range"
                   onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                     const value = e.target.value as ActiveThresholdsKeys;
@@ -257,34 +252,29 @@ function Projects(): JSX.Element {
                   label="Only Code For America projects?"
                   id="only_cfa_projects"
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setFilters({ onlyCfA: String(e.target.checked) })
-                  }
+                    setFilters({ onlyCfA: String(e.target.checked) })}
                 />
                 <ComboWidget
                   label="Organization"
                   id="Organization"
                   options={selectOrganizations}
-                  onChange={(e) => setFilters({ organization: e?.value })}
+                  onChange={(e: InputElement) =>
+                    setFilters({ organization: e.target.value })}
                   inputClassName="query-input-width"
                 />
                 <TextInput
                   label="Project Name"
                   id="project"
                   inputClassName="query-input-width"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setFilters({ project: e.target.value })
-                  }
+                  onChange={(e) => setFilters({ project: e.target.value })}
                 />
                 <TextInput
                   label="Description"
                   id="description"
                   inputClassName="query-input-width"
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setFilters({ description: e.target.value })
-                  }
+                    setFilters({ description: e.target.value })}
                 />
-
-
               </div>
               <div id="tagFilter">
                 <div>
@@ -342,8 +332,7 @@ function Projects(): JSX.Element {
                       availableTags={availableTags}
                       labelText="Add Specific Tags"
                       setSelectedItems={(newTags: string[] | undefined) =>
-                        setFilters({ topics: newTags })
-                      }
+                        setFilters({ topics: newTags })}
                     />
                   </>
                 )}
@@ -353,8 +342,7 @@ function Projects(): JSX.Element {
               <SelectedTags
                 selectedItems={topics}
                 setSelectedItems={(newTags: string[] | undefined) =>
-                  setFilters({ topics: newTags })
-                }
+                  setFilters({ topics: newTags })}
                 clearTaxonomy={clearTaxonomy}
               />
               <div

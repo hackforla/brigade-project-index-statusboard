@@ -12,7 +12,7 @@
       }
     ]
   },
-  "compilerOptions": {
+   "compilerOptions": {
     "target": "es5",
     "downlevelIteration": true,
     "module": "esnext",

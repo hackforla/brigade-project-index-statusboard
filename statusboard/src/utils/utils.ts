@@ -97,7 +97,7 @@ export function filterProjectsByOrganization(
   projects: Project[],
   organization?: string
 ) {
-  if (!organization) {
+  if (!organization?.trim()) {
     return projects;
   }
 

@@ -33,11 +33,12 @@ export default function ComboWidget({
         name="Organization"
         list="orgList"
         className={`${inputClassName} form-control`}
+        onChange={onChange}
       />
       <datalist
         id="orgList"
+        x="a"
         // ref={extraRef}
-        onChange={onChange}
         className="form-control"
         // {`${cx('form-control', {
         //   'form-control--inline': inline,
@@ -45,11 +46,9 @@ export default function ComboWidget({
         //   ${inputClassName}`}
         // value={selected}
       >
-        {/* <option value=" ">None</option> */}
+        <option key="AL>" value=" " />
         {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
+          <option key={option} value={option} />
         ))}
       </datalist>
     </div>

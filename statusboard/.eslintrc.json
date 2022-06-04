@@ -23,15 +23,24 @@
     "node": true
   },
   "rules": {
-    "import/extensions": "off",
-    "jsx-a11y/href-no-hash": [
+  "import/extensions": [
+    "warning",
+    "ignorePackages",
+    {
+      "js": "never",
+      "jsx": "never",
+      "ts": "never",
+      "tsx": "never"
+    }
+  ],    
+  "jsx-a11y/href-no-hash": [
       "off"
     ],
     "react/jsx-filename-extension": [
       "warn",
       {
         "extensions": [
-          ".js",
+          ".tsx",
           ".jsx"
         ]
       }
