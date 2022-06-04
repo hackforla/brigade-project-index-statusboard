@@ -17,7 +17,7 @@ function Brigades() {
   const [filteredBrigadeData, setFilteredBrigadeData] =
     useState(allBrigadeData);
   const [filterOpts, setFilterOpts] = useState({});
-  const [timeRange, setTimeRange] = useState('year');
+  const [timeRange, setTimeRange] = useState('all time');
   const { selectedBrigade } = filterOpts; // also has bounds
   const [projects, setProjects] = useState(allProjects);
 

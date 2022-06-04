@@ -81,11 +81,11 @@ function Projects(): JSX.Element {
   const { priorityAreasMap, issuesMap, isTaxonomyError } =
     useContext(TaxonomyDataContext);
 
-  useEffect(() => {
-    window.addEventListener('resize', (event) => {
-      setHeightToBottom('#projects-table');
-    });
-  });
+  // useEffect(() => {
+  //   window.addEventListener('resize', (event) => {
+  //     setHeightToBottom('#projects-table');
+  //   });
+  // });
 
   const {
     topics,
@@ -210,6 +210,8 @@ function Projects(): JSX.Element {
   const expand = '▼';
   type InputElement = ChangeEvent<HTMLInputElement>;
 
+  type SelectElement = ChangeEvent<HTMLSelectElement>;
+
   return (
     <>
       <LoadingIndicator loading={loading}>
@@ -232,20 +234,18 @@ function Projects(): JSX.Element {
             <ProjectsOverview />
           </div>
           <Divider />
-
           <div
-            id="filter-section"
-            className="filter-section block"
-            style={{ display: "inline-flex" }}
-          >          <div style={{ float: 'left' }}>
-              <b>Filter</b>
-            </div>
-            <div id="tagFilter">
+            id="left-filter-panel"
+            className="filter-section"
+            style={{ display: 'inline-flex' }}
+          >
+            <div className="filter-title-panel">Filter</div>
+            <div id="filter-left-side" className="filter-panel">
               <SelectWidget
                 extraRef={null}
                 label="Code changed since"
                 id="active_time_range"
-                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                onChange={(e: SelectElement) => {
                   const value = e.target.value as ActiveThresholdsKeys;
                   setFilters({ timeRange: value });
                 }}
@@ -262,12 +262,15 @@ function Projects(): JSX.Element {
                     inputClassName="query-select-widget-width tagFilterSectionSelect"
                     options={issueOptions}
                     emptyOptionText=""
-                    onChange={(event) => {
+                    onChange={(event: SelectElement) => {
                       if (!event || !event.target) return;
                       const newVal = event.target.value;
                       if (typeof newVal === 'string') {
-                        const tags = issuesMap.get(newVal) ?? [];
-                        setFilters({ topics: tags });
+                        let tags = issuesMap.get(newVal) ?? [];
+                        tags = tags.filter(
+                          (tag) => !(topics || []).includes(tag)
+                        );
+                        setFilters({ topics: [...(topics || []), ...tags] });
                       }
                       clearPriorityAreaSelect();
                     }}
@@ -284,7 +287,8 @@ function Projects(): JSX.Element {
                     availableTags={availableTags}
                     labelText="Filter by Tags"
                     setSelectedItems={(newTags: string[] | undefined) =>
-                      setFilters({ topics: newTags })}
+                      setFilters({ topics: newTags })
+                    }
                   />
 
                   {/* <SelectWidget
@@ -309,19 +313,21 @@ function Projects(): JSX.Element {
             </div>
             {availableTags && (
               <>
-                <div id="tagFilter">
+                <div id="filter-right-panel" className="filter-panel">
                   <Checkbox
                     label="Only Code For America?"
                     id="only_cfa_projects"
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setFilters({ onlyCfA: String(e.target.checked) })}
+                    onChange={(e: InputElement) =>
+                      setFilters({ onlyCfA: String(e.target.checked) })
+                    }
                   />
                   <ComboWidget
                     label="Organization"
                     id="Organization"
                     options={selectOrganizations}
                     onChange={(e: InputElement) =>
-                      setFilters({ organization: e.target.value })}
+                      setFilters({ organization: e.target.value })
+                    }
                     inputClassName="query-input-width"
                   />
                   <TextInput
@@ -334,8 +340,9 @@ function Projects(): JSX.Element {
                     label="Description"
                     id="description"
                     inputClassName="query-input-width"
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setFilters({ description: e.target.value })}
+                    onChange={(e: InputElement) =>
+                      setFilters({ description: e.target.value })
+                    }
                   />
                 </div>
               </>
@@ -346,7 +353,8 @@ function Projects(): JSX.Element {
               <SelectedTags
                 selectedItems={topics}
                 setSelectedItems={(newTags: string[] | undefined) =>
-                  setFilters({ topics: newTags })}
+                  setFilters({ topics: newTags })
+                }
                 clearTaxonomy={clearTaxonomy}
               />
               <div
