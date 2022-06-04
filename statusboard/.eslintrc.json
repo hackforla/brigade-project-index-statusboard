@@ -24,7 +24,7 @@
   },
   "rules": {
   "import/extensions": [
-    "warning",
+    1,
     "ignorePackages",
     {
       "js": "never",

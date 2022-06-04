@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable import/extensions */
 import React, {
   useMemo,
   useContext,
@@ -230,76 +232,93 @@ function Projects(): JSX.Element {
             <ProjectsOverview />
           </div>
           <Divider />
-          <div className="flex" id="filter-and-right-panel">
-            <div id="filter-section" className="filter-section block">
-              <div id="nontagFilter">
-                <div>
-                  <b>General</b>
-                </div>
-                <SelectWidget
-                  extraRef={null}
-                  label=" "
-                  id="active_time_range"
-                  onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                    const value = e.target.value as ActiveThresholdsKeys;
-                    setFilters({ timeRange: value });
-                  }}
-                  selected={timeRange}
-                  // inputClassName="query-select-widget-width"
-                  options={Object.keys(ACTIVE_THRESHOLDS)}
-                />
-                <Checkbox
-                  label="Only Code For America projects?"
-                  id="only_cfa_projects"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setFilters({ onlyCfA: String(e.target.checked) })}
-                />
-                <ComboWidget
-                  label="Organization"
-                  id="Organization"
-                  options={selectOrganizations}
-                  onChange={(e: InputElement) =>
-                    setFilters({ organization: e.target.value })}
-                  inputClassName="query-input-width"
-                />
-                <TextInput
-                  label="Project Name"
-                  id="project"
-                  inputClassName="query-input-width"
-                  onChange={(e) => setFilters({ project: e.target.value })}
-                />
-                <TextInput
-                  label="Description"
-                  id="description"
-                  inputClassName="query-input-width"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setFilters({ description: e.target.value })}
-                />
-              </div>
-              <div id="tagFilter">
-                <div>
-                  <b>Tags</b>
-                </div>
-                {!isTaxonomyError && (
-                  <div>
-                    <SelectWidget
-                      extraRef={issueSelect}
-                      label="By Topic"
-                      id="select-issue"
-                      inputClassName="query-select-widget-width tagFilterSectionSelect"
-                      options={issueOptions}
-                      emptyOptionText=""
-                      onChange={(event) => {
-                        if (!event || !event.target) return;
-                        const newVal = event.target.value;
-                        if (typeof newVal === 'string') {
-                          const tags = issuesMap.get(newVal) ?? [];
-                          setFilters({ topics: tags });
-                        }
-                        clearPriorityAreaSelect();
-                      }}
-                    />
-                    {/* <SelectWidget
+
+          <div
+            id="filter-section"
+            className="filter-section block"
+            style={{ display: "inline-flex" }}
+          >          <div style={{ float: 'left' }}>
+              <b>Filter</b>
+            </div>
+            <div id="tagFilter">
+              <SelectWidget
+                extraRef={null}
+                label=" "
+                id="active_time_range"
+                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                  const value = e.target.value as ActiveThresholdsKeys;
+                  setFilters({ timeRange: value });
+                }}
+                selected={timeRange}
+                // inputClassName="query-select-widget-width"
+                options={Object.keys(ACTIVE_THRESHOLDS)}
+              />
+              <Checkbox
+                label="Only Code For America?"
+                id="only_cfa_projects"
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setFilters({ onlyCfA: String(e.target.checked) })}
+              />
+              <ComboWidget
+                label="Organization"
+                id="Organization"
+                options={selectOrganizations}
+                onChange={(e: InputElement) =>
+                  setFilters({ organization: e.target.value })}
+                inputClassName="query-input-width"
+              />
+              <TextInput
+                label="Project Name"
+                id="project"
+                inputClassName="query-input-width"
+                onChange={(e) => setFilters({ project: e.target.value })}
+              />
+              <TextInput
+                label="Description"
+                id="description"
+                inputClassName="query-input-width"
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setFilters({ description: e.target.value })}
+              />
+            </div>
+            {availableTags && (
+              <>
+                <div id="tagFilter">
+                  {!isTaxonomyError && (
+                    <div>
+                      <SelectWidget
+                        extraRef={issueSelect}
+                        label="Filter By Topic Tags"
+                        id="select-issue"
+                        inputClassName="query-select-widget-width tagFilterSectionSelect"
+                        options={issueOptions}
+                        emptyOptionText=""
+                        onChange={(event) => {
+                          if (!event || !event.target) return;
+                          const newVal = event.target.value;
+                          if (typeof newVal === 'string') {
+                            const tags = issuesMap.get(newVal) ?? [];
+                            setFilters({ topics: tags });
+                          }
+                          clearPriorityAreaSelect();
+                        }}
+                      />
+                      <MultiSelect
+                        clearTaxonomy={clearTaxonomy}
+                        inputClassName="tag-filter-section-multi-select"
+                        selectedItems={topics}
+                        setSelectedItem={setSelectedItem}
+                        setInputValue={setInputValue}
+                        inputValue={inputValue}
+                        setIsOpen={setIsOpen}
+                        isOpen={isOpen}
+                        availableTags={availableTags}
+                        labelText="Filter by Tags"
+                        setSelectedItems={(newTags: string[] | undefined) =>
+                          setFilters({ topics: newTags })}
+                      />
+
+                      {/* <SelectWidget
                       inputClassName="query-input-width tagFilterSectionSelect"
                       extraRef={priorityAreaSelect}
                       label="By CfA Priority Action Area "
@@ -316,28 +335,13 @@ function Projects(): JSX.Element {
                         clearIssueSelect();
                       }}
                     /> */}
-                  </div>
-                )}
-                {availableTags && (
-                  <>
-                    <MultiSelect
-                      clearTaxonomy={clearTaxonomy}
-                      inputClassName="tag-filter-section-multi-select"
-                      selectedItems={topics}
-                      setSelectedItem={setSelectedItem}
-                      setInputValue={setInputValue}
-                      inputValue={inputValue}
-                      setIsOpen={setIsOpen}
-                      isOpen={isOpen}
-                      availableTags={availableTags}
-                      labelText="Add Specific Tags"
-                      setSelectedItems={(newTags: string[] | undefined) =>
-                        setFilters({ topics: newTags })}
-                    />
-                  </>
-                )}
-              </div>
-            </div>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+          <div className="flex" id="filter-and-right-panel">
             <div id="right-panel" className="block right-panel">
               <SelectedTags
                 selectedItems={topics}
