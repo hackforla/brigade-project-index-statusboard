@@ -215,7 +215,6 @@ function Projects(): JSX.Element {
   type InputElement = ChangeEvent<HTMLInputElement>;
 
   type SelectElement = ChangeEvent<HTMLSelectElement>;
-  console.log('only', onlyCfA);
   return (
     <>
       <LoadingIndicator loading={loading}>
@@ -238,11 +237,7 @@ function Projects(): JSX.Element {
             <ProjectsOverview />
           </div>
           <Divider />
-          <div
-            id="filter-section"
-            className="filter-panel"
-            style={{ display: 'inline-flex' }}
-          >
+          <div id="filter-section" className="filter-section">
             <div className="filter-title-panel">Filter</div>
             <div id="filter-left-panel" className="filter-panel">
               <SelectWidget
@@ -292,8 +287,7 @@ function Projects(): JSX.Element {
                     availableTags={availableTags}
                     labelText="Filter by Tags"
                     setSelectedItems={(newTags: string[] | undefined) =>
-                      setFilters({ topics: newTags })
-                    }
+                      setFilters({ topics: newTags })}
                   />
 
                   {/* <SelectWidget
@@ -323,8 +317,7 @@ function Projects(): JSX.Element {
                     label="Only Code For America?"
                     id="only_cfa_projects"
                     onChange={(e: InputElement) =>
-                      setFilters({ onlyCfA: String(e.target.checked) })
-                    }
+                      setFilters({ onlyCfA: String(e.target.checked) })}
                     defaultValue={onlyCfA}
                   />
                   <ComboWidget
@@ -332,8 +325,7 @@ function Projects(): JSX.Element {
                     id="Organization"
                     options={selectOrganizations}
                     onChange={(e: InputElement) =>
-                      setFilters({ organization: e.target.value })
-                    }
+                      setFilters({ organization: e.target.value })}
                     inputClassName="query-input-width"
                     defaultValue={organization}
                   />
@@ -349,8 +341,7 @@ function Projects(): JSX.Element {
                     id="description"
                     inputClassName="query-input-width"
                     onChange={(e: InputElement) =>
-                      setFilters({ description: e.target.value })
-                    }
+                      setFilters({ description: e.target.value })}
                     defaultValue={description}
                   />
                 </div>
@@ -360,8 +351,7 @@ function Projects(): JSX.Element {
           <SelectedTags
             selectedItems={topics}
             setSelectedItems={(newTags: string[] | undefined) =>
-              setFilters({ topics: newTags })
-            }
+              setFilters({ topics: newTags })}
             clearTaxonomy={clearTaxonomy}
           />
           <div className="flex" id="projects-table-section">
