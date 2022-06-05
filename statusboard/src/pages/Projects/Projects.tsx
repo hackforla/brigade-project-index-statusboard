@@ -287,7 +287,8 @@ function Projects(): JSX.Element {
                     availableTags={availableTags}
                     labelText="Filter by Tags"
                     setSelectedItems={(newTags: string[] | undefined) =>
-                      setFilters({ topics: newTags })}
+                      setFilters({ topics: newTags })
+                    }
                   />
 
                   {/* <SelectWidget
@@ -317,7 +318,8 @@ function Projects(): JSX.Element {
                     label="Only Code For America?"
                     id="only_cfa_projects"
                     onChange={(e: InputElement) =>
-                      setFilters({ onlyCfA: String(e.target.checked) })}
+                      setFilters({ onlyCfA: String(e.target.checked) })
+                    }
                     defaultValue={onlyCfA}
                   />
                   <ComboWidget
@@ -325,7 +327,8 @@ function Projects(): JSX.Element {
                     id="Organization"
                     options={selectOrganizations}
                     onChange={(e: InputElement) =>
-                      setFilters({ organization: e.target.value })}
+                      setFilters({ organization: e.target.value })
+                    }
                     inputClassName="query-input-width"
                     defaultValue={organization}
                   />
@@ -341,7 +344,8 @@ function Projects(): JSX.Element {
                     id="description"
                     inputClassName="query-input-width"
                     onChange={(e: InputElement) =>
-                      setFilters({ description: e.target.value })}
+                      setFilters({ description: e.target.value })
+                    }
                     defaultValue={description}
                   />
                 </div>
@@ -351,18 +355,12 @@ function Projects(): JSX.Element {
           <SelectedTags
             selectedItems={topics}
             setSelectedItems={(newTags: string[] | undefined) =>
-              setFilters({ topics: newTags })}
+              setFilters({ topics: newTags })
+            }
             clearTaxonomy={clearTaxonomy}
           />
           <div className="flex" id="projects-table-section">
-            <div
-              id="projects-table"
-              className="hideFifthColumn"
-              style={{
-                height: `${getDistanceToBottom('#projects-table') - 25}px`,
-                overflowY: 'scroll',
-              }}
-            >
+            <div id="projects-table" className="hideFifthColumn">
               <ProjectsTable
                 options={options}
                 plugins={hooks}
