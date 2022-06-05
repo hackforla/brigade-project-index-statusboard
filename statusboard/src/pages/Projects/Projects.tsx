@@ -93,6 +93,7 @@ function Projects(): JSX.Element {
     organization,
     project,
     description,
+    onlyCfA,
     setFilters,
     projectsFilteredByTime,
     projectsFilteredByAllParams: filteredProjects,
@@ -214,7 +215,7 @@ function Projects(): JSX.Element {
   type InputElement = ChangeEvent<HTMLInputElement>;
 
   type SelectElement = ChangeEvent<HTMLSelectElement>;
-
+  console.log('only', onlyCfA);
   return (
     <>
       <LoadingIndicator loading={loading}>
@@ -324,6 +325,7 @@ function Projects(): JSX.Element {
                     onChange={(e: InputElement) =>
                       setFilters({ onlyCfA: String(e.target.checked) })
                     }
+                    defaultValue={onlyCfA}
                   />
                   <ComboWidget
                     label="Organization"
