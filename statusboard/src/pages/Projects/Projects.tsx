@@ -239,12 +239,12 @@ function Projects(): JSX.Element {
           </div>
           <Divider />
           <div
-            id="left-filter-panel"
-            className="filter-section"
+            id="filter-section"
+            className="filter-panel"
             style={{ display: 'inline-flex' }}
           >
             <div className="filter-title-panel">Filter</div>
-            <div id="filter-left-side" className="filter-panel">
+            <div id="filter-left-panel" className="filter-panel">
               <SelectWidget
                 extraRef={null}
                 label="Code changed since"
