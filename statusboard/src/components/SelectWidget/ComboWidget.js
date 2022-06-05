@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { React } from 'react';
 import PropTypes from 'prop-types';
@@ -11,7 +12,9 @@ export default function ComboWidget({
   options,
   onChange,
   inputClassName,
+  defaultValue,
 }) {
+  const listId = `list${id}`;
   return (
     <div
       className="form-control-container"
@@ -30,14 +33,14 @@ export default function ComboWidget({
       </label>
       <input
         type="text"
-        name="Organization"
-        list="orgList"
+        name={id}
+        list={listId}
         className={`${inputClassName} form-control`}
         onChange={onChange}
+        defaultValue={defaultValue}
       />
       <datalist
-        id="orgList"
-        x="a"
+        id={listId}
         // ref={extraRef}
         className="form-control"
         // {`${cx('form-control', {
@@ -46,7 +49,7 @@ export default function ComboWidget({
         //   ${inputClassName}`}
         // value={selected}
       >
-        <option key="AL>" value=" " />
+        <option key="ALL" value=" " />
         {options.map((option) => (
           <option key={option} value={option} />
         ))}

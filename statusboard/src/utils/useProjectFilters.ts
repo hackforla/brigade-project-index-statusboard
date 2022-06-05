@@ -155,6 +155,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
   return {
     topics,
     timeRange,
+    organization,
     brigades,
     setFilters,
     queryParameters,

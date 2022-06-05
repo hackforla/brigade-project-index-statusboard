@@ -90,6 +90,9 @@ function Projects(): JSX.Element {
   const {
     topics,
     timeRange,
+    organization,
+    project,
+    description,
     setFilters,
     projectsFilteredByTime,
     projectsFilteredByAllParams: filteredProjects,
@@ -250,6 +253,7 @@ function Projects(): JSX.Element {
                   setFilters({ timeRange: value });
                 }}
                 selected={timeRange}
+                inputClassName="query-select-widget-width"
                 // inputClassName="query-select-widget-width"
                 options={Object.keys(ACTIVE_THRESHOLDS)}
               />
@@ -329,12 +333,14 @@ function Projects(): JSX.Element {
                       setFilters({ organization: e.target.value })
                     }
                     inputClassName="query-input-width"
+                    defaultValue={organization}
                   />
                   <TextInput
                     label="Project Name"
                     id="project"
                     inputClassName="query-input-width"
                     onChange={(e) => setFilters({ project: e.target.value })}
+                    defaultValue={project}
                   />
                   <TextInput
                     label="Description"
@@ -343,34 +349,33 @@ function Projects(): JSX.Element {
                     onChange={(e: InputElement) =>
                       setFilters({ description: e.target.value })
                     }
+                    defaultValue={description}
                   />
                 </div>
               </>
             )}
           </div>
-          <div className="flex" id="filter-and-right-panel">
-            <div id="right-panel" className="block right-panel">
-              <SelectedTags
-                selectedItems={topics}
-                setSelectedItems={(newTags: string[] | undefined) =>
-                  setFilters({ topics: newTags })
-                }
-                clearTaxonomy={clearTaxonomy}
+          <SelectedTags
+            selectedItems={topics}
+            setSelectedItems={(newTags: string[] | undefined) =>
+              setFilters({ topics: newTags })
+            }
+            clearTaxonomy={clearTaxonomy}
+          />
+          <div className="flex" id="projects-table-section">
+            <div
+              id="projects-table"
+              className="hideFifthColumn"
+              style={{
+                height: `${getDistanceToBottom('#projects-table') - 25}px`,
+                overflowY: 'scroll',
+              }}
+            >
+              <ProjectsTable
+                options={options}
+                plugins={hooks}
+                setRowCounter={setRowCounter}
               />
-              <div
-                id="projects-table"
-                className="hideFifthColumn"
-                style={{
-                  height: `${getDistanceToBottom('#projects-table') - 25}px`,
-                  overflowY: 'scroll',
-                }}
-              >
-                <ProjectsTable
-                  options={options}
-                  plugins={hooks}
-                  setRowCounter={setRowCounter}
-                />
-              </div>
             </div>
           </div>
         </div>
