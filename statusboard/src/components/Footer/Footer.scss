@@ -1,0 +1,23 @@
+.App-footer {
+  width: 100%;
+  min-height: 5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.25rem;
+  background-color: var(--cfa-purple-dark);
+
+  p {
+    color: var(--cfa-white);
+    font-family: var(--font-family-text);
+    margin-left: 1.0rem;
+    margin-right: 1.0rem;
+  }
+
+  @media only screen and (max-width: 800px) {
+    .p {
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+}
