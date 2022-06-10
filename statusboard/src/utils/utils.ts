@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import { Bounds, latLng } from 'leaflet';
 
 import { SortByFn, Row, IdType } from 'react-table';

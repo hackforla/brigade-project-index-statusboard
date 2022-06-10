@@ -1,6 +1,7 @@
+/* eslint-disable import/extensions */
 import React from 'react';
 import cx from 'classnames';
-import { Cell, Column, Row, SortByFn } from 'react-table';
+import { Cell, Column } from 'react-table';
 import { Button } from '../../components';
 import { Project } from '../../utils/types';
 import { Filter } from '../../utils/useProjectFilters';

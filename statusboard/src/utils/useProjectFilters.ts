@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { parse, ParsedQuery, stringify } from 'query-string';
 import { useContext, useEffect, useMemo } from 'react';
