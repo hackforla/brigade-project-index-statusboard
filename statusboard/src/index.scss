@@ -6,6 +6,10 @@ body {
   overflow-x: hidden;
 }
 
+.attention {
+  font-size: 150%;
+  color: blue;
+}
 body {
   margin: 0;
   padding: 0;
@@ -37,4 +41,20 @@ a {
 
 .display-inline {
   display: inline;
+}
+
+.hidden {
+  display: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.separator {
+  border-bottom: 3px solid blue;
+  height: 0px;
+  padding: 0px;
+  margin: 0px;
+
 }

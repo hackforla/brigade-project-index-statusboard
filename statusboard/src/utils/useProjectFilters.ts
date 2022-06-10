@@ -8,7 +8,7 @@ import {
   filterActiveProjects,
   filterProjectsByBrigades,
   filterProjectsByTime,
-  filterProjectsByTopics,
+  filterProjectsByTags,
   filterProjectsByCfA,
 } from './utils';
 
@@ -21,7 +21,7 @@ export type Filter = {
 
 export type ProjectFilterReturn = Filter & {
   projectsFilteredByTime: Project[];
-  projectsFilteredByTopics: Project[];
+  projectsFilteredByTags: Project[];
   projectsFilteredByBrigades: Project[];
   projectsFilteredByAllParams: Project[];
   projectsFilteredByCfA: Project[];
@@ -59,8 +59,8 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     [timeRange, allProjects],
   );
 
-  const projectsFilteredByTopics = useMemo<Project[]>(
-    () => filterProjectsByTopics(allProjects || [], topics),
+  const projectsFilteredByTags = useMemo<Project[]>(
+    () => filterProjectsByTags(allProjects || [], topics),
     [topics, allProjects],
   );
 
@@ -105,7 +105,7 @@ export const useProjectFilters = (): ProjectFilterReturn => {
     queryParameters,
     projectsFilteredByTime,
     projectsFilteredByCfA,
-    projectsFilteredByTopics,
+    projectsFilteredByTags,
     projectsFilteredByBrigades,
     projectsFilteredByAllParams,
   };

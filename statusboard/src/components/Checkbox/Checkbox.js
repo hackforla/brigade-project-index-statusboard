@@ -1,37 +1,19 @@
 import React from 'react';
-import cx from 'classnames';
 import '../commonFormControlStyles.scss';
 import './Checkbox.scss';
 
-export default function Checkbox({
-  label,
-  id,
-  onChange,
-  className = '',
-  inline = true
-}) {
+export default function Checkbox({ label, id, onChange }) {
   return (
-    <div
-      className={cx(
-        'form-control-container',
-        { 'form-control-container--inline': inline },
-        className
-      )}
-      style={{ display: 'flex' }}
-    >
-      <label
-        htmlFor={id}
-        className={cx('form-label', { 'form-label--inline': inline })}
-      >
+    <div className="form-control-container" style={{ display: 'flex' }}>
+      <label htmlFor={id} className="form-label checkboxLabelAdjustment">
         {label}
       </label>
       <input
-	    type="checkbox"
+        type="checkbox"
         id={id}
         onChange={onChange}
-        className={cx('form-control', { 'form-control--inline': inline })}
+        className="form-control"
       />
     </div>
   );
 }
-

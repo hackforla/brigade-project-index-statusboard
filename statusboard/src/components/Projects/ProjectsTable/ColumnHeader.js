@@ -3,8 +3,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import cx from 'classnames';
-import Button from '../Button/Button';
-import { ReactComponent as Arrow } from '../../assets/arrow.svg';
+import Button from '../../Button/Button';
+import { ReactComponent as Arrow } from '../../../assets/arrow.svg';
 import './ColumnHeader.scss';
 
 export default function ColumnHeader({ column, disableSort }) {

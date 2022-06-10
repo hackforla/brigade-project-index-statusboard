@@ -9,12 +9,12 @@ function App() {
   return (
     <div className="App">
       <TaxonomyDataContextProvider>
-      <BrigadeDataContextProvider>
-        <AppRouter>
-          <Header />
-          <PageContents />
-        </AppRouter>
-      </BrigadeDataContextProvider>
+        <BrigadeDataContextProvider>
+          <AppRouter>
+            <Header />
+            <PageContents />
+          </AppRouter>
+        </BrigadeDataContextProvider>
       </TaxonomyDataContextProvider>
     </div>
   );

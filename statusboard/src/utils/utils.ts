@@ -40,13 +40,13 @@ export function getProjectsFromBrigadeData(brigadeData: Brigade[]) {
   );
 }
 
-function numTopicsIntersecting(
-  filterByTopics: any[],
-  projectTopics?: string | any[]
+function numTagsIntersecting(
+  filterByTags: any[],
+  projectTags?: string | any[]
 ) {
-  if (!filterByTopics?.length) return 1;
-  if (!projectTopics || !projectTopics.length) return -1;
-  const intersection = filterByTopics.filter((t) => projectTopics.includes(t));
+  if (!filterByTags?.length) return 1;
+  if (!projectTags || !projectTags.length) return -1;
+  const intersection = filterByTags.filter((t) => projectTags.includes(t));
   return intersection.length;
 }
 
@@ -84,20 +84,20 @@ export function filterProjectsByBrigades(
   );
 }
 
-type ProjectWithTopicsMatched = Project & {
-  numberTopicsMatched?: number;
+type ProjectWithTagsMatched = Project & {
+  numberTagsMatched?: number;
 };
-export function filterProjectsByTopics(projects: Project[], topics?: string[]) {
+export function filterProjectsByTags(projects: Project[], topics?: string[]) {
   if (!topics?.length) return projects;
   return projects
     .map((p) => ({
       ...p,
-      numberTopicsMatched: numTopicsIntersecting(topics, p.topics),
+      numberTagsMatched: numTagsIntersecting(topics, p.topics),
     }))
-    .sort((a, b) => b.numberTopicsMatched - a.numberTopicsMatched)
+    .sort((a, b) => b.numberTagsMatched - a.numberTagsMatched)
     .filter(
-      (project: ProjectWithTopicsMatched) =>
-        (project.numberTopicsMatched || -1) > 0
+      (project: ProjectWithTagsMatched) =>
+        (project.numberTagsMatched || -1) > 0
     );
 }
 
@@ -135,11 +135,11 @@ export function filterActiveProjects(
   if (!projects) return [];
   // Set destructuring and allow defaults to be overwritten
   const { timeRange, topics, brigades, onlyCfA } = options || {};
-  let newProjects: ProjectWithTopicsMatched[] = filterProjectsByBrigades(
+  let newProjects: ProjectWithTagsMatched[] = filterProjectsByBrigades(
     projects,
     brigades
   );
-  newProjects = filterProjectsByTopics(newProjects, topics);
+  newProjects = filterProjectsByTags(newProjects, topics);
   newProjects = filterProjectsByTime(newProjects, timeRange);
   newProjects = filterProjectsByCfA(newProjects, onlyCfA);
   return newProjects;
@@ -149,15 +149,15 @@ export function slugify(s: string) {
   return s.toLowerCase().replace(/[^\w]+/g, '');
 }
 
-export function getTopicsFromProjects(projects?: Project[]) {
+export function getTagsFromProjects(projects?: Project[]) {
   if (!projects) return [];
   // Sorted by frequency
-  const allTopics: string[] = projects.reduce<string[]>(
+  const allTags: string[] = projects.reduce<string[]>(
     (topics, project) => topics.concat(project.topics || []),
     []
   );
   const topicsByFrequency: { [key: string]: number } = {};
-  allTopics.forEach(
+  allTags.forEach(
     (topic) => (topicsByFrequency[topic] = (topicsByFrequency[topic] || 0) + 1)
   );
 
