@@ -1,0 +1,179 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jest/recommended",
+    "plugin:jest/style",
+    "plugin:jest-dom/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "jest",
+    "jest-dom"
+  ],
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    },
+    "react": {
+      "version": "detect"
+    }
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true,
+        "jest": true
+      },
+      "extends": [
+        "react-app",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "airbnb",
+        "airbnb/hooks",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:jest/recommended",
+        "plugin:jest/style",
+        "plugin:jest-dom/recommended",
+        "plugin:prettier/recommended"
+      ],
+      "plugins": [
+        "react",
+        "react-hooks",
+        "@typescript-eslint",
+        "jest",
+        "jest-dom"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaFeatures": {
+          "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+      },
+      "rules": {
+    "import/extensions": [
+      "warn",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],    
+        "max-len": [
+          "warn",
+          {
+            "code": 80,
+            "tabWidth": 2,
+            "comments": 80,
+            "ignoreComments": false,
+            "ignoreTrailingComments": true,
+            "ignoreUrls": true,
+            "ignoreStrings": true,
+            "ignoreTemplateLiterals": true,
+            "ignoreRegExpLiterals": true
+          }
+        ],
+        "no-return-assign": "warn",
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "no-underscore-dangle": "off",
+        "object-shorthand": "warn",
+        "camelcase": "off",
+        "@typescript-eslint/naming-convention": [
+          "warn",
+          {
+            "selector": "default",
+            "format": [
+              "camelCase",
+              "PascalCase"
+            ],
+            "leadingUnderscore": "allow"
+          }
+        ],
+        "@typescript-eslint/ban-ts-comment": "warn",
+        "@typescript-eslint/no-unnecessary-type-assertion": "warn",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-floating-promises": "warn",
+        "@typescript-eslint/no-unsafe-assignment": "warn",
+        "@typescript-eslint/explicit-module-boundary-types": "warn",
+        "@typescript-eslint/no-non-null-assertion": "warn",
+        "@typescript-eslint/no-unsafe-member-access": "warn",
+        "react/display-name": "warn",
+        "react/prop-types": "warn",
+        "react/no-children-prop": "warn",
+        "react/jsx-props-no-spreading": "warn",
+        "react/forbid-prop-types": "warn",
+        "jsx-a11y/label-has-associated-control": "warn",
+        "no-shadow": "warn",
+        "import/no-cycle": "warn",
+        "import/no-extraneous-dependencies": "warn",
+        "import/prefer-default-export": "warn",
+        "jest/no-export": "warn",
+        "prettier/prettier": "warn",
+        "react/destructuring-assignment": "warn",
+        "react/jsx-key": "warn",
+        "react/jsx-curly-newline": "warn",
+        "react/jsx-filename-extension": "warn",
+        "react/require-default-props": "warn",
+        "react/no-unescaped-entities": "warn",
+        "react-hooks/exhaustive-deps": "warn"
+      },
+      "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [
+              ".js",
+              ".jsx",
+              ".ts",
+              ".tsx"
+            ]
+          }
+        },
+        "react": {
+          "version": "detect"
+        }
+      }
+    }
+  ]
+}

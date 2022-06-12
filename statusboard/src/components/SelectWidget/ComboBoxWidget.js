@@ -6,7 +6,25 @@ import PropTypes from 'prop-types';
 import '../commonFormControlStyles.scss';
 import '../Projects/ProjectsTable/ProjectsQuery.scss';
 
-export default function ComboWidget({
+function changeIfValidValue(options, e, onChange) {
+  if (options.includes(e.target.value) || e.target.value.trim() === '') {
+    onChange(e);
+  }
+}
+
+function resetIfNotValidValue(options, e, originalValue) {
+  const validValue =
+    options.includes(e.target.value) || e.target.value.trim() === '';
+  if (!validValue) {
+    e.target.value = originalValue;
+  }
+}
+
+function selectOnFocus(e) {
+  e.target.select();
+}
+
+export default function ComboBoxWidget({
   label,
   id,
   options,
@@ -15,6 +33,7 @@ export default function ComboWidget({
   defaultValue,
 }) {
   const listId = `list${id}`;
+  let originalValue = '';
   return (
     <div
       className="form-control-container"
@@ -36,19 +55,19 @@ export default function ComboWidget({
         name={id}
         list={listId}
         className={`${inputClassName} form-control`}
-        onChange={onChange}
+        onFocus={(e) => {
+          originalValue = e.target.value;
+          selectOnFocus(e);
+        }}
+        onChange={(e) => {
+          changeIfValidValue(options, e, onChange);
+        }}
+        onBlur={(e) => {
+          resetIfNotValidValue(options, e, originalValue);
+        }}
         defaultValue={defaultValue}
       />
-      <datalist
-        id={listId}
-        // ref={extraRef}
-        className="form-control"
-        // {`${cx('form-control', {
-        //   'form-control--inline': inline,
-        // })}
-        //   ${inputClassName}`}
-        // value={selected}
-      >
+      <datalist id={listId}>
         <option key="ALL" value=" " />
         {options.map((option) => (
           <option key={option} value={option} />
@@ -58,17 +77,19 @@ export default function ComboWidget({
   );
 }
 
-ComboWidget.defaultProps = {
+ComboBoxWidget.defaultProps = {
   // selected: undefined,
   options: [],
   inputClassName: '',
+  defaultValue: '',
   // inline: false,
 };
 
-ComboWidget.propTypes = {
+ComboBoxWidget.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
   inputClassName: PropTypes.string,
+  defaultValue: PropTypes.string,
 };

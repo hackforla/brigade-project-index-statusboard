@@ -46,7 +46,7 @@ import './modal.css';
 
 import { SelectedTags } from '../../components/Projects/SelectedTags';
 import TextInput from '../../components/TextInput/TextInput';
-import ComboWidget from '../../components/SelectWidget/ComboWidget';
+import ComboBoxWidget from '../../components/SelectWidget/ComboBoxWidget';
 
 function getDistanceToBottom(jqueryElem: string): number {
   const top = $(jqueryElem).offset()?.top || 0;
@@ -322,13 +322,13 @@ function Projects(): JSX.Element {
                     }
                     defaultValue={onlyCfA}
                   />
-                  <ComboWidget
+                  <ComboBoxWidget
                     label="Organization"
                     id="Organization"
                     options={selectOrganizations}
-                    onChange={(e: InputElement) =>
-                      setFilters({ organization: e.target.value })
-                    }
+                    onChange={(e: InputElement) => {
+                      setFilters({ organization: e.target.value });
+                    }}
                     inputClassName="query-input-width"
                     defaultValue={organization}
                   />
