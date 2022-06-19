@@ -4,6 +4,10 @@
   width: 7px;
 }
 
+::-webkit-calendar-picker-indicator {
+  opacity: 100;
+}
+
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: rgba(0, 0, 0, .5);
@@ -29,14 +33,13 @@
 }
 
 .accordionCollapseExpand {
-  color: blue;
 }
 
 .accordionCollapseExpandButton {
   border-width: 0;
   padding-left: 6px;
   font-size: small;
-  color: blue;
+  margin: -25px
 }
 
 .accordionButton {
@@ -76,7 +79,7 @@
 // Total width is width + padding + border (2px).  
 // Border width should n
 .tag-filter-section-multi-select {
-  width: 140px;
+  width: 166px;
   padding-left: 16px;
   padding-right: 16px;
   border-width: 2px

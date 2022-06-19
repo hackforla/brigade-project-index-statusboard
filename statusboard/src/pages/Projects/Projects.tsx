@@ -199,7 +199,7 @@ function Projects(): JSX.Element {
     return display ? 'active' : '';
   };
 
-  const displayHideClass = (display: boolean): string => {
+  const showHideClass = (display: boolean): string => {
     console.log('dhc', display);
     return display ? '' : 'hidden';
   };
@@ -228,7 +228,6 @@ function Projects(): JSX.Element {
       <LoadingIndicator loading={loading}>
         <div>
           <div className="display-inline-flex">
-            <div className="filter-title-panel">Overview</div>
             <button
               type="button"
               className={`accordionButton ${displayActiveClass(
@@ -243,15 +242,13 @@ function Projects(): JSX.Element {
                 </div>
               </div>
             </button>
+            <div className="filter-title-panel">Overview</div>
           </div>
-          <div
-            className={`overviewSection ${displayHideClass(displayOverview)}`}
-          >
+          <div className={`overviewSection ${showHideClass(displayOverview)}`}>
             <ProjectsOverview />
           </div>
           <Divider />
           <div className="display-inline-flex">
-            <div className="filter-title-panel">Filter</div>
             <button
               type="button"
               className={`accordionButton ${displayActiveClass(displayFilter)}`}
@@ -264,8 +261,9 @@ function Projects(): JSX.Element {
                 </div>
               </div>
             </button>
+            <div className="filter-title-panel">{`Filter (${rowCounter} matches)`}</div>
           </div>
-          <div className={`${displayHideClass(displayFilter)}`}>
+          <div id="show-hide" className={`${showHideClass(displayFilter)}`}>
             <div id="filter-section" className="filter-section">
               <div id="filter-left-panel" className="filter-panel">
                 <SelectWidget
@@ -384,14 +382,12 @@ function Projects(): JSX.Element {
               setFilters({ topics: newTags })}
             clearTaxonomy={clearTaxonomy}
           />
-          <div className="flex" id="projects-table-section">
-            <div id="projects-table" className="hideFifthColumn">
-              <ProjectsTable
-                options={options}
-                plugins={hooks}
-                setRowCounter={setRowCounter}
-              />
-            </div>
+          <div id="projects-table" className="projects-table-section">
+            <ProjectsTable
+              options={options}
+              plugins={hooks}
+              setRowCounter={setRowCounter}
+            />
           </div>
         </div>
       </LoadingIndicator>
