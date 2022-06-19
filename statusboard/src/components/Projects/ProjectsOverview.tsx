@@ -11,8 +11,7 @@ import React from 'react';
 export const ProjectsOverview = () => (
   <div>
     <div className="attention">
-      Looking to volunteer for an open source Civic Tech Github (and non Github)
-      application?
+      Looking for an open source Civic Tech Github (and non Github) application?
     </div>
     <br />
     <div>

@@ -8,7 +8,7 @@ body {
 
 .attention {
   font-size: 150%;
-  color: blue;
+  font-weight: bold;
 }
 body {
   margin: 0;
@@ -39,6 +39,10 @@ a {
   display: inline-block;
 }
 
+.display-inline-flex {
+  display: inline-flex;
+}
+
 .display-inline {
   display: inline;
 }
@@ -55,6 +59,6 @@ a {
   border-bottom: 3px solid blue;
   height: 0px;
   padding: 0px;
-  margin: 0px;
+  margin: 6px 0px;
 
 }

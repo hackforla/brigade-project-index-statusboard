@@ -24,7 +24,6 @@
 }
 
 .accordionButtonInnerDiv {
-  color: blue;
   display: flex;
   justify-content: space-between;
 }
@@ -42,10 +41,8 @@
 
 .accordionButton {
   background-color: #eee;
-  color: blue;
   cursor: pointer;
   display: block;
-  width: 150px;
   padding: 6px;
   text-align: left;
   border: none;
@@ -56,6 +53,10 @@
 .active,
 .accordionButton:hover {
   background-color: #ccc;
+}
+
+.show-in-gutter {
+  margin-left: -45px;
 }
 
 .overviewSection {
@@ -85,10 +86,13 @@
     vertical-align: middle;
     padding-top: 5px;
     font-weight: bold;
+    padding: 6px;
 }
 
 .filter-section {
       display: inline-flex;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
     }
 
 @media only screen and (max-width: 600px) {
