@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/extensions */
 import React from 'react';
 import cx from 'classnames';
@@ -10,11 +11,15 @@ function projectGitHubCellLink(cell: Cell<Project>): JSX.Element {
   const project = cell.row.original;
   // TODO: CHANGE THIS WHEN WE HAVE A PROJECT DETAIL PAGE TO GO TO
   // <NavLink to={`/projects/${slugify(project.slug)}`}>{project.name}</NavLink>
-  let html = <a href={project.code_url}>{project.name}</a>;
+  let html = (
+    <a href={project.code_url} target="new" rel="noreferrer">
+      {project.name}
+    </a>
+  );
   if (project.link_url) {
     html = (
       <div style={{ display: 'flex' }}>
-        <a title="Repo" href={project.code_url}>
+        <a title="Repo" href={project.code_url} target="new">
           {project.name}
         </a>
         <a

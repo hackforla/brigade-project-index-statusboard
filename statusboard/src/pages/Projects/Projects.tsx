@@ -335,7 +335,7 @@ function Projects(): JSX.Element {
               </div>
               {availableTags && (
                 <>
-                  <div id="filter-right-panel" className="filter-panel">
+                  <div id="filter-right-panel" className="filter-panel filter-right-panel">
                     <Checkbox
                       label="Only Code For America?"
                       id="only_cfa_projects"
