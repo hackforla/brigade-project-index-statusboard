@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 // import cx from 'classnames';
 import '../commonFormControlStyles.scss';
 import '../Projects/ProjectsTable/ProjectsQuery.scss';
+import ClearInput from '../../pages/Projects/ClearInput';
 
 function changeIfValidValue(options, e, onChange) {
   if (options.includes(e.target.value) || e.target.value.trim() === '') {
@@ -31,6 +32,7 @@ export default function ComboBoxWidget({
   onChange,
   inputClassName,
   defaultValue,
+  onClear,
 }) {
   const listId = `list${id}`;
   let originalValue = '';
@@ -51,6 +53,7 @@ export default function ComboBoxWidget({
         {label}
       </label>
       <input
+        id={id}
         type="text"
         name={id}
         list={listId}
@@ -67,6 +70,7 @@ export default function ComboBoxWidget({
         }}
         defaultValue={defaultValue}
       />
+      <ClearInput id="organization" onClear={onClear} />
       <datalist id={listId}>
         <option key="ALL" value=" " />
         {options.map((option) => (
@@ -90,6 +94,7 @@ ComboBoxWidget.propTypes = {
   id: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired,
   inputClassName: PropTypes.string,
   defaultValue: PropTypes.string,
 };

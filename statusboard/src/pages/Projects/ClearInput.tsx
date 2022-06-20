@@ -5,7 +5,7 @@ import { Button } from '../../components';
 
 export default function ClearInput({
   inputId,
-  setInputFunc,
+  onClear,
 }: InputFuncType): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -14,8 +14,8 @@ export default function ClearInput({
       text="X"
       className="clear-button"
       onClick={() => {
-        $(`#${inputId}:text`).val("");
-        setInputFunc();
+        $("#organization:text").val("");
+        onClear();
         console.log('trying 3', $('#fred:text').val());
       }}
     />
@@ -24,5 +24,5 @@ export default function ClearInput({
 
 type InputFuncType = {
   inputId: string;
-  setInputFunc: () => void;
+  onClear: () => void;
 };

@@ -348,11 +348,12 @@ function Projects(): JSX.Element {
                     />
                     <ComboBoxWidget
                       label="Organization"
-                      id="Organization"
+                      id="organization"
                       options={selectOrganizations}
                       onChange={(e: InputElement) => {
                         setFilters({ organization: e.target.value });
                       }}
+                      onClear={() => setFilters({ organization: '' })}
                       inputClassName="query-input-width"
                       defaultValue={organization}
                     />
