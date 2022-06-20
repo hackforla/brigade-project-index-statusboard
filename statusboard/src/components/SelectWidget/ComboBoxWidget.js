@@ -7,19 +7,19 @@ import '../commonFormControlStyles.scss';
 import '../Projects/ProjectsTable/ProjectsQuery.scss';
 import ClearInput from '../../pages/Projects/ClearInput';
 
-function changeIfValidValue(options, e, onChange) {
-  if (options.includes(e.target.value) || e.target.value.trim() === '') {
-    onChange(e);
-  }
-}
+// function changeIfValidValue(options, e, onChange) {
+//   if (options.includes(e.target.value) || e.target.value.trim() === '') {
+//     onChange(e);
+//   }
+// }
 
-function resetIfNotValidValue(options, e, originalValue) {
-  const validValue =
-    options.includes(e.target.value) || e.target.value.trim() === '';
-  if (!validValue) {
-    e.target.value = originalValue;
-  }
-}
+// function resetIfNotValidValue(options, e, originalValue) {
+//   const validValue =
+//     options.includes(e.target.value) || e.target.value.trim() === '';
+//   if (!validValue) {
+//     e.target.value = originalValue;
+//   }
+// }
 
 function selectOnFocus(e) {
   e.target.select();
@@ -35,7 +35,7 @@ export default function ComboBoxWidget({
   onClear,
 }) {
   const listId = `list${id}`;
-  let originalValue = '';
+  // let originalValue = '';
   return (
     <div
       className="form-control-container"
@@ -59,15 +59,9 @@ export default function ComboBoxWidget({
         list={listId}
         className={`${inputClassName} form-control`}
         onFocus={(e) => {
-          originalValue = e.target.value;
           selectOnFocus(e);
         }}
-        onChange={(e) => {
-          changeIfValidValue(options, e, onChange);
-        }}
-        onBlur={(e) => {
-          resetIfNotValidValue(options, e, originalValue);
-        }}
+        onChange={onChange}
         defaultValue={defaultValue}
       />
       <ClearInput

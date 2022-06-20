@@ -102,7 +102,9 @@ export function filterProjectsByOrganization(
     return projects;
   }
 
-  return projects.filter((project) => project.brigade?.name === organization);
+  return projects.filter((project) =>
+    project.brigade?.name.toUpperCase().includes(organization.toUpperCase())
+  );
 }
 
 export function filterProjectsByProjectName(
