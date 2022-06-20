@@ -70,7 +70,11 @@ export default function ComboBoxWidget({
         }}
         defaultValue={defaultValue}
       />
-      <ClearInput id="organization" onClear={onClear} />
+      <ClearInput
+        inputId="organization"
+        className="clear-button"
+        onClear={onClear}
+      />
       <datalist id={listId}>
         <option key="ALL" value=" " />
         {options.map((option) => (

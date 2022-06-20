@@ -11,12 +11,11 @@ export default function ClearInput({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   return (
     <Button
-      text="X"
-      className="clear-button"
+      text="x"
+      className="clear-input"
       onClick={() => {
-        $("#organization:text").val("");
+        $(`#${inputId}:text`).val('');
         onClear();
-        console.log('trying 3', $('#fred:text').val());
       }}
     />
   );

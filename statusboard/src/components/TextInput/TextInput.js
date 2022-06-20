@@ -2,11 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../commonFormControlStyles.scss';
+import ClearInput from '../../pages/Projects/ClearInput';
 
 export default function TextInput({
   label,
   id,
   onChange,
+  onClear,
   defaultValue,
   inputClassName,
 }) {
@@ -20,6 +22,7 @@ export default function TextInput({
         className={`${inputClassName} form-control`}
         defaultValue={defaultValue}
       />
+      <ClearInput inputId={id} onClear={onClear} />
     </div>
   );
 }
@@ -33,6 +36,7 @@ TextInput.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired,
   inputClassName: PropTypes.string,
   defaultValue: PropTypes.string,
 };

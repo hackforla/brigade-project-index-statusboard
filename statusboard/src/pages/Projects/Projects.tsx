@@ -200,7 +200,6 @@ function Projects(): JSX.Element {
   };
 
   const showHideClass = (display: boolean): string => {
-    console.log('dhc', display);
     return display ? '' : 'hidden';
   };
 
@@ -209,12 +208,10 @@ function Projects(): JSX.Element {
   };
 
   const toggleDisplayFilter = () => {
-    console.log('toggle filter');
     setDisplayFilter(!displayFilter);
   };
 
   const toggleDisplayOverview = () => {
-    console.log('toggle overview');
     setDisplayOverview(!displayOverview);
   };
 
@@ -363,6 +360,7 @@ function Projects(): JSX.Element {
                       inputClassName="query-input-width"
                       onChange={(e) => setFilters({ project: e.target.value })}
                       defaultValue={project}
+                      onClear={() => setFilters({ project: '' })}
                     />
                     <TextInput
                       label="Description"
@@ -370,6 +368,7 @@ function Projects(): JSX.Element {
                       inputClassName="query-input-width"
                       onChange={(e: InputElement) =>
                         setFilters({ description: e.target.value })}
+                      onClear={() => setFilters({ description: '' })}
                       defaultValue={description}
                     />
                   </div>
