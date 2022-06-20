@@ -3,6 +3,7 @@ import { Bounds, latLng } from 'leaflet';
 
 import { SortByFn, Row, IdType } from 'react-table';
 import { fuzzyTextFilter } from '../components';
+import { ExcludeParam } from '../pages/Projects/Projects';
 import { Brigade, Project } from './types';
 import { Filter } from './useProjectFilters';
 
@@ -185,6 +186,39 @@ export function filterProjectsByAllParams(
   newProjects = filterProjectsByCfA(newProjects, onlyCfA);
   newProjects = filterProjectsByProjectName(newProjects, project);
   newProjects = filterProjectsByOrganization(newProjects, organization);
+  newProjects = filterProjectsByDescription(newProjects, description);
+  return newProjects;
+}
+
+export function filterProjectsExcludeParam(
+  options: Filter,
+  projects?: Project[],
+  excludeParam?: string
+): Project[] {
+  if (!projects) return [];
+  // Set destructuring and allow defaults to be overwritten
+  const {
+    timeRange,
+    topics,
+    brigades,
+    onlyCfA,
+    project,
+    organization,
+    description,
+  } = options || {};
+  let newProjects: ProjectWithTagsMatched[] = filterProjectsByBrigades(
+    projects,
+    brigades
+  );
+  if (excludeParam !== ExcludeParam.tags) {
+    newProjects = filterProjectsByTags(newProjects, topics);
+  }
+  newProjects = filterProjectsByTime(newProjects, timeRange);
+  newProjects = filterProjectsByCfA(newProjects, onlyCfA);
+  newProjects = filterProjectsByProjectName(newProjects, project);
+  if (excludeParam !== ExcludeParam.organization) {
+    newProjects = filterProjectsByOrganization(newProjects, organization);
+  }
   newProjects = filterProjectsByDescription(newProjects, description);
   return newProjects;
 }

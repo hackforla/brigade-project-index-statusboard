@@ -29,6 +29,7 @@ import {
   customStringSort,
   lastPushSort,
   ActiveThresholdsKeys,
+  filterProjectsExcludeParam,
 } from '../../utils/utils';
 import SelectWidget from '../../components/SelectWidget/SelectWidget';
 import Checkbox from '../../components/Checkbox/Checkbox';
@@ -47,6 +48,11 @@ import './modal.css';
 import { SelectedTags } from '../../components/Projects/SelectedTags';
 import TextInput from '../../components/TextInput/TextInput';
 import ComboBoxWidget from '../../components/SelectWidget/ComboBoxWidget';
+
+export enum ExcludeParam {
+  tags = "tags",
+  organization = "organization"
+}
 
 function getDistanceToBottom(jqueryElem: string): number {
   const top = $(jqueryElem).offset()?.top || 0;
@@ -89,6 +95,7 @@ function Projects(): JSX.Element {
   // });
 
   const {
+    brigades,
     topics,
     timeRange,
     organization,
@@ -102,15 +109,66 @@ function Projects(): JSX.Element {
   } = useProjectFilters();
 
   // Tags
+  const { allProjects } = useContext(BrigadeDataContext);
   const availableTags = useMemo(() => {
     if (!projectsFilteredByTime) return allTags;
-    return getTagsFromProjects(projectsFilteredByTime);
-  }, [projectsFilteredByTime, allTags]);
-  const { allProjects } = useContext(BrigadeDataContext);
-  const allOrganizations = [
-    ...new Set(allProjects.map((project) => project.brigade?.name)),
-  ];
-  const selectOrganizations = allOrganizations.map((org) => org);
+    return getTagsFromProjects(
+      filterProjectsExcludeParam(
+        {
+          topics,
+          timeRange,
+          brigades,
+          onlyCfA,
+          project,
+          organization,
+          description,
+        },
+        allProjects,
+        ExcludeParam.tags
+      )
+    );
+  }, [
+    projectsFilteredByTime,
+    allTags,
+    topics,
+    timeRange,
+    brigades,
+    onlyCfA,
+    project,
+    organization,
+    description,
+    allProjects,
+  ]);
+  const selectOrganizations = useMemo(() => {
+    if (!projectsFilteredByTime) return allTags;
+    const orgProjects = filterProjectsExcludeParam(
+      {
+        topics,
+        timeRange,
+        brigades,
+        onlyCfA,
+        project,
+        organization,
+        description,
+      },
+      projectsFilteredByTime,
+      ExcludeParam.organization
+    );
+    const availableOrganizations = [
+      ...new Set(orgProjects.map((project) => project.brigade?.name)),
+    ];
+    return availableOrganizations.map((org) => org);
+  }, [
+    projectsFilteredByTime,
+    topics,
+    timeRange,
+    brigades,
+    onlyCfA,
+    project,
+    organization,
+    description,
+    allTags,
+  ]);
 
   const filterTypes: FilterTypes<Project> = useMemo(
     () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
@@ -335,7 +393,10 @@ function Projects(): JSX.Element {
               </div>
               {availableTags && (
                 <>
-                  <div id="filter-right-panel" className="filter-panel filter-right-panel">
+                  <div
+                    id="filter-right-panel"
+                    className="filter-panel filter-right-panel"
+                  >
                     <Checkbox
                       label="Only Code For America?"
                       id="only_cfa_projects"
