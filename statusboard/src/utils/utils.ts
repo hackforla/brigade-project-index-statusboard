@@ -234,14 +234,9 @@ export function getTagsFromProjects(projects?: Project[]): string[] {
     (topics, project) => topics.concat(project.topics || []),
     []
   );
-  const topicsByFrequency: { [key: string]: number } = {};
-  allTags.forEach(
-    (topic) => (topicsByFrequency[topic] = (topicsByFrequency[topic] || 0) + 1)
-  );
-
-  return Object.entries(topicsByFrequency)
-    .sort((a, b) => b[1] - a[1])
-    .map((topicAndCount) => topicAndCount[0]);
+  const topicSet = new Set<string>();
+  allTags.forEach((topic) => topicSet.add(topic));
+  return Array.from(topicSet).sort();
 }
 
 function periodToNumber(period: string) {
