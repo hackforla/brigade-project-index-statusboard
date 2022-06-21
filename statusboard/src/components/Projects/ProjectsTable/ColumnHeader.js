@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 // TODO: DEAL WITH THESE
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */

@@ -10,6 +10,7 @@ import ColumnHeader from './ColumnHeader';
 import './ProjectsTable.scss';
 import { Project } from '../../../utils/types';
 import BrigadeDataContext from '../../../contexts/BrigadeDataContext';
+import ColumnDisplayOption from './ColumnDisplayOption';
 
 export type TableAttributes = {
   options: TableOptions<Project>;
@@ -30,6 +31,9 @@ export default function ProjectsTable({
     rows,
     page,
     setPageSize,
+    setHiddenColumns,
+    getToggleHideAllColumnsProps,
+    allColumns,
     state: { pageSize },
   } = useTable<Project>(options, ...plugins);
   const { loading } = useContext(BrigadeDataContext);
@@ -40,6 +44,21 @@ export default function ProjectsTable({
 
   return (
     <div className="projects-table">
+      <div className="display-inline-flex">
+        {allColumns.map((column) => (
+          // <div key={`${headerGroup.getHeaderGroupProps().key}-b>`}>
+          <ColumnDisplayOption
+            column={column}
+            key={`${column.id}-column-option`}
+            id={column.id}
+            // column={column}
+            header={column.Header?.toString() || ''}
+            setHiddenColumns={setHiddenColumns}
+            getToggleHideAllColumnsProps={getToggleHideAllColumnsProps}
+          />
+          // </div>
+        ))}
+      </div>
       {/* <PerfectScrollbar> */}
       <Table {...getTableProps()}>
         <thead className="desktop">

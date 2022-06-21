@@ -54,12 +54,12 @@
     }
   }
 
-  .hideOpenIssuesText {
+  .hideColumnLabel {
     display:none;
   }
 
   @media screen and (max-width:800px) {
-    .hideOpenIssuesText {
+    .hideColumnLabel {
       display:inline;
     }
   }

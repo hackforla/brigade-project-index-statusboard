@@ -52,15 +52,6 @@
 }
 
 
-.hideFifthColumn {
-  .sort-button {
-    margin:0.5em;
-    width: 1rem;
-    padding: 0;
-  }
-  
-}
-
 @media screen and (max-width:800px) {
   .column-header__contents {
       display: flex;

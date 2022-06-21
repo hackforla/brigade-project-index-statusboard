@@ -36,6 +36,5 @@ export const ProjectsOverview = () => (
       </a>
       .
     </div>
-    <br />
   </div>
 );

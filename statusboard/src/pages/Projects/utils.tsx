@@ -49,7 +49,7 @@ function projectOpenIssuesCell(cell: Cell<Project>): JSX.Element {
     }
     return (
       <span>
-        <span className="hideOpenIssuesText">Open issues: </span>
+        <span className="hideColumnLabel">Open issues: </span>
         {issuestxt}
       </span>
     );
@@ -91,6 +91,13 @@ export default function getTableColumns(
 ): Column<Project>[] {
   return [
     {
+      Header: 'Organization',
+      accessor: (project: Project): string => project.brigade?.name ?? '',
+      id: 'organization',
+      sortType: 'customStringSort',
+      disableFilters: true,
+    },
+    {
       Header: 'Project',
       accessor: 'name',
       disableFilters: true,
@@ -122,13 +129,6 @@ export default function getTableColumns(
       disableFilters: true,
       Cell: topicsCellButtons(filterTags, setFilterTags),
       disableSortBy: true,
-    },
-    {
-      Header: 'Organization',
-      accessor: (project: Project): string => project.brigade?.name ?? '',
-      id: 'organization',
-      sortType: 'customStringSort',
-      disableFilters: true,
     },
   ];
 }

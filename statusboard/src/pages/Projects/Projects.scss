@@ -20,11 +20,6 @@
     width: calc(100% - 0.5em) !important;
   }
 
-  .hideFifthColumn {
-    th:nth-of-type(5) {
-      display: none;
-    }
-  }
 }
 
 .accordionButtonInnerDiv {
@@ -59,6 +54,9 @@
 }
 
 .clear-input { background-color: transparent; border-width: 0px;}
+.column-display-option {
+          display: flex; padding-right: 30px; 
+      }
 .show-in-gutter {
   margin-left: -45px;
 }
@@ -80,7 +78,7 @@
 // Total width is width + padding + border (2px).  
 // Border width should n
 .tag-filter-section-multi-select {
-  width: 166px;
+  width: 169px;
   padding-left: 16px;
   padding-right: 16px;
   border-width: 2px
