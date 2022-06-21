@@ -1,5 +1,12 @@
 /* eslint-disable react/jsx-filename-extension */
-import { Row, useTable, TableOptions, PluginHook } from 'react-table';
+import {
+  Row,
+  useTable,
+  TableOptions,
+  PluginHook,
+  useBlockLayout,
+  useResizeColumns,
+} from 'react-table';
 import React, { useContext, useEffect } from 'react';
 // import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
@@ -35,7 +42,8 @@ export default function ProjectsTable({
     getToggleHideAllColumnsProps,
     allColumns,
     state: { pageSize },
-  } = useTable<Project>(options, ...plugins);
+    resetResizing,
+  } = useTable<Project>(options, useBlockLayout, useResizeColumns, ...plugins);
   const { loading } = useContext(BrigadeDataContext);
 
   useEffect(() => {

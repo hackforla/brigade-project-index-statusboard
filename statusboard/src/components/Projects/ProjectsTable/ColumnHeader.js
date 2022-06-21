@@ -17,7 +17,13 @@ export default function ColumnHeader({ column, disableSort }) {
   return (
     <th {...headerProps} className="column-header">
       <div className="column-header__contents">
-        <div>{column.render('Header')}</div>
+        <div>
+          {column.render('Header')}{' '}
+          <div
+            {...column.getResizerProps()}
+            className={`resizer ${column.isResizing ? 'isResizing' : ''}`}
+          />
+        </div>
         {column.canFilter && <div>{column.render('Filter')}</div>}
         {column.canSort && (
           <div>

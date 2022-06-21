@@ -37,8 +37,25 @@
     padding: 0.5rem;
     font-size: 1rem;
     overflow-wrap: break-word;
+
   }
 
+            .resizer {
+              display: inline-block;
+              background: white;
+              width: 10px;
+              height: 100%;
+              position: absolute;
+              right: 0;
+              top: 0;
+              transform: translateX(50%);
+              z-index: 1;
+      
+              // touch-action: none;
+              &.isResizing {
+                background: red;
+              }
+            }
   tr:nth-child(odd) {
     background: var(--cfa-purple-lightest);
   }
