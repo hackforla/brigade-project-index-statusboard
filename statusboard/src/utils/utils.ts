@@ -240,7 +240,7 @@ export function getTagsFromProjects(projects?: Project[]): string[] {
   );
 
   return Object.entries(topicsByFrequency)
-    .sort((a, b) => b[1] - a[1])
+    .sort((a, b) => (a[0] > b[0] ? 1 : -1))
     .map((topicAndCount) => topicAndCount[0]);
 }
 
