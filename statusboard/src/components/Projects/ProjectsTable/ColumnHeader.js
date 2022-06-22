@@ -15,9 +15,9 @@ export default function ColumnHeader({ column, disableSort }) {
     sortProps = column.getHeaderProps(column.getSortByToggleProps());
   }
   return (
-    <th {...headerProps} className="column-header">
-      <div className="column-header__contents">
-        <div>{column.render('Header')}</div>
+    <th {...headerProps} className={`column-header ${column.id}-column`}>
+      <div className={`column-header__contents ${column.id}-column`}>
+        <div className={`${column.id}-column`}>{column.render('Header')}</div>
         {column.canFilter && <div>{column.render('Filter')}</div>}
         {column.canSort && (
           <div>

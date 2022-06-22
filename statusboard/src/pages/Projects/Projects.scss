@@ -54,6 +54,31 @@
 }
 
 .clear-input { background-color: transparent; border-width: 0px;}
+.organization-column { color: red;
+  // min-width: 150px
+}
+.name-column {
+  color: red;
+  min-width: 200px;
+  width: 200px;
+}
+.description-column {
+  color: red;
+  min-width: 250px;
+  width: 250px;
+}
+.open-issues-column {
+  color: red;
+  width: 120px;
+}
+.last_pushed_within-column {
+  color: red;
+  width: 120px;
+}
+.topics-column {
+  color: red;
+    width: 150px;
+}
 .column-display-option {
           display: flex; padding-right: 30px; 
       }

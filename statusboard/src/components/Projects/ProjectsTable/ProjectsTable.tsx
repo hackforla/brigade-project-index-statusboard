@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable react/jsx-filename-extension */
 import { Row, useTable, TableOptions, PluginHook } from 'react-table';
 import React, { useContext, useEffect } from 'react';
@@ -98,7 +100,11 @@ export default function ProjectsTable({
             return (
               <Tr {...row.getRowProps()} key={row.getRowProps().key}>
                 {row.cells.map((cell) => (
-                  <Td {...cell.getCellProps()} key={cell.getCellProps().key}>
+                  <Td
+                    {...cell.getCellProps()}
+                    className={`${cell.column.id}-column`}
+                    key={cell.getCellProps().key}
+                  >
                     {cell.render('Cell')}
                   </Td>
                 ))}
