@@ -2,9 +2,9 @@
 /* eslint-disable import/extensions */
 import React from 'react';
 import cx from 'classnames';
-import { Cell, Column } from 'react-table';
+import { Cell } from 'react-table';
 import { Button } from '../../components';
-import { Project } from '../../utils/types';
+import { Project, ExtendedColumn } from '../../utils/types';
 import { Filter } from '../../utils/useProjectFilters';
 
 function projectGitHubCellLink(cell: Cell<Project>): JSX.Element {
@@ -88,7 +88,7 @@ function topicsCellButtons(
 export default function getTableColumns(
   filterTags: string[] = [],
   setFilterTags: (newFilter: Filter) => void
-): Column<Project>[] {
+): ExtendedColumn<Project>[] {
   return [
     {
       Header: 'Organization',
@@ -96,17 +96,20 @@ export default function getTableColumns(
       id: 'organization',
       sortType: 'customStringSort',
       disableFilters: true,
+      extendedClassName: 'organization-column',
     },
     {
       Header: 'Project',
       accessor: 'name',
       disableFilters: true,
       Cell: projectGitHubCellLink,
+      extendedClassName: 'name-column',
     },
     {
       Header: 'Description',
       accessor: 'description',
       disableFilters: true,
+      extendedClassName: 'description-column',
     },
     {
       Header: 'Open Issues',
@@ -115,12 +118,14 @@ export default function getTableColumns(
       Cell: projectOpenIssuesCell,
       sortType: 'customStringSort',
       disableFilters: true,
+      extendedClassName: 'open-issues-column',
     },
     {
       Header: 'Last Push',
       disableFilters: true,
       accessor: 'last_pushed_within',
       sortType: 'lastPushSort',
+      extendedClassName: 'last_pushed_within-column',
     },
     {
       Header: 'Tags',
@@ -129,6 +134,7 @@ export default function getTableColumns(
       disableFilters: true,
       Cell: topicsCellButtons(filterTags, setFilterTags),
       disableSortBy: true,
+      extendedClassName: 'topics-column',
     },
   ];
 }

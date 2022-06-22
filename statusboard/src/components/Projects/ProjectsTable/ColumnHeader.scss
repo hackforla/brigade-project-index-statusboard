@@ -64,3 +64,32 @@
     }
   }
 }
+
+.organization-column {
+  width: 200px
+}
+
+.name-column {
+  width: 150px;
+}
+
+// no need to adjust
+// .description-column {
+// }
+
+.open-issues-column {
+  width: 80px;
+}
+
+.last_pushed_within-column {
+  width: 80px;
+}
+
+.topics-column {
+  width: 325px;
+}
+
+.column-display-option {
+  display: flex;
+  padding-right: 30px;
+}

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/extensions */
 import React, {
@@ -38,13 +41,12 @@ import { ProjectsOverview } from '../../components/Projects/ProjectsOverview';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
 import { useProjectFilters } from '../../utils/useProjectFilters';
-import { Project } from '../../utils/types';
+import { Project, ExtendedColumn } from '../../utils/types';
 import getTableColumns from './utils';
 import queryParamFilter from '../../components/Projects/ProjectsTable/QueryParamFilter';
 import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss';
 import './modal.css';
-
 import { SelectedTags } from '../../components/Projects/SelectedTags';
 import TextInput from '../../components/TextInput/TextInput';
 import ComboBoxWidget from '../../components/SelectWidget/ComboBoxWidget';
@@ -180,10 +182,11 @@ function Projects(): JSX.Element {
     lastPushSort,
   };
 
-  const columns: Column<Project>[] = useMemo(
+  const columns: ExtendedColumn<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
     [topics, setFilters]
   );
+
   const initialFilterValues: Filters<Project> = useMemo(
     () =>
       columns
