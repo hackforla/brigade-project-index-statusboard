@@ -6,7 +6,7 @@ import './Checkbox.scss';
 export default function Checkbox({ label, id, onChange, defaultValue }) {
   return (
     <div className="form-control-container" style={{ display: 'flex' }}>
-      <label htmlFor={id} className="form-label checkboxLabelAdjustment">
+      <label htmlFor={id} className="form-label checkbox-label-adjustment">
         {label}
       </label>
       <input

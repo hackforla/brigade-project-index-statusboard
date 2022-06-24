@@ -82,7 +82,7 @@ export const MultiSelect = ({
             />
             <span
               {...getToggleButtonProps({
-                className: 'accordionCollapseExpandButton',
+                className: 'accordion-collapse-expandButton',
               })}
             >
               {displayCollapseExpand(isOpen)}

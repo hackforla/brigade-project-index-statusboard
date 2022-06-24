@@ -15,10 +15,7 @@ export default function ColumnHeader({ column, disableSort }) {
     sortProps = column.getHeaderProps(column.getSortByToggleProps());
   }
   return (
-    <th
-      {...headerProps}
-      className={`column-header ${column.extendedClassName}`}
-    >
+    <th {...headerProps} className={`${column.extendedClassName}`}>
       <div className="column-header__contents">
         {column.canSort && (
           <>

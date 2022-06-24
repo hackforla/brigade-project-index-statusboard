@@ -49,7 +49,7 @@ function projectOpenIssuesCell(cell: Cell<Project>): JSX.Element {
     }
     return (
       <span>
-        <span className="hideColumnLabel">Open issues: </span>
+        <span className="hide-column-label">Open issues: </span>
         {issuestxt}
       </span>
     );
@@ -122,10 +122,11 @@ export default function getTableColumns(
     },
     {
       Header: 'Last Push',
+      id: 'last-pushed-within',
       disableFilters: true,
       accessor: 'last_pushed_within',
       sortType: 'lastPushSort',
-      extendedClassName: 'last_pushed_within-column',
+      extendedClassName: 'last-pushed-within-column',
     },
     {
       Header: 'Tags',

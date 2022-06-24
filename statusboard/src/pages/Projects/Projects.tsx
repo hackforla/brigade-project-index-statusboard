@@ -217,7 +217,7 @@ function Projects(): JSX.Element {
         filters: initialFilterValues,
         sortBy: [
           {
-            id: 'last_pushed_within',
+            id: 'last-pushed-within',
           },
           {
             id: 'name',
@@ -288,33 +288,33 @@ function Projects(): JSX.Element {
           <div className="display-inline-flex">
             <button
               type="button"
-              className={`accordionButton ${displayActiveClass(
+              className={`accordion-button ${displayActiveClass(
                 displayOverview
               )}`}
               onClick={toggleDisplayOverview}
             >
-              <div className="accordionButtonInnerDiv">
+              <div className="accordion-button-inner-div">
                 <div>{hideShowLabel(displayOverview)}</div>
-                <div className="accordionCollapseExpand">
+                <div className="accordion-collapse-expand">
                   {displayCollapseExpand(displayOverview)}
                 </div>
               </div>
             </button>
             <div className="filter-title-panel">Overview</div>
           </div>
-          <div className={`overviewSection ${showHideClass(displayOverview)}`}>
+          <div className={`overview-section ${showHideClass(displayOverview)}`}>
             <ProjectsOverview />
           </div>
           <Divider />
           <div className="display-inline-flex">
             <button
               type="button"
-              className={`accordionButton ${displayActiveClass(displayFilter)}`}
+              className={`accordion-button ${displayActiveClass(displayFilter)}`}
               onClick={toggleDisplayFilter}
             >
-              <div className="accordionButtonInnerDiv">
+              <div className="accordion-button-inner-div">
                 <div>{hideShowLabel(displayFilter)}</div>
-                <div className="accordionCollapseExpand">
+                <div className="accordion-collapse-expand">
                   {displayCollapseExpand(displayFilter)}
                 </div>
               </div>
@@ -343,7 +343,7 @@ function Projects(): JSX.Element {
                       extraRef={issueSelect}
                       label="Filter By Topic Tags"
                       id="select-issue"
-                      inputClassName="query-select-widget-width tagFilterSectionSelect"
+                      inputClassName="query-select-widget-width tag-filter-section-selection"
                       options={issueOptions}
                       emptyOptionText=""
                       onChange={(event: SelectElement) => {
@@ -375,7 +375,7 @@ function Projects(): JSX.Element {
                     />
 
                     {/* <SelectWidget
-                      inputClassName="query-input-width tagFilterSectionSelect"
+                      inputClassName="query-input-width tag-filter-section-selection"
                       extraRef={priorityAreaSelect}
                       label="By CfA Priority Action Area "
                       id="select-priority-areas"
@@ -402,7 +402,7 @@ function Projects(): JSX.Element {
                   >
                     <Checkbox
                       label="Only Code For America?"
-                      id="only_cfa_projects"
+                      id="only-cfa-projects"
                       onChange={(e: InputElement) =>
                         setFilters({ onlyCfA: String(e.target.checked) })}
                       defaultValue={onlyCfA}

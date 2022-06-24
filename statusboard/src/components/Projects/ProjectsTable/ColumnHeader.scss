@@ -3,16 +3,10 @@
   padding-right: 0rem;
   align-items: stretch;
   overflow-wrap: anywhere;
-  
-
-  > *:first-child {
-    align-self: center;
-  }
+  align-self: center;
 
   > *:not(:first-child) {
-    margin-left: 1rem;
-    align-self: center;
-    
+    margin-left: 1rem;   
   }
 
   input {
@@ -85,7 +79,7 @@
   width: 80px;
 }
 
-.last_pushed_within-column {
+.last-pushed-within-column {
   width: 80px;
 }
 

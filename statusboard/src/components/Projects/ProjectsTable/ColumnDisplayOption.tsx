@@ -31,7 +31,7 @@ export default function ColumnDisplayOption({
         // onChange={(e) => })
         className="form-control"
       />
-      <label htmlFor={id} className="form-label checkboxLabelAdjustment">
+      <label htmlFor={id} className="form-label checkbox-label-adjustment">
         {header}
       </label>
     </div>
