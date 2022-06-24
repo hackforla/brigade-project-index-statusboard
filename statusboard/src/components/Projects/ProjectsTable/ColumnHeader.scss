@@ -1,7 +1,8 @@
 .column-header__contents {
   display: flex;
-  padding-right: 2rem;
+  padding-right: 0rem;
   align-items: stretch;
+  overflow-wrap: anywhere;
   
 
   > *:first-child {
@@ -10,6 +11,7 @@
 
   > *:not(:first-child) {
     margin-left: 1rem;
+    align-self: center;
     
   }
 
@@ -20,6 +22,7 @@
 
   .sort-button {
     width: 1rem;
+    min-width: 1rem;
     padding: 0;
     height:2rem;
   }
@@ -73,9 +76,10 @@
   width: 150px;
 }
 
-// no need to adjust
-// .description-column {
-// }
+// sets width of amount left over after fixed width columns
+.description-column {
+  width: 60%;
+}
 
 .open-issues-column {
   width: 80px;
@@ -86,10 +90,11 @@
 }
 
 .topics-column {
-  width: 325px;
+  width: 30%;
 }
 
 .column-display-option {
   display: flex;
   padding-right: 30px;
 }
+
