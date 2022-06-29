@@ -38,20 +38,25 @@
 }
 
 .accordion-button {
-  background-color: #eee;
+border: 2px solid var(--cfa-white);
+  border-radius: 5px;
+  padding: 0 0.75rem 0.1rem 0.75rem;
+  background-color: var(--cfa-blue);
+  color: var(--cfa-white);
+    // background-color: #eee;
+  font-size: 1.15rem;
   cursor: pointer;
   display: block;
-  padding: 6px;
+  // padding: 6px;
   text-align: left;
-  border: none;
+  // border: none;
   outline: none;
   transition: 0.4s;
 }
 
-.active,
-.accordion-button:hover {
-  background-color: #ccc;
-}
+// .accordion-button:hover {
+//   background-color: #ccc;
+// }
 
 .clear-input { background-color: transparent; border-width: 0px;}
 
@@ -129,6 +134,7 @@
 .checkbox-label-adjustment {
   /* align-center does not work for checkboxes same as text */
   padding-top: 5px;
+  font-size: 1rem;
 }
 
 #only-cfa-projects {

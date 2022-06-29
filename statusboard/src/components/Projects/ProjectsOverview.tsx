@@ -15,8 +15,7 @@ export const ProjectsOverview = () => (
     </div>
     <br />
     <div>
-      Search our curated list of Civic Tech Open Source applications for the
-      ideal volunteer opportunity. Filter projects based on your area of
+      Search our curated list of Civic Tech Open Source applications. Use as is, make request for changes, or change yourself!  Many projects are looking for volunteers.  Filter application projects based on your area of
       interest and date last updated. Check out the{' '}
       <a href="https://brigade.cloud/" rel="noreferrer" target="_blank">
         Project Index Documentation

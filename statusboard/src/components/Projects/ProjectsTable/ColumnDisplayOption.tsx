@@ -5,31 +5,28 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import Checkbox from '../../Checkbox/Checkbox';
 import './ColumnHeader.scss';
 
 export default function ColumnDisplayOption({
   column,
   id,
   header,
-  setHiddenColumns,
-  getToggleHideAllColumnsProps,
 }: {
-  column: any,
+  column: any;
   id: string;
   header: string;
   setHiddenColumns: (ids: string[]) => void;
-  getToggleHideAllColumnsProps: any
+  getToggleHideAllColumnsProps: any;
 }): JSX.Element {
   return (
-    <div
-      className="form-control-container column-display-option"
-    >
+    <div className="form-control-container column-display-option">
       <input
-        type="checkbox" {...column.getToggleHiddenProps()}
+        type="checkbox"
+        {...column.getToggleHiddenProps()}
         id={id}
+        content="x"
         // onChange={(e) => })
-        className="form-control"
+        className="form-control column-display-option"
       />
       <label htmlFor={id} className="form-label checkbox-label-adjustment">
         {header}

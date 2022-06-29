@@ -10,13 +10,11 @@ import React, {
   useState,
   useRef,
   useCallback,
-  useEffect,
 } from 'react';
 import $ from 'jquery';
 import {
   usePagination,
   useFilters,
-  Column,
   TableOptions,
   PluginHook,
   FilterTypes,
@@ -52,8 +50,8 @@ import TextInput from '../../components/TextInput/TextInput';
 import ComboBoxWidget from '../../components/SelectWidget/ComboBoxWidget';
 
 export enum ExcludeParam {
-  tags = "tags",
-  organization = "organization"
+  tags = 'tags',
+  organization = 'organization',
 }
 
 function getDistanceToBottom(jqueryElem: string): number {
@@ -237,7 +235,7 @@ function Projects(): JSX.Element {
 
   // the options for the Issues dropdown, prepend an empty string
   const issueOptions = [''].concat([...issuesMap.keys()]);
-  const priorityAreasOptions = [''].concat([...priorityAreasMap.keys()]);
+  // const priorityAreasOptions = [''].concat([...priorityAreasMap.keys()]);
 
   const issueSelect = useRef<HTMLSelectElement>();
   const priorityAreaSelect = useRef<HTMLSelectElement>();
@@ -309,7 +307,9 @@ function Projects(): JSX.Element {
           <div className="display-inline-flex">
             <button
               type="button"
-              className={`accordion-button ${displayActiveClass(displayFilter)}`}
+              className={`accordion-button ${displayActiveClass(
+                displayFilter
+              )}`}
               onClick={toggleDisplayFilter}
             >
               <div className="accordion-button-inner-div">
@@ -371,7 +371,8 @@ function Projects(): JSX.Element {
                       availableTags={availableTags}
                       labelText="Filter by Tags"
                       setSelectedItems={(newTags: string[] | undefined) =>
-                        setFilters({ topics: newTags })}
+                        setFilters({ topics: newTags })
+                      }
                     />
 
                     {/* <SelectWidget
@@ -404,7 +405,8 @@ function Projects(): JSX.Element {
                       label="Only Code For America?"
                       id="only-cfa-projects"
                       onChange={(e: InputElement) =>
-                        setFilters({ onlyCfA: String(e.target.checked) })}
+                        setFilters({ onlyCfA: String(e.target.checked) })
+                      }
                       defaultValue={onlyCfA}
                     />
                     <ComboBoxWidget
@@ -431,7 +433,8 @@ function Projects(): JSX.Element {
                       id="description"
                       inputClassName="query-input-width"
                       onChange={(e: InputElement) =>
-                        setFilters({ description: e.target.value })}
+                        setFilters({ description: e.target.value })
+                      }
                       onClear={() => setFilters({ description: '' })}
                       defaultValue={description}
                     />
@@ -443,7 +446,8 @@ function Projects(): JSX.Element {
           <SelectedTags
             selectedItems={topics}
             setSelectedItems={(newTags: string[] | undefined) =>
-              setFilters({ topics: newTags })}
+              setFilters({ topics: newTags })
+            }
             clearTaxonomy={clearTaxonomy}
           />
           <div id="projects-table" className="projects-table-section">

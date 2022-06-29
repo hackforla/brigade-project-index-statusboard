@@ -14,6 +14,7 @@ import './ProjectsTable.scss';
 import { Project } from '../../../utils/types';
 import BrigadeDataContext from '../../../contexts/BrigadeDataContext';
 import ColumnDisplayOption from './ColumnDisplayOption';
+import Divider from '../../Divider/Divider';
 
 export type TableAttributes = {
   options: TableOptions<Project>;
@@ -47,6 +48,7 @@ export default function ProjectsTable({
 
   return (
     <div className="projects-table">
+      <Divider />
       <div className="display-inline-flex">
         {allColumns.map((column) => (
           // <div key={`${headerGroup.getHeaderGroupProps().key}-b>`}>

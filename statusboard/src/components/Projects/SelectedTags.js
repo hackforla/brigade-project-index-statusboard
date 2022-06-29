@@ -19,7 +19,7 @@ export const SelectedTags = ({
     {selectedItems.length > 0 ? (
       <>
         <Button
-          className="button-primary clear-button"
+          className="button-primary clear-all-button"
           onClick={() => {
             setSelectedItems([]);
             clearTaxonomy();

@@ -91,14 +91,6 @@ export default function getTableColumns(
 ): ExtendedColumn<Project>[] {
   return [
     {
-      Header: 'Organization',
-      accessor: (project: Project): string => project.brigade?.name ?? '',
-      id: 'organization',
-      sortType: 'customStringSort',
-      disableFilters: true,
-      extendedClassName: 'organization-column',
-    },
-    {
       Header: 'Project',
       accessor: 'name',
       disableFilters: true,
@@ -137,5 +129,13 @@ export default function getTableColumns(
       disableSortBy: true,
       extendedClassName: 'topics-column',
     },
+    {
+      Header: 'Organization',
+      accessor: (project: Project): string => project.brigade?.name ?? '',
+      id: 'organization',
+      sortType: 'customStringSort',
+      disableFilters: true,
+      extendedClassName: 'organization-column',
+    },  
   ];
 }

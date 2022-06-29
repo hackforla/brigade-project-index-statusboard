@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 // import cx from 'classnames';
 import '../commonFormControlStyles.scss';
 import '../Projects/ProjectsTable/ProjectsQuery.scss';
+import '../Projects/MultiSelect/MultiSelect.scss';
+
 import ClearInput from '../../pages/Projects/ClearInput';
 
 // function changeIfValidValue(options, e, onChange) {
@@ -66,7 +68,7 @@ export default function ComboBoxWidget({
       />
       <ClearInput
         inputId="organization"
-        className="clear-button"
+        className="clear-input"
         onClear={onClear}
       />
       <datalist id={listId}>
