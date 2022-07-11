@@ -55,7 +55,7 @@ export default function ProjectsTable({
           <ColumnDisplayOption
             column={column}
             key={`${column.id}-column-option`}
-            id={column.id}
+            id={`${column.id}-column-option`}
             // column={column}
             header={column.Header?.toString() || ''}
             setHiddenColumns={setHiddenColumns}

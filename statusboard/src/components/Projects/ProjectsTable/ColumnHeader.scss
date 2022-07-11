@@ -1,5 +1,5 @@
 .column-header__contents {
-  display: flex;
+ display: flex;
   padding-right: 0rem;
   align-items: stretch;
   overflow-wrap: anywhere;
@@ -87,10 +87,76 @@
   width: 33%;
 }
 
+// https: //medium.com/claritydesignsystem/pure-css-accessible-checkboxes-and-radios-buttons-54063e759bb3
+
 .column-display-option {
-  display: flex;
-  font-size: 1rem;
-  padding-right: 15px;
-  label { padding-top: 10px;};
+   font-size: 1rem;
+   padding-bottom: 10px;
 }
 
+.column-display-option input[type="checkbox"] {
+  opacity: 0;
+//   height: 1px;
+//   width: 1px;
+}
+
+.column-display-option label {
+  position: relative;
+  display: inline-block;
+
+  /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
+  padding-left: 3px;
+  padding-right: 25px;
+}
+
+.column-display-option label::before,
+.column-display-option label::after {
+  position: absolute;
+  margin-left: -18px;
+  content: "";
+  background-color: var(--cfa-blue-lighter);
+  /*Needed for the line-height to take effect*/
+  display: inline-block;
+}
+
+/*Outer box of the fake checkbox*/
+.column-display-option label::before {
+  height: 16px;
+  width: 16px;
+
+  border: 1px solid;
+  left: 0px;
+
+  /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
+     *to vertically center it.
+     */
+  top: 3px;
+}
+
+/*Checkmark of the fake checkbox*/
+.column-display-option label::after {
+  height: 5px;
+  width: 9px;
+  border-left: 2px solid;
+  border-bottom: 2px solid;
+
+  transform: rotate(-45deg);
+
+  left: 4px;
+  top: 7px;
+}
+
+/*Hide the checkmark by default*/
+.column-display-option input[type="checkbox"]+label::after {
+  content: none;
+}
+
+/*Unhide on the checked state*/
+.column-display-option input[type="checkbox"]:checked+label::after {
+  content: "";
+}
+
+/*Adding focus styles on the outer-box of the fake checkbox*/
+.column-display-option input[type="checkbox"]:focus+label::before {
+  outline: rgb(59, 153, 252) auto 5px;
+}

@@ -19,16 +19,14 @@ export default function ColumnDisplayOption({
   getToggleHideAllColumnsProps: any;
 }): JSX.Element {
   return (
-    <div className="form-control-container column-display-option">
+    <div className="column-display-option">
       <input
         type="checkbox"
         {...column.getToggleHiddenProps()}
         id={id}
-        content="x"
-        // onChange={(e) => })
-        className="form-control column-display-option"
+      // onChange={(e) => })
       />
-      <label htmlFor={id} className="form-label checkbox-label-adjustment">
+      <label htmlFor={id}>
         {header}
       </label>
     </div>

@@ -15,8 +15,10 @@ export const ProjectsOverview = () => (
     </div>
     <br />
     <div>
-      Search our curated list of Civic Tech Open Source projects. Use as is, make request for changes, or change yourself!  Many projects are looking for volunteers.  Filter projects based on your area of
-      interest and date last updated. Check out the{' '}
+      Search our list of Civic Tech Open Source projects. Use as is, make
+      request for changes, or change yourself! Many projects are looking for
+      volunteers. Filter projects based on your area of interest and date last
+      updated. Check out the{' '}
       <a href="https://brigade.cloud/" rel="noreferrer" target="_blank">
         Project Index Documentation
       </a>{' '}

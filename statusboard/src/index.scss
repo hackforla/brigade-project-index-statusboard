@@ -57,7 +57,8 @@ a {
 }
 
 .separator {
-  border-bottom: 3px solid blue;
+  border-bottom: 3px solid ;
+  color: var(--cfa-purple-dark);
   height: 0px;
   padding: 0px;
   margin: 6px 0px;
