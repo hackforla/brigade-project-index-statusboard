@@ -50,6 +50,7 @@ export default function ProjectsTable({
     <div className="projects-table">
       <Divider />
       <div className="display-inline-flex">
+        <div className='column-display-option'><b>Show/Hide Columns:</b></div>
         {allColumns.map((column) => (
           // <div key={`${headerGroup.getHeaderGroupProps().key}-b>`}>
           <ColumnDisplayOption
@@ -112,17 +113,19 @@ export default function ProjectsTable({
           })}
         </Tbody>
       </Table>
-      {pageSize < rows.length && (
-        <div className="load-projects-button">
-          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-          {/* @ts-ignore */}
-          <Button
-            text="Load next 50 projects"
-            onClick={() => setPageSize(pageSize + 50)}
-          />
-        </div>
-      )}
+      {
+        pageSize < rows.length && (
+          <div className="load-projects-button">
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/* @ts-ignore */}
+            <Button
+              text="Load next 50 projects"
+              onClick={() => setPageSize(pageSize + 50)}
+            />
+          </div>
+        )
+      }
       {/* </PerfectScrollbar> */}
-    </div>
+    </div >
   );
 }
