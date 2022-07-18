@@ -6,6 +6,10 @@ body {
   overflow-x: hidden;
 }
 
+.attention {
+  font-size: 150%;
+  font-weight: bold;
+}
 body {
   margin: 0;
   padding: 0;
@@ -35,6 +39,28 @@ a {
   display: inline-block;
 }
 
+.display-inline-flex {
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
 .display-inline {
   display: inline;
+}
+
+.hidden {
+  display: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.separator {
+  border-bottom: 3px solid ;
+  color: var(--cfa-purple-dark);
+  height: 0px;
+  padding: 0px;
+  margin: 6px 0px;
+
 }

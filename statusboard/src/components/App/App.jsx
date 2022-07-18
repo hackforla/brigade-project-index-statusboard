@@ -7,14 +7,19 @@ import { TaxonomyDataContextProvider } from '../../contexts/TaxonomyDataContext'
 
 function App() {
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={{
+        overflowY: 'visible',
+      }}
+    >
       <TaxonomyDataContextProvider>
-      <BrigadeDataContextProvider>
-        <AppRouter>
-          <Header />
-          <PageContents />
-        </AppRouter>
-      </BrigadeDataContextProvider>
+        <BrigadeDataContextProvider>
+          <AppRouter>
+            <Header />
+            <PageContents />
+          </AppRouter>
+        </BrigadeDataContextProvider>
       </TaxonomyDataContextProvider>
     </div>
   );

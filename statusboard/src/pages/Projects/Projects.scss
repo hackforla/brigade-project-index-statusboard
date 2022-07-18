@@ -1,11 +1,142 @@
+// below forces scrollbar to always be visible
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+::-webkit-calendar-picker-indicator {
+  opacity: 100;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+  box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
 @media screen and (max-width:800px) {
-  th{
-      width:calc(100% - 0.5em) !important;
+  th {
+    width: calc(100% - 0.5em) !important;
   }
-  .hideFifthColumn {
-    th:nth-of-type(5){
-      display:none;
+
+}
+
+.accordion-button-inner-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.accordion-collapse-expand {
+}
+
+.accordion-collapse-expandButton {
+  border-width: 0;
+  padding-left: 6px;
+  font-size: small;
+  margin: -25px
+}
+
+.accordion-button {
+border: 2px solid var(--cfa-white);
+  border-radius: 5px;
+  padding: 0 0.75rem 0.1rem 0.75rem;
+  background-color: var(--cfa-blue);
+  color: var(--cfa-white);
+    // background-color: #eee;
+  font-size: 1.15rem;
+  cursor: pointer;
+  display: block;
+  // padding: 6px;
+  text-align: left;
+  // border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+// .accordion-button:hover {
+//   background-color: #ccc;
+// }
+
+.clear-input { background-color: transparent; border-width: 0px;}
+
+.show-in-gutter {
+  margin-left: -45px;
+}
+
+.overview-section {
+  margin-bottom: 8px
+}
+
+.filter-section {
+  display: box;
+}
+
+// width below included margins, border, and padding
+.tag-filter-section-selection {
+  width: 200px
+}
+
+// width below excludes padding left, padding right for MultiSelect.  
+// Total width is width + padding + border (2px).  
+// Border width should n
+.tag-filter-section-multi-select {
+  width: 169px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-width: 2px
+}
+
+.filter-title-panel {
+    vertical-align: middle;
+    padding-top: 5px;
+    font-weight: bold;
+    padding: 6px;
+}
+
+.filter-section {
+      display: inline-flex;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
     }
+
+@media only screen and (max-width: 600px) {
+  .filter-section {
+    display: block;
   }
 }
-  
+.filter-panel {
+    label {
+      display: inline-flex;
+      width: 210px;
+      vertical-align: middle;
+      position: relative;
+      text-align: relative;
+    }
+  }
+
+.filter-right-panel {
+  padding-left: 32px;
+}
+
+@media only screen and (max-width: 600px) {
+  .filter-right-panel {
+    padding-left: 0;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .filter-panel {
+    max-width: 300px;
+  }
+}
+
+.checkbox-label-adjustment {
+  /* align-center does not work for checkboxes same as text */
+  padding-top: 3px;
+}
+
+#only-cfa-projects {
+  margin-left: 0;
+  margin-top: 0;
+}

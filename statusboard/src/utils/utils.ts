@@ -1,8 +1,11 @@
+/* eslint-disable import/extensions */
 import { Bounds, latLng } from 'leaflet';
 
 import { SortByFn, Row, IdType } from 'react-table';
-
+import { fuzzyTextFilter } from '../components';
+import { ExcludeParam } from '../pages/Projects/Projects';
 import { Brigade, Project } from './types';
+import { Filter } from './useProjectFilters';
 
 export type ActiveThresholdsKeys = 'all time' | 'year' | 'month' | 'week';
 // key: user-facing string that represents the threshold
@@ -40,13 +43,13 @@ export function getProjectsFromBrigadeData(brigadeData: Brigade[]) {
   );
 }
 
-function numTopicsIntersecting(
-  filterByTopics: any[],
-  projectTopics?: string | any[]
+function numTagsIntersecting(
+  filterByTags: any[],
+  projectTags?: string | any[]
 ) {
-  if (!filterByTopics?.length) return 1;
-  if (!projectTopics || !projectTopics.length) return -1;
-  const intersection = filterByTopics.filter((t) => projectTopics.includes(t));
+  if (!filterByTags?.length) return 1;
+  if (!projectTags || !projectTags.length) return -1;
+  const intersection = filterByTags.filter((t) => projectTags.includes(t));
   return intersection.length;
 }
 
@@ -61,9 +64,7 @@ export function filterBrigades(
   let dataToFilter = brigadeData;
   const { selectedBrigade, bounds } = filterOpts || {};
   if (selectedBrigade) {
-    dataToFilter = dataToFilter.filter(
-      (b) => b.name === selectedBrigade!.name!
-    );
+    dataToFilter = dataToFilter.filter((b) => b.name === selectedBrigade.name);
   } else if (bounds) {
     dataToFilter = dataToFilter.filter((b) => {
       if (!b.latitude || !b.longitude) return false;
@@ -84,64 +85,141 @@ export function filterProjectsByBrigades(
   );
 }
 
-type ProjectWithTopicsMatched = Project & {
-  numberTopicsMatched?: number;
+export function filterProjectsByDescription(
+  projects: Project[],
+  description?: string
+): Project[] {
+  if (!description) {
+    return projects;
+  }
+  return fuzzyTextFilter(projects, description, 'description') as Project[];
+}
+
+export function filterProjectsByOrganization(
+  projects: Project[],
+  organization?: string
+) {
+  if (!organization?.trim()) {
+    return projects;
+  }
+
+  return projects.filter((project) =>
+    project.brigade?.name.toUpperCase().includes(organization.toUpperCase())
+  );
+}
+
+export function filterProjectsByProjectName(
+  projects: Project[],
+  name?: string
+) {
+  if (!name) {
+    return projects;
+  }
+
+  return fuzzyTextFilter(projects, name, 'name') as Project[];
+}
+
+type ProjectWithTagsMatched = Project & {
+  numberTagsMatched?: number;
 };
-export function filterProjectsByTopics(projects: Project[], topics?: string[]) {
+
+export function filterProjectsByTags(
+  projects: Project[],
+  topics?: string[]
+): Project[] {
   if (!topics?.length) return projects;
   return projects
     .map((p) => ({
       ...p,
-      numberTopicsMatched: numTopicsIntersecting(topics, p.topics),
+      numberTagsMatched: numTagsIntersecting(topics, p.topics),
     }))
-    .sort((a, b) => b.numberTopicsMatched - a.numberTopicsMatched)
+    .sort((a, b) => b.numberTagsMatched - a.numberTagsMatched)
     .filter(
-      (project: ProjectWithTopicsMatched) =>
-        (project.numberTopicsMatched || -1) > 0
+      (project: ProjectWithTagsMatched) => (project.numberTagsMatched || -1) > 0
     );
 }
 
 export function filterProjectsByTime(
   projects: Project[],
   timeRangeKey?: ActiveThresholdsKeys
-) {
+): Project[] {
   const timeRanges = timeRangeKey ? ACTIVE_THRESHOLDS[timeRangeKey] : undefined;
   if (!timeRanges) return projects;
   return projects.filter((p) => timeRanges.includes(p.last_pushed_within));
 }
 
-export function filterProjectsByCfA(
-  projects: Project[],
-  onlyCfA?: string
-) {
+export function filterProjectsByCfA(projects: Project[], onlyCfA?: string) {
   if (onlyCfA === 'true') {
     return projects.filter((p: Project) =>
-      p?.brigade?.type ? p.brigade.type.includes("Brigade") || p.brigade.type.includes("Code for America") : false
+      p?.brigade?.type
+        ? p.brigade.type.includes('Brigade') ||
+          p.brigade.type.includes('Code for America')
+        : false
     );
   }
-  
+
   return projects;
 }
 
-export function filterActiveProjects(
-  options: {
-    timeRange?: ActiveThresholdsKeys;
-    topics?: string[];
-    brigades?: string[];
-    onlyCfA: string;
-  },
+// generic filter execute query
+export function filterProjectsByAllParams(
+  options: Filter,
   projects?: Project[]
-) {
+): Project[] {
   if (!projects) return [];
   // Set destructuring and allow defaults to be overwritten
-  const { timeRange, topics, brigades, onlyCfA } = options || {};
-  let newProjects: ProjectWithTopicsMatched[] = filterProjectsByBrigades(
+  const {
+    timeRange,
+    topics,
+    brigades,
+    onlyCfA,
+    project,
+    organization,
+    description,
+  } = options || {};
+  let newProjects: ProjectWithTagsMatched[] = filterProjectsByBrigades(
     projects,
     brigades
   );
-  newProjects = filterProjectsByTopics(newProjects, topics);
+  newProjects = filterProjectsByTags(newProjects, topics);
   newProjects = filterProjectsByTime(newProjects, timeRange);
   newProjects = filterProjectsByCfA(newProjects, onlyCfA);
+  newProjects = filterProjectsByProjectName(newProjects, project);
+  newProjects = filterProjectsByOrganization(newProjects, organization);
+  newProjects = filterProjectsByDescription(newProjects, description);
+  return newProjects;
+}
+
+export function filterProjectsExcludeParam(
+  options: Filter,
+  projects?: Project[],
+  excludeParam?: string
+): Project[] {
+  if (!projects) return [];
+  // Set destructuring and allow defaults to be overwritten
+  const {
+    timeRange,
+    topics,
+    brigades,
+    onlyCfA,
+    project,
+    organization,
+    description,
+  } = options || {};
+  let newProjects: ProjectWithTagsMatched[] = filterProjectsByBrigades(
+    projects,
+    brigades
+  );
+  if (excludeParam !== ExcludeParam.tags) {
+    newProjects = filterProjectsByTags(newProjects, topics);
+  }
+  newProjects = filterProjectsByTime(newProjects, timeRange);
+  newProjects = filterProjectsByCfA(newProjects, onlyCfA);
+  newProjects = filterProjectsByProjectName(newProjects, project);
+  if (excludeParam !== ExcludeParam.organization) {
+    newProjects = filterProjectsByOrganization(newProjects, organization);
+  }
+  newProjects = filterProjectsByDescription(newProjects, description);
   return newProjects;
 }
 
@@ -149,20 +227,20 @@ export function slugify(s: string) {
   return s.toLowerCase().replace(/[^\w]+/g, '');
 }
 
-export function getTopicsFromProjects(projects?: Project[]) {
+export function getTagsFromProjects(projects?: Project[]): string[] {
   if (!projects) return [];
   // Sorted by frequency
-  const allTopics: string[] = projects.reduce<string[]>(
+  const allTags: string[] = projects.reduce<string[]>(
     (topics, project) => topics.concat(project.topics || []),
     []
   );
   const topicsByFrequency: { [key: string]: number } = {};
-  allTopics.forEach(
+  allTags.forEach(
     (topic) => (topicsByFrequency[topic] = (topicsByFrequency[topic] || 0) + 1)
   );
 
   return Object.entries(topicsByFrequency)
-    .sort((a, b) => b[1] - a[1])
+    .sort((a, b) => (a[0] > b[0] ? 1 : -1))
     .map((topicAndCount) => topicAndCount[0]);
 }
 

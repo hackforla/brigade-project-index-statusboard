@@ -1,9 +1,10 @@
-import {React} from 'react';
+/* eslint-disable react/jsx-filename-extension */
+import { React } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import '../commonFormControlStyles.scss';
 
-export default function Select({
+export default function SelectWidget({
   label,
   id,
   options,
@@ -13,6 +14,7 @@ export default function Select({
   className,
   inline,
   extraRef,
+  inputClassName,
 }) {
   return (
     <div
@@ -32,29 +34,33 @@ export default function Select({
         id={id}
         ref={extraRef}
         onChange={onChange}
-        className={cx('form-control', { 'form-control--inline': inline })}
+        className={`${inputClassName} ${cx('form-control', {
+          'form-control--inline': inline,
+        })}
+          `}
         value={selected}
       >
         {emptyOptionText && (
           <option value={emptyOptionText}>{emptyOptionText}</option>
         )}
-        {options.map((option) => {
-          return <option key={option}>{option}</option>;
-        })}
+        {options.map((option) => (
+          <option key={option}>{option}</option>
+        ))}
       </select>
     </div>
   );
 }
 
-Select.defaultProps = {
+SelectWidget.defaultProps = {
   selected: undefined,
   options: [],
   className: '',
+  inputClassName: '',
   emptyOptionText: undefined,
   inline: false,
 };
 
-Select.propTypes = {
+SelectWidget.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(
@@ -65,4 +71,5 @@ Select.propTypes = {
   emptyOptionText: PropTypes.string,
   className: PropTypes.string,
   inline: PropTypes.bool,
+  inputClassName: PropTypes.string,
 };

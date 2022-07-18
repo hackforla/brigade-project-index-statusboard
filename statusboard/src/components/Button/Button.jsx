@@ -1,16 +1,16 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import cx from 'classnames';
 import '../commonFormControlStyles.scss';
 import './Button.scss';
 
 export default function Button({
-  text,
+  text = '',
   onClick,
-  disabled,
-  linkButton,
-  className,
-  children,
+  disabled = false,
+  linkButton = false,
+  className = '',
+  children = undefined,
   ...rest
 }) {
   return (
@@ -29,20 +29,3 @@ export default function Button({
     </button>
   );
 }
-
-Button.defaultProps = {
-  disabled: false,
-  linkButton: false,
-  className: '',
-  text: undefined,
-  children: undefined,
-};
-
-Button.propTypes = {
-  text: PropTypes.string,
-  children: PropTypes.element,
-  onClick: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
-  linkButton: PropTypes.bool,
-  className: PropTypes.string,
-};

@@ -1,10 +1,11 @@
+/* eslint-disable react/jsx-filename-extension */
 // TODO: DEAL WITH THESE
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import cx from 'classnames';
-import Button from '../Button/Button';
-import { ReactComponent as Arrow } from '../../assets/arrow.svg';
+import Button from '../../Button/Button';
+import { ReactComponent as Arrow } from '../../../assets/arrow.svg';
 import './ColumnHeader.scss';
 
 export default function ColumnHeader({ column, disableSort }) {
@@ -14,12 +15,10 @@ export default function ColumnHeader({ column, disableSort }) {
     sortProps = column.getHeaderProps(column.getSortByToggleProps());
   }
   return (
-    <th {...headerProps} className="column-header">
+    <th {...headerProps} className={`${column.extendedClassName}`}>
       <div className="column-header__contents">
-        <div>{column.render('Header')}</div>
-        {column.canFilter && <div>{column.render('Filter')}</div>}
         {column.canSort && (
-          <div>
+          <>
             <Button
               type="button"
               className="sort-button"
@@ -46,8 +45,9 @@ export default function ColumnHeader({ column, disableSort }) {
                 </div>
               </>
             </Button>
-          </div>
+          </>
         )}
+        <div>{column.render('Header')}</div>
       </div>
     </th>
   );

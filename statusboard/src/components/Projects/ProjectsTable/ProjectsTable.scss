@@ -20,23 +20,19 @@
     table-layout:fixed;
   }
 
-  th:nth-of-type(2){
-    width:40%;
-  } 
-
   th {
     background-color: var(--cfa-purple-dark);
     color: var(--cfa-white);
-    padding: 0.25rem;
     text-align: left;
     font-size: 1rem;
     min-width: 12rem;
+    padding: 0.5rem;
   }
 
   td {
     padding: 0.5rem;
     font-size: 1rem;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
   }
 
   tr:nth-child(odd) {
@@ -54,12 +50,12 @@
     }
   }
 
-  .hideOpenIssuesText {
+  .hide-column-label {
     display:none;
   }
 
   @media screen and (max-width:800px) {
-    .hideOpenIssuesText {
+    .hide-column-label {
       display:inline;
     }
   }

@@ -1,19 +1,25 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable import/extensions */
 import React from 'react';
 import cx from 'classnames';
-import { Cell, Column, Row, SortByFn } from 'react-table';
-import { Button, TextFilter } from '../../components';
-import { Project } from '../../utils/types';
+import { Cell } from 'react-table';
+import { Button } from '../../components';
+import { Project, ExtendedColumn } from '../../utils/types';
 import { Filter } from '../../utils/useProjectFilters';
 
 function projectGitHubCellLink(cell: Cell<Project>): JSX.Element {
   const project = cell.row.original;
   // TODO: CHANGE THIS WHEN WE HAVE A PROJECT DETAIL PAGE TO GO TO
   // <NavLink to={`/projects/${slugify(project.slug)}`}>{project.name}</NavLink>
-  let html = <a href={project.code_url}>{project.name}</a>;
+  let html = (
+    <a href={project.code_url} target="new" rel="noreferrer">
+      {project.name}
+    </a>
+  );
   if (project.link_url) {
     html = (
       <div style={{ display: 'flex' }}>
-        <a title="Repo" href={project.code_url}>
+        <a title="Repo" href={project.code_url} target="new">
           {project.name}
         </a>
         <a
@@ -43,7 +49,7 @@ function projectOpenIssuesCell(cell: Cell<Project>): JSX.Element {
     }
     return (
       <span>
-        <span className="hideOpenIssuesText">Open issues: </span>
+        <span className="hide-column-label">Open issues: </span>
         {issuestxt}
       </span>
     );
@@ -80,23 +86,22 @@ function topicsCellButtons(
 }
 
 export default function getTableColumns(
-  filterTopics: string[] = [],
-  setFilterTopics: (newFilter: Filter) => void
-): Column<Project>[] {
+  filterTags: string[] = [],
+  setFilterTags: (newFilter: Filter) => void
+): ExtendedColumn<Project>[] {
   return [
     {
       Header: 'Project',
       accessor: 'name',
-      Filter: TextFilter,
-      filter: 'fuzzyTextFilter',
+      disableFilters: true,
       Cell: projectGitHubCellLink,
+      extendedClassName: 'name-column',
     },
     {
       Header: 'Description',
       accessor: 'description',
-      Filter: TextFilter,
-      filter: 'fuzzyTextFilter',
-      disableSortBy: true,
+      disableFilters: true,
+      extendedClassName: 'description-column',
     },
     {
       Header: 'Open Issues',
@@ -105,28 +110,32 @@ export default function getTableColumns(
       Cell: projectOpenIssuesCell,
       sortType: 'customStringSort',
       disableFilters: true,
+      extendedClassName: 'open-issues-column',
     },
     {
       Header: 'Last Push',
+      id: 'last-pushed-within',
       disableFilters: true,
       accessor: 'last_pushed_within',
       sortType: 'lastPushSort',
+      extendedClassName: 'last-pushed-within-column',
     },
     {
       Header: 'Tags',
       id: 'topics',
       accessor: (project: Project) => project.topics?.length,
       disableFilters: true,
-      Cell: topicsCellButtons(filterTopics, setFilterTopics),
+      Cell: topicsCellButtons(filterTags, setFilterTags),
       disableSortBy: true,
+      extendedClassName: 'topics-column',
     },
     {
       Header: 'Organization',
       accessor: (project: Project): string => project.brigade?.name ?? '',
       id: 'organization',
-      Filter: TextFilter,
-      filter: 'fuzzyTextFilter',
       sortType: 'customStringSort',
-    },
+      disableFilters: true,
+      extendedClassName: 'organization-column',
+    },  
   ];
 }

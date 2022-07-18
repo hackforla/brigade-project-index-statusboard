@@ -1,5 +1,5 @@
 
-input[type=checkbox] {
+.checkbox input[type=checkbox] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -11,18 +11,18 @@ input[type=checkbox] {
 }
 
 
-input[type=checkbox]:checked:after {
+.checkbox input[type=checkbox]:checked:after {
   content: "✓";
   font-weight: bolder;
   font-size: 1.5rem;
   color: var(--cfa-blue);
   position: relative;
-  top: -9px;
+  top: -6px;
   left: -2px;
 }
 
-input[type=checkbox]:hover,
-input[type=checkbox]:focus {
+.checkbox input[type=checkbox]:hover,
+.checkbox input[type=checkbox]:focus {
   background-color: var(--cfa-blue-lightest);
   cursor: pointer;
 }

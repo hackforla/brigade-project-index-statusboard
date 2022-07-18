@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-types */
 // If we also use typescript on the back end, we can move this into a "common" folder (still within the front end bc CRA is opinionated) and use it there too
+
+import { Column } from 'react-table';
 
 export type Brigade = {
   name: string;
@@ -40,4 +43,8 @@ export type Location = {
     latitude?: string | number;
     longitude?: string | number;
   };
+};
+
+export type ExtendedColumn<D extends object = {}> = Column<D> & {
+  extendedClassName: string;
 };

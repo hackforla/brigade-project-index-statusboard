@@ -9,7 +9,7 @@ import {
   ACTIVE_THRESHOLDS,
 } from '../../utils/utils';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
-import { ProjectsTable, Select } from '../../components';
+import { ProjectsTable, SelectWidget } from '../../components';
 import './Brigades.scss';
 
 function Brigades() {
@@ -17,7 +17,7 @@ function Brigades() {
   const [filteredBrigadeData, setFilteredBrigadeData] =
     useState(allBrigadeData);
   const [filterOpts, setFilterOpts] = useState({});
-  const [timeRange, setTimeRange] = useState('year');
+  const [timeRange, setTimeRange] = useState('all time');
   const { selectedBrigade } = filterOpts; // also has bounds
   const [projects, setProjects] = useState(allProjects);
 
@@ -117,7 +117,7 @@ function Brigades() {
       <h1>Projects by brigade or geographic area</h1>
       <p>
         {brigadesShowingString}
-        <Select
+        <SelectWidget
           extraRef={null}
           label="Showing projects updated within the past "
           id="active_time_range"
@@ -128,7 +128,7 @@ function Brigades() {
       </p>
       <div>
         Zoom in on the map to filter by projects in a geographic area or
-        <Select
+        <SelectWidget
           label=" select a brigade "
           id="select-brigade"
           emptyOptionText="All brigades"

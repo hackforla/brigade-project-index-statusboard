@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable import/extensions */
 import React, {
   useMemo,
   useContext,
@@ -6,53 +11,164 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
+import $ from 'jquery';
 import {
   usePagination,
   useFilters,
-  Column,
   TableOptions,
   PluginHook,
   FilterTypes,
   Filters,
   useSortBy,
 } from 'react-table';
-import Modal from 'react-modal'
 import { fuzzyTextFilter } from '../../components';
-import ProjectsTable from '../../components/ProjectsTable/ProjectsTable';
-import { ACTIVE_THRESHOLDS, getTopicsFromProjects, customStringSort, lastPushSort } from '../../utils/utils';
-import Select from '../../components/Select/Select';
+import ProjectsTable from '../../components/Projects/ProjectsTable/ProjectsTable';
+import Divider from '../../components/Divider/Divider';
+import {
+  ACTIVE_THRESHOLDS,
+  getTagsFromProjects,
+  customStringSort,
+  lastPushSort,
+  ActiveThresholdsKeys,
+  filterProjectsExcludeParam,
+} from '../../utils/utils';
+import SelectWidget from '../../components/SelectWidget/SelectWidget';
 import Checkbox from '../../components/Checkbox/Checkbox';
-import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
+import { MultiSelect } from '../../components/Projects/MultiSelect/MultiSelect';
+import { ProjectsOverview } from '../../components/Projects/ProjectsOverview';
 import BrigadeDataContext from '../../contexts/BrigadeDataContext';
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
 import { useProjectFilters } from '../../utils/useProjectFilters';
-import { Project } from '../../utils/types';
+import { Project, ExtendedColumn } from '../../utils/types';
 import getTableColumns from './utils';
-import queryParamFilter from '../../components/ProjectsTable/QueryParamFilter';
+import queryParamFilter from '../../components/Projects/ProjectsTable/QueryParamFilter';
 import TaxonomyDataContext from '../../contexts/TaxonomyDataContext';
 import './Projects.scss';
 import './modal.css';
+import { SelectedTags } from '../../components/Projects/SelectedTags';
+import TextInput from '../../components/TextInput/TextInput';
+import ComboBoxWidget from '../../components/SelectWidget/ComboBoxWidget';
+
+export enum ExcludeParam {
+  tags = 'tags',
+  organization = 'organization',
+}
+
+function getDistanceToBottom(jqueryElem: string): number {
+  const top = $(jqueryElem).offset()?.top || 0;
+  const height = window.innerHeight - top;
+  return height;
+}
+
+function setHeightToBottom(jqueryElement: string): void {
+  const width = window.innerWidth;
+  if (width < 800) {
+    $('#filter-and-right-panel').css({ display: 'block' });
+    $(jqueryElement).removeAttr('height');
+    // $(jqueryElement).removeAttr('overflow-y');
+    // $(jqueryElement).height(3000);
+    $(jqueryElement).css({ overflowY: 'visible' });
+  } else {
+    $('#filter-and-right-panel').css({ display: 'flex' });
+    const height = getDistanceToBottom(jqueryElement) - 25;
+    $(jqueryElement).height(height);
+    $(jqueryElement).css({ overflowY: 'scroll' });
+  }
+}
 
 function Projects(): JSX.Element {
-  const { allTopics, loading } = useContext(BrigadeDataContext);
+  const { allTags, loading } = useContext(BrigadeDataContext);
   const [rowCounter, setRowCounter] = useState(0);
+  const [displayOverview, setDisplayOverview] = useState(true);
+  const [displayFilter, setDisplayFilter] = useState(true);
+  const [selectedItem, setSelectedItem] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
-  const { priorityAreasMap, issuesMap, isTaxonomyError } = useContext(TaxonomyDataContext);
+  const { priorityAreasMap, issuesMap, isTaxonomyError } =
+    useContext(TaxonomyDataContext);
+
+  // useEffect(() => {
+  //   window.addEventListener('resize', (event) => {
+  //     setHeightToBottom('#projects-table');
+  //   });
+  // });
 
   const {
+    brigades,
     topics,
     timeRange,
+    organization,
+    project,
+    description,
+    onlyCfA,
     setFilters,
     projectsFilteredByTime,
     projectsFilteredByAllParams: filteredProjects,
     queryParameters,
   } = useProjectFilters();
 
-  // Topics
-  const availableTopics = useMemo(() => {
-    if (!projectsFilteredByTime) return allTopics;
-    return getTopicsFromProjects(projectsFilteredByTime);
-  }, [projectsFilteredByTime, allTopics]);
+  // Tags
+  const { allProjects } = useContext(BrigadeDataContext);
+  const availableTags = useMemo(() => {
+    if (!projectsFilteredByTime) return allTags;
+    return getTagsFromProjects(
+      filterProjectsExcludeParam(
+        {
+          topics,
+          timeRange,
+          brigades,
+          onlyCfA,
+          project,
+          organization,
+          description,
+        },
+        allProjects,
+        ExcludeParam.tags
+      )
+    );
+  }, [
+    projectsFilteredByTime,
+    allTags,
+    topics,
+    timeRange,
+    brigades,
+    onlyCfA,
+    project,
+    organization,
+    description,
+    allProjects,
+  ]);
+  const selectOrganizations = useMemo(() => {
+    if (!projectsFilteredByTime) return allTags;
+    const orgProjects = filterProjectsExcludeParam(
+      {
+        topics,
+        timeRange,
+        brigades,
+        onlyCfA,
+        project,
+        organization,
+        description,
+      },
+      projectsFilteredByTime,
+      ExcludeParam.organization
+    );
+    const availableOrganizations = [
+      ...new Set(orgProjects.map((project) => project.brigade?.name)),
+    ];
+    return availableOrganizations.map((org) => org);
+  }, [
+    projectsFilteredByTime,
+    topics,
+    timeRange,
+    brigades,
+    onlyCfA,
+    project,
+    organization,
+    description,
+    allTags,
+  ]);
 
   const filterTypes: FilterTypes<Project> = useMemo(
     () => ({ fuzzyTextFilter: queryParamFilter(fuzzyTextFilter) }),
@@ -61,15 +177,14 @@ function Projects(): JSX.Element {
 
   const sortTypes = {
     customStringSort,
-    lastPushSort
+    lastPushSort,
   };
 
-
-
-  const columns: Column<Project>[] = useMemo(
+  const columns: ExtendedColumn<Project>[] = useMemo(
     () => getTableColumns(topics, setFilters),
     [topics, setFilters]
   );
+
   const initialFilterValues: Filters<Project> = useMemo(
     () =>
       columns
@@ -89,8 +204,8 @@ function Projects(): JSX.Element {
     []
   );
 
-  const options: TableOptions<Project> = useMemo(
-    () => ({
+  const options: TableOptions<Project> = useMemo(() => {
+    return {
       columns,
       data: filteredProjects || [],
       autoResetFilters: false,
@@ -100,7 +215,7 @@ function Projects(): JSX.Element {
         filters: initialFilterValues,
         sortBy: [
           {
-            id: 'last_pushed_within',
+            id: 'last-pushed-within',
           },
           {
             id: 'name',
@@ -110,9 +225,8 @@ function Projects(): JSX.Element {
       filterTypes,
       sortTypes,
       setRowCounter,
-    }),
-    [filteredProjects, columns, sortTypes, filterTypes, initialFilterValues]
-  );
+    };
+  }, [filteredProjects, columns, sortTypes, filterTypes, initialFilterValues]);
 
   const hooks: PluginHook<Project>[] = useMemo(
     () => [useFilters, useSortBy, usePagination],
@@ -121,7 +235,7 @@ function Projects(): JSX.Element {
 
   // the options for the Issues dropdown, prepend an empty string
   const issueOptions = [''].concat([...issuesMap.keys()]);
-  const priorityAreasOptions = [''].concat([...priorityAreasMap.keys()]);
+  // const priorityAreasOptions = [''].concat([...priorityAreasMap.keys()]);
 
   const issueSelect = useRef<HTMLSelectElement>();
   const priorityAreaSelect = useRef<HTMLSelectElement>();
@@ -140,130 +254,216 @@ function Projects(): JSX.Element {
     clearPriorityAreaSelect();
   }, [clearIssueSelect, clearPriorityAreaSelect]);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const displayActiveClass = (display: boolean): string => {
+    return display ? 'active' : '';
+  };
 
-  function toggleModal() {
-    setIsOpen(!isOpen);
-  }
+  const showHideClass = (display: boolean): string => {
+    return display ? '' : 'hidden';
+  };
 
-  function closeModal() {
-    setIsOpen(false);
-  }
+  const displayCollapseExpand = (display: boolean): string => {
+    return display ? collapse : expand;
+  };
 
+  const toggleDisplayFilter = () => {
+    setDisplayFilter(!displayFilter);
+  };
+
+  const toggleDisplayOverview = () => {
+    setDisplayOverview(!displayOverview);
+  };
+
+  const collapse = '▲';
+  const expand = '▼';
+  type InputElement = ChangeEvent<HTMLInputElement>;
+
+  type SelectElement = ChangeEvent<HTMLSelectElement>;
   return (
     <>
-        This is the list of <a href="https://brigade.codeforamerica.org/">Code For America Brigades</a> and other organizations' civic tech projects.
-        <br/>
-        You can search projects by <span className="help">"Topic", "Priority Area" or by "Tags"</span> &nbsp;  
-        <button type='button' className='question_mark' onClick={toggleModal}>&#63;</button>
-        <Modal 
-          isOpen={isOpen}
-          contentLabel="Taxonomy"
-          className="taxonomy_modal"
-          overlayClassName="taxonomy_overlay"
-          onRequestClose={() => closeModal()}          
-          shouldCloseOnOverlayClick
-          shouldCloseOnEsc
-        >
-          <div className='header'>
-            <div>Taxonomy</div>
-            <button type='button' className='close' onClick={toggleModal}>.</button>
-          </div>
-          <div style={{fontSize: '16px'}}>
-            The list of Topics and Priority Action Areas comes from the Taxonomy project.
-            <br/>
-            The list of Tags comes from the Index Crawler.
-            <br/>
-            You can find out more about Taxonomy by clicking on the Taxonomy menu item.
-          </div>
-        </Modal>
-        <br/>
-        You can also exclude projects outside "Code For America Brigades" as well as select a timeframe on when a project was last updated.
-        <br/>
       <LoadingIndicator loading={loading}>
-        <>
-          <div>
-          <br/>
-            <Select
-              extraRef={null}
-              label={`Showing ${rowCounter} projects with changes on Github in the last  `}
-              id="active_time_range"
-              onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                setFilters({ timeRange: e.target.value })
-              }
-              selected={timeRange}
-              options={Object.keys(ACTIVE_THRESHOLDS)}
-            />
-            <Checkbox
-              label="Show only Code For America projects?"
-              id="only_cfa_projects"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setFilters({ onlyCfA: String(e.target.checked) })
-              }
-            />
-            {!isTaxonomyError &&
-              <div style={{display: 'flex', gap: '30px'}}>
-              <Select
-                extraRef={issueSelect}
-                label="Topic "
-                id="select-issue"
-                options={issueOptions}
-                emptyOptionText=""
-                onChange={(event) => {
-                  if (!event || !event.target) return;
-                  const newVal = event.target.value;
-                  if (typeof newVal === 'string') {
-                    const tags = issuesMap.get(newVal) ?? [];
-                    setFilters({ topics: tags });
-                  }
-                  clearPriorityAreaSelect();
-                }}
-              />
-              <Select
-                extraRef={priorityAreaSelect}
-                label=" CfA Priority Action Area "
-                id="select-priority-areas"
-                options={priorityAreasOptions}
-                emptyOptionText=""
-                onChange={(event) => {
-                  if (!event || !event.target) return;
-                  const newVal = event.target.value;
-                  if (typeof newVal === 'string') {
-                    const tags = priorityAreasMap.get(newVal) ?? [];
-                    setFilters({ topics: tags });
-                  }
-                  clearIssueSelect();
-                }}
-              />
+        <div>
+          <div className="display-inline-flex">
+            <button
+              type="button"
+              className={`accordion-button ${displayActiveClass(
+                displayOverview
+              )}`}
+              onClick={toggleDisplayOverview}
+            >
+              <div className="accordion-button-inner-div">
+                <div>{hideShowLabel(displayOverview)}</div>
+                <div className="accordion-collapse-expand">
+                  {displayCollapseExpand(displayOverview)}
+                </div>
               </div>
-            }
+            </button>
+            <div className="filter-title-panel">Overview</div>
           </div>
-          {availableTopics  && (
-            <MultiSelect
-              clearTaxonomy={clearTaxonomy}
-              selectedItems={topics}
-              setSelectedItems={(newTopics: string[]) =>
-                setFilters({ topics: newTopics })
-              }
-              items={availableTopics}
-              labelText="Tags"
-              onSelectionItemsChange={(newTopics: string[] | undefined) =>
-                setFilters({ topics: newTopics })
-              }
-            />
-          )}
-          <br />
-          <div className="hideFifthColumn">
+          <div className={`overview-section ${showHideClass(displayOverview)}`}>
+            <ProjectsOverview />
+          </div>
+          <Divider />
+          <div className="display-inline-flex">
+            <button
+              type="button"
+              className={`accordion-button ${displayActiveClass(
+                displayFilter
+              )}`}
+              onClick={toggleDisplayFilter}
+            >
+              <div className="accordion-button-inner-div">
+                <div>{hideShowLabel(displayFilter)}</div>
+                <div className="accordion-collapse-expand">
+                  {displayCollapseExpand(displayFilter)}
+                </div>
+              </div>
+            </button>
+            <div className="filter-title-panel">{`Filter (${rowCounter} matches)`}</div>
+          </div>
+          <div id="show-hide" className={`${showHideClass(displayFilter)}`}>
+            <div id="filter-section" className="filter-section">
+              <div id="filter-left-panel" className="filter-panel">
+                <SelectWidget
+                  extraRef={null}
+                  label="Code changed since"
+                  id="active_time_range"
+                  onChange={(e: SelectElement) => {
+                    const value = e.target.value as ActiveThresholdsKeys;
+                    setFilters({ timeRange: value });
+                  }}
+                  selected={timeRange}
+                  inputClassName="query-select-widget-width"
+                  // inputClassName="query-select-widget-width"
+                  options={Object.keys(ACTIVE_THRESHOLDS)}
+                />
+                {!isTaxonomyError && (
+                  <div>
+                    <SelectWidget
+                      extraRef={issueSelect}
+                      label="Filter By Topic Tags"
+                      id="select-issue"
+                      inputClassName="query-select-widget-width tag-filter-section-selection"
+                      options={issueOptions}
+                      emptyOptionText=""
+                      onChange={(event: SelectElement) => {
+                        if (!event || !event.target) return;
+                        const newVal = event.target.value;
+                        if (typeof newVal === 'string') {
+                          let tags = issuesMap.get(newVal) ?? [];
+                          tags = tags.filter(
+                            (tag) => !(topics || []).includes(tag)
+                          );
+                          setFilters({ topics: [...(topics || []), ...tags] });
+                        }
+                        clearPriorityAreaSelect();
+                      }}
+                    />
+                    <MultiSelect
+                      clearTaxonomy={clearTaxonomy}
+                      inputClassName="tag-filter-section-multi-select"
+                      selectedItems={topics}
+                      setSelectedItem={setSelectedItem}
+                      setInputValue={setInputValue}
+                      inputValue={inputValue}
+                      setIsOpen={setIsOpen}
+                      isOpen={isOpen}
+                      availableTags={availableTags}
+                      labelText="Filter by Tags"
+                      setSelectedItems={(newTags: string[] | undefined) =>
+                        setFilters({ topics: newTags })
+                      }
+                    />
+
+                    {/* <SelectWidget
+                      inputClassName="query-input-width tag-filter-section-selection"
+                      extraRef={priorityAreaSelect}
+                      label="By CfA Priority Action Area "
+                      id="select-priority-areas"
+                      options={priorityAreasOptions}
+                      emptyOptionText=""
+                      onChange={(event) => {
+                        if (!event || !event.target) return;
+                        const newVal = event.target.value;
+                        if (typeof newVal === 'string') {
+                          const tags = priorityAreasMap.get(newVal) ?? [];
+                          setFilters({ topics: tags });
+                        }
+                        clearIssueSelect();
+                      }}
+                    /> */}
+                  </div>
+                )}
+              </div>
+              {availableTags && (
+                <>
+                  <div
+                    id="filter-right-panel"
+                    className="filter-panel filter-right-panel"
+                  >
+                    <Checkbox
+                      label="Only Code For America?"
+                      id="only-cfa-projects"
+                      onChange={(e: InputElement) =>
+                        setFilters({ onlyCfA: String(e.target.checked) })
+                      }
+                      defaultValue={onlyCfA}
+                    />
+                    <ComboBoxWidget
+                      label="Organization"
+                      id="organization"
+                      options={selectOrganizations}
+                      onChange={(e: InputElement) => {
+                        setFilters({ organization: e.target.value });
+                      }}
+                      onClear={() => setFilters({ organization: '' })}
+                      inputClassName="query-input-width"
+                      defaultValue={organization}
+                    />
+                    <TextInput
+                      label="Project Name"
+                      id="project"
+                      inputClassName="query-input-width"
+                      onChange={(e) => setFilters({ project: e.target.value })}
+                      defaultValue={project}
+                      onClear={() => setFilters({ project: '' })}
+                    />
+                    <TextInput
+                      label="Description"
+                      id="description"
+                      inputClassName="query-input-width"
+                      onChange={(e: InputElement) =>
+                        setFilters({ description: e.target.value })
+                      }
+                      onClear={() => setFilters({ description: '' })}
+                      defaultValue={description}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+          <SelectedTags
+            selectedItems={topics}
+            setSelectedItems={(newTags: string[] | undefined) =>
+              setFilters({ topics: newTags })
+            }
+            clearTaxonomy={clearTaxonomy}
+          />
+          <div id="projects-table" className="projects-table-section">
             <ProjectsTable
               options={options}
               plugins={hooks}
               setRowCounter={setRowCounter}
             />
           </div>
-        </>
+        </div>
       </LoadingIndicator>
     </>
   );
 }
 
 export default Projects;
+function hideShowLabel(show: boolean): React.ReactNode {
+  return show ? 'Hide' : 'Show';
+}
