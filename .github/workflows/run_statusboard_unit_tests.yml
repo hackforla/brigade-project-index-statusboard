@@ -15,7 +15,7 @@ jobs:
           run:
             working-directory: statusboard
         steps:
-          - uses: actions/checkout@v3
+          - uses: actions/checkout@v3.1.0
           - uses: actions/setup-node@v3
             with:
                 node-version: 'lts/*'
